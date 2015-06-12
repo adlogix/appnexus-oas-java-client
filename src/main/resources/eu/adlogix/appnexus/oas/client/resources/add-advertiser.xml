@@ -1,0 +1,29 @@
+<AdXML>
+  <Request type="Advertiser">
+    <Database action="add">
+      <Advertiser>
+        <Id>$advertiserId$</Id>
+        <Organization>$advertiserName$</Organization>
+        <ExternalUsers />
+        <BillingInformation>
+          <Method>
+            <Code>M</Code>
+          </Method>
+          <Address />
+          <City />
+          <State />
+          <!-- <State> -->
+          <!-- <Code>AD</Code> -->
+          <!-- </State> -->
+          <Country>
+            <Code>US</Code>
+          </Country>
+          <Zip />
+          <Email />
+        </BillingInformation>
+        <InternalQuickReport>short</InternalQuickReport>
+        <ExternalQuickReport>to-date</ExternalQuickReport>
+      </Advertiser>
+    </Database>
+  </Request>
+</AdXML>

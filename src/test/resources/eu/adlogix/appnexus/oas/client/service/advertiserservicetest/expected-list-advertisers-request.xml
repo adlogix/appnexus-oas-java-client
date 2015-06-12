@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Advertiser">
+    <Database action="list">
+      <SearchCriteria pageIndex="1">
+        <Id>%</Id>
+      </SearchCriteria>
+    </Database>
+  </Request>
+</AdXML>

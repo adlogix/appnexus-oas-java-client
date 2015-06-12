@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Advertiser>
+    <Id>TestAdvertiser_01</Id>
+    <Organization>AdvertiserTest</Organization>
+    <Notes/>
+    <ContactFirstName></ContactFirstName>
+    <ContactLastName></ContactLastName>
+    <ContactTitle></ContactTitle>
+    <Email/>
+    <Phone/>
+    <Fax/>
+    <ExternalUsers/>
+    <BillingInformation>
+      <Method>
+        <Code>M</Code>
+      </Method>
+      <Address/>
+      <City/>
+      <State>
+        <Code>AD:ANDORRALAVEL</Code>
+      </State>
+      <Country>
+        <Code>US</Code>
+      </Country>
+      <Zip/>
+      <Email/>
+    </BillingInformation>
+    <AdvertiserCategories/>
+    <InternalQuickReport>short</InternalQuickReport>
+    <ExternalQuickReport>to-date</ExternalQuickReport>
+    <Exclusions>
+      <SiteDomains/>
+    </Exclusions>
+    <WhoCreated>RCSAPI</WhoCreated>
+    <WhenCreated>06/10/2015 08:33:04</WhenCreated>
+    <WhoModified></WhoModified>
+    <WhenModified></WhenModified>
+  </Advertiser>
+</Response>
+</AdXML>

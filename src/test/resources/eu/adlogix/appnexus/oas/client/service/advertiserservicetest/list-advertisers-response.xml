@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Advertiser>Request OK.  Found 5 records.</Advertiser>
+  <List numberOfRows='5' pageIndex='1' pageSize='1000' totalNumberOfEntries='5'>
+    <Advertiser>
+      <Id>Advertiser_Test_1</Id>
+      <Organization/>
+      <ContactFirstName></ContactFirstName>
+      <ContactLastName></ContactLastName>
+      <Email/>
+    </Advertiser>
+    <Advertiser>
+      <Id>Advertiser_Test_2</Id>
+      <Organization>Advertiser_Test</Organization>
+      <ContactFirstName></ContactFirstName>
+      <ContactLastName></ContactLastName>
+      <Email/>
+    </Advertiser>
+    <Advertiser>
+      <Id>Advertiser_Test_3</Id>
+      <Organization></Organization>
+      <ContactFirstName></ContactFirstName>
+      <ContactLastName></ContactLastName>
+      <Email/>
+    </Advertiser>
+    <Advertiser>
+      <Id>Advertiser_Test_4</Id>
+      <Organization></Organization>
+      <ContactFirstName></ContactFirstName>
+      <ContactLastName></ContactLastName>
+      <Email/>
+    </Advertiser>
+    <Advertiser>
+      <Id>Advertiser_Test_5</Id>
+      <Organization></Organization>
+      <ContactFirstName></ContactFirstName>
+      <ContactLastName></ContactLastName>
+      <Email/>
+    </Advertiser>
+  </List>
+</Response>
+</AdXML>
