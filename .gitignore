@@ -5,3 +5,4 @@
 bin/
 conf/
 test-output/
+src/test/resources/eu/adlogix/appnexus/oas/certificate/
