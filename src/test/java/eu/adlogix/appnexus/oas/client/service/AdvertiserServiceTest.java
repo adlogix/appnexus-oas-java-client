@@ -11,9 +11,8 @@ import java.util.Properties;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
+import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
-import eu.adlogix.appnexus.oas.client.service.AdvertiserService;
-import eu.adlogix.appnexus.oas.client.service.XaxisApiService;
 import eu.adlogix.testutils.file.AdlTestFileUtils;
 import eu.adlogix.testutils.string.StringTestUtils;
 
@@ -106,12 +105,7 @@ public class AdvertiserServiceTest {
 	}
 
 	private Properties getTestCredentials() {
-		final Properties credentials = new Properties();
-		credentials.put("xaxis.host", "https://test");
-		credentials.put("xaxis.account", "x");
-		credentials.put("xaxis.user", "x");
-		credentials.put("xaxis.password", "x");
-		return credentials;
+		return TestCredentials.getTestCredentials();
 	}
 
 	private static String normalizeNewLinesToCurPlatform(String source) {
