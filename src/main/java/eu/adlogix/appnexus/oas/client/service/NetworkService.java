@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Function;
@@ -70,6 +71,10 @@ public class NetworkService extends AbstractXaxisService {
 	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final List<Site> allSites,
 			final DateTime lastModifiedDate) {
 
+		if (CollectionUtils.isEmpty(allSites)) {
+			throw new RuntimeException("Empty allSites parameter was passed. Expected a non empty site list");
+		}
+
 		final Map<String, Site> siteMapById = Maps.uniqueIndex(allSites, new Function<Site, String>() {
 			@Override
 			public String apply(Site site) {
@@ -111,4 +116,5 @@ public class NetworkService extends AbstractXaxisService {
 
 		return getPageListResponseElementHandler.getPages();
 	}
+
 }

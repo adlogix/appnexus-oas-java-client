@@ -9,11 +9,13 @@ import static org.testng.Assert.assertTrue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import javax.xml.rpc.ServiceException;
 
+import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
@@ -352,5 +354,66 @@ public class NetworkServiceTest {
 			}
 
 		}
+	}
+
+	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Empty allSites parameter was passed. Expected a non empty site list.*")
+	public void getAllPagesWithPositionsModifiedSinceDate_EmptySitesMapParameter_ThrowException()
+			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
+			ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		service.getAllPagesWithPositionsModifiedSinceDate(new ArrayList<Site>(), null);
+
+	}
+
+	@Test
+	public void getAllPagesWithPositionsModifiedSinceDate_WithPositionsAndLastModifiedParam_ReturnPagesAndPositions()
+			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
+			ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages-modifieddate.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		List<Site> sites = Lists.newArrayList();
+		sites.add(new Site("adsolutions", null));
+		sites.add(new Site("dada", "dada"));
+
+		DateTime lastModifiedDate = new DateTime(2014, 5, 10, 0, 0, 0, 0);
+		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(sites, lastModifiedDate);
+
+		assertEquals(pages.size(), 2);
+
+		Position rightPostion = new Position("Right");
+		Position topPostion = new Position("Top");
+		Position leftPostion = new Position("Left");
+
+		for (Page oasPage : pages) {
+			assertNotNull(oasPage.getUrl());
+			if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", oasPage.getSite().getId());
+				assertEquals(null, oasPage.getSite().getName());
+				assertEquals(oasPage.getPositions().size(), 2);
+				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
+			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", oasPage.getSite().getId());
+				assertEquals("dada", oasPage.getSite().getName());
+				assertEquals(oasPage.getPositions().size(), 2);
+				assertTrue(oasPage.getPositions().contains(rightPostion)
+						&& oasPage.getPositions().contains(leftPostion));
+			}
+		}
+
 	}
 }
