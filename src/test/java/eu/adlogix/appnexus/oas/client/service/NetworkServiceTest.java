@@ -147,8 +147,8 @@ public class NetworkServiceTest {
 
 	@Test
 	public void getAllPagesWithPositionsModifiedSinceDate_WithPositions_ReturnPagesAndPositions()
-			throws FileNotFoundException,
-			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
+			ServiceException {
 
 		XaxisApiService mockedApiService = mock(XaxisApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
