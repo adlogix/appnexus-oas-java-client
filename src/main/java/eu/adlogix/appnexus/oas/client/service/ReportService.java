@@ -3,14 +3,18 @@ package eu.adlogix.appnexus.oas.client.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
+import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
@@ -29,6 +33,10 @@ public class ReportService extends AbstractXaxisService {
 	private static final String CUSTOMREPORT_TAG = "CustomReport";
 
 	private final XmlRequestGenerator inventoryReportRequestGenerator = new XmlRequestGenerator("inventory-report");
+	private final XmlRequestGenerator campaignDetailDeliveryGenerator = new XmlRequestGenerator("read-campaign-live-delivery-report");
+
+	// private final XmlRequestGenerator trafficReportsRequestGenerator = new
+	// XmlRequestGenerator("read-campaigndelivery-positionatpage");
 
 	public List<PageAtPositionDeliveryInformationRow> getPageAtPositionDeliveryInformation(final DateTime startDate, final DateTime endDate) {
 
@@ -58,4 +66,33 @@ public class ReportService extends AbstractXaxisService {
 		return histoStats;
 	}
 
+	public List<CampaignDetailDeliveryHistoryRow> getCampaignDetailDeliveryHistoryRow(final String oasCampaignId,
+			final DateTime startDate, final DateTime endDate) {
+
+		@SuppressWarnings("serial")
+		final Map<String, Object> parameters = new HashMap<String, Object>() {
+			{
+				put("campaignId", oasCampaignId);
+				put("startDate", DATE_FORMATTER.print(startDate));
+				put("endDate", DATE_FORMATTER.print(endDate));
+			}
+		};
+
+		final String request = campaignDetailDeliveryGenerator.generateRequest(parameters);
+
+		final String response = performRequest(request);
+		final ResponseParser parser = new ResponseParser(response);
+
+		final List<CampaignDetailDeliveryHistoryRow> deliveryHistoryRows = Lists.newArrayList();
+
+		final String deliveryHistory = "//reportTable[@name='CampaignDetailDeliveryHistory']/row";
+		parser.forEachElement(deliveryHistory, new ResponseElementHandler() {
+
+			public final void processElement(final ResponseElement element) {
+				final CampaignDetailDeliveryHistoryRow row = new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime(element.getChild("Date")), Long.parseLong(element.getChild("Impressions")), Long.parseLong(element.getChild("Clickthrus")));
+				deliveryHistoryRows.add(row);
+			}
+		});
+		return deliveryHistoryRows;
+	}
 }

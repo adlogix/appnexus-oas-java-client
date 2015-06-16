@@ -1,0 +1,67 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+<BasicInventory>
+<html_general>
+  <content reportTitle='InventoryCampaign'>
+    <reportTable name='StandardHeader' title='AboutThisReport'>
+      <row>
+        <TimethattheReportwasRun><![CDATA[Thu Apr 30 10:11:00 CEST 2015]]></TimethattheReportwasRun>
+      </row>
+      <row>
+        <StartDate><![CDATA[03/23/2015]]></StartDate>
+      </row>
+      <row>
+        <EndDate><![CDATA[03/26/2015]]></EndDate>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailDeliveryToDate' title='CampaignDetailDeliveryToDate'/>
+    <reportTable name='CampaignDetailDeliveryHistory' title='CampaignDetailDeliveryHistory'>
+      <row>
+        <Date><![CDATA[2015-03-26]]></Date>
+        <Weekday><![CDATA[Thursday]]></Weekday>
+        <Impressions><![CDATA[211597]]></Impressions>
+        <Clickthrus><![CDATA[944]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.4461]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2015-03-25]]></Date>
+        <Weekday><![CDATA[Wednesday]]></Weekday>
+        <Impressions><![CDATA[222752]]></Impressions>
+        <Clickthrus><![CDATA[1146]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.5145]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2015-03-24]]></Date>
+        <Weekday><![CDATA[Tuesday]]></Weekday>
+        <Impressions><![CDATA[232027]]></Impressions>
+        <Clickthrus><![CDATA[1164]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.5017]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2015-03-23]]></Date>
+        <Weekday><![CDATA[Monday]]></Weekday>
+        <Impressions><![CDATA[240014]]></Impressions>
+        <Clickthrus><![CDATA[1456]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.6066]]></CTR>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailSchedule' title='CampaignDetailSchedule'/>
+    <reportTable name='CampaignDetailPrioritization' title='CampaignDetailPrioritization'/>
+    <reportTable name='CampaignDetailSchedule' title='CampaignDetailSchedule'/>
+    <reportTable name='CampaignOverviewDetailDeliveryToDate' title='CampaignOverviewDetailDeliveryToDate'/>
+    <reportTable name='CampaignDetailBookedAreas' title='CampaignDetailBookedAreas'>
+      <row>
+        <Pages><![CDATA[mrepubblica.it/home@Middle1,  mrepubblica.it/home@Top3]]></Pages>
+        <Sections><![CDATA[MRepubblica.Home.Masthead,  MRepubblica.Home.Rettangolo]]></Sections>
+        <Positions><![CDATA[Middle1,  Top3]]></Positions>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailDeliveryToDate' title='CampaignDetailDeliveryToDate'/>
+    <reportTable name='CampaignDetailBookedImpressions' title='CampaignDetailBookedImpressions'/>
+  </content>
+</html_general>
+</BasicInventory>
+</Response>
+</AdXML>

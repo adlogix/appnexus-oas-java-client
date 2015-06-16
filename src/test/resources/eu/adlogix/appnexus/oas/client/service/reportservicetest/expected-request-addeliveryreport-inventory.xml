@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Inventory">
+    <BasicInventory type="Campaign.Detail">
+      <Id>VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820</Id>
+      <StartDate>2015-03-23</StartDate>
+      <EndDate>2015-03-26</EndDate>
+      <Table>DetailDeliveryStatus</Table>
+      <Table>DetailOverview</Table>
+      <Table>DetailBookedImpressions</Table>
+    </BasicInventory>
+  </Request>
+</AdXML>

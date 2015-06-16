@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Inventory">
+    <BasicInventory type="Campaign.Detail">
+      <Id>$campaignId$</Id>
+      <StartDate>$startDate$</StartDate>
+      <EndDate>$endDate$</EndDate>
+      <Table>DetailDeliveryStatus</Table>
+      <Table>DetailOverview</Table>
+      <Table>DetailBookedImpressions</Table>
+    </BasicInventory>
+  </Request>
+</AdXML>

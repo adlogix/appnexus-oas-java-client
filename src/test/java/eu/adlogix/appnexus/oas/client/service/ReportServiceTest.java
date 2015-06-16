@@ -14,16 +14,21 @@ import java.util.Properties;
 import javax.xml.rpc.ServiceException;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
 import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
 import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
 
 public class ReportServiceTest {
+
+	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 
 	public final List<PageAtPositionDeliveryInformationRow> expectedHistoStats() {
 		List<PageAtPositionDeliveryInformationRow> expectedHistoStats = new ArrayList<PageAtPositionDeliveryInformationRow>();
@@ -64,15 +69,14 @@ public class ReportServiceTest {
 
 	@Test
 	public void getPageAtPositionDeliveryInformation_MultiplePage_CorrectlyExecutes() throws ServiceException,
-			FileNotFoundException, URISyntaxException,
-			IOException, AdlResourceNotFoundException {
+			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
 
 		XaxisApiService mockedApiService = mock(XaxisApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
-		final String expectedPageOneRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("inventory-report-page1-request-test.xml", ReportServiceTest.class));
-		final String mockedPageOneAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("inventory-report-page1-answer-test.xml", ReportServiceTest.class));
+		final String expectedPageOneRequest = fileToString("inventory-report-page1-request-test.xml");
+		final String mockedPageOneAnswer = fileToString("inventory-report-page1-answer-test.xml");
 		when(mockedApiService.callApi(expectedPageOneRequest, true)).thenReturn(mockedPageOneAnswer);
 
 		final String expectedPageTwoRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("inventory-report-page2-request-test.xml", ReportServiceTest.class));
@@ -107,5 +111,30 @@ public class ReportServiceTest {
 		assertEquals(actual.getPositionName(), expected.getPositionName(), "issue with positionName for " + msg);
 		assertEquals(actual.getImpressions(), expected.getImpressions(), "issue with impressions for " + msg);
 		assertEquals(actual.getClicks(), expected.getClicks(), "issue with clicks for " + msg);
+	}
+
+	@Test
+	public void getCampaignDetailDeliveryHistoryRow__CorrectlyExecutes() throws ServiceException,
+			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedLiveDeliRequest = fileToString("expected-request-addeliveryreport-inventory.xml");
+		final String mockedLiveDeliAnswer = fileToString("expected-response-addeliveryreport-inventory.xml");
+		when(mockedApiService.callApi(expectedLiveDeliRequest, false)).thenReturn(mockedLiveDeliAnswer);
+
+		List<CampaignDetailDeliveryHistoryRow> rows = service.getCampaignDetailDeliveryHistoryRow("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"), DATE_FORMATTER.parseDateTime("2015-03-26"));
+
+		assertEquals(rows.get(0), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-26"), 211597l, 944l));
+		assertEquals(rows.get(1), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-25"), 222752l, 1146l));
+		assertEquals(rows.get(2), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-24"), 232027l, 1164l));
+		assertEquals(rows.get(3), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-23"), 240014l, 1456l));
+
+	}
+
+	private String fileToString(String fileName) throws URISyntaxException, FileNotFoundException, IOException,
+			AdlResourceNotFoundException {
+		return StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString(fileName, ReportServiceTest.class));
 	}
 }
