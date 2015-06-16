@@ -9,6 +9,9 @@ import java.util.Properties;
 
 import org.joda.time.DateTime;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
+
 import eu.adlogix.appnexus.oas.client.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Page;
@@ -55,16 +58,24 @@ public class NetworkService extends AbstractXaxisService {
 	 * Retrieve list of pages with positions which are modified since the given
 	 * last modified date
 	 * 
-	 * @param siteMapById
-	 *            Map which contains all the OAS sites mapped against their IDs
+	 * @param allSites
+	 *            {@link List} which contains all the OAS {@link Site}s mapped
+	 *            against their IDs
 	 * 
 	 * @param lastModifiedDate
 	 *            Used to retrieve all modifications since this given date. If
 	 *            null, everything will be retrieved.
 	 * @return
 	 */
-	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final Map<String, Site> siteMapById,
+	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final List<Site> allSites,
 			final DateTime lastModifiedDate) {
+
+		final Map<String, Site> siteMapById = Maps.uniqueIndex(allSites, new Function<Site, String>() {
+			@Override
+			public String apply(Site site) {
+				return site.getId();
+			}
+		});
 
 		return getAllPagesWithPositionsModifiedSinceDate(new Site.SiteIdMapBackedBuilder(siteMapById), lastModifiedDate);
 	}
@@ -72,7 +83,7 @@ public class NetworkService extends AbstractXaxisService {
 	/**
 	 * Retrieve list of pages with positions which are modified since the given
 	 * last modified date. No {@link Site} details are loaded since
-	 * {@link Page#getSite()} only contains ID
+	 * {@link Page#getSite()} only contains ID and the same value to the name
 	 * 
 	 * @param lastModifiedDate
 	 *            Used to retrieve all modifications since this given date. If
