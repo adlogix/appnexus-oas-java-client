@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="CustomReport">
+    <CustomReport>
+      <Table>Api.Account.Base.T1000.01</Table>
+      <Parameters>
+        <Parameter>
+          <Name>StartDate</Name>
+          <Value>2011-04-01</Value>
+        </Parameter>
+        <Parameter>
+          <Name>EndDate</Name>
+          <Value>2011-05-10</Value>
+        </Parameter>
+        <Parameter>
+          <Name>Campaign</Name>
+          <Value>%</Value>
+        </Parameter>
+        <Parameter>
+          <Name>Page</Name>
+          <Value>%</Value>
+        </Parameter>
+        <Parameter>
+          <Name>Position</Name>
+          <Value>%</Value>
+        </Parameter>
+        <Parameter>
+          <Name>PageIndex</Name>
+          <Value>2</Value>
+        </Parameter>
+      </Parameters>
+    </CustomReport>
+  </Request>
+</AdXML>

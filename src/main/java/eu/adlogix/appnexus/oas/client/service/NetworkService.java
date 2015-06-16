@@ -111,7 +111,7 @@ public class NetworkService extends AbstractXaxisService {
 
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		if (lastModifiedDate != null) {
-			parameters.put("lastModifiedDate", lastModifiedDate.toString("yyyy-MM-dd"));
+			parameters.put("lastModifiedDate", lastModifiedDate.toString(OAS_DATE_FORMAT));
 		}
 
 		// The siteBuilder will inject the Site when Pages are created based on
@@ -138,7 +138,7 @@ public class NetworkService extends AbstractXaxisService {
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		if (lastModifiedDate != null) {
-			parameters.put("lastModifiedDate", lastModifiedDate.toString("yyyy-MM-dd"));
+			parameters.put("lastModifiedDate", lastModifiedDate.toString(OAS_DATE_FORMAT));
 		}
 
 		ResponseElementHandler getSectionListResponseElementHandler = new ResponseElementHandler() {

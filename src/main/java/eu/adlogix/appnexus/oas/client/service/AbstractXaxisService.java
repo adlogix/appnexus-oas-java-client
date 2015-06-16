@@ -27,6 +27,8 @@ public class AbstractXaxisService {
 	private final PushLevel pushLevel;
 
 	private static final Logger logger = LogUtils.getLogger(AbstractXaxisService.class);
+
+	protected static final String OAS_DATE_FORMAT = "yyyy-MM-dd";
 	private XaxisApiService xaxisApiService;
 	private CertificateManager certificateManager;
 

@@ -51,8 +51,6 @@ public final class ResponseParser {
 
 	}
 
-	public static final String CUSTOMREPORT_TAG = "CustomReport";
-
 	private final Document responseDocument;
 
 	public ResponseParser(final String response) {

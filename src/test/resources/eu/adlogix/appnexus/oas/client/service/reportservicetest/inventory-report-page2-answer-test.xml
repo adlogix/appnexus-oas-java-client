@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <CustomReport numberOfRows='3' pageIndex='2' pageSize='6' totalNumberOfEntries='9'>
+    <html_general>
+      <content reportTitle='Api.Account.Base.T1000.01'>
+        <reportTable name='Api.Account.Base.T1000.01' title='PageAtPositionDeliveryInformation'>
+          <row>
+            <Date><![CDATA[2011-03-03]]></Date>
+            <Page><![CDATA[express/ECONOMIE_HP]]></Page>
+            <Position><![CDATA[Right2]]></Position>
+            <Impressions><![CDATA[1300]]></Impressions>
+            <Clicks><![CDATA[0]]></Clicks>
+          </row>
+		  <row>
+            <Date><![CDATA[2011-03-01]]></Date>
+            <Page><![CDATA[corriere.it/tv]]></Page>
+            <Position><![CDATA[x85]]></Position>
+            <Impressions><![CDATA[0]]></Impressions>
+            <Clicks><![CDATA[3039]]></Clicks>
+          </row>
+          <row>
+            <Date><![CDATA[2011-03-01]]></Date>
+            <Page><![CDATA[corriere.it/tv]]></Page>
+            <Position><![CDATA[x96]]></Position>
+            <Impressions><![CDATA[166551]]></Impressions>
+            <Clicks><![CDATA[0]]></Clicks>
+          </row>
+        </reportTable>
+      </content>
+    </html_general>
+  </CustomReport>
+</Response>
+</AdXML>
