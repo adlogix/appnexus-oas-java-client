@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Section">
+    <Database action="list">
+      <SearchCriteria pageIndex="1">
+        <Id>%</Id>
+        <WhenModified condition="GE">2014-05-10</WhenModified>
+      </SearchCriteria>
+    </Database>
+  </Request>
+</AdXML>

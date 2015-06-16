@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Section">
+    <Database action="list">
+      <SearchCriteria pageIndex="$pageIndex$">
+        <Id>%</Id>
+$if(lastModifiedDate)$        <WhenModified condition="GE">$lastModifiedDate$</WhenModified>$endif$
+      </SearchCriteria>
+    </Database>
+  </Request>
+</AdXML>

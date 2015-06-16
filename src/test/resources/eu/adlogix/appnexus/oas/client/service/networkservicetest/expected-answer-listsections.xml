@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Section>Request OK.  Found 2 records.</Section>
+  <List numberOfRows='2' pageIndex='1' pageSize='1000' totalNumberOfEntries='2'>
+    <Section>
+      <Id>383section</Id>
+    </Section>
+    <Section>
+      <Id>Finegil.Centro.Necro</Id>
+    </Section>
+  </List>
+</Response>
+</AdXML>

@@ -23,6 +23,7 @@ import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
+import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
@@ -81,24 +82,24 @@ public class NetworkServiceTest {
 
 		assertEquals(pages.size(), 4);
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.aperol.com")) {
-				assertEquals("Aperol", oasPage.getSite().getId());
-				assertEquals("aperol", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.cartest.it")) {
-				assertEquals("cartest.it", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.aperol.com")) {
+				assertEquals("Aperol", Page.getSite().getId());
+				assertEquals("aperol", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.cartest.it")) {
+				assertEquals("cartest.it", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
 
@@ -121,24 +122,24 @@ public class NetworkServiceTest {
 
 		assertEquals(pages.size(), 4);
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals("adsolutions", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.aperol.com")) {
-				assertEquals("Aperol", oasPage.getSite().getId());
-				assertEquals("Aperol", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.cartest.it")) {
-				assertEquals("cartest.it", oasPage.getSite().getId());
-				assertEquals("cartest.it", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals("adsolutions", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.aperol.com")) {
+				assertEquals("Aperol", Page.getSite().getId());
+				assertEquals("Aperol", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.cartest.it")) {
+				assertEquals("cartest.it", Page.getSite().getId());
+				assertEquals("cartest.it", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
 
@@ -169,19 +170,18 @@ public class NetworkServiceTest {
 		Position topPostion = new Position("Top");
 		Position leftPostion = new Position("Left");
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion)
-						&& oasPage.getPositions().contains(leftPostion));
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
 	}
@@ -207,19 +207,18 @@ public class NetworkServiceTest {
 		Position topPostion = new Position("Top");
 		Position leftPostion = new Position("Left");
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals("adsolutions", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion)
-						&& oasPage.getPositions().contains(leftPostion));
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals("adsolutions", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
 	}
@@ -252,41 +251,39 @@ public class NetworkServiceTest {
 		Position leftPostion = new Position("Left");
 		Position topRightPostion = new Position("TopRight");
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 4);
-				assertTrue(oasPage.getPositions().contains(leftPostion)
-						&& oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion)
-						&& oasPage.getPositions().contains(topRightPostion));
-			} else if (oasPage.getUrl().equals("www.dada.it/sport")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 4);
-				assertTrue(oasPage.getPositions().contains(leftPostion)
-						&& oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion)
-						&& oasPage.getPositions().contains(topRightPostion));
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 4);
+				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
+						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
+			} else if (Page.getUrl().equals("www.dada.it/sport")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 4);
+				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
+						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 
-			} else if (oasPage.getUrl().equals("www.aperol.com")) {
-				assertEquals("Aperol", oasPage.getSite().getId());
-				assertEquals("aperol", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.cartest.it")) {
-				assertEquals("cartest.it", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.aperol.com")) {
+				assertEquals("Aperol", Page.getSite().getId());
+				assertEquals("aperol", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.cartest.it")) {
+				assertEquals("cartest.it", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
 
 			}
 
@@ -315,41 +312,39 @@ public class NetworkServiceTest {
 		Position leftPostion = new Position("Left");
 		Position topRightPostion = new Position("TopRight");
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals("adsolutions", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals("adsolutions", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals("adsolutions", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals("adsolutions", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 4);
-				assertTrue(oasPage.getPositions().contains(leftPostion)
-						&& oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion)
-						&& oasPage.getPositions().contains(topRightPostion));
-			} else if (oasPage.getUrl().equals("www.dada.it/sport")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 4);
-				assertTrue(oasPage.getPositions().contains(leftPostion)
-						&& oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion)
-						&& oasPage.getPositions().contains(topRightPostion));
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 4);
+				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
+						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
+			} else if (Page.getUrl().equals("www.dada.it/sport")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 4);
+				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
+						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 
-			} else if (oasPage.getUrl().equals("www.aperol.com")) {
-				assertEquals("Aperol", oasPage.getSite().getId());
-				assertEquals("Aperol", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
-			} else if (oasPage.getUrl().equals("www.cartest.it")) {
-				assertEquals("cartest.it", oasPage.getSite().getId());
-				assertEquals("cartest.it", oasPage.getSite().getName());
-				assertTrue(oasPage.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.aperol.com")) {
+				assertEquals("Aperol", Page.getSite().getId());
+				assertEquals("Aperol", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
+			} else if (Page.getUrl().equals("www.cartest.it")) {
+				assertEquals("cartest.it", Page.getSite().getId());
+				assertEquals("cartest.it", Page.getSite().getName());
+				assertTrue(Page.getPositions().isEmpty());
 
 			}
 
@@ -399,21 +394,209 @@ public class NetworkServiceTest {
 		Position topPostion = new Position("Top");
 		Position leftPostion = new Position("Left");
 
-		for (Page oasPage : pages) {
-			assertNotNull(oasPage.getUrl());
-			if (oasPage.getUrl().equals("www.adsolutions.com/adservering")) {
-				assertEquals("adsolutions", oasPage.getSite().getId());
-				assertEquals(null, oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion) && oasPage.getPositions().contains(topPostion));
-			} else if (oasPage.getUrl().equals("www.dada.it/female/Magazine")) {
-				assertEquals("dada", oasPage.getSite().getId());
-				assertEquals("dada", oasPage.getSite().getName());
-				assertEquals(oasPage.getPositions().size(), 2);
-				assertTrue(oasPage.getPositions().contains(rightPostion)
-						&& oasPage.getPositions().contains(leftPostion));
+		for (Page Page : pages) {
+			assertNotNull(Page.getUrl());
+			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+				assertEquals("adsolutions", Page.getSite().getId());
+				assertEquals(null, Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+				assertEquals("dada", Page.getSite().getId());
+				assertEquals("dada", Page.getSite().getName());
+				assertEquals(Page.getPositions().size(), 2);
+				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
+
+	}
+
+	@Test
+	public void readSection_WithSinglePage_ReturnSectionWithSinglePage() throws FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		Section section = service.readSection("Finegil.Centro.Necro");
+
+		assertEquals(section.getId(), "Finegil.Centro.Necro");
+
+		List<Page> list = section.getPages();
+		assertEquals(list.size(), 1);
+		Page actualPage = list.get(0);
+		assertEquals(actualPage.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
+		assertEquals(actualPage.getPositions().size(), 1);
+		assertEquals(actualPage.getPositions().get(0).getName(), "x96");
+
+	}
+
+	@Test
+	public void readSection_WithSinglePageAndNoPositions_ReturnSectionWithSinglePageWithoutPositions()
+			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
+			ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-nopositions.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		Section section = service.readSection("Finegil.Centro.Necro");
+
+		assertEquals(section.getId(), "Finegil.Centro.Necro");
+
+		List<Page> list = section.getPages();
+		assertEquals(list.size(), 1);
+		Page actualPage = list.get(0);
+		assertEquals(actualPage.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
+		assertTrue(actualPage.getPositions().isEmpty());
+
+	}
+
+	@Test
+	public void readSection_WithNoPages_ReturnSectionOnly() throws FileNotFoundException, URISyntaxException,
+			IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-nopages.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		Section section = service.readSection("Finegil.Centro.Necro");
+
+		assertEquals(section.getId(), "Finegil.Centro.Necro");
+
+		assertTrue(section.getPages().isEmpty());
+
+	}
+
+	@Test
+	public void readSection_WithMultiplePages_ReturnSectionWithMultiplePages() throws FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-multiplepages.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		Section section = service.readSection("Finegil.Centro.Necro");
+
+		assertEquals(section.getId(), "Finegil.Centro.Necro");
+
+		List<Page> pages = section.getPages();
+		assertEquals(pages.size(), 5);
+
+		Page page1 = pages.get(0);
+		assertNotNull(page1.getUrl());
+		assertEquals(page1.getPositions().size(), 1);
+
+		Page page2 = pages.get(1);
+		assertNotNull(page2.getUrl());
+		assertTrue(page2.getPositions().isEmpty());
+
+		Page page3 = pages.get(2);
+		assertNotNull(page3.getUrl());
+		assertTrue(page3.getPositions().isEmpty());
+
+		Page page4 = pages.get(3);
+		assertNotNull(page4.getUrl());
+		assertEquals(page4.getPositions().size(), 2);
+
+		Page page5 = pages.get(4);
+		assertNotNull(page5.getUrl());
+		assertTrue(page5.getPositions().isEmpty());
+
+	}
+
+	@Test
+	public void getSectionList_WithoutLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listsections.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		final String expectedSectionRequest1 = (AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer1 = (AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
+
+		final String expectedSectionRequest2 = (AdlTestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer2 = (AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
+
+		List<Section> sections = service.getSectionList(null);
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertEquals(section2.getPages().size(), 1);
+		Page section2Page = section2.getPages().get(0);
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
+		assertEquals(section2Page.getPositions().size(), 1);
+		Position section2PagePosition = section2Page.getPositions().get(0);
+		assertEquals(section2PagePosition.getName(), "x96");
+
+	}
+
+	@Test
+	public void getSectionList_WithLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listsections-modifieddate.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		final String expectedSectionRequest1 = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer1 = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
+
+		final String expectedSectionRequest2 = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer2 = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
+
+		List<Section> sections = service.getSectionList(new DateTime(2014, 5, 10, 0, 0, 0, 0));
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertEquals(section2.getPages().size(), 1);
+		Page section2Page = section2.getPages().get(0);
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
+		assertEquals(section2Page.getPositions().size(), 1);
+		Position section2PagePosition = section2Page.getPositions().get(0);
+		assertEquals(section2PagePosition.getName(), "x96");
 
 	}
 }

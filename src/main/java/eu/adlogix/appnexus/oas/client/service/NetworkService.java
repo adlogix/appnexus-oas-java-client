@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Function;
@@ -16,7 +17,11 @@ import com.google.common.collect.Maps;
 import eu.adlogix.appnexus.oas.client.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Page;
+import eu.adlogix.appnexus.oas.client.domain.Position;
+import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
+import eu.adlogix.appnexus.oas.client.util.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
@@ -24,8 +29,9 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 public class NetworkService extends AbstractXaxisService {
 
 	final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
-
 	final XmlRequestGenerator getPageListRequestGenerator = new XmlRequestGenerator("list-pages");
+	final XmlRequestGenerator getSectionListRequestGenerator = new XmlRequestGenerator("list-sections");
+	final XmlRequestGenerator readSectionRequestGenerator = new XmlRequestGenerator("read-section.xml");
 
 	protected NetworkService(Properties credentials) {
 		super(credentials);
@@ -117,4 +123,79 @@ public class NetworkService extends AbstractXaxisService {
 		return getPageListResponseElementHandler.getPages();
 	}
 
+	/**
+	 * Retrieve list of sections that are modified since the given last modified
+	 * date
+	 * 
+	 * @param lastModifiedDate
+	 *            Used to retrieve all modifications since this given date. If
+	 *            null, everything will be retrieved.
+	 * @return
+	 */
+	public List<Section> getSectionList(DateTime lastModifiedDate) {
+
+		final List<Section> result = new ArrayList<Section>();
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		if (lastModifiedDate != null) {
+			parameters.put("lastModifiedDate", lastModifiedDate.toString("yyyy-MM-dd"));
+		}
+
+		ResponseElementHandler getSectionListResponseElementHandler = new ResponseElementHandler() {
+			public final void processElement(final ResponseElement element) {
+				final String id = element.getChild("Id");
+				final Section section = readSection(id);
+				result.add(section);
+			}
+		};
+
+		performPagedRequest(getSectionListRequestGenerator, parameters, "List", "//List/Section", getSectionListResponseElementHandler);
+
+		return Collections.unmodifiableList(result);
+	}
+
+	/**
+	 * Retrieve a single section by id
+	 * 
+	 * @param sectionId
+	 *            OAS ID of the section that needs to be retrieved
+	 * @return
+	 */
+	public Section readSection(final String sectionId) {
+
+		@SuppressWarnings("serial")
+		final String readSectionXmlRequest = this.readSectionRequestGenerator.generateRequest(new HashMap<String, Object>() {
+			{
+				put("sectionId", sectionId);
+			}
+		});
+
+		final String readSectionXmlResponse = performRequest(readSectionXmlRequest, true);
+		final ResponseParser parser = new ResponseParser(readSectionXmlResponse);
+
+		String secId = parser.getTrimmedElement("//Section/Id");
+		Section oasSection = new Section(secId);
+
+		List<String> pageUrls = parser.getTrimmedElementList("//Section/Pages/Url");
+
+		final Map<String, Page> mapPositionsPerPage = new HashMap<String, Page>();
+
+		for (String url : pageUrls) {
+
+			String pageUrl = OasPageUrlParser.getPageUrl(url);
+			String position = OasPageUrlParser.getPosition(url);
+
+			if (!mapPositionsPerPage.containsKey(pageUrl)) {
+				mapPositionsPerPage.put(pageUrl, new Page(pageUrl));
+			}
+			if (!StringUtils.isEmpty(position)) {
+				Position oasPosition = new Position(position);
+				mapPositionsPerPage.get(pageUrl).addPosition(oasPosition);
+			}
+		}
+
+		oasSection.setPages(new ArrayList<Page>(mapPositionsPerPage.values()));
+
+		return oasSection;
+	}
 }
