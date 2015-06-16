@@ -1,4 +1,4 @@
-package eu.adlogix.testutils.file;
+package eu.adlogix.appnexus.oas.utils.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +8,8 @@ import java.net.URISyntaxException;
 
 import org.apache.commons.io.IOUtils;
 
-import eu.adlogix.utils.AdlFileUtils;
-import eu.adlogix.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.utils.AdlFileUtils;
+import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 
 public class AdlTestFileUtils {
 

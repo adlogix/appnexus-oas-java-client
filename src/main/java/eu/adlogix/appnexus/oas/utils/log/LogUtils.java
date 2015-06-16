@@ -1,4 +1,4 @@
-package eu.adlogix.utils.log;
+package eu.adlogix.appnexus.oas.utils.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

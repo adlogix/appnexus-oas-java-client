@@ -1,4 +1,4 @@
-package eu.adlogix.testutils.string;
+package eu.adlogix.appnexus.oas.utils.string;
 
 public class StringTestUtils {
 

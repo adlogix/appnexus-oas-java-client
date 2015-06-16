@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 import org.slf4j.Logger;
 
-import eu.adlogix.utils.log.LogUtils;
+import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 @AllArgsConstructor
 public class XaxisApiService {

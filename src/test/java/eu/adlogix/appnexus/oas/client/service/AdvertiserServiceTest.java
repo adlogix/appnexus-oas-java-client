@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
-import eu.adlogix.testutils.file.AdlTestFileUtils;
-import eu.adlogix.testutils.string.StringTestUtils;
+import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
+import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
 
 public class AdvertiserServiceTest {
 

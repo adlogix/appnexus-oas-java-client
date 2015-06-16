@@ -1,4 +1,4 @@
-package eu.adlogix.utils.file;
+package eu.adlogix.appnexus.oas.utils.file;
 
 public class AdlResourceNotFoundException extends Exception {
 

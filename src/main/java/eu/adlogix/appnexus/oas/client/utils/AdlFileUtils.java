@@ -1,4 +1,4 @@
-package eu.adlogix.utils;
+package eu.adlogix.appnexus.oas.client.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-import eu.adlogix.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 
 public class AdlFileUtils {
 

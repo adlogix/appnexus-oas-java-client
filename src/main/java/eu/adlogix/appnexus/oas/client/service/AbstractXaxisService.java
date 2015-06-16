@@ -13,7 +13,7 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseObjectHandler;
-import eu.adlogix.utils.log.LogUtils;
+import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 
 public class AbstractXaxisService {

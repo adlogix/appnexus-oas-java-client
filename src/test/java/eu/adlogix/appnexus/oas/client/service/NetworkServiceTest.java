@@ -22,9 +22,9 @@ import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Site;
-import eu.adlogix.testutils.file.AdlTestFileUtils;
-import eu.adlogix.testutils.string.StringTestUtils;
-import eu.adlogix.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
+import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
 
 public class NetworkServiceTest {
 	@Test
