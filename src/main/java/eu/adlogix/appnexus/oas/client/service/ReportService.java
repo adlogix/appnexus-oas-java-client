@@ -1,6 +1,6 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkEmpty;
+import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class ReportService extends AbstractXaxisService {
 	public CampaignDetail getCampaignDetail(final String oasCampaignId,
 			final DateTime startDate, final DateTime endDate) {
 
-		checkEmpty(oasCampaignId, "oasCampaignId");
+		checkNotEmpty(oasCampaignId, "oasCampaignId");
 		checkNotNull(startDate, "startDate");
 		checkNotNull(endDate, "endDate");
 
