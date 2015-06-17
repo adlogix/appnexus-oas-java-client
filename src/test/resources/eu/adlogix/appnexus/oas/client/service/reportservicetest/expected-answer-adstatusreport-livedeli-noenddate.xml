@@ -1,0 +1,195 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+<BasicInventory>
+<html_general>
+  <content reportTitle='InventoryCampaign'>
+    <reportTable name='StandardHeader' title='AboutThisReport'>
+      <row>
+        <TimethattheReportwasRun><![CDATA[Fri Mar 02 15:00:41 CET 2012]]></TimethattheReportwasRun>
+      </row>
+      <row>
+        <StartDate><![CDATA[02/22/2012]]></StartDate>
+      </row>
+      <row>
+        <EndDate><![CDATA[03/04/2012]]></EndDate>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailDeliveryToDate' title='CampaignDetailDeliveryToDate'>
+      <row>
+        <Reach><![CDATA[OPEN]]></Reach>
+        <TodayTarget><![CDATA[0]]></TodayTarget>
+        <Livedaysremain><![CDATA[0]]></Livedaysremain>
+        <ImpressionsBooked><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsDeliv><![CDATA[813]]></ImpressionsDeliv>
+        <ImpressionsCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ImpressionsCmpl>
+        <ImpressionsOvrn><![CDATA[0]]></ImpressionsOvrn>
+        <YesterdayAverageDailyTarget><![CDATA[0]]></YesterdayAverageDailyTarget>
+        <YesterdayDeliv><![CDATA[14]]></YesterdayDeliv>
+        <ClickthrusBooked><![CDATA[0]]></ClickthrusBooked>
+        <ClickthrusDeliv><![CDATA[34]]></ClickthrusDeliv>
+        <ClickthrusCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ClickthrusCmpl>
+        <ClickthrusOvrn><![CDATA[0]]></ClickthrusOvrn>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailDeliveryHistory' title='CampaignDetailDeliveryHistory'>
+      <row>
+        <Date><![CDATA[2012-03-02]]></Date>
+        <Weekday><![CDATA[Friday]]></Weekday>
+        <Impressions><![CDATA[3]]></Impressions>
+        <Clickthrus><![CDATA[0]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-03-01]]></Date>
+        <Weekday><![CDATA[Thursday]]></Weekday>
+        <Impressions><![CDATA[14]]></Impressions>
+        <Clickthrus><![CDATA[0]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-29]]></Date>
+        <Weekday><![CDATA[Wednesday]]></Weekday>
+        <Impressions><![CDATA[214]]></Impressions>
+        <Clickthrus><![CDATA[3]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[1.4019]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-28]]></Date>
+        <Weekday><![CDATA[Tuesday]]></Weekday>
+        <Impressions><![CDATA[394]]></Impressions>
+        <Clickthrus><![CDATA[20]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[5.0761]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-27]]></Date>
+        <Weekday><![CDATA[Monday]]></Weekday>
+        <Impressions><![CDATA[139]]></Impressions>
+        <Clickthrus><![CDATA[11]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[7.9137]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-24]]></Date>
+        <Weekday><![CDATA[Friday]]></Weekday>
+        <Impressions><![CDATA[4]]></Impressions>
+        <Clickthrus><![CDATA[0]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-23]]></Date>
+        <Weekday><![CDATA[Thursday]]></Weekday>
+        <Impressions><![CDATA[1]]></Impressions>
+        <Clickthrus><![CDATA[0]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <Date><![CDATA[2012-02-22]]></Date>
+        <Weekday><![CDATA[Wednesday]]></Weekday>
+        <Impressions><![CDATA[47]]></Impressions>
+        <Clickthrus><![CDATA[0]]></Clickthrus>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailSchedule' title='CampaignDetailSchedule'>
+      <row>
+        <Advertiser><![CDATA[HAVASMEDIAFRANCE_HAVA1P]]></Advertiser>
+        <Status><![CDATA[Live]]></Status>
+        <Reach><![CDATA[OPEN]]></Reach>
+        <Compl><![CDATA[SOON]]></Compl>
+        <CampaignStart><![CDATA[2012-02-22]]></CampaignStart>
+        <CampaignEnd/>
+        <DayofWeek><![CDATA[MTWRFSS]]></DayofWeek>
+        <Hoursperday><![CDATA[24]]></Hoursperday>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailPrioritization' title='CampaignDetailPrioritization'>
+      <row>
+        <PriorityLevel><![CDATA[20]]></PriorityLevel>
+        <Weight><![CDATA[99999999]]></Weight>
+        <CPM><![CDATA[94.7508]]></CPM>
+        <CPC><![CDATA[0]]></CPC>
+        <YieldManager><![CDATA[No]]></YieldManager>
+        <Overrun><![CDATA[0]]></Overrun>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailSchedule' title='CampaignDetailSchedule'>
+      <row>
+        <Advertiser><![CDATA[HAVASMEDIAFRANCE_HAVA1P]]></Advertiser>
+        <Status><![CDATA[Live]]></Status>
+        <Reach><![CDATA[OPEN]]></Reach>
+        <Compl><![CDATA[SOON]]></Compl>
+        <CampaignStart><![CDATA[2012-02-22]]></CampaignStart>
+        <CampaignEnd/>
+        <DayofWeek><![CDATA[MTWRFSS]]></DayofWeek>
+        <Hoursperday><![CDATA[24]]></Hoursperday>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignOverviewDetailDeliveryToDate' title='CampaignOverviewDetailDeliveryToDate'>
+      <row>
+        <TodayTarget><![CDATA[0]]></TodayTarget>
+        <Livedaysremain><![CDATA[0]]></Livedaysremain>
+        <ImpressionsBooked><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsDeliv><![CDATA[813]]></ImpressionsDeliv>
+        <ImpressionsCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ImpressionsCmpl>
+        <ImpressionsOvrn><![CDATA[0]]></ImpressionsOvrn>
+        <YesterdayAverageDailyTarget><![CDATA[0]]></YesterdayAverageDailyTarget>
+        <YesterdayDeliv><![CDATA[14]]></YesterdayDeliv>
+        <ClickthrusBooked><![CDATA[0]]></ClickthrusBooked>
+        <ClickthrusDeliv><![CDATA[34]]></ClickthrusDeliv>
+        <ClickthrusCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ClickthrusCmpl>
+        <ClickthrusOvrn><![CDATA[0]]></ClickthrusOvrn>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailBookedAreas' title='CampaignDetailBookedAreas'>
+      <row>
+        <Pages><![CDATA[express/TEST1]]></Pages>
+        <Sections><![CDATA[Z_TEST]]></Sections>
+        <Positions><![CDATA[Frame1,  Middle,  Top,  x10]]></Positions>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailDeliveryToDate' title='CampaignDetailDeliveryToDate'>
+      <row>
+        <Reach><![CDATA[OPEN]]></Reach>
+        <TodayTarget><![CDATA[0]]></TodayTarget>
+        <Livedaysremain><![CDATA[0]]></Livedaysremain>
+        <ImpressionsBooked><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsDeliv><![CDATA[813]]></ImpressionsDeliv>
+        <ImpressionsCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ImpressionsCmpl>
+        <ImpressionsOvrn><![CDATA[0]]></ImpressionsOvrn>
+        <YesterdayAverageDailyTarget><![CDATA[0]]></YesterdayAverageDailyTarget>
+        <YesterdayDeliv><![CDATA[14]]></YesterdayDeliv>
+        <ClickthrusBooked><![CDATA[0]]></ClickthrusBooked>
+        <ClickthrusDeliv><![CDATA[34]]></ClickthrusDeliv>
+        <ClickthrusCmpl dataFormat='2' dataSuffix='%'><![CDATA[0]]></ClickthrusCmpl>
+        <ClickthrusOvrn><![CDATA[0]]></ClickthrusOvrn>
+      </row>
+    </reportTable>
+    <reportTable name='CampaignDetailBookedImpressions' title='CampaignDetailBookedImpressions'>
+      <row>
+        <Date><![CDATA[2012-03-02]]></Date>
+        <Weekday><![CDATA[Friday]]></Weekday>
+        <ActiveDay><![CDATA[1]]></ActiveDay>
+        <ImpressionsBooked dataFormat='0'><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsCumulative dataFormat='0'><![CDATA[813]]></ImpressionsCumulative>
+      </row>
+      <row>
+        <Date><![CDATA[2012-03-03]]></Date>
+        <Weekday><![CDATA[Saturday]]></Weekday>
+        <ActiveDay><![CDATA[1]]></ActiveDay>
+        <ImpressionsBooked dataFormat='0'><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsCumulative dataFormat='0'><![CDATA[813]]></ImpressionsCumulative>
+      </row>
+      <row>
+        <Date><![CDATA[2012-03-04]]></Date>
+        <Weekday><![CDATA[Sunday]]></Weekday>
+        <ActiveDay><![CDATA[1]]></ActiveDay>
+        <ImpressionsBooked dataFormat='0'><![CDATA[0]]></ImpressionsBooked>
+        <ImpressionsCumulative dataFormat='0'><![CDATA[813]]></ImpressionsCumulative>
+      </row>
+    </reportTable>
+  </content>
+</html_general>
+</BasicInventory>
+</Response>
+</AdXML>

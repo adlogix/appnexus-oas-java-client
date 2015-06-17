@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
 import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
@@ -114,7 +115,8 @@ public class ReportServiceTest {
 	}
 
 	@Test
-	public void getCampaignDetailDeliveryHistoryRow__CorrectlyExecutes() throws ServiceException,
+	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRowsOnlyHistoryInResponse_CorrectlyExecutes()
+			throws ServiceException,
 			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
 		XaxisApiService mockedApiService = mock(XaxisApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
@@ -124,7 +126,9 @@ public class ReportServiceTest {
 		final String mockedLiveDeliAnswer = fileToString("expected-response-addeliveryreport-inventory.xml");
 		when(mockedApiService.callApi(expectedLiveDeliRequest, false)).thenReturn(mockedLiveDeliAnswer);
 
-		List<CampaignDetailDeliveryHistoryRow> rows = service.getCampaignDetailDeliveryHistoryRow("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"), DATE_FORMATTER.parseDateTime("2015-03-26"));
+		CampaignDetail detail = service.getCampaignDetail("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"), DATE_FORMATTER.parseDateTime("2015-03-26"));
+
+		List<CampaignDetailDeliveryHistoryRow> rows = detail.getDeliveryHistoryRows();
 
 		assertEquals(rows.get(0), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-26"), 211597l, 944l));
 		assertEquals(rows.get(1), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2015-03-25"), 222752l, 1146l));
@@ -136,5 +140,42 @@ public class ReportServiceTest {
 	private String fileToString(String fileName) throws URISyntaxException, FileNotFoundException, IOException,
 			AdlResourceNotFoundException {
 		return StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString(fileName, ReportServiceTest.class));
+	}
+
+	@Test
+	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRows_CorrectlyExecutes()
+			throws ServiceException, FileNotFoundException, URISyntaxException, IOException,
+			AdlResourceNotFoundException {
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedLiveDeliRequest = fileToString("expected-request-adstatusreport-livedeli-noenddate.xml");
+		final String mockedLiveDeliAnswer = fileToString("expected-answer-adstatusreport-livedeli-noenddate.xml");
+		when(mockedApiService.callApi(expectedLiveDeliRequest, false)).thenReturn(mockedLiveDeliAnswer);
+
+		CampaignDetail detail = service.getCampaignDetail("0312_AXA-CENTRAL_XPR_HAB_5894", DATE_FORMATTER.parseDateTime("2012-02-22"), DATE_FORMATTER.parseDateTime("2012-03-04"));
+
+		List<CampaignDetailDeliveryHistoryRow> rows = detail.getDeliveryHistoryRows();
+
+		assertEquals(rows.get(0), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-03-02"), 3l, 0l));
+		assertEquals(rows.get(1), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-03-01"), 14l, 0l));
+		assertEquals(rows.get(2), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-29"), 214l, 3l));
+		assertEquals(rows.get(3), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-28"), 394l, 20l));
+		assertEquals(rows.get(4), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-27"), 139l, 11l));
+		assertEquals(rows.get(5), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-24"), 4l, 0l));
+		assertEquals(rows.get(6), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-23"), 1l, 0l));
+		assertEquals(rows.get(7), new CampaignDetailDeliveryHistoryRow(DATE_FORMATTER.parseDateTime("2012-02-22"), 47l, 0l));
+
+	}
+
+	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "endDate shouldn't have a null value")
+	public void getCampaignDetail_EndDateNull_CorrectlyExecutes() throws ServiceException, FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException {
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		service.getCampaignDetail("0312_AXA-CENTRAL_XPR_HAB_5894", DATE_FORMATTER.parseDateTime("2012-02-22"), null);
 	}
 }

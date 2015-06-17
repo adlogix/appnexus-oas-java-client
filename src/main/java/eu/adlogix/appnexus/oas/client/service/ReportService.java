@@ -1,5 +1,8 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkEmpty;
+import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
@@ -40,6 +44,9 @@ public class ReportService extends AbstractXaxisService {
 
 	public List<PageAtPositionDeliveryInformationRow> getPageAtPositionDeliveryInformation(final DateTime startDate, final DateTime endDate) {
 
+		checkNotNull(startDate, "startDate");
+		checkNotNull(endDate, "endDate");
+
 		final List<PageAtPositionDeliveryInformationRow> histoStats = new ArrayList<PageAtPositionDeliveryInformationRow>();
 
 		@SuppressWarnings("serial")
@@ -66,8 +73,12 @@ public class ReportService extends AbstractXaxisService {
 		return histoStats;
 	}
 
-	public List<CampaignDetailDeliveryHistoryRow> getCampaignDetailDeliveryHistoryRow(final String oasCampaignId,
+	public CampaignDetail getCampaignDetail(final String oasCampaignId,
 			final DateTime startDate, final DateTime endDate) {
+
+		checkEmpty(oasCampaignId, "oasCampaignId");
+		checkNotNull(startDate, "startDate");
+		checkNotNull(endDate, "endDate");
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
@@ -93,6 +104,6 @@ public class ReportService extends AbstractXaxisService {
 				deliveryHistoryRows.add(row);
 			}
 		});
-		return deliveryHistoryRows;
+		return new CampaignDetail(deliveryHistoryRows);
 	}
 }

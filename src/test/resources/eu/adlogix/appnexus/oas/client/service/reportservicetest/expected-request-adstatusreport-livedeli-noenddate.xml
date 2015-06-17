@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Inventory">
+    <BasicInventory type="Campaign.Detail">
+      <Id>0312_AXA-CENTRAL_XPR_HAB_5894</Id>
+      <StartDate>2012-02-22</StartDate>
+      <EndDate>2012-03-04</EndDate>
+      <Table>DetailDeliveryStatus</Table>
+      <Table>DetailOverview</Table>
+      <Table>DetailBookedImpressions</Table>
+    </BasicInventory>
+  </Request>
+</AdXML>
