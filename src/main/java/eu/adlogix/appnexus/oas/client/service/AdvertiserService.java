@@ -11,20 +11,23 @@ import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseObjectHandler;
+import eu.adlogix.appnexus.oas.client.xml.XmlGenerator;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
-public class AdvertiserService extends AbstractXaxisService {
+public class AdvertiserService extends AbstractOasService {
 
 	private final XmlRequestGenerator addAdvertiserRequestGenerator = new XmlRequestGenerator("add-advertiser");
 	private final XmlRequestGenerator listAdvertisersRequestGenerator = new XmlRequestGenerator("list-advertisers");
 	private final XmlRequestGenerator readAdvertisersRequestGenerator = new XmlRequestGenerator("read-advertiser");
 	private final XmlRequestGenerator updateAdvertiserRequestGenerator = new XmlRequestGenerator("update-advertiser");
 
+	private XmlGenerator xmlGenerator = new XmlGenerator();
+
 	public AdvertiserService(Properties credentials) {
 		super(credentials);
 	}
 
-	public AdvertiserService(Properties credentials, XaxisApiService apiService, CertificateManager certificateManager) {
+	public AdvertiserService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
 		super(credentials, apiService, certificateManager);
 	}
 
@@ -32,12 +35,13 @@ public class AdvertiserService extends AbstractXaxisService {
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
-				put("advertiserId", advertiser.getId());
-				put("advertiserName", advertiser.getOrganization());
+				put("advertiser", xmlGenerator.generate(advertiser, Advertiser.class));
 			}
 		};
 
-		final String request = this.addAdvertiserRequestGenerator.generateRequest(parameters);
+
+		final String request = this.addAdvertiserRequestGenerator.generateRequest(parameters, false);
+
 		final String response = performRequest(request);
 
 		ResponseParser responseParser = new ResponseParser(response);
@@ -50,20 +54,15 @@ public class AdvertiserService extends AbstractXaxisService {
 
 	public final void updateAdvertiser(final Advertiser advertiser) {
 
-		Advertiser existingAdvertiser = getAdvertiserById(advertiser.getId());
-
-		final String existingOrganization = existingAdvertiser.getOrganization();
-		final String organization = advertiser.getOrganization();
-
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
-				put("advertiserId", advertiser.getId());
-				put("advertiserName", (existingOrganization.equals(organization)) ? null : organization);
+				put("advertiser", xmlGenerator.generate(advertiser, Advertiser.class));
 			}
 		};
 
-		final String request = this.updateAdvertiserRequestGenerator.generateRequest(parameters);
+
+		final String request = this.updateAdvertiserRequestGenerator.generateRequest(parameters, false);
 		final String response = performRequest(request);
 
 		ResponseParser responseParser = new ResponseParser(response);
@@ -71,6 +70,7 @@ public class AdvertiserService extends AbstractXaxisService {
 		if (responseParser.containsExceptions()) {
 			throw new RuntimeException(responseParser.getExceptionMessage());
 		}
+
 
 	}
 

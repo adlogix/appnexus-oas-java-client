@@ -29,6 +29,10 @@ public final class XmlRequestGenerator {
 	}
 
 	public final String generateRequest(final Map<String, Object> requestParameters) {
+		return generateRequest(requestParameters, true);
+	}
+
+	public final String generateRequest(final Map<String, Object> requestParameters, boolean sanitizeParameters) {
 		@SuppressWarnings("unchecked")
 		final Map<String, Object> parameters = Collections.unmodifiableMap(requestParameters == null ? Collections.EMPTY_MAP
 				: requestParameters);
@@ -38,7 +42,11 @@ public final class XmlRequestGenerator {
 		// the resource every time. So there is still an advantage to
 		// cache/reuse the generator over multiple request generations.
 		final StringTemplate xmlRequestTemplate = new StringTemplate(this.requestTemplate);
-		xmlRequestTemplate.setAttributes(this.parameterMapXmlSanitizer.escapeParameters(parameters));
+		if (sanitizeParameters) {
+			xmlRequestTemplate.setAttributes(this.parameterMapXmlSanitizer.escapeParameters(parameters));
+		} else {
+			xmlRequestTemplate.setAttributes(parameters);
+		}
 		final String xmlRequest = xmlRequestTemplate.toString();
 		return xmlRequest;
 	}

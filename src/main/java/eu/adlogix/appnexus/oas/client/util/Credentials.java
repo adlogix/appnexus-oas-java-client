@@ -15,11 +15,11 @@ import eu.adlogix.appnexus.oas.client.domain.PushLevel;
 
 public final class Credentials {
 	
-	private static final String CREDENTIASL_KEY_HOST = "xaxis.host";
-	private static final String CREDENTIASL_KEY_ACCOUNT = "xaxis.account";
-	private static final String CREDENTIASL_KEY_USER = "xaxis.user";
-	private static final String CREDENTIASL_KEY_PASSWORD = "xaxis.password";
-	private static final String CREDENTIASL_KEY_PUSH_LEVEL = "xaxis.push_level";
+	private static final String CREDENTIASL_KEY_HOST = "oas.host";
+	private static final String CREDENTIASL_KEY_ACCOUNT = "oas.account";
+	private static final String CREDENTIASL_KEY_USER = "oas.user";
+	private static final String CREDENTIASL_KEY_PASSWORD = "oas.password";
+	private static final String CREDENTIASL_KEY_PUSH_LEVEL = "oas.push_level";
 	
 
 	public static Properties loadCredentials(final String credentialsName) {

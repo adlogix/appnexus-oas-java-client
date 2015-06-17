@@ -20,9 +20,9 @@ import org.slf4j.Logger;
 import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 @AllArgsConstructor
-public class XaxisApiService {
+public class OasApiService {
 
-	private static final Logger logger = LogUtils.getLogger(XaxisApiService.class);
+	private static final Logger logger = LogUtils.getLogger(OasApiService.class);
 	private static final int MAX_RETRY = 10;
 
 	String host;
@@ -31,7 +31,7 @@ public class XaxisApiService {
 	String password;
 
 	/**
-	 * This generic method may be reused to call any Xaxis API function
+	 * This generic method may be reused to call any Oas API function
 	 * 
 	 * @param oasHost
 	 *            The host on which OAS resides

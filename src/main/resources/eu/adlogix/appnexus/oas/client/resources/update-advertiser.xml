@@ -1,10 +1,7 @@
 <AdXML>
   <Request type="Advertiser">
     <Database action="update">
-      <Advertiser>
-        <Id>$advertiserId$</Id>
-$if(advertiserName)$        <Organization>$advertiserName$</Organization>$endif$
-      </Advertiser>
+      $advertiser$
     </Database>
   </Request>
 </AdXML>

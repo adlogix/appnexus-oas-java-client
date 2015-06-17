@@ -5,10 +5,10 @@ import java.util.Properties;
 public class TestCredentials {
 	public static Properties getTestCredentials() {
 		final Properties credentials = new Properties();
-		credentials.put("xaxis.host", "https://test");
-		credentials.put("xaxis.account", "x");
-		credentials.put("xaxis.user", "x");
-		credentials.put("xaxis.password", "x");
+		credentials.put("oas.host", "https://test");
+		credentials.put("oas.account", "x");
+		credentials.put("oas.user", "x");
+		credentials.put("oas.password", "x");
 		return credentials;
 	}
 }

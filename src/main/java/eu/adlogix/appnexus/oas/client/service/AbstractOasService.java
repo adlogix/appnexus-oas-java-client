@@ -16,7 +16,7 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseObjectHandler;
 import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 
-public class AbstractXaxisService {
+public class AbstractOasService {
 
 	private static String certificateInitialisedForHost = null;
 
@@ -26,14 +26,14 @@ public class AbstractXaxisService {
 	private final String password;
 	private final PushLevel pushLevel;
 
-	private static final Logger logger = LogUtils.getLogger(AbstractXaxisService.class);
+	private static final Logger logger = LogUtils.getLogger(AbstractOasService.class);
 
 	protected static final String OAS_DATE_FORMAT = "yyyy-MM-dd";
-	private XaxisApiService xaxisApiService;
+	private OasApiService xaxisApiService;
 	private CertificateManager certificateManager;
 
 
-	protected AbstractXaxisService(final Properties credentials, XaxisApiService apiService,
+	protected AbstractOasService(final Properties credentials, OasApiService apiService,
 			CertificateManager certificateManager) {
 
 		this.host = Credentials.getHost(credentials);
@@ -59,7 +59,7 @@ public class AbstractXaxisService {
 		this.pushLevel = Credentials.getPushLevel(credentials);
 
 		if (apiService == null) {
-			apiService = new XaxisApiService(host, account, user, password);
+			apiService = new OasApiService(host, account, user, password);
 		}
 		this.xaxisApiService = apiService;
 
@@ -73,7 +73,7 @@ public class AbstractXaxisService {
 
 	}
 
-	protected AbstractXaxisService(final Properties credentials) {
+	protected AbstractOasService(final Properties credentials) {
 		this(credentials, null, null);
 	}
 

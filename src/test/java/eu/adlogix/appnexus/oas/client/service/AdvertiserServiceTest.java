@@ -21,7 +21,7 @@ public class AdvertiserServiceTest {
 	@Test
 	public final void getAdvertiserById_ExistingAdvertiser_ReturnAdvertiser() throws Exception {
 		
-		XaxisApiService mockedApiService=mock(XaxisApiService.class);
+		OasApiService mockedApiService=mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		AdvertiserService service = new AdvertiserService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -37,7 +37,7 @@ public class AdvertiserServiceTest {
 	@Test(expectedExceptions = { RuntimeException.class })
 	public final void getAdvertiserById_InvalidId_ThrowException() throws Exception {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		AdvertiserService service = new AdvertiserService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -51,7 +51,7 @@ public class AdvertiserServiceTest {
 	@Test
 	public final void addAdvertiser_ValidParameters_SuccessfullyAdd() throws Exception {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		AdvertiserService service = new AdvertiserService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -68,7 +68,7 @@ public class AdvertiserServiceTest {
 	@Test(expectedExceptions = { RuntimeException.class })
 	public final void addAdvertiser_AlreadyExisting_ThrowException() throws Exception {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		AdvertiserService service = new AdvertiserService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -84,7 +84,7 @@ public class AdvertiserServiceTest {
 	@Test
 	public final void getAllAdvertisers_NoExceptions_ReturnAllAdvertisers() throws Exception {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		AdvertiserService service = new AdvertiserService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
