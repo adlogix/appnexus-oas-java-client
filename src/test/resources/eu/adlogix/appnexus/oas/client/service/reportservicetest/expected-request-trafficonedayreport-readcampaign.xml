@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Report">
+    <Report type="Campaign">
+      <Id>0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278</Id> 
+      <StartDate>2012-02-27</StartDate> 
+      <EndDate>2012-02-27</EndDate> 
+      <Table>Delivery.Campaign.Base.T280.01</Table> 
+    </Report>
+  </Request>
+</AdXML>

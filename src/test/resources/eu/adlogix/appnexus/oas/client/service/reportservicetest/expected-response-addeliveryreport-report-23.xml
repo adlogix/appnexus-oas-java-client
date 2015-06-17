@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+<Report>
+<html_general>
+  <content reportKey='VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820' reportTitle='CampaignReport'>
+    <reportTable name='StandardHeader' title='AboutThisReport'>
+      <row>
+        <TimethattheReportwasRun><![CDATA[Thu Apr 30 10:11:08 CEST 2015]]></TimethattheReportwasRun>
+      </row>
+      <row>
+        <StartDate><![CDATA[03/23/2015]]></StartDate>
+      </row>
+      <row>
+        <EndDate><![CDATA[03/23/2015]]></EndDate>
+      </row>
+      <row>
+        <Format><![CDATA[$format$]]></Format>
+      </row>
+    </reportTable>
+    <reportTable name='Delivery.Campaign.Base.T280.01' title='PageAndPositionDeliveryInformation(Top500)'>
+      <row>
+        <No><![CDATA[1]]></No>
+        <Page><![CDATA[mrepubblica.it/home]]></Page>
+        <Position><![CDATA[Top3]]></Position>
+        <Impressions><![CDATA[120011]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[50.0017]]></ofTotal>
+        <Clicks><![CDATA[461]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[31.6621]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.3841]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[2]]></No>
+        <Page><![CDATA[mrepubblica.it/home]]></Page>
+        <Position><![CDATA[Middle1]]></Position>
+        <Impressions><![CDATA[120003]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[49.9983]]></ofTotal>
+        <Clicks><![CDATA[995]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[68.3379]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.8291]]></CTR>
+      </row>
+    </reportTable>
+  </content>
+</html_general>
+</Report>
+</Response>
+</AdXML>

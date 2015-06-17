@@ -6,13 +6,14 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
+import eu.adlogix.appnexus.oas.client.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.PushLevel;
 import eu.adlogix.appnexus.oas.client.util.Credentials;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
-import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseObjectHandler;
+import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 
@@ -119,6 +120,8 @@ public class AbstractXaxisService {
 
 		ResponseParser parser = new ResponseParser(xmlResponseOne);
 
+		throwExceptionsThrownByOas(parser, xmlRequestOne);
+
 		parser.forEachElement(xPathLoopExpression, responseElementHandler);
 
 		for (int pageIndex = 2; pageIndex <= maxPageIndex; pageIndex++) {
@@ -126,6 +129,7 @@ public class AbstractXaxisService {
 			logger.info("Paged request, page #" + pageIndex + " /" + maxPageIndex + " ...");
 			final String xmlResponseN = performRequest(xmlRequestN, true);
 			parser = new ResponseParser(xmlResponseN);
+			throwExceptionsThrownByOas(parser, xmlResponseN);
 			parser.forEachElement(xPathLoopExpression, responseElementHandler);
 		}
 	}
@@ -153,4 +157,9 @@ public class AbstractXaxisService {
 		}
 	}
 
+	protected void throwExceptionsThrownByOas(final ResponseParser parser, String request) {
+		if (parser.containsExceptions()) {
+			throw new OasServerSideException(parser, request);
+		}
+	}
 }

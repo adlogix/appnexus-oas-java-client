@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Report">
+    <Report type="Campaign">
+      <Id>VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820</Id> 
+      <StartDate>2015-03-23</StartDate> 
+      <EndDate>2015-03-23</EndDate> 
+      <Table>Delivery.Campaign.Base.T280.01</Table> 
+    </Report>
+  </Request>
+</AdXML>

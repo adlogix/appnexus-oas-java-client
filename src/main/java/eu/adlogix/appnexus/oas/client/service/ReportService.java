@@ -1,8 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +12,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
@@ -22,6 +20,9 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
+
+import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
 
 public class ReportService extends AbstractXaxisService {
 
@@ -38,9 +39,7 @@ public class ReportService extends AbstractXaxisService {
 
 	private final XmlRequestGenerator inventoryReportRequestGenerator = new XmlRequestGenerator("inventory-report");
 	private final XmlRequestGenerator campaignDetailDeliveryGenerator = new XmlRequestGenerator("read-campaign-live-delivery-report");
-
-	// private final XmlRequestGenerator trafficReportsRequestGenerator = new
-	// XmlRequestGenerator("read-campaigndelivery-positionatpage");
+	private final XmlRequestGenerator trafficReportsRequestGenerator = new XmlRequestGenerator("read-campaigndelivery-positionatpage");
 
 	public List<PageAtPositionDeliveryInformationRow> getPageAtPositionDeliveryInformation(final DateTime startDate, final DateTime endDate) {
 
@@ -94,6 +93,8 @@ public class ReportService extends AbstractXaxisService {
 		final String response = performRequest(request);
 		final ResponseParser parser = new ResponseParser(response);
 
+		throwExceptionsThrownByOas(parser, request);
+
 		final List<CampaignDetailDeliveryHistoryRow> deliveryHistoryRows = Lists.newArrayList();
 
 		final String deliveryHistory = "//reportTable[@name='CampaignDetailDeliveryHistory']/row";
@@ -105,5 +106,51 @@ public class ReportService extends AbstractXaxisService {
 			}
 		});
 		return new CampaignDetail(deliveryHistoryRows);
+	}
+
+	public List<CampaignDeliveryByPageAndPosition> getCampaignDeliveryByPageAndPosition(final String campaignId,
+			final DateTime date) {
+		return getCampaignDeliveryByPageAndPosition(campaignId, date, date);
+	}
+
+	public List<CampaignDeliveryByPageAndPosition> getCampaignDeliveryByPageAndPosition(final String campaignId,
+			final DateTime startDate, final DateTime endDate) {
+
+		checkNotEmpty(campaignId, "campaignId");
+		checkNotNull(startDate, "startDate");
+		checkNotNull(endDate, "endDate");
+
+		@SuppressWarnings("serial")
+		final HashMap<String, Object> requestParameters = new HashMap<String, Object>() {
+			{
+				put("startFetchDate", DATE_FORMATTER.print(startDate));
+				put("endFetchDate", DATE_FORMATTER.print(endDate));
+				put("campaignId", campaignId);
+			}
+		};
+
+		final String readCampaignDeliveryReportOnDayXmlRequest = this.trafficReportsRequestGenerator.generateRequest(requestParameters);
+
+		final String readCampaignDeliveryReportXmlResponse = performRequest(readCampaignDeliveryReportOnDayXmlRequest, true);
+
+		final ResponseParser parser = new ResponseParser(readCampaignDeliveryReportXmlResponse);
+
+		throwExceptionsThrownByOas(parser, readCampaignDeliveryReportOnDayXmlRequest);
+
+		final List<CampaignDeliveryByPageAndPosition> delivery = Lists.newArrayList();
+
+		parser.forEachElement("//reportTable[@name='Delivery.Campaign.Base.T280.01']/row", new ResponseElementHandler() {
+			public final void processElement(final ResponseElement element) {
+				final String pageUrl = element.getChild("Page");
+				final String positionName = element.getChild("Position");
+				final long impressions = Long.parseLong(element.getChild("Impressions"));
+				final long clicks = Long.parseLong(element.getChild("Clicks"));
+
+				CampaignDeliveryByPageAndPosition deliveryByPageAndPosition = new CampaignDeliveryByPageAndPosition(pageUrl, positionName, impressions, clicks);
+				delivery.add(deliveryByPageAndPosition);
+			}
+		});
+
+		return delivery;
 	}
 }

@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Report>
+    <Exception errorCode='408'>You do not have enough permission to see Delivery.Campaign.Base.T280.01 report.</Exception>
+  </Report>
+</Response>
+</AdXML>

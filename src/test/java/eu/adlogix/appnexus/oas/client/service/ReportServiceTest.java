@@ -1,9 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,14 +14,20 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 
+import eu.adlogix.appnexus.oas.client.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
 import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
 import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class ReportServiceTest {
 
@@ -172,10 +174,49 @@ public class ReportServiceTest {
 	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "endDate shouldn't have a null value")
 	public void getCampaignDetail_EndDateNull_CorrectlyExecutes() throws ServiceException, FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException {
+
 		XaxisApiService mockedApiService = mock(XaxisApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
 		service.getCampaignDetail("0312_AXA-CENTRAL_XPR_HAB_5894", DATE_FORMATTER.parseDateTime("2012-02-22"), null);
+	}
+
+	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[408\\]: 'You do not have enough permission to see Delivery.Campaign.Base.T280.01 report.'")
+	public void getCampaignDeliveryByPageAndPosition_SameDayWithError_ThrowsException() throws FileNotFoundException,
+			URISyntaxException,
+			IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedAdTrafficRequestOfDay = fileToString("expected-request-trafficonedayreport-readcampaign.xml");
+		final String answerAdTrafficRequestOfDay = fileToString("expected-answer-trafficonedayreport-readcampaign.xml");
+		when(mockedApiService.callApi(expectedAdTrafficRequestOfDay, true)).thenReturn(answerAdTrafficRequestOfDay);
+
+		service.getCampaignDeliveryByPageAndPosition("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278", DATE_FORMATTER.parseDateTime("2012-02-27"));
+
+		verify(mockedApiService).callApi(expectedAdTrafficRequestOfDay, true);
+	}
+
+	@Test
+	public void getCampaignDeliveryByPageAndPosition_SingleDayNoError_NoError() throws FileNotFoundException,
+			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+
+		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
+		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+
+		final String expectedAdTrafficRequestOfDay23 = fileToString("expected-request-addeliveryreport-report-23.xml");
+		final String answerAdTrafficRequestOfDay23 = fileToString("expected-response-addeliveryreport-report-23.xml");
+		when(mockedApiService.callApi(expectedAdTrafficRequestOfDay23, true)).thenReturn(answerAdTrafficRequestOfDay23);
+
+		List<CampaignDeliveryByPageAndPosition> delivery = service.getCampaignDeliveryByPageAndPosition("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"));
+
+		assertEquals(delivery.get(0), new CampaignDeliveryByPageAndPosition("mrepubblica.it/home", "Top3", 120011l, 461l));
+		assertEquals(delivery.get(1), new CampaignDeliveryByPageAndPosition("mrepubblica.it/home", "Middle1", 120003l, 995l));
+
+		verify(mockedApiService).callApi(expectedAdTrafficRequestOfDay23, true);
 	}
 }

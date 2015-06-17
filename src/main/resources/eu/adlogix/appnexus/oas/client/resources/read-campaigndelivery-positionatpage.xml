@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Report">
+    <Report type="Campaign">
+      <Id>$campaignId$</Id> 
+      <StartDate>$startFetchDate$</StartDate> 
+      <EndDate>$endFetchDate$</EndDate> 
+      <Table>Delivery.Campaign.Base.T280.01</Table> 
+    </Report>
+  </Request>
+</AdXML>

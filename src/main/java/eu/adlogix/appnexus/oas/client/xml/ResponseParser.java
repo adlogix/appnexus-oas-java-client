@@ -16,6 +16,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
+import eu.adlogix.appnexus.oas.client.util.ValidatorUtils;
+
 public final class ResponseParser {
 
 	public interface ResponseElementHandler {
@@ -54,6 +56,7 @@ public final class ResponseParser {
 	private final Document responseDocument;
 
 	public ResponseParser(final String response) {
+		ValidatorUtils.checkNotEmpty(response, "response");
 		try {
 			this.responseDocument = DocumentHelper.parseText(response);
 		} catch (final DocumentException exception) {
