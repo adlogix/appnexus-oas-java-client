@@ -542,7 +542,7 @@ public class NetworkServiceTest {
 		final String mockedSectionAnswer2 = (AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
 
-		List<Section> sections = service.getSectionList(null);
+		List<Section> sections = service.getSectionListModifiedSinceDate(null);
 
 		assertEquals(sections.size(), 2);
 
@@ -581,7 +581,7 @@ public class NetworkServiceTest {
 		final String mockedSectionAnswer2 = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
 
-		List<Section> sections = service.getSectionList(new DateTime(2014, 5, 10, 0, 0, 0, 0));
+		List<Section> sections = service.getSectionListModifiedSinceDate(new DateTime(2014, 5, 10, 0, 0, 0, 0));
 
 		assertEquals(sections.size(), 2);
 

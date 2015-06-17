@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
@@ -21,6 +20,7 @@ import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.util.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.util.ValidatorUtils;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -77,9 +77,7 @@ public class NetworkService extends AbstractXaxisService {
 	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final List<Site> allSites,
 			final DateTime lastModifiedDate) {
 
-		if (CollectionUtils.isEmpty(allSites)) {
-			throw new RuntimeException("Empty allSites parameter was passed. Expected a non empty site list");
-		}
+		ValidatorUtils.checkNotEmpty(allSites, "allSites");
 
 		final Map<String, Site> siteMapById = Maps.uniqueIndex(allSites, new Function<Site, String>() {
 			@Override
@@ -132,7 +130,7 @@ public class NetworkService extends AbstractXaxisService {
 	 *            null, everything will be retrieved.
 	 * @return
 	 */
-	public List<Section> getSectionList(DateTime lastModifiedDate) {
+	public List<Section> getSectionListModifiedSinceDate(DateTime lastModifiedDate) {
 
 		final List<Section> result = new ArrayList<Section>();
 
