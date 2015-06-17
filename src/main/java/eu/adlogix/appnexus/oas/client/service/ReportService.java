@@ -24,9 +24,9 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
 
-public class ReportService extends AbstractXaxisService {
+public class ReportService extends AbstractOasService {
 
-	protected ReportService(Properties credentials, XaxisApiService apiService, CertificateManager certificateManager) {
+	protected ReportService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
 		super(credentials, apiService, certificateManager);
 	}
 

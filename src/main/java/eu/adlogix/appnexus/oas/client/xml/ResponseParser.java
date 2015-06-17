@@ -1,14 +1,7 @@
 package eu.adlogix.appnexus.oas.client.xml;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -23,12 +16,6 @@ public final class ResponseParser {
 	public interface ResponseElementHandler {
 
 		void processElement(ResponseElement element);
-
-	}
-
-	public interface ResponseObjectHandler<T> {
-
-		void processObject(T object);
 
 	}
 
@@ -113,14 +100,6 @@ public final class ResponseParser {
 		}
 	}
 
-	public final <T> void forEachElement(final String xpathExpression, final ResponseObjectHandler<T> objectHandler,
-			final Class<T> type) {
-		@SuppressWarnings("unchecked")
-		final List<DefaultElement> elements = this.responseDocument.selectNodes(xpathExpression);
-		for (final DefaultElement element : elements) {
-			objectHandler.processObject(parseAndCreateObject(element, type));
-		}
-	}
 
 	public final String getTrimmedElement(final String xpathExpression) {
 		final DefaultElement element = (DefaultElement) this.responseDocument.selectSingleNode(xpathExpression);
@@ -146,19 +125,4 @@ public final class ResponseParser {
 		return maxPageIndex;
 	}
 
-	public <T> T parseAndCreateObject(String xpathExpression, Class<T> type) {
-		return parseAndCreateObject(getElement(xpathExpression), type);
-	}
-
-	public <T> T parseAndCreateObject(Element element, Class<T> type) {
-		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(type);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			Source source = new StreamSource(new StringReader(element.asXML()));
-			return type.cast(jaxbUnmarshaller.unmarshal(source));
-
-		} catch (JAXBException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
 }

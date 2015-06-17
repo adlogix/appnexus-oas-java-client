@@ -26,7 +26,7 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
-public class NetworkService extends AbstractXaxisService {
+public class NetworkService extends AbstractOasService {
 
 	final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
 	final XmlRequestGenerator getPageListRequestGenerator = new XmlRequestGenerator("list-pages");
@@ -37,7 +37,7 @@ public class NetworkService extends AbstractXaxisService {
 		super(credentials);
 	}
 
-	public NetworkService(Properties credentials, XaxisApiService apiService, CertificateManager certificateManager) {
+	public NetworkService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
 		super(credentials, apiService, certificateManager);
 	}
 

@@ -1,30 +1,30 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import lombok.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@XmlType(propOrder = { "id", "organization" })
-@XmlRootElement(name = "Advertiser")
+@Data
 public class Advertiser {
 
-	String id;
-	String organization;
+	private String id;
+	private String organization;
+	private BillingInformation billingInformation;
+	private String internalQuickReport;
+	private String externalQuickReport;
 
-	@XmlElement(name = "Id")
-	public void setId(String id) {
+	public Advertiser(String id, String organization) {
 		this.id = id;
+		this.organization = organization;
+		this.billingInformation = new BillingInformation();
+		billingInformation.setMethod("M");
+		billingInformation.setCountry("US");
+
+		this.internalQuickReport = "short";
+		this.externalQuickReport = "to-date";
+
 	}
 
-	@XmlElement(name = "Organization")
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public Advertiser() {
+		this(null, null);
 	}
+
 }

@@ -6,14 +6,14 @@ import java.io.InputStream;
 import org.antlr.stringtemplate.StringTemplate;
 import org.apache.commons.io.IOUtils;
 
-import eu.adlogix.appnexus.oas.client.ExceptionUtils;
-
 public final class ResourceUtils {
 
 	public static InputStream loadResourceInputStream(final String resourceFileName) {
 		final InputStream result = ResourceUtils.class.getResourceAsStream(resourceFileName);
-		return result == null ? ExceptionUtils.throwException(resourceFileName + " could not be found", InputStream.class)
-				: result;
+		if (result == null) {
+			throw new RuntimeException(resourceFileName + " could not be found");
+		}
+		return result;
 	}
 
 	public static String loadResourceString(final String resourceFileName) {

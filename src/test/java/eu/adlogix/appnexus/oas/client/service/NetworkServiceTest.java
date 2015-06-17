@@ -34,7 +34,7 @@ public class NetworkServiceTest {
 	public void getAllSites_NoError_ReturnAllSites() throws FileNotFoundException, URISyntaxException, IOException,
 			AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -64,7 +64,7 @@ public class NetworkServiceTest {
 	public void getAllPagesWithPositionsModifiedSinceDate_NoPositions_ReturnPagesOnly() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -110,7 +110,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -150,7 +150,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -191,7 +191,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -228,7 +228,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -295,7 +295,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -356,7 +356,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -373,7 +373,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -415,7 +415,7 @@ public class NetworkServiceTest {
 	public void readSection_WithSinglePage_ReturnSectionWithSinglePage() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -441,7 +441,7 @@ public class NetworkServiceTest {
 			throws FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException,
 			ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -465,7 +465,7 @@ public class NetworkServiceTest {
 	public void readSection_WithNoPages_ReturnSectionOnly() throws FileNotFoundException, URISyntaxException,
 			IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -485,7 +485,7 @@ public class NetworkServiceTest {
 	public void readSection_WithMultiplePages_ReturnSectionWithMultiplePages() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -526,7 +526,7 @@ public class NetworkServiceTest {
 	public void getSectionList_WithoutLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -565,7 +565,7 @@ public class NetworkServiceTest {
 	public void getSectionList_WithLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 

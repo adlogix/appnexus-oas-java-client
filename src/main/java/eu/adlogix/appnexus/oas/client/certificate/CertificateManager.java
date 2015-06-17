@@ -34,19 +34,21 @@ public class CertificateManager {
 	private static final Logger logger = LogUtils.getLogger(CertificateManager.class);
 
 	private static final String CONF_DIRECTORY = "conf";
-	private static final String XAXIS_KEYSTORE_FILENAME = "xaxisCACerts";
+	private static final String OAS_KEYSTORE_FILENAME = "OASCACerts";
 
 	private static final String HTTPS_PREFIX = "https://";
 
 	public synchronized void prepareKeyStoreForHost(final String host) {
 
+		if (!host.startsWith(HTTPS_PREFIX))
+			throw new RuntimeException("We only support https host and not [" + host + "]");
+
 		final File confDir = new File("conf");
 
-		if (!confDir.exists())
-			if (!confDir.mkdir())
+		if (!confDir.exists() && !confDir.mkdir())
 				throw new RuntimeException("Unable to create inexisting conf dir at " + confDir.getAbsolutePath());
 
-		final File usedKeyStoreFile = new File(confDir, XAXIS_KEYSTORE_FILENAME);
+		final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
 
 		if (usedKeyStoreFile.exists()) {
 			logger.warn("Going to delete pre-existing keyStore file at " + usedKeyStoreFile.getAbsolutePath());
@@ -59,9 +61,6 @@ public class CertificateManager {
 				throw new RuntimeException("We could not delete the existing keyStore at "
 						+ usedKeyStoreFile.getAbsolutePath());
 		}
-
-		if (!host.startsWith(HTTPS_PREFIX))
-			throw new RuntimeException("We only support https host and not [" + host + "]");
 
 		final String shortenedHost = host.substring(HTTPS_PREFIX.length());
 
@@ -76,7 +75,7 @@ public class CertificateManager {
 		if (!usedKeyStoreFile.exists())
 			throw new RuntimeException("We could not copy the keyStore to " + usedKeyStoreFile.getAbsolutePath());
 
-		System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + XAXIS_KEYSTORE_FILENAME);
+		System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + OAS_KEYSTORE_FILENAME);
 	}
 
 	public synchronized void renewCertificateForHost(final String host) {
@@ -84,12 +83,12 @@ public class CertificateManager {
 		try {
 
 			final File confDir = new File("conf");
-			final File usedKeyStoreFile = new File(confDir, XAXIS_KEYSTORE_FILENAME);
+			final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
 			final String shortenedHost = host.substring(HTTPS_PREFIX.length());
 			boolean renewed = renewCertificate(usedKeyStoreFile.getAbsolutePath(), shortenedHost);
 			if (renewed) {
 				System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator
-						+ XAXIS_KEYSTORE_FILENAME);
+ + OAS_KEYSTORE_FILENAME);
 			}
 
 		} catch (Exception e) {

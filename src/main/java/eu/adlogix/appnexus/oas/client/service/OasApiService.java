@@ -20,9 +20,9 @@ import org.slf4j.Logger;
 import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 @AllArgsConstructor
-public class XaxisApiService {
+public class OasApiService {
 
-	private static final Logger logger = LogUtils.getLogger(XaxisApiService.class);
+	private static final Logger logger = LogUtils.getLogger(OasApiService.class);
 	private static final int MAX_RETRY = 10;
 
 	String host;
@@ -31,7 +31,7 @@ public class XaxisApiService {
 	String password;
 
 	/**
-	 * This generic method may be reused to call any Xaxis API function
+	 * This generic method may be reused to call any Oas API function
 	 * 
 	 * @param oasHost
 	 *            The host on which OAS resides
@@ -54,7 +54,7 @@ public class XaxisApiService {
 			RemoteException {
 
 		if (logger.isDebugEnabled())
-			logger.debug("Call Xaxis Api as '" + user + "' with pass: '" + password + "', account: '" + account
+			logger.debug("Call Oas Api as '" + user + "' with pass: '" + password + "', account: '" + account
 					+ "' on '" + host + "'...");
 
 		final HostnameVerifier hv = new HostnameVerifier() {
@@ -89,15 +89,15 @@ public class XaxisApiService {
 					retryCount++;
 
 					if (retryCount < MAX_RETRY) {
-						logger.info("Xaxis API call retry #" + retryCount);
+						logger.info("OAS API call retry #" + retryCount);
 					} else {
-						logger.error("We just exceeded the maximal number of Xaxis API calls retries while querying ["
+						logger.error("We just exceeded the maximal number of OAS API calls retries while querying ["
 								+ adXML + "]");
-						throw new RuntimeException("Too many Xaxis API calls retries", e);
+						throw new RuntimeException("Too many OAS API calls retries", e);
 					}
 				} else {
 					// we dont retry on errors
-					throw new RuntimeException("Not retrying Xaxis API call", e);
+					throw new RuntimeException("Not retrying OAS API call", e);
 				}
 			}
 		}

@@ -4,22 +4,13 @@
       <Advertiser>
         <Id>$advertiserId$</Id>
         <Organization>$advertiserName$</Organization>
-        <ExternalUsers />
         <BillingInformation>
           <Method>
-            <Code>M</Code>
+            <Code>$advertiserBillingInfoMethod$</Code>
           </Method>
-          <Address />
-          <City />
-          <State />
-          <!-- <State> -->
-          <!-- <Code>AD</Code> -->
-          <!-- </State> -->
           <Country>
-            <Code>US</Code>
+            <Code>$advertiserBillingInfoCountry$</Code>
           </Country>
-          <Zip />
-          <Email />
         </BillingInformation>
         <InternalQuickReport>short</InternalQuickReport>
         <ExternalQuickReport>to-date</ExternalQuickReport>

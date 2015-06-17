@@ -74,7 +74,7 @@ public class ReportServiceTest {
 	public void getPageAtPositionDeliveryInformation_MultiplePage_CorrectlyExecutes() throws ServiceException,
 			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -120,7 +120,7 @@ public class ReportServiceTest {
 	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRowsOnlyHistoryInResponse_CorrectlyExecutes()
 			throws ServiceException,
 			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -148,7 +148,7 @@ public class ReportServiceTest {
 	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRows_CorrectlyExecutes()
 			throws ServiceException, FileNotFoundException, URISyntaxException, IOException,
 			AdlResourceNotFoundException {
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -175,7 +175,7 @@ public class ReportServiceTest {
 	public void getCampaignDetail_EndDateNull_CorrectlyExecutes() throws ServiceException, FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -187,7 +187,7 @@ public class ReportServiceTest {
 			URISyntaxException,
 			IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 
@@ -204,7 +204,7 @@ public class ReportServiceTest {
 	public void getCampaignDeliveryByPageAndPosition_SingleDayNoError_NoError() throws FileNotFoundException,
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
-		XaxisApiService mockedApiService = mock(XaxisApiService.class);
+		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
 

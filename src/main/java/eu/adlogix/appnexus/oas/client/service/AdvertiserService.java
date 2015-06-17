@@ -9,11 +9,13 @@ import java.util.Properties;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
+import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
-import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseObjectHandler;
+import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
+import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
-public class AdvertiserService extends AbstractXaxisService {
+public class AdvertiserService extends AbstractOasService {
 
 	private final XmlRequestGenerator addAdvertiserRequestGenerator = new XmlRequestGenerator("add-advertiser");
 	private final XmlRequestGenerator listAdvertisersRequestGenerator = new XmlRequestGenerator("list-advertisers");
@@ -24,7 +26,7 @@ public class AdvertiserService extends AbstractXaxisService {
 		super(credentials);
 	}
 
-	public AdvertiserService(Properties credentials, XaxisApiService apiService, CertificateManager certificateManager) {
+	public AdvertiserService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
 		super(credentials, apiService, certificateManager);
 	}
 
@@ -34,6 +36,8 @@ public class AdvertiserService extends AbstractXaxisService {
 			{
 				put("advertiserId", advertiser.getId());
 				put("advertiserName", advertiser.getOrganization());
+				put("advertiserBillingInfoCountry", advertiser.getBillingInformation().getCountry());
+				put("advertiserBillingInfoMethod", advertiser.getBillingInformation().getMethod());
 			}
 		};
 
@@ -77,14 +81,19 @@ public class AdvertiserService extends AbstractXaxisService {
 	public final List<Advertiser> getAllAdvertisers() {
 		final List<Advertiser> result = new ArrayList<Advertiser>();
 
-		ResponseObjectHandler<Advertiser> advertiserResponseHandler = new ResponseObjectHandler<Advertiser>() {
+		ResponseElementHandler advertiserResponseHandler = new ResponseElementHandler() {
+
 			@Override
-			public void processObject(Advertiser object) {
-				result.add(object);
-			}
+			public void processElement(ResponseElement element) {
+					Advertiser advertiser=new Advertiser();
+				advertiser.setId(element.getChild("Id"));
+					advertiser.setOrganization(element.getChild("Organization"));
+					result.add(advertiser);
+				}
+			
 		};
 
-		performPagedRequest(listAdvertisersRequestGenerator, new HashMap<String, Object>(), "List", "//List/Advertiser", advertiserResponseHandler, Advertiser.class);
+		performPagedRequest(listAdvertisersRequestGenerator, new HashMap<String, Object>(), "List", "//List/Advertiser", advertiserResponseHandler);
 
 		return Collections.unmodifiableList(result);
 	}
@@ -111,8 +120,14 @@ public class AdvertiserService extends AbstractXaxisService {
 	}
 
 	private Advertiser parseAndCreateAdvertiser(ResponseParser parser) {
-		return parser.parseAndCreateObject("//Advertiser", Advertiser.class);
-
+		Advertiser advertiser = new Advertiser();
+		advertiser.setId(parser.getTrimmedElement("//Advertiser/Id"));
+		advertiser.setOrganization(parser.getTrimmedElement("//Advertiser/Organization"));
+		BillingInformation billingInformation = new BillingInformation();
+		billingInformation.setMethod(parser.getTrimmedElement("//Advertiser/BillingInformation/Method/Code"));
+		billingInformation.setCountry(parser.getTrimmedElement("//Advertiser/BillingInformation/Country/Code"));
+		advertiser.setBillingInformation(billingInformation);
+		return advertiser;
 	}
 
 }
