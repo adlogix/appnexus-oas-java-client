@@ -156,14 +156,13 @@ public class NetworkService extends AbstractOasService {
 	public Section readSection(final String sectionId) {
 
 		@SuppressWarnings("serial")
-		final String readSectionXmlRequest = this.readSectionRequestGenerator.generateRequest(new HashMap<String, Object>() {
+		final Map<String, Object> requestParameters = new HashMap<String, Object>() {
 			{
 				put("sectionId", sectionId);
 			}
-		});
+		};
 
-		final String readSectionXmlResponse = performRequest(readSectionXmlRequest, true);
-		final ResponseParser parser = new ResponseParser(readSectionXmlResponse);
+		final ResponseParser parser = performRequest(readSectionRequestGenerator, requestParameters, true);
 
 		String secId = parser.getTrimmedElement("//Section/Id");
 		Section oasSection = new Section(secId);

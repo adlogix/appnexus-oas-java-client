@@ -114,11 +114,10 @@ public final class ResponseParser {
 		return this.responseDocument.asXML();
 	}
 
-	public final static int parseMaxPageIndex(final String response, final String sizeHeaderTag) {
-		final ResponseParser parser = new ResponseParser(response);
+	public final int parseMaxPageIndex(final String sizeHeaderTag) {
 
-		final int pageSize = Integer.parseInt(parser.getElementAttribute("//Response/" + sizeHeaderTag, "pageSize"));
-		final int totalNumberOfEntries = Integer.parseInt(parser.getElementAttribute("//Response/" + sizeHeaderTag,
+		final int pageSize = Integer.parseInt(getElementAttribute("//Response/" + sizeHeaderTag, "pageSize"));
+		final int totalNumberOfEntries = Integer.parseInt(getElementAttribute("//Response/" + sizeHeaderTag,
 				"totalNumberOfEntries"));
 		final int maxPageIndex = totalNumberOfEntries / pageSize + 1;
 
