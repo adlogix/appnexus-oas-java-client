@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 
 import org.slf4j.Logger;
 
+import eu.adlogix.appnexus.oas.client.exceptions.OasRequestEmbeddedException;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
@@ -25,10 +26,10 @@ public class OasApiService {
 	private static final Logger logger = LogUtils.getLogger(OasApiService.class);
 	private static final int MAX_RETRY = 10;
 
-	String host;
-	String account;
-	String user;
-	String password;
+	private String host;
+	private String account;
+	private String user;
+	private String password;
 
 	/**
 	 * This generic method may be reused to call any Oas API function
@@ -93,11 +94,12 @@ public class OasApiService {
 					} else {
 						logger.error("We just exceeded the maximal number of OAS API calls retries while querying ["
 								+ adXML + "]");
-						throw new RuntimeException("Too many OAS API calls retries", e);
+						throw new RuntimeException("Aborted with Exception on OAS request after retrying " + MAX_RETRY
+								+ " times", new OasRequestEmbeddedException(adXML, e));
 					}
 				} else {
 					// we dont retry on errors
-					throw new RuntimeException("Not retrying OAS API call", e);
+					throw new RuntimeException("Aborted with Exception on OAS request without retrying", new OasRequestEmbeddedException(adXML, e));
 				}
 			}
 		}

@@ -110,6 +110,7 @@ public abstract class AbstractOasService {
 	public final void performPagedRequest(final XmlRequestGenerator requestGenerator,
 			final Map<String, Object> requestParams, final String sizeHeaderTag, final String xPathLoopExpression,
 			final ResponseElementHandler responseElementHandler) {
+
 		final String xmlRequestOne = requestGenerator.generateRequestWithPageIndex(1, requestParams);
 
 		logger.info("Paged request, page #1 /? ...");
