@@ -94,12 +94,13 @@ public class OasApiService {
 					} else {
 						logger.error("We just exceeded the maximal number of OAS API calls retries while querying ["
 								+ adXML + "]");
-						throw new RuntimeException("Aborted with Exception on OAS request after retrying " + MAX_RETRY
+						throw new RuntimeException("Exception while calling OAS API: [" + e.toString()
+								+ "]. Aborted after retrying " + MAX_RETRY
 								+ " times", new OasRequestEmbeddedException(adXML, e));
 					}
 				} else {
 					// we dont retry on errors
-					throw new RuntimeException("Aborted with Exception on OAS request without retrying", new OasRequestEmbeddedException(adXML, e));
+					throw new RuntimeException("Exception while calling OAS API: [" + e.toString() + "]", new OasRequestEmbeddedException(adXML, e));
 				}
 			}
 		}
