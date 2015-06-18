@@ -6,14 +6,14 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
-import eu.adlogix.appnexus.oas.client.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.PushLevel;
-import eu.adlogix.appnexus.oas.client.util.Credentials;
+import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.utils.Credentials;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 
 public abstract class AbstractOasService {

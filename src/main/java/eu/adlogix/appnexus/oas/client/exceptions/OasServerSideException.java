@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client;
+package eu.adlogix.appnexus.oas.client.exceptions;
 
 import lombok.Getter;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;

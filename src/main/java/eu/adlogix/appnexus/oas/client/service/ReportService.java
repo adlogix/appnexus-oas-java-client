@@ -21,8 +21,8 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 public class ReportService extends AbstractOasService {
 

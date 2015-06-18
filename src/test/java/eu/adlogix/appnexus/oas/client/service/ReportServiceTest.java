@@ -14,16 +14,16 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 
-import eu.adlogix.appnexus.oas.client.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
-import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
-import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
-import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
+import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
+import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,7 +72,7 @@ public class ReportServiceTest {
 
 	@Test
 	public void getPageAtPositionDeliveryInformation_MultiplePage_CorrectlyExecutes() throws ServiceException,
-			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
+			FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
@@ -82,8 +82,8 @@ public class ReportServiceTest {
 		final String mockedPageOneAnswer = fileToString("inventory-report-page1-answer-test.xml");
 		when(mockedApiService.callApi(expectedPageOneRequest, true)).thenReturn(mockedPageOneAnswer);
 
-		final String expectedPageTwoRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("inventory-report-page2-request-test.xml", ReportServiceTest.class));
-		final String mockedPageTwoAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("inventory-report-page2-answer-test.xml", ReportServiceTest.class));
+		final String expectedPageTwoRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-request-test.xml", ReportServiceTest.class));
+		final String mockedPageTwoAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-answer-test.xml", ReportServiceTest.class));
 		when(mockedApiService.callApi(expectedPageTwoRequest, true)).thenReturn(mockedPageTwoAnswer);
 
 		final DateTime testedStartDate = new DateTime().withYear(2011).withMonthOfYear(4).withDayOfMonth(1);
@@ -119,7 +119,7 @@ public class ReportServiceTest {
 	@Test
 	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRowsOnlyHistoryInResponse_CorrectlyExecutes()
 			throws ServiceException,
-			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
+			FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
@@ -140,14 +140,14 @@ public class ReportServiceTest {
 	}
 
 	private String fileToString(String fileName) throws URISyntaxException, FileNotFoundException, IOException,
-			AdlResourceNotFoundException {
-		return StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString(fileName, ReportServiceTest.class));
+			ResourceNotFoundException {
+		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, ReportServiceTest.class));
 	}
 
 	@Test
 	public void getCampaignDetail_ValidateCampaignDetailDeliveryHistoryRows_CorrectlyExecutes()
 			throws ServiceException, FileNotFoundException, URISyntaxException, IOException,
-			AdlResourceNotFoundException {
+			ResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
 		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
@@ -173,7 +173,7 @@ public class ReportServiceTest {
 
 	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "endDate shouldn't have a null value")
 	public void getCampaignDetail_EndDateNull_CorrectlyExecutes() throws ServiceException, FileNotFoundException,
-			URISyntaxException, IOException, AdlResourceNotFoundException {
+			URISyntaxException, IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
@@ -185,7 +185,7 @@ public class ReportServiceTest {
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[408\\]: 'You do not have enough permission to see Delivery.Campaign.Base.T280.01 report.'")
 	public void getCampaignDeliveryByPageAndPosition_SameDayWithError_ThrowsException() throws FileNotFoundException,
 			URISyntaxException,
-			IOException, AdlResourceNotFoundException, ServiceException {
+			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
@@ -202,7 +202,7 @@ public class ReportServiceTest {
 
 	@Test
 	public void getCampaignDeliveryByPageAndPosition_SingleDayNoError_NoError() throws FileNotFoundException,
-			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
+			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CertificateManager mockedCertificateManager = mock(CertificateManager.class);

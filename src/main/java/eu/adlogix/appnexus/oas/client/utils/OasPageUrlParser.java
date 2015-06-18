@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.util;
+package eu.adlogix.appnexus.oas.client.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
