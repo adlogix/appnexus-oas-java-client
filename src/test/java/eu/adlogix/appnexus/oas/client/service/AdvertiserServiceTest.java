@@ -6,12 +6,9 @@ import static org.mockito.Mockito.when;
 import static org.testng.AssertJUnit.assertEquals;
 
 import java.util.List;
-import java.util.Properties;
 
 import org.testng.annotations.Test;
 
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
-import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
@@ -99,10 +96,6 @@ public class AdvertiserServiceTest {
 		Advertiser advertiser2 = advertisers.get(1);
 		assertEquals(advertiser2.getId(), "Advertiser_Test_2");
 		assertEquals(advertiser2.getOrganization(), "Advertiser_Test");
-	}
-
-	private Properties getTestCredentials() {
-		return TestCredentials.getTestCredentials();
 	}
 
 	private static String normalizeNewLinesToCurPlatform(String source) {

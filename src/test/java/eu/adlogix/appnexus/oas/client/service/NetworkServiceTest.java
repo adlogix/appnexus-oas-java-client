@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.xml.rpc.ServiceException;
 
@@ -19,7 +18,6 @@ import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
-import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
@@ -54,9 +52,6 @@ public class NetworkServiceTest {
 
 	}
 
-	private Properties getTestCredentials() {
-		return TestCredentials.getTestCredentials();
-	}
 
 	@Test
 	public void getAllPagesWithPositionsModifiedSinceDate_NoPositions_ReturnPagesOnly() throws FileNotFoundException,

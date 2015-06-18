@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.xml.rpc.ServiceException;
 
@@ -19,7 +18,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 
-import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
@@ -66,9 +64,6 @@ public class ReportServiceTest {
 		return expectedHistoStats;
 	}
 
-	private Properties getTestCredentials() {
-		return TestCredentials.getTestCredentials();
-	}
 
 	@Test
 	public void getPageAtPositionDeliveryInformation_MultiplePage_CorrectlyExecutes() throws ServiceException,

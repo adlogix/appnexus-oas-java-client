@@ -5,13 +5,12 @@ import static org.testng.AssertJUnit.assertNotNull;
 import static org.testng.AssertJUnit.assertTrue;
 
 import java.util.Date;
-import java.util.Properties;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
-import eu.adlogix.appnexus.oas.client.utils.Credentials;
+import eu.adlogix.appnexus.oas.client.util.TestCredentials;
 
 public class AdvertiserServiceIT {
 
@@ -21,8 +20,7 @@ public class AdvertiserServiceIT {
 
 	@BeforeClass
 	public void initialise() {
-		Properties testCredentials = Credentials.loadTestCredentials();
-		OasServiceFactory factory = new OasServiceFactory(testCredentials);
+		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		advertiserService = factory.getAdvertiserService();
 		String ts = Long.toString(new Date().getTime());
 		advertiserId = "AdlogixAdvertiserTest_" + ts;
