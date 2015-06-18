@@ -4,11 +4,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 
-import eu.adlogix.appnexus.oas.client.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-import eu.adlogix.appnexus.oas.utils.log.LogUtils;
 
 
 public abstract class AbstractOasService {
@@ -42,6 +42,7 @@ public abstract class AbstractOasService {
 	public final void performPagedRequest(final XmlRequestGenerator requestGenerator,
 			final Map<String, Object> requestParams, final String sizeHeaderTag, final String xPathLoopExpression,
 			final ResponseElementHandler responseElementHandler) {
+
 		final String xmlRequestOne = requestGenerator.generateRequestWithPageIndex(1, requestParams);
 
 		logger.info("Paged request, page #1 /? ...");

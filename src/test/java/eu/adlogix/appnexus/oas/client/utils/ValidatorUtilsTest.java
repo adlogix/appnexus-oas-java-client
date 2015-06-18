@@ -1,9 +1,11 @@
-package eu.adlogix.appnexus.oas.client.util;
+package eu.adlogix.appnexus.oas.client.utils;
 
 import java.util.List;
 
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
+
+import eu.adlogix.appnexus.oas.client.utils.ValidatorUtils;
 
 public class ValidatorUtilsTest {
 

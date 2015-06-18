@@ -24,7 +24,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.slf4j.Logger;
 
-import eu.adlogix.appnexus.oas.utils.log.LogUtils;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 public class CertificateManager {
 

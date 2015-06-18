@@ -9,7 +9,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
-import eu.adlogix.appnexus.oas.client.util.ValidatorUtils;
+import eu.adlogix.appnexus.oas.client.utils.ValidatorUtils;
 
 public final class ResponseParser {
 

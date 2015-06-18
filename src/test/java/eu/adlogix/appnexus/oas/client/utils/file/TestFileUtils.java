@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.utils.file;
+package eu.adlogix.appnexus.oas.client.utils.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,13 +8,13 @@ import java.net.URISyntaxException;
 
 import org.apache.commons.io.IOUtils;
 
-import eu.adlogix.appnexus.oas.client.utils.AdlFileUtils;
-import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.utils.FileUtils;
 
-public class AdlTestFileUtils {
+public class TestFileUtils {
 
 	public static File getTestResource(final String fileName, final Class<?> testClazz) throws URISyntaxException,
-			AdlResourceNotFoundException {
+			ResourceNotFoundException {
 		String testedClassCanonicalName = testClazz.getCanonicalName();
 		String testedClassCanonicalNameLow = testedClassCanonicalName.toLowerCase();
 
@@ -22,11 +22,11 @@ public class AdlTestFileUtils {
 		String testedClassPath = testedClassCanonicalNameLow.replace(".", classPathSep);
 		String completeClassPath = testedClassPath + classPathSep + fileName;
 
-		return AdlFileUtils.getResourceFilePerClassPath(completeClassPath);
+		return FileUtils.getResourceFilePerClassPath(completeClassPath);
 	}
 
 	public static String getTestResourceAsString(final String fileName, final Class<?> testClazz)
-			throws URISyntaxException, FileNotFoundException, IOException, AdlResourceNotFoundException {
+			throws URISyntaxException, FileNotFoundException, IOException, ResourceNotFoundException {
 		File testResourceFile = getTestResource(fileName, testClazz);
 
 		return IOUtils.toString(new FileInputStream(testResourceFile));

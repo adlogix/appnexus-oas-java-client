@@ -11,7 +11,7 @@ import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.domain.Site.Builder;
-import eu.adlogix.appnexus.oas.client.util.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.utils.OasPageUrlParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 

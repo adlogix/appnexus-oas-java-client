@@ -1,7 +1,7 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotEmpty;
-import static eu.adlogix.appnexus.oas.client.util.ValidatorUtils.checkNotNull;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;

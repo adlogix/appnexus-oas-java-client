@@ -10,28 +10,28 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 
-public class AdlFileUtils {
+public class FileUtils {
 
 	private final static String RESOURCE_NOT_FOUND_MSG_BEGIN = "Unable to locate resource for path '";
 
-	public static File getResourceFilePerClassPath(final String resourcePath) throws AdlResourceNotFoundException {
+	public static File getResourceFilePerClassPath(final String resourcePath) throws ResourceNotFoundException {
 		try {
 			final URL fileUrl = ClassLoader.getSystemResource(resourcePath);
 			if (fileUrl == null)
-				throw new AdlResourceNotFoundException(RESOURCE_NOT_FOUND_MSG_BEGIN + resourcePath
+				throw new ResourceNotFoundException(RESOURCE_NOT_FOUND_MSG_BEGIN + resourcePath
 						+ "' (fileUrl is null)");
 
 			URI fileUri = fileUrl.toURI();
 
 			if (fileUri == null)
-				throw new AdlResourceNotFoundException(RESOURCE_NOT_FOUND_MSG_BEGIN + resourcePath
+				throw new ResourceNotFoundException(RESOURCE_NOT_FOUND_MSG_BEGIN + resourcePath
 						+ "' (fileUri is null)");
 
 			final File res = new File(fileUri);
 			return res;
-		} catch (AdlResourceNotFoundException adlrnfe) {
+		} catch (ResourceNotFoundException adlrnfe) {
 			throw adlrnfe;
 		} catch (Throwable t) {
 			throw new RuntimeException("Unexpected throwable while getResourceFilePerClassPath for '" + resourcePath

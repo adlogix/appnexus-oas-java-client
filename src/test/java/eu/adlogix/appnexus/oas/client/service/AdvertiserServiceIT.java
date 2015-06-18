@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
-import eu.adlogix.appnexus.oas.client.util.Credentials;
+import eu.adlogix.appnexus.oas.client.utils.Credentials;
 
 public class AdvertiserServiceIT {
 
