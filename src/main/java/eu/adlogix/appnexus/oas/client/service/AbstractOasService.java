@@ -73,7 +73,7 @@ public abstract class AbstractOasService {
 	 *            and parameter values as values
 	 * @param retryOnConnectionErrors
 	 *            If <code>true</code>, it will retry if any exceptions are
-	 *            found on invokation. Best for stateless methods
+	 *            found on invocation. Best for stateless methods
 	 * @param suppressOasServerSideExceptions
 	 *            If <code>true</code> this method will not throw any
 	 *            {@link OasServerSideException}s where OAS logic fails. But

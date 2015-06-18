@@ -24,6 +24,13 @@ public class AdvertiserService extends AbstractOasService {
 		super(apiService);
 	}
 
+	/**
+	 * Adds a new advertiser
+	 * 
+	 * @param advertiser
+	 *            {@link Advertiser}
+	 * @return
+	 */
 	public final void addAdvertiser(final Advertiser advertiser) {
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
@@ -38,6 +45,13 @@ public class AdvertiserService extends AbstractOasService {
 		performRequest(addAdvertiserRequestGenerator, parameters);
 	}
 
+	/**
+	 * Updates an existing advertiser
+	 * 
+	 * @param advertiser
+	 *            {@link Advertiser}
+	 * @return
+	 */
 	public final void updateAdvertiser(final Advertiser advertiser) {
 
 		Advertiser existingAdvertiser = getAdvertiserById(advertiser.getId());
@@ -56,6 +70,11 @@ public class AdvertiserService extends AbstractOasService {
 		performRequest(updateAdvertiserRequestGenerator, parameters);
 	}
 
+	/**
+	 * Retrieves a list of existing {@link Advertiser}s
+	 * 
+	 * @return {@link List} of {@link Advertiser}s
+	 */
 	public final List<Advertiser> getAllAdvertisers() {
 		final List<Advertiser> result = new ArrayList<Advertiser>();
 
@@ -76,6 +95,15 @@ public class AdvertiserService extends AbstractOasService {
 		return Collections.unmodifiableList(result);
 	}
 
+	/**
+	 * Retrieves an existing {@link Advertiser} by the given advertiser id
+	 * 
+	 * @param id
+	 *            OAS advertiser Id
+	 * 
+	 * @return {@link Advertiser}
+	 * 
+	 */
 	public Advertiser getAdvertiserById(final String id) {
 
 		@SuppressWarnings("serial")
@@ -86,10 +114,6 @@ public class AdvertiserService extends AbstractOasService {
 		};
 
 		final ResponseParser responseParser = performRequest(readAdvertisersRequestGenerator, parameters);
-
-		if (responseParser.containsExceptions()) {
-			throw new RuntimeException(responseParser.getExceptionMessage());
-		}
 
 		return parseAndCreateAdvertiser(responseParser);
 	}

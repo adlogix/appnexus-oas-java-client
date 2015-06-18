@@ -87,8 +87,7 @@ public class CertificateManager {
 			final String shortenedHost = host.substring(HTTPS_PREFIX.length());
 			boolean renewed = renewCertificate(usedKeyStoreFile.getAbsolutePath(), shortenedHost);
 			if (renewed) {
-				System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator
- + OAS_KEYSTORE_FILENAME);
+				System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + OAS_KEYSTORE_FILENAME);
 			}
 
 		} catch (Exception e) {
