@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 
 import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.PushLevel;
+import eu.adlogix.appnexus.oas.client.exceptions.OasRequestEmbeddedException;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.Credentials;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
@@ -92,49 +93,122 @@ public abstract class AbstractOasService {
 		}
 	}
 
-	public String performRequest(final String xmlRequest) {
-		return performRequest(xmlRequest, false);
+	/**
+	 * Perform a request on OAS API which won't be retried and where
+	 * {@link OasServerSideException}s will be thrown at logic failures in OAS
+	 * side
+	 * 
+	 * @param xmlRequestGenerator
+	 *            Generates an XML request based on the source XML document and
+	 *            parameters
+	 * @param parameters
+	 *            Parameters as a {@link Map} where the parameter names as keys
+	 *            and parameter values as values
+	 * @return {@link ResponseParser} of the Response String
+	 */
+	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+			final Map<String, Object> parameters) {
+		return performRequest(xmlRequestGenerator, parameters, false);
 	}
 
-	public String performRequest(final String xmlRequest, final boolean retryOnConnectionErrors) {
+	/**
+	 * Perform a request on OAS API where {@link OasServerSideException}s will
+	 * be thrown at logic failures in OAS side
+	 * 
+	 * @param xmlRequestGenerator
+	 *            Generates an XML request based on the source XML document and
+	 *            parameters
+	 * @param parameters
+	 *            Parameters as a {@link Map} where the parameter names as keys
+	 *            and parameter values as values
+	 * @param retryOnConnectionErrors
+	 *            If <code>true</code>, it will retry if any exceptions are
+	 *            found on invokation. Best for stateless methods
+	 * @return {@link ResponseParser} of the Response String
+	 */
+	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+			final Map<String, Object> parameters, final boolean retryOnConnectionErrors) {
+		return performRequest(xmlRequestGenerator, parameters, retryOnConnectionErrors, false);
+	}
+
+	/**
+	 * Perform a request on OAS API
+	 * 
+	 * @param xmlRequestGenerator
+	 *            Generates an XML request based on the source XML document and
+	 *            parameters
+	 * @param parameters
+	 *            Parameters as a {@link Map} where the parameter names as keys
+	 *            and parameter values as values
+	 * @param retryOnConnectionErrors
+	 *            If <code>true</code>, it will retry if any exceptions are
+	 *            found on invokation. Best for stateless methods
+	 * @param suppressOasServerSideExceptions
+	 *            If <code>true</code> this method will not throw any
+	 *            {@link OasServerSideException}s where OAS logic fails. But
+	 *            these exceptions can be found by looking into the
+	 *            {@link ResponseParser#containsExceptions()},
+	 *            {@link ResponseParser#getExceptionCode()} and
+	 *            {@link ResponseParser#getExceptionMessage()}
+	 * @return {@link ResponseParser} of the Response String
+	 */
+	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+			final Map<String, Object> parameters, final boolean retryOnConnectionErrors,
+			final boolean suppressOasServerSideExceptions) {
+
+		final String xmlRequest = xmlRequestGenerator.generateRequest(parameters);
+
+		final String xmlResponse = performRequest(xmlRequest, retryOnConnectionErrors);
+
+		final ResponseParser parser = new ResponseParser(xmlResponse);
+		if (parser.containsExceptions() && !suppressOasServerSideExceptions) {
+			throw new OasServerSideException(parser, xmlRequest);
+		}
+
+		return parser;
+	}
+
+	private String performRequest(final String xmlRequest, final boolean retryOnConnectionErrors) {
 		try {
 			logger.info("Making Request:\n" + xmlRequest);
 			final String xmlResponse = OasApiService.callApi(xmlRequest, retryOnConnectionErrors);
 			logger.info("Recieved Response:\n" + xmlResponse);
 			return xmlResponse;
 		} catch (final Exception exception) {
-			throw new RuntimeException("Failed request: \n----- START -----\n" + xmlRequest + "\n----- END -----\n", exception);
+			throw new OasRequestEmbeddedException(xmlRequest, exception);
 		}
 	}
 
-	public final void performPagedRequest(final XmlRequestGenerator requestGenerator,
+	public void performPagedRequest(final XmlRequestGenerator requestGenerator,
 			final Map<String, Object> requestParams, final String sizeHeaderTag, final String xPathLoopExpression,
 			final ResponseElementHandler responseElementHandler) {
 
 		final String xmlRequestOne = requestGenerator.generateRequestWithPageIndex(1, requestParams);
 
 		logger.info("Paged request, page #1 /? ...");
+
 		final String xmlResponseOne = performRequest(xmlRequestOne, true);
-
-		final int maxPageIndex = ResponseParser.parseMaxPageIndex(xmlResponseOne, sizeHeaderTag);
-
 		ResponseParser parser = new ResponseParser(xmlResponseOne);
+		throwExceptionsThrownByOas(parser, xmlResponseOne);
 
-		throwExceptionsThrownByOas(parser, xmlRequestOne);
+		final int maxPageIndex = parser.parseMaxPageIndex(sizeHeaderTag);
 
 		parser.forEachElement(xPathLoopExpression, responseElementHandler);
 
 		for (int pageIndex = 2; pageIndex <= maxPageIndex; pageIndex++) {
+
 			final String xmlRequestN = requestGenerator.generateRequestWithPageIndex(pageIndex, requestParams);
+
 			logger.info("Paged request, page #" + pageIndex + " /" + maxPageIndex + " ...");
+			
 			final String xmlResponseN = performRequest(xmlRequestN, true);
 			parser = new ResponseParser(xmlResponseN);
 			throwExceptionsThrownByOas(parser, xmlResponseN);
+			
 			parser.forEachElement(xPathLoopExpression, responseElementHandler);
 		}
 	}
 	
-
 	protected void throwExceptionsThrownByOas(final ResponseParser parser, String request) {
 		if (parser.containsExceptions()) {
 			throw new OasServerSideException(parser, request);

@@ -88,12 +88,7 @@ public class ReportService extends AbstractOasService {
 			}
 		};
 
-		final String request = campaignDetailDeliveryGenerator.generateRequest(parameters);
-
-		final String response = performRequest(request);
-		final ResponseParser parser = new ResponseParser(response);
-
-		throwExceptionsThrownByOas(parser, request);
+		final ResponseParser parser = performRequest(campaignDetailDeliveryGenerator, parameters);
 
 		final List<CampaignDetailDeliveryHistoryRow> deliveryHistoryRows = Lists.newArrayList();
 
@@ -129,13 +124,7 @@ public class ReportService extends AbstractOasService {
 			}
 		};
 
-		final String readCampaignDeliveryReportOnDayXmlRequest = this.trafficReportsRequestGenerator.generateRequest(requestParameters);
-
-		final String readCampaignDeliveryReportXmlResponse = performRequest(readCampaignDeliveryReportOnDayXmlRequest, true);
-
-		final ResponseParser parser = new ResponseParser(readCampaignDeliveryReportXmlResponse);
-
-		throwExceptionsThrownByOas(parser, readCampaignDeliveryReportOnDayXmlRequest);
+		final ResponseParser parser = performRequest(trafficReportsRequestGenerator, requestParameters, true);
 
 		final List<CampaignDeliveryByPageAndPosition> delivery = Lists.newArrayList();
 

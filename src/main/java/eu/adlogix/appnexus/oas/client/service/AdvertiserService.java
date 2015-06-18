@@ -41,15 +41,7 @@ public class AdvertiserService extends AbstractOasService {
 			}
 		};
 
-		final String request = this.addAdvertiserRequestGenerator.generateRequest(parameters);
-		final String response = performRequest(request);
-
-		ResponseParser responseParser = new ResponseParser(response);
-
-		if (responseParser.containsExceptions()) {
-			throw new RuntimeException(responseParser.getExceptionMessage());
-		}
-
+		performRequest(addAdvertiserRequestGenerator, parameters);
 	}
 
 	public final void updateAdvertiser(final Advertiser advertiser) {
@@ -67,15 +59,7 @@ public class AdvertiserService extends AbstractOasService {
 			}
 		};
 
-		final String request = this.updateAdvertiserRequestGenerator.generateRequest(parameters);
-		final String response = performRequest(request);
-
-		ResponseParser responseParser = new ResponseParser(response);
-
-		if (responseParser.containsExceptions()) {
-			throw new RuntimeException(responseParser.getExceptionMessage());
-		}
-
+		performRequest(updateAdvertiserRequestGenerator, parameters);
 	}
 
 	public final List<Advertiser> getAllAdvertisers() {
@@ -107,10 +91,7 @@ public class AdvertiserService extends AbstractOasService {
 			}
 		};
 
-		final String request = this.readAdvertisersRequestGenerator.generateRequest(parameters);
-		final String response = performRequest(request);
-
-		ResponseParser responseParser = new ResponseParser(response);
+		final ResponseParser responseParser = performRequest(readAdvertisersRequestGenerator, parameters);
 
 		if (responseParser.containsExceptions()) {
 			throw new RuntimeException(responseParser.getExceptionMessage());

@@ -1,11 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,6 +22,11 @@ import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 public class NetworkServiceTest {
 	@Test
@@ -351,7 +350,7 @@ public class NetworkServiceTest {
 		}
 	}
 
-	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Empty allSites parameter was passed. Expected a non empty site list.*")
+	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "allSites shouldn't be empty")
 	public void getAllPagesWithPositionsModifiedSinceDate_EmptySitesMapParameter_ThrowException()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
