@@ -1,17 +1,18 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.testng.collections.Lists;
 
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
@@ -21,17 +22,10 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
-
 public class ReportService extends AbstractOasService {
 
-	protected ReportService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
-		super(credentials, apiService, certificateManager);
-	}
-
-	protected ReportService(Properties credentials) {
-		super(credentials);
+	protected ReportService(OasApiService apiService) {
+		super(apiService);
 	}
 
 	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern(OAS_DATE_FORMAT);

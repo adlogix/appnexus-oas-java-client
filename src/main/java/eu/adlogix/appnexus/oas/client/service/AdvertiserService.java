@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
@@ -22,12 +20,8 @@ public class AdvertiserService extends AbstractOasService {
 	private final XmlRequestGenerator readAdvertisersRequestGenerator = new XmlRequestGenerator("read-advertiser");
 	private final XmlRequestGenerator updateAdvertiserRequestGenerator = new XmlRequestGenerator("update-advertiser");
 
-	public AdvertiserService(Properties credentials) {
-		super(credentials);
-	}
-
-	public AdvertiserService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
-		super(credentials, apiService, certificateManager);
+	AdvertiserService(OasApiService apiService) {
+		super(apiService);
 	}
 
 	public final void addAdvertiser(final Advertiser advertiser) {

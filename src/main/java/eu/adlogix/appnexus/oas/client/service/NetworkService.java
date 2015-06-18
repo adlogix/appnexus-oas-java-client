@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -14,7 +13,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.GetPageListResponseElementHandler;
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
@@ -33,12 +31,8 @@ public class NetworkService extends AbstractOasService {
 	final XmlRequestGenerator getSectionListRequestGenerator = new XmlRequestGenerator("list-sections");
 	final XmlRequestGenerator readSectionRequestGenerator = new XmlRequestGenerator("read-section.xml");
 
-	protected NetworkService(Properties credentials) {
-		super(credentials);
-	}
-
-	public NetworkService(Properties credentials, OasApiService apiService, CertificateManager certificateManager) {
-		super(credentials, apiService, certificateManager);
+	public NetworkService(OasApiService apiService) {
+		super(apiService);
 	}
 
 	/**
