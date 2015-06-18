@@ -19,7 +19,6 @@ import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
@@ -35,8 +34,7 @@ public class NetworkServiceTest {
 			AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listsites.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listsites.xml", NetworkServiceTest.class));
@@ -65,8 +63,7 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", NetworkServiceTest.class));
@@ -111,8 +108,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", NetworkServiceTest.class));
@@ -151,8 +147,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
@@ -192,8 +187,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
@@ -229,8 +223,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
@@ -296,8 +289,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
@@ -357,8 +349,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
@@ -374,8 +365,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listpages-modifieddate.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
@@ -416,8 +406,7 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
@@ -442,8 +431,7 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-nopositions.xml", NetworkServiceTest.class));
@@ -466,8 +454,7 @@ public class NetworkServiceTest {
 			IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-nopages.xml", NetworkServiceTest.class));
@@ -486,8 +473,7 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-readsection-multiplepages.xml", NetworkServiceTest.class));
@@ -527,8 +513,7 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listsections.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
@@ -566,8 +551,7 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		NetworkService service = new NetworkService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		NetworkService service = new NetworkService(mockedApiService);
 
 		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-request-listsections-modifieddate.xml", NetworkServiceTest.class));
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(AdlTestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));

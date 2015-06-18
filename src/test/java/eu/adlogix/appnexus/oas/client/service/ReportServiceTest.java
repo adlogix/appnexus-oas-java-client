@@ -1,5 +1,10 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -15,7 +20,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.OasServerSideException;
-import eu.adlogix.appnexus.oas.client.certificate.CertificateManager;
 import eu.adlogix.appnexus.oas.client.certificate.TestCredentials;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
@@ -24,10 +28,6 @@ import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRo
 import eu.adlogix.appnexus.oas.utils.file.AdlResourceNotFoundException;
 import eu.adlogix.appnexus.oas.utils.file.AdlTestFileUtils;
 import eu.adlogix.appnexus.oas.utils.string.StringTestUtils;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 public class ReportServiceTest {
 
@@ -75,8 +75,7 @@ public class ReportServiceTest {
 			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		final String expectedPageOneRequest = fileToString("inventory-report-page1-request-test.xml");
 		final String mockedPageOneAnswer = fileToString("inventory-report-page1-answer-test.xml");
@@ -121,8 +120,7 @@ public class ReportServiceTest {
 			throws ServiceException,
 			FileNotFoundException, URISyntaxException, IOException, AdlResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		final String expectedLiveDeliRequest = fileToString("expected-request-addeliveryreport-inventory.xml");
 		final String mockedLiveDeliAnswer = fileToString("expected-response-addeliveryreport-inventory.xml");
@@ -149,8 +147,7 @@ public class ReportServiceTest {
 			throws ServiceException, FileNotFoundException, URISyntaxException, IOException,
 			AdlResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		final String expectedLiveDeliRequest = fileToString("expected-request-adstatusreport-livedeli-noenddate.xml");
 		final String mockedLiveDeliAnswer = fileToString("expected-answer-adstatusreport-livedeli-noenddate.xml");
@@ -176,8 +173,7 @@ public class ReportServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		service.getCampaignDetail("0312_AXA-CENTRAL_XPR_HAB_5894", DATE_FORMATTER.parseDateTime("2012-02-22"), null);
 	}
@@ -188,8 +184,7 @@ public class ReportServiceTest {
 			IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		final String expectedAdTrafficRequestOfDay = fileToString("expected-request-trafficonedayreport-readcampaign.xml");
 		final String answerAdTrafficRequestOfDay = fileToString("expected-answer-trafficonedayreport-readcampaign.xml");
@@ -205,8 +200,7 @@ public class ReportServiceTest {
 			URISyntaxException, IOException, AdlResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CertificateManager mockedCertificateManager = mock(CertificateManager.class);
-		ReportService service = new ReportService(getTestCredentials(), mockedApiService, mockedCertificateManager);
+		ReportService service = new ReportService(mockedApiService);
 
 		final String expectedAdTrafficRequestOfDay23 = fileToString("expected-request-addeliveryreport-report-23.xml");
 		final String answerAdTrafficRequestOfDay23 = fileToString("expected-response-addeliveryreport-report-23.xml");

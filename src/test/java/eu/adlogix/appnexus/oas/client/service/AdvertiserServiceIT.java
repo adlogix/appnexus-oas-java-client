@@ -11,7 +11,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
-import eu.adlogix.appnexus.oas.client.service.AdvertiserService;
 import eu.adlogix.appnexus.oas.client.util.Credentials;
 
 public class AdvertiserServiceIT {
@@ -23,7 +22,8 @@ public class AdvertiserServiceIT {
 	@BeforeClass
 	public void initialise() {
 		Properties testCredentials = Credentials.loadTestCredentials();
-		advertiserService = new AdvertiserService(testCredentials);
+		OasServiceFactory factory = new OasServiceFactory(testCredentials);
+		advertiserService = factory.getAdvertiserService();
 		String ts = Long.toString(new Date().getTime());
 		advertiserId = "AdlogixAdvertiserTest_" + ts;
 
