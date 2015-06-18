@@ -23,7 +23,7 @@ public class OasServiceFactory {
 	 * Initializes the OasServiceFactory with the provided {@link Credentials}
 	 * 
 	 * @param credentials
-	 *            OAS credentials that should be used for accessing OAS API
+	 *            {@link Credentials} that should be used for accessing OAS API
 	 * 
 	 */
 	public OasServiceFactory(final Credentials credentials) {

@@ -1,5 +1,7 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,6 +34,10 @@ public class AdvertiserService extends AbstractOasService {
 	 * @return
 	 */
 	public final void addAdvertiser(final Advertiser advertiser) {
+
+		checkNotEmpty(advertiser.getId(), "advertiserId");
+		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
+
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
@@ -39,6 +45,9 @@ public class AdvertiserService extends AbstractOasService {
 				put("advertiserName", advertiser.getOrganization());
 				put("advertiserBillingInfoCountry", advertiser.getBillingInformation().getCountry());
 				put("advertiserBillingInfoMethod", advertiser.getBillingInformation().getMethod());
+				put("advertiserInternalQuickReport", advertiser.getInternalQuickReport());
+				put("advertiserExternalQuickReport", advertiser.getExternalQuickReport());
+
 			}
 		};
 
@@ -53,6 +62,8 @@ public class AdvertiserService extends AbstractOasService {
 	 * @return
 	 */
 	public final void updateAdvertiser(final Advertiser advertiser) {
+
+		checkNotEmpty(advertiser.getId(), "advertiserId");
 
 		Advertiser existingAdvertiser = getAdvertiserById(advertiser.getId());
 
@@ -105,6 +116,8 @@ public class AdvertiserService extends AbstractOasService {
 	 * 
 	 */
 	public Advertiser getAdvertiserById(final String id) {
+
+		checkNotEmpty(id, "advertiserId");
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {

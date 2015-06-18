@@ -80,7 +80,7 @@ public class OasApiService {
 			ServiceException,
 			RemoteException {
 
-		renewCertificate();
+		renewCertificateIfExpired();
 
 		if (logger.isDebugEnabled())
 			logger.debug("Call Oas Api as '" + user + "' with pass: '" + password + "', account: '" + account
@@ -147,7 +147,7 @@ public class OasApiService {
 				throw new RuntimeException("Can not initialize certificate for host" + host
 						+ " as it was already initialized for " + certificateInitialisedForHost);
 			} else {
-				renewCertificate();
+				renewCertificateIfExpired();
 			}
 		}
 	}
@@ -155,7 +155,7 @@ public class OasApiService {
 	/**
 	 * Renews the existing OAS certificate if it has expired.
 	 */
-	private synchronized void renewCertificate() {
+	private synchronized void renewCertificateIfExpired() {
 		certificateManager.renewCertificateForHost(host);
 	}
 

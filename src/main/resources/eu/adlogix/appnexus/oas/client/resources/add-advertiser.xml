@@ -12,8 +12,8 @@
             <Code>$advertiserBillingInfoCountry$</Code>
           </Country>
         </BillingInformation>
-        <InternalQuickReport>short</InternalQuickReport>
-        <ExternalQuickReport>to-date</ExternalQuickReport>
+        <InternalQuickReport>$advertiserInternalQuickReport$</InternalQuickReport>
+        <ExternalQuickReport>$advertiserExternalQuickReport$</ExternalQuickReport>
       </Advertiser>
     </Database>
   </Request>
