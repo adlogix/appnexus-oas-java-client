@@ -314,7 +314,7 @@ public class CertificateManager {
 	 * @return 'true' if the host matches commonNam.e 'false'if the host does
 	 *         not match commonName
 	 */
-	private boolean hostMatchesCommonName(String commonName, String host) {
+	public static boolean hostMatchesCommonName(String commonName, String host) {
 
 		if (commonName.equals(host)) {
 			return true;
