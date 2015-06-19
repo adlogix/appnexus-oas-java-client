@@ -33,7 +33,6 @@ public class OasApiService {
 
 	private static String certificateInitialisedForHost = null;
 
-
 	private String host;
 	private String account;
 	private String user;
