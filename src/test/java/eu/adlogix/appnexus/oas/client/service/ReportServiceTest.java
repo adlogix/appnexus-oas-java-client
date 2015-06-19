@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
-import eu.adlogix.appnexus.oas.client.domain.CampaignDetailDeliveryHistoryRow;
-import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformationRow;
+import eu.adlogix.appnexus.oas.client.domain.CampaignDetail.CampaignDetailDeliveryHistoryRow;
+import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformation;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
@@ -30,34 +30,34 @@ public class ReportServiceTest {
 
 	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-	public final List<PageAtPositionDeliveryInformationRow> expectedHistoStats() {
-		List<PageAtPositionDeliveryInformationRow> expectedHistoStats = new ArrayList<PageAtPositionDeliveryInformationRow>();
+	public final List<PageAtPositionDeliveryInformation.Row> expectedHistoStats() {
+		List<PageAtPositionDeliveryInformation.Row> expectedHistoStats = new ArrayList<PageAtPositionDeliveryInformation.Row>();
 
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "cote_maison", "Frame1", 71203, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "cote_maison", "Left", 71203, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "cote_maison/CALCULETTES", "Middle", 1436, 3));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "express", "Bottom", 3, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "express", "Frame1", 3, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(3), "express/ECONOMIE_HP", "Middle3", 1591, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(3), "express/ECONOMIE_HP", "Right2", 1300, 0));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "corriere.it/tv", "x85", 0, 3039));
-		expectedHistoStats.add(new PageAtPositionDeliveryInformationRow(new DateTime().withYear(2011)
+		expectedHistoStats.add(new PageAtPositionDeliveryInformation.Row(new DateTime().withYear(2011)
 				.withMonthOfYear(3)
 				.withDayOfMonth(1), "corriere.it/tv", "x96", 166551, 0));
 		return expectedHistoStats;
@@ -82,24 +82,24 @@ public class ReportServiceTest {
 		final DateTime testedStartDate = new DateTime().withYear(2011).withMonthOfYear(4).withDayOfMonth(1);
 		final DateTime testedEndDate = new DateTime().withYear(2011).withMonthOfYear(5).withDayOfMonth(10);
 
-		final List<PageAtPositionDeliveryInformationRow> actualHistoStats = service.getPageAtPositionDeliveryInformation(testedStartDate, testedEndDate);
+		final PageAtPositionDeliveryInformation actualHistoStats = service.getPageAtPositionDeliveryInformation(testedStartDate, testedEndDate);
 
-		assertListHistoStatItemEquals(actualHistoStats, expectedHistoStats(), "issue with inventory-report parsing");
+		assertListHistoStatItemEquals(actualHistoStats.getRows(), expectedHistoStats(), "issue with inventory-report parsing");
 	}
 
-	private void assertListHistoStatItemEquals(List<PageAtPositionDeliveryInformationRow> actuals,
-			List<PageAtPositionDeliveryInformationRow> expecteds, String msg) {
+	private void assertListHistoStatItemEquals(List<PageAtPositionDeliveryInformation.Row> actuals,
+			List<PageAtPositionDeliveryInformation.Row> expecteds, String msg) {
 		assertEquals(actuals.size(), expecteds.size(), "issue with sizes for " + msg);
 
 		int cnt = 0;
-		for (PageAtPositionDeliveryInformationRow actual : actuals) {
+		for (PageAtPositionDeliveryInformation.Row actual : actuals) {
 			assertHistoStatItemEquals(actual, expecteds.get(cnt), "issue for item " + cnt + " for " + msg);
 			cnt++;
 		}
 	}
 
-	private void assertHistoStatItemEquals(PageAtPositionDeliveryInformationRow actual,
-			PageAtPositionDeliveryInformationRow expected, String msg) {
+	private void assertHistoStatItemEquals(PageAtPositionDeliveryInformation.Row actual,
+			PageAtPositionDeliveryInformation.Row expected, String msg) {
 		assertEquals(actual.getDate().getYear(), expected.getDate().getYear(), "issue with year date for " + msg);
 		assertEquals(actual.getDate().getDayOfYear(), expected.getDate().getDayOfYear(), "issue with day date for "
 				+ msg);
@@ -200,10 +200,10 @@ public class ReportServiceTest {
 		final String answerAdTrafficRequestOfDay23 = fileToString("expected-response-addeliveryreport-report-23.xml");
 		when(mockedApiService.callApi(expectedAdTrafficRequestOfDay23, true)).thenReturn(answerAdTrafficRequestOfDay23);
 
-		List<CampaignDeliveryByPageAndPosition> delivery = service.getCampaignDeliveryByPageAndPosition("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"));
+		CampaignDeliveryByPageAndPosition delivery = service.getCampaignDeliveryByPageAndPosition("VALENTINOSPA_REDVALEN_MRepHP_Abb_230315_21820", DATE_FORMATTER.parseDateTime("2015-03-23"));
 
-		assertEquals(delivery.get(0), new CampaignDeliveryByPageAndPosition("mrepubblica.it/home", "Top3", 120011l, 461l));
-		assertEquals(delivery.get(1), new CampaignDeliveryByPageAndPosition("mrepubblica.it/home", "Middle1", 120003l, 995l));
+		assertEquals(delivery.getRows().get(0), new CampaignDeliveryByPageAndPosition.Row("mrepubblica.it/home", "Top3", 120011l, 461l));
+		assertEquals(delivery.getRows().get(1), new CampaignDeliveryByPageAndPosition.Row("mrepubblica.it/home", "Middle1", 120003l, 995l));
 
 		verify(mockedApiService).callApi(expectedAdTrafficRequestOfDay23, true);
 	}
@@ -219,14 +219,14 @@ public class ReportServiceTest {
 		final String answerAdTrafficRequest = fileToString("expected-answer-addeliveryreport-1.xml");
 		when(mockedApiService.callApi(expectedAdTrafficRequest, true)).thenReturn(answerAdTrafficRequest);
 
-		List<CampaignDeliveryByPageAndPosition> delivery = service.getCampaignDeliveryByPageAndPosition("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278", DATE_FORMATTER.parseDateTime("2012-02-27"), DATE_FORMATTER.parseDateTime("2012-02-28"));
+		CampaignDeliveryByPageAndPosition delivery = service.getCampaignDeliveryByPageAndPosition("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278", DATE_FORMATTER.parseDateTime("2012-02-27"), DATE_FORMATTER.parseDateTime("2012-02-28"));
 
-		assertEquals(delivery.size(), 33);
-		assertEquals(delivery.get(0), new CampaignDeliveryByPageAndPosition("express_styles/SAVEURS_RG", "Middle", 30423l, 100l));
-		assertEquals(delivery.get(1), new CampaignDeliveryByPageAndPosition("express_styles/VIP_RG", "Middle", 19931l, 33l));
-		assertEquals(delivery.get(2), new CampaignDeliveryByPageAndPosition("express_styles/DIVERS", "Middle", 2619l, 11l));
-		assertEquals(delivery.get(3), new CampaignDeliveryByPageAndPosition("express_styles/MODE_RG", "Middle", 2451l, 9l));
-		assertEquals(delivery.get(32), new CampaignDeliveryByPageAndPosition("express_styles/BLOGS_HP", "Middle", 1l, 0l));
+		assertEquals(delivery.getRows().size(), 33);
+		assertEquals(delivery.getRows().get(0), new CampaignDeliveryByPageAndPosition.Row("express_styles/SAVEURS_RG", "Middle", 30423l, 100l));
+		assertEquals(delivery.getRows().get(1), new CampaignDeliveryByPageAndPosition.Row("express_styles/VIP_RG", "Middle", 19931l, 33l));
+		assertEquals(delivery.getRows().get(2), new CampaignDeliveryByPageAndPosition.Row("express_styles/DIVERS", "Middle", 2619l, 11l));
+		assertEquals(delivery.getRows().get(3), new CampaignDeliveryByPageAndPosition.Row("express_styles/MODE_RG", "Middle", 2451l, 9l));
+		assertEquals(delivery.getRows().get(32), new CampaignDeliveryByPageAndPosition.Row("express_styles/BLOGS_HP", "Middle", 1l, 0l));
 
 		verify(mockedApiService).callApi(expectedAdTrafficRequest, true);
 	}
