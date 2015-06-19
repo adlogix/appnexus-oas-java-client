@@ -15,6 +15,10 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+/**
+ * Service Class which provides functions for all Advertiser related operations
+ * 
+ */
 public class AdvertiserService extends AbstractOasService {
 
 	private final XmlRequestGenerator addAdvertiserRequestGenerator = new XmlRequestGenerator("add-advertiser");
@@ -27,7 +31,7 @@ public class AdvertiserService extends AbstractOasService {
 	}
 
 	/**
-	 * Adds a new advertiser
+	 * Adds a new {@link Advertiser}
 	 * 
 	 * @param advertiser
 	 *            {@link Advertiser}
@@ -55,7 +59,7 @@ public class AdvertiserService extends AbstractOasService {
 	}
 
 	/**
-	 * Updates an existing advertiser
+	 * Updates an existing {@link Advertiser}
 	 * 
 	 * @param advertiser
 	 *            {@link Advertiser}
