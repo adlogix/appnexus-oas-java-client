@@ -110,6 +110,26 @@ public abstract class AbstractOasService {
 		}
 	}
 
+	/**
+	 * Perform a request where the response is paginated. In such a case the
+	 * each atomic request should also mention the page number to access.
+	 * 
+	 * @param requestGenerator
+	 *            Generates an XML request based on the source XML document and
+	 *            parameters
+	 * @param requestParams
+	 *            Parameters as a {@link Map} where the parameter names as keys
+	 *            and parameter values as values
+	 * @param sizeHeaderTag
+	 *            Is the name of the tag of the response which the value of
+	 *            number of pages are found
+	 * @param xPathLoopExpression
+	 *            XPath expression of the response of the tag which is used to
+	 *            identify an entity returned by a response
+	 * @param responseElementHandler
+	 *            An implementation of {@link ResponseElementHandler} which does
+	 *            a custom action on finding instances of xPathLoopExpression
+	 */
 	public void performPagedRequest(final XmlRequestGenerator requestGenerator,
 			final Map<String, Object> requestParams, final String sizeHeaderTag, final String xPathLoopExpression,
 			final ResponseElementHandler responseElementHandler) {
@@ -140,7 +160,7 @@ public abstract class AbstractOasService {
 		}
 	}
 	
-	protected void throwExceptionsThrownByOas(final ResponseParser parser, String request) {
+	private void throwExceptionsThrownByOas(final ResponseParser parser, String request) {
 		if (parser.containsExceptions()) {
 			throw new OasServerSideException(parser, request);
 		}
