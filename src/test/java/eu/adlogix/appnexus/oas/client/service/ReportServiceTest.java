@@ -1,10 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,6 +21,10 @@ import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class ReportServiceTest {
 
@@ -207,5 +206,28 @@ public class ReportServiceTest {
 		assertEquals(delivery.get(1), new CampaignDeliveryByPageAndPosition("mrepubblica.it/home", "Middle1", 120003l, 995l));
 
 		verify(mockedApiService).callApi(expectedAdTrafficRequestOfDay23, true);
+	}
+
+	@Test
+	public void getCampaignDeliveryByPageAndPosition_TwoDayNoError_NoError() throws FileNotFoundException,
+			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		ReportService service = new ReportService(mockedApiService);
+
+		final String expectedAdTrafficRequest = fileToString("expected-request-addeliveryreport-1.xml");
+		final String answerAdTrafficRequest = fileToString("expected-answer-addeliveryreport-1.xml");
+		when(mockedApiService.callApi(expectedAdTrafficRequest, true)).thenReturn(answerAdTrafficRequest);
+
+		List<CampaignDeliveryByPageAndPosition> delivery = service.getCampaignDeliveryByPageAndPosition("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278", DATE_FORMATTER.parseDateTime("2012-02-27"), DATE_FORMATTER.parseDateTime("2012-02-28"));
+
+		assertEquals(delivery.size(), 33);
+		assertEquals(delivery.get(0), new CampaignDeliveryByPageAndPosition("express_styles/SAVEURS_RG", "Middle", 30423l, 100l));
+		assertEquals(delivery.get(1), new CampaignDeliveryByPageAndPosition("express_styles/VIP_RG", "Middle", 19931l, 33l));
+		assertEquals(delivery.get(2), new CampaignDeliveryByPageAndPosition("express_styles/DIVERS", "Middle", 2619l, 11l));
+		assertEquals(delivery.get(3), new CampaignDeliveryByPageAndPosition("express_styles/MODE_RG", "Middle", 2451l, 9l));
+		assertEquals(delivery.get(32), new CampaignDeliveryByPageAndPosition("express_styles/BLOGS_HP", "Middle", 1l, 0l));
+
+		verify(mockedApiService).callApi(expectedAdTrafficRequest, true);
 	}
 }
