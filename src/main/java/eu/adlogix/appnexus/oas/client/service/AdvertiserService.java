@@ -40,21 +40,21 @@ public class AdvertiserService extends AbstractOasService {
 	 *            {@link Advertiser}
 	 * @return
 	 */
-	public final void addAdvertiser(final Advertiser advertiser) {
+	public final void addAdvertiser(Advertiser advertiser) {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
 
-		setDefaultValuesForEmptyFields(advertiser);
+		final Advertiser advertiserWithDefValues = setDefaultValuesForEmptyFields(advertiser);
 
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
-				put("advertiserId", advertiser.getId());
-				put("advertiserName", advertiser.getOrganization());
-				put("advertiserBillingInfoCountry", advertiser.getBillingInformation().getCountry());
-				put("advertiserBillingInfoMethod", advertiser.getBillingInformation().getMethod());
-				put("advertiserInternalQuickReport", advertiser.getInternalQuickReport());
-				put("advertiserExternalQuickReport", advertiser.getExternalQuickReport());
+				put("advertiserId", advertiserWithDefValues.getId());
+				put("advertiserName", advertiserWithDefValues.getOrganization());
+				put("advertiserBillingInfoCountry", advertiserWithDefValues.getBillingInformation().getCountry());
+				put("advertiserBillingInfoMethod", advertiserWithDefValues.getBillingInformation().getMethod());
+				put("advertiserInternalQuickReport", advertiserWithDefValues.getInternalQuickReport());
+				put("advertiserExternalQuickReport", advertiserWithDefValues.getExternalQuickReport());
 
 			}
 		};
