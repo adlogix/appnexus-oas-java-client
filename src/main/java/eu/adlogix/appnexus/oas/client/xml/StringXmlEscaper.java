@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 final class StringXmlEscaper {
 
 	final String escape(final String unescapedString) {
-		return StringEscapeUtils.escapeXml(unescapedString);
+		return StringEscapeUtils.escapeXml11(unescapedString);
 	}
 
 }
