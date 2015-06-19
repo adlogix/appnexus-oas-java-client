@@ -1,0 +1,358 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+<Report>
+<html_general>
+  <content reportKey='0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278' reportTitle='CampaignReport'>
+    <reportTable name='StandardHeader' title='AboutThisReport'>
+      <row>
+        <TimethattheReportwasRun><![CDATA[Fri Mar 02 10:41:10 CET 2012]]></TimethattheReportwasRun>
+      </row>
+      <row>
+        <StartDate><![CDATA[02/27/2012]]></StartDate>
+      </row>
+      <row>
+        <EndDate><![CDATA[02/28/2012]]></EndDate>
+      </row>
+      <row>
+        <Format><![CDATA[$format$]]></Format>
+      </row>
+    </reportTable>
+    <reportTable name='Delivery.Campaign.Base.T280.01' title='PageAndPositionDeliveryInformation(Top500)'>
+      <row>
+        <No><![CDATA[1]]></No>
+        <Page><![CDATA[express_styles/SAVEURS_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[30423]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[48.627]]></ofTotal>
+        <Clicks><![CDATA[100]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[55.5556]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.3287]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[2]]></No>
+        <Page><![CDATA[express_styles/VIP_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[19931]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[31.857]]></ofTotal>
+        <Clicks><![CDATA[33]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[18.3333]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.1656]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[3]]></No>
+        <Page><![CDATA[express_styles/DIVERS]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[2619]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[4.1861]]></ofTotal>
+        <Clicks><![CDATA[11]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[6.1111]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.42]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[4]]></No>
+        <Page><![CDATA[express_styles/MODE_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[2451]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[3.9176]]></ofTotal>
+        <Clicks><![CDATA[9]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[5]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.3672]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[5]]></No>
+        <Page><![CDATA[express_styles/BEAUTE_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[2063]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[3.2974]]></ofTotal>
+        <Clicks><![CDATA[6]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[3.3333]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.2908]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[6]]></No>
+        <Page><![CDATA[express_styles/BLOGS_CAFE_MODE_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[1386]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[2.2153]]></ofTotal>
+        <Clicks><![CDATA[7]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[3.8889]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.5051]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[7]]></No>
+        <Page><![CDATA[express_styles/PHOTO_RG_DIAPO]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[1120]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[1.7902]]></ofTotal>
+        <Clicks><![CDATA[4]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[2.2222]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.3571]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[8]]></No>
+        <Page><![CDATA[express_styles/FASHIONWEEK_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[632]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[1.0102]]></ofTotal>
+        <Clicks><![CDATA[4]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[2.2222]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.6329]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[9]]></No>
+        <Page><![CDATA[express_styles/VOYAGES_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[562]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.8983]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[10]]></No>
+        <Page><![CDATA[express_styles/HOME]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[276]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.4411]]></ofTotal>
+        <Clicks><![CDATA[2]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[1.1111]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.7246]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[11]]></No>
+        <Page><![CDATA[express_styles/HOME]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[250]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.3996]]></ofTotal>
+        <Clicks><![CDATA[1]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.5556]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.4]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[12]]></No>
+        <Page><![CDATA[express_styles/FASHIONWEEK_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[131]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.2094]]></ofTotal>
+        <Clicks><![CDATA[1]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.5556]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0.7634]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[13]]></No>
+        <Page><![CDATA[express_styles/SAVEURS_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[126]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.2014]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[14]]></No>
+        <Page><![CDATA[express_styles/FASHIONWEEK_HP]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[124]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.1982]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[15]]></No>
+        <Page><![CDATA[express_styles/DECO_DESIGN_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[99]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.1582]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[16]]></No>
+        <Page><![CDATA[express_styles/MODE_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[98]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.1566]]></ofTotal>
+        <Clicks><![CDATA[2]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[1.1111]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[2.0408]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[17]]></No>
+        <Page><![CDATA[express_styles/SHOPPING_RG]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[71]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.1135]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[18]]></No>
+        <Page><![CDATA[express_styles/BEAUTE_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[50]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0799]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[19]]></No>
+        <Page><![CDATA[express_styles/FASHIONWEEK_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[48]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0767]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[20]]></No>
+        <Page><![CDATA[express_styles/DIVERS]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[35]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0559]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[21]]></No>
+        <Page><![CDATA[express_styles/DECO_DESIGN_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[22]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0352]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[22]]></No>
+        <Page><![CDATA[express_styles/VIP_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[13]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0208]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[23]]></No>
+        <Page><![CDATA[express_styles/SAVEURS_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[9]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0144]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[24]]></No>
+        <Page><![CDATA[express_styles/SAVEURS_HP]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[8]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0128]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[25]]></No>
+        <Page><![CDATA[express_styles/MODE_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[3]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0048]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[26]]></No>
+        <Page><![CDATA[express_styles/MODE_HP]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[3]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0048]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[27]]></No>
+        <Page><![CDATA[express_styles/VOYAGES_RG]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[3]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0048]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[28]]></No>
+        <Page><![CDATA[express_styles/RSS]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[2]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0032]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[29]]></No>
+        <Page><![CDATA[express_styles/VOYAGES_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[2]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0032]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[30]]></No>
+        <Page><![CDATA[express_styles/VIP_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[1]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0016]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[31]]></No>
+        <Page><![CDATA[express_styles/BEAUTE_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[1]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0016]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[32]]></No>
+        <Page><![CDATA[express_styles/BEAUTE_HP]]></Page>
+        <Position><![CDATA[Middle2]]></Position>
+        <Impressions><![CDATA[1]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0016]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+      <row>
+        <No><![CDATA[33]]></No>
+        <Page><![CDATA[express_styles/BLOGS_HP]]></Page>
+        <Position><![CDATA[Middle]]></Position>
+        <Impressions><![CDATA[1]]></Impressions>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0.0016]]></ofTotal>
+        <Clicks><![CDATA[0]]></Clicks>
+        <ofTotal dataFormat='2' dataSuffix='%'><![CDATA[0]]></ofTotal>
+        <CTR dataFormat='2' dataSuffix='%'><![CDATA[0]]></CTR>
+      </row>
+    </reportTable>
+  </content>
+</html_general>
+</Report>
+</Response>
+</AdXML>
