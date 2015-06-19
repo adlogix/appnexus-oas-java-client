@@ -19,6 +19,7 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
  * Service Class which provides functions for all Advertiser related operations
  * 
  */
+@SuppressWarnings("serial")
 public class AdvertiserService extends AbstractOasService {
 
 	private final XmlRequestGenerator addAdvertiserRequestGenerator = new XmlRequestGenerator("add-advertiser");
@@ -42,7 +43,7 @@ public class AdvertiserService extends AbstractOasService {
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
 
-		@SuppressWarnings("serial")
+
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
 				put("advertiserId", advertiser.getId());
@@ -74,7 +75,6 @@ public class AdvertiserService extends AbstractOasService {
 		final String existingOrganization = existingAdvertiser.getOrganization();
 		final String organization = advertiser.getOrganization();
 
-		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
 				put("advertiserId", advertiser.getId());
@@ -123,7 +123,6 @@ public class AdvertiserService extends AbstractOasService {
 
 		checkNotEmpty(id, "advertiserId");
 
-		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
 				put("advertiserId", id);

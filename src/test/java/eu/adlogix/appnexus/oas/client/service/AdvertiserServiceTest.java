@@ -10,6 +10,7 @@ import java.util.List;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
+import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
@@ -32,7 +33,7 @@ public class AdvertiserServiceTest {
 		assertEquals(advertiser.getBillingInformation().getMethod(), "M");
 	}
 
-	@Test(expectedExceptions = { RuntimeException.class })
+	@Test(expectedExceptions = { OasServerSideException.class })
 	public final void getAdvertiserById_InvalidId_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -61,7 +62,7 @@ public class AdvertiserServiceTest {
 
 	}
 
-	@Test(expectedExceptions = { RuntimeException.class })
+	@Test(expectedExceptions = { OasServerSideException.class })
 	public final void addAdvertiser_AlreadyExisting_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
