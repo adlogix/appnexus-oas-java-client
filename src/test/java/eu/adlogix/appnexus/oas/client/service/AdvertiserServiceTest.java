@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,7 +13,6 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
-import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
 public class AdvertiserServiceTest {
 
@@ -99,9 +99,4 @@ public class AdvertiserServiceTest {
 		assertEquals(advertiser2.getOrganization(), "Advertiser_Test");
 	}
 
-	private static String normalizeNewLinesToCurPlatform(String source) {
-		return (execPlatform.indexOf("windows") >= 0) ? source : StringTestUtils.normalizeNewLinesToCurPlatform(source);
-	}
-
-	private static final String execPlatform = System.getProperty("os.name").toLowerCase();
 }
