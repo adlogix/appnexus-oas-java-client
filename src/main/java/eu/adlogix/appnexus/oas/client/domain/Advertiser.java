@@ -1,8 +1,10 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Advertiser {
 
 	private String id;
@@ -14,17 +16,6 @@ public class Advertiser {
 	public Advertiser(String id, String organization) {
 		this.id = id;
 		this.organization = organization;
-		this.billingInformation = new BillingInformation();
-		billingInformation.setMethod("M");
-		billingInformation.setCountry("US");
-
-		this.internalQuickReport = "short";
-		this.externalQuickReport = "to-date";
-
-	}
-
-	public Advertiser() {
-		this(null, null);
 	}
 
 }

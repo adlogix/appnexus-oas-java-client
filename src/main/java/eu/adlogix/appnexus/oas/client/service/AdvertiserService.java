@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
@@ -43,6 +45,7 @@ public class AdvertiserService extends AbstractOasService {
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
 
+		setDefaultValuesForEmptyFields(advertiser);
 
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
@@ -134,6 +137,12 @@ public class AdvertiserService extends AbstractOasService {
 		return parseAndCreateAdvertiser(responseParser);
 	}
 
+	/**
+	 * Creates an Advertiser object from the {@link ResponseParser}
+	 * 
+	 * @param parser
+	 * @return created {@link Advertiser} object
+	 */
 	private Advertiser parseAndCreateAdvertiser(ResponseParser parser) {
 		Advertiser advertiser = new Advertiser();
 		advertiser.setId(parser.getTrimmedElement("//Advertiser/Id"));
@@ -143,6 +152,44 @@ public class AdvertiserService extends AbstractOasService {
 		billingInformation.setCountry(parser.getTrimmedElement("//Advertiser/BillingInformation/Country/Code"));
 		advertiser.setBillingInformation(billingInformation);
 		return advertiser;
+	}
+
+	/**
+	 * Sets default values for the empty fields of the {@link Advertiser} object
+	 * 
+	 * @param advertiser
+	 * @return {@link Advertiser} object with default values
+	 */
+	private Advertiser setDefaultValuesForEmptyFields(Advertiser advertiser) {
+		if (advertiser.getBillingInformation() == null) {
+			advertiser.setBillingInformation(new BillingInformation());
+		}
+		BillingInformation billingInformation = advertiser.getBillingInformation();
+		billingInformation.setMethod(getDefaultValueIfEmpty(billingInformation.getMethod(), "M"));
+		billingInformation.setCountry(getDefaultValueIfEmpty(billingInformation.getCountry(), "US"));
+
+		advertiser.setInternalQuickReport(getDefaultValueIfEmpty(advertiser.getInternalQuickReport(), "short"));
+		advertiser.setExternalQuickReport(getDefaultValueIfEmpty(advertiser.getExternalQuickReport(), "to-date"));
+
+		return advertiser;
+	}
+
+	/**
+	 * Utility method which checks if a value is empty and returns a default
+	 * value if its empty
+	 * 
+	 * @param value
+	 *            value that needs to be checked if empty
+	 * @param defaultValue
+	 *            default value
+	 * @return if value is not empty returns value. if value is empty returns
+	 *         default value
+	 */
+	private String getDefaultValueIfEmpty(String value, String defaultValue) {
+		if (StringUtils.isEmpty(value)) {
+			return defaultValue;
+		}
+		return value;
 	}
 
 }
