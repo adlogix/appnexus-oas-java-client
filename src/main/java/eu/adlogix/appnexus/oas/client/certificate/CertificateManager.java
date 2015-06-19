@@ -24,63 +24,85 @@ import javax.net.ssl.X509TrustManager;
 
 import org.slf4j.Logger;
 
+import eu.adlogix.appnexus.oas.client.exceptions.OasCertificateException;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
+/**
+ * Manager class which handles all the certificate related functions such as
+ * certificate initialization and renewal.
+ * 
+ **/
 public class CertificateManager {
 
 	private static final int PORT = 443;
 	private static char[] passphrase = "changeit".toCharArray();
 	private static final int NO_OF_DAYS_TO_EXPIRE = 3;
-	private static final Logger logger = LogUtils.getLogger(CertificateManager.class);
 
 	private static final String CONF_DIRECTORY = "conf";
 	private static final String OAS_KEYSTORE_FILENAME = "OASCACerts";
 
 	private static final String HTTPS_PREFIX = "https://";
+	private static final String CERTIFICATE_ALIAS_POSTFIX = "-1";
 
+	private static final Logger logger = LogUtils.getLogger(CertificateManager.class);
+
+	/**
+	 * Installs a new certificate and prepares the keystore for a given host
+	 * 
+	 * @param host
+	 *            - host name which starts with 'https://'
+	 */
 	public synchronized void prepareKeyStoreForHost(final String host) {
 
-		if (!host.startsWith(HTTPS_PREFIX))
-			throw new RuntimeException("We only support https host and not [" + host + "]");
+		try {
+			if (!host.startsWith(HTTPS_PREFIX))
+				throw new RuntimeException("We only support https host and not [" + host + "]");
 
-		final File confDir = new File("conf");
+			final File confDir = new File("conf");
 
-		if (!confDir.exists() && !confDir.mkdir())
+			if (!confDir.exists() && !confDir.mkdir())
 				throw new RuntimeException("Unable to create inexisting conf dir at " + confDir.getAbsolutePath());
 
-		final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
+			final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
 
-		if (usedKeyStoreFile.exists()) {
-			logger.warn("Going to delete pre-existing keyStore file at " + usedKeyStoreFile.getAbsolutePath());
+			if (usedKeyStoreFile.exists()) {
+				logger.warn("Going to delete pre-existing keyStore file at " + usedKeyStoreFile.getAbsolutePath());
 
-			if (!usedKeyStoreFile.delete())
-				throw new RuntimeException("Unable to delete pre-existing keyStore at "
-						+ usedKeyStoreFile.getAbsolutePath());
+				if (!usedKeyStoreFile.delete())
+					throw new RuntimeException("Unable to delete pre-existing keyStore at "
+							+ usedKeyStoreFile.getAbsolutePath());
 
-			if (usedKeyStoreFile.exists())
-				throw new RuntimeException("We could not delete the existing keyStore at "
-						+ usedKeyStoreFile.getAbsolutePath());
-		}
+				if (usedKeyStoreFile.exists())
+					throw new RuntimeException("We could not delete the existing keyStore at "
+							+ usedKeyStoreFile.getAbsolutePath());
+			}
 
-		final String shortenedHost = host.substring(HTTPS_PREFIX.length());
-
-		try {
+			final String shortenedHost = host.substring(HTTPS_PREFIX.length());
 
 			installCertificate(usedKeyStoreFile.getAbsolutePath(), shortenedHost);
 
+			if (!usedKeyStoreFile.exists())
+				throw new RuntimeException("We could not copy the keyStore to " + usedKeyStoreFile.getAbsolutePath());
+
+			System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + OAS_KEYSTORE_FILENAME);
+
 		} catch (Exception e) {
-			throw new RuntimeException("Unable to install the certificate", e);
+			throw new OasCertificateException("Error in preparing keystore and installing certificate for host" + host, e);
 		}
-
-		if (!usedKeyStoreFile.exists())
-			throw new RuntimeException("We could not copy the keyStore to " + usedKeyStoreFile.getAbsolutePath());
-
-		System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + OAS_KEYSTORE_FILENAME);
 	}
 
+	/**
+	 * Renews the existing certificate for the given host if it has expired or
+	 * will expire in the next 3 days
+	 * 
+	 * @param host
+	 *            - host name which starts with 'https://'
+	 */
 	public synchronized void renewCertificateForHost(final String host) {
 
 		try {
+			if (!host.startsWith(HTTPS_PREFIX))
+				throw new RuntimeException("We only support https host and not [" + host + "]");
 
 			final File confDir = new File("conf");
 			final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
@@ -91,43 +113,71 @@ public class CertificateManager {
 			}
 
 		} catch (Exception e) {
-			throw new RuntimeException("Unable to renew the certificate", e);
+			throw new OasCertificateException("Error in renewing certificate for host" + host, e);
+
 		}
 	}
 
-	public static boolean certificateExpires(String filePath, String host) throws Exception {
+	/**
+	 * Checks if a certificate for the given host is expired or will expire in 3
+	 * days
+	 * 
+	 * @param filePath
+	 *            - keystore file path
+	 * @param host
+	 *            - host name without 'https://' prefix
+	 */
 
-		String certificateAlias = host + "-1";
+	private boolean certificateExpires(String filePath, String host) {
 
-		File file = new File(filePath);
+		String certificateAlias = host + CERTIFICATE_ALIAS_POSTFIX;
 
-		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+		try {
 
-		if (file.exists()) {
+			File file = new File(filePath);
+
+			if (!file.exists()) {
+				throw new RuntimeException("There is no keystore at " + filePath);
+			}
+
+			KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+
 			InputStream in = new FileInputStream(file);
 			ks.load(in, passphrase);
 			in.close();
-		} else {
-			throw new RuntimeException("There is no certificate at " + filePath);
-		}
 
-		X509Certificate certificate = (X509Certificate) ks.getCertificate(certificateAlias);
+			X509Certificate certificate = (X509Certificate) ks.getCertificate(certificateAlias);
 
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.add(Calendar.DATE, NO_OF_DAYS_TO_EXPIRE);
+			GregorianCalendar cal = new GregorianCalendar();
+			cal.add(Calendar.DATE, NO_OF_DAYS_TO_EXPIRE);
 
-		Date certExpirationDate = ((X509Certificate) certificate).getNotAfter();
+			Date certExpirationDate = ((X509Certificate) certificate).getNotAfter();
 
-		if (certExpirationDate.before(cal.getTime())) {
-			logger.info("Certificate at " + filePath + " is expired or will expire in " + NO_OF_DAYS_TO_EXPIRE
-					+ " days. Expires/Expired on : " + certExpirationDate);
-			return true;
-		} else {
-			return false;
+			if (certExpirationDate.before(cal.getTime())) {
+				logger.info("Certificate at " + filePath + " is expired or will expire in " + NO_OF_DAYS_TO_EXPIRE
+						+ " days. Expires/Expired on : " + certExpirationDate);
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error occured while checking if the certificate expires", e);
 		}
 	}
 
-	public static boolean renewCertificate(String filePath, String host) throws Exception {
+	/**
+	 * Renews the certificate at the given keystore path if it has expired or
+	 * will expire in the next 3 days
+	 * 
+	 * @param filePath
+	 *            - keystore file path
+	 * @param host
+	 *            - host name without 'https://' prefix
+	 * @return 'true' if the certificate was renewed. 'false' if the certificate
+	 *         was not renewed
+	 */
+	private boolean renewCertificate(String filePath, String host) {
 
 		File file = new File(filePath);
 		boolean certificateExists = file.exists();
@@ -140,82 +190,95 @@ public class CertificateManager {
 		return false;
 	}
 
-	public static void installCertificate(String filePath, String host) throws Exception {
+	/**
+	 * Installs a new certificate at the given path for the given host
+	 * 
+	 * @param filePath
+	 *            - keystore file path
+	 * @param host
+	 *            - host name without 'https://' prefix
+	 */
+	private void installCertificate(String filePath, String host) {
 
-		String certificateAlias = host + "-1";
-
-		File file = new File(filePath);
-
-		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-
-		if (file.exists()) {
-			logger.debug("Loading KeyStore " + file.getAbsolutePath() + "...");
-			InputStream in = new FileInputStream(file);
-			ks.load(in, passphrase);
-			in.close();
-		} else {
-			logger.debug("Creating KeyStore " + file.getAbsolutePath() + "...");
-			ks.load(null, passphrase);
-		}
-
-		SSLContext context = SSLContext.getInstance("TLS");
-		TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-		tmf.init(ks);
-		X509TrustManager defaultTrustManager = (X509TrustManager) tmf.getTrustManagers()[0];
-		SavingTrustManager tm = new SavingTrustManager(defaultTrustManager);
-		context.init(null, new TrustManager[] { tm }, null);
-		SSLSocketFactory factory = context.getSocketFactory();
-
-		logger.debug("Opening connection to " + host + ":" + PORT + "...");
-		SSLSocket socket = (SSLSocket) factory.createSocket(host, PORT);
-		socket.setSoTimeout(10000);
 		try {
-			logger.debug("Starting SSL handshake...");
-			socket.startHandshake();
-			socket.close();
-			logger.debug("No errors, certificate is already trusted");
-		} catch (SSLException e) {
-			logger.warn(e.getLocalizedMessage());
-		}
+			String certificateAlias = host + CERTIFICATE_ALIAS_POSTFIX;
 
-		X509Certificate[] chain = tm.chain;
-		if (chain == null) {
-			logger.error("Could not obtain server certificate chain");
-			return;
-		}
+			File file = new File(filePath);
 
-		logger.debug("Server sent " + chain.length + " certificate(s):");
+			KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
 
-		int certificateToAdd = -1;
-		int i = 0;
-		while (i < chain.length && (certificateToAdd == -1)) {
-			X509Certificate cert = chain[i];
-			String dn = cert.getSubjectX500Principal().getName();
-			LdapName ldapDN = new LdapName(dn);
-
-			for (Rdn rdn : ldapDN.getRdns()) {
-				if (rdn.getType().equals("CN") && hostMatchesCommonName(rdn.getValue().toString(), host)) {
-					certificateToAdd = i;
-					logger.debug("Found certificate to renew");
-					break;
-				}
+			if (file.exists()) {
+				logger.debug("Loading KeyStore " + file.getAbsolutePath() + "...");
+				InputStream in = new FileInputStream(file);
+				ks.load(in, passphrase);
+				in.close();
+			} else {
+				logger.debug("Creating KeyStore " + file.getAbsolutePath() + "...");
+				ks.load(null, passphrase);
 			}
-			i++;
+
+			SSLContext context = SSLContext.getInstance("TLS");
+			TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+			tmf.init(ks);
+			X509TrustManager defaultTrustManager = (X509TrustManager) tmf.getTrustManagers()[0];
+			SavingTrustManager tm = new SavingTrustManager(defaultTrustManager);
+			context.init(null, new TrustManager[] { tm }, null);
+			SSLSocketFactory factory = context.getSocketFactory();
+
+			logger.debug("Opening connection to " + host + ":" + PORT + "...");
+			SSLSocket socket = (SSLSocket) factory.createSocket(host, PORT);
+			socket.setSoTimeout(10000);
+			try {
+				logger.debug("Starting SSL handshake...");
+				socket.startHandshake();
+				socket.close();
+				logger.debug("No errors, certificate is already trusted");
+			} catch (SSLException e) {
+				logger.warn(e.getLocalizedMessage());
+			}
+
+			X509Certificate[] chain = tm.chain;
+			if (chain == null) {
+				logger.error("Could not obtain server certificate chain");
+				return;
+			}
+
+			logger.debug("Server sent " + chain.length + " certificate(s):");
+
+			int certificateToAdd = -1;
+			int i = 0;
+			while (i < chain.length && (certificateToAdd == -1)) {
+				X509Certificate cert = chain[i];
+				String dn = cert.getSubjectX500Principal().getName();
+				LdapName ldapDN = new LdapName(dn);
+
+				for (Rdn rdn : ldapDN.getRdns()) {
+					if (rdn.getType().equals("CN") && hostMatchesCommonName(rdn.getValue().toString(), host)) {
+						certificateToAdd = i;
+						logger.debug("Found certificate to renew");
+						break;
+					}
+				}
+				i++;
+			}
+
+			if (certificateToAdd == -1) {
+				logger.debug("KeyStore not changed");
+				return;
+			}
+
+			X509Certificate cert = chain[certificateToAdd];
+			ks.setCertificateEntry(certificateAlias, cert);
+
+			OutputStream out = new FileOutputStream(file);
+			ks.store(out, passphrase);
+			out.close();
+
+			logger.info("Added certificate to keystore " + file.getAbsolutePath());
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error in installing certificate", e);
 		}
-
-		if (certificateToAdd == -1) {
-			logger.debug("KeyStore not changed");
-			return;
-		}
-
-		X509Certificate cert = chain[certificateToAdd];
-		ks.setCertificateEntry(certificateAlias, cert);
-
-		OutputStream out = new FileOutputStream(file);
-		ks.store(out, passphrase);
-		out.close();
-
-		logger.info("Added certificate to keystore " + file.getAbsolutePath());
 	}
 
 	private static class SavingTrustManager implements X509TrustManager {
@@ -241,7 +304,17 @@ public class CertificateManager {
 		}
 	}
 
-	public static boolean hostMatchesCommonName(String commonName, String host) {
+	/**
+	 * Checks if the Certificate common name matches the host name
+	 * 
+	 * @param commonName
+	 *            - Certificate common name
+	 * @param host
+	 *            - host name
+	 * @return 'true' if the host matches commonNam.e 'false'if the host does
+	 *         not match commonName
+	 */
+	private boolean hostMatchesCommonName(String commonName, String host) {
 
 		if (commonName.equals(host)) {
 			return true;
@@ -254,10 +327,27 @@ public class CertificateManager {
 		return false;
 	}
 
+	/**
+	 * Checks if the given name is a wildcard name which starts with *
+	 * 
+	 * @param name
+	 * @return 'true' if the name starts with '*'. 'false' if the name does not
+	 *         start with '*'
+	 */
 	private static boolean isWildCardName(String name) {
 		return name.startsWith("*");
 	}
 
+	/**
+	 * Checks if the given wild card common name matches host
+	 * 
+	 * @param wildCardCommonName
+	 *            eg: *.domain.com
+	 * @param host
+	 *            eg: test.domain.com
+	 * @return 'true' if the wild card common name matched host. 'false'if the
+	 *         wild card common name does not match host
+	 */
 	private static boolean matchesWildCardCommonName(String wildCardCommonName, String host) {
 
 		if (wildCardCommonName != null && wildCardCommonName.length() > 1) {
