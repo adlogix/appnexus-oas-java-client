@@ -32,7 +32,8 @@ final class ParameterMapXmlEscaper {
 				}
 				result.put(key, Collections.unmodifiableList(sanitizedCollection));
 			} else {
-				result.put(key, this.stringXmlEscaper.escape(parameter.toString()));
+				Object value = (parameter == null) ? parameter : this.stringXmlEscaper.escape(parameter.toString());
+				result.put(key, value);
 			}
 		}
 		return Collections.unmodifiableMap(result);

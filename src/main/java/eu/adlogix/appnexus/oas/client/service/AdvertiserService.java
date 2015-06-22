@@ -1,6 +1,7 @@
 package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,15 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-
 /**
  * Service Class which provides functions for all Advertiser related operations
  * 
@@ -165,31 +163,13 @@ public class AdvertiserService extends AbstractOasService {
 			advertiser.setBillingInformation(new BillingInformation());
 		}
 		BillingInformation billingInformation = advertiser.getBillingInformation();
-		billingInformation.setMethod(getDefaultValueIfEmpty(billingInformation.getMethod(), "M"));
-		billingInformation.setCountry(getDefaultValueIfEmpty(billingInformation.getCountry(), "US"));
+		billingInformation.setMethod(defaultIfEmpty(billingInformation.getMethod(), "M"));
+		billingInformation.setCountry(defaultIfEmpty(billingInformation.getCountry(), "US"));
 
-		advertiser.setInternalQuickReport(getDefaultValueIfEmpty(advertiser.getInternalQuickReport(), "short"));
-		advertiser.setExternalQuickReport(getDefaultValueIfEmpty(advertiser.getExternalQuickReport(), "to-date"));
+		advertiser.setInternalQuickReport(defaultIfEmpty(advertiser.getInternalQuickReport(), "short"));
+		advertiser.setExternalQuickReport(defaultIfEmpty(advertiser.getExternalQuickReport(), "to-date"));
 
 		return advertiser;
-	}
-
-	/**
-	 * Utility method which checks if a value is empty and returns a default
-	 * value if its empty
-	 * 
-	 * @param value
-	 *            value that needs to be checked if empty
-	 * @param defaultValue
-	 *            default value
-	 * @return if value is not empty returns value. if value is empty returns
-	 *         default value
-	 */
-	private String getDefaultValueIfEmpty(String value, String defaultValue) {
-		if (StringUtils.isEmpty(value)) {
-			return defaultValue;
-		}
-		return value;
 	}
 
 }
