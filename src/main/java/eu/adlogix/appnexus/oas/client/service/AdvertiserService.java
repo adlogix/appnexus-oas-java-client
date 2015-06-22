@@ -43,7 +43,7 @@ public class AdvertiserService extends AbstractOasService {
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
 
-		final Advertiser advertiserWithDefValues = setDefaultValuesForEmptyFields(advertiser);
+		final Advertiser advertiserWithDefValues = setDefaultsForEmptyFields(advertiser);
 
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
@@ -158,7 +158,7 @@ public class AdvertiserService extends AbstractOasService {
 	 * @param advertiser
 	 * @return {@link Advertiser} object with default values
 	 */
-	private Advertiser setDefaultValuesForEmptyFields(Advertiser advertiser) {
+	private Advertiser setDefaultsForEmptyFields(Advertiser advertiser) {
 		if (advertiser.getBillingInformation() == null) {
 			advertiser.setBillingInformation(new BillingInformation());
 		}
