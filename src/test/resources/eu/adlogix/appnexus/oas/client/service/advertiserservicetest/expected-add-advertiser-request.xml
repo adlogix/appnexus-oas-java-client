@@ -2,8 +2,8 @@
   <Request type="Advertiser">
     <Database action="add">
       <Advertiser>
-        <Id>TestAdvertiser_01</Id>
-        <Organization>AdvertiserTest</Organization>
+        <Id>test_advertiser_01</Id>
+        <Organization>Adlogix</Organization>
         <BillingInformation>
           <Method>
             <Code>M</Code>

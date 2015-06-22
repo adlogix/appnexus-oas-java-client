@@ -33,23 +33,23 @@ public final class Credentials {
 	public Credentials(String host, String user, String password, String account) {
 
 		if (StringUtils.isEmpty(host)) {
-			throw new IllegalStateException("The OAS Hostname is empty");
+			throw new IllegalArgumentException("The OAS Hostname is empty");
 		}
 		this.host = host;
 
 		if (StringUtils.isEmpty(user)) {
-			throw new IllegalStateException("The OAS Username is empty");
+			throw new IllegalArgumentException("The OAS Username is empty");
 		}
 		this.user = user;
 
 		if (StringUtils.isEmpty(password)) {
-			throw new IllegalStateException("The OAS Password is empty");
+			throw new IllegalArgumentException("The OAS Password is empty");
 		}
 
 		this.password = password;
 
 		if (StringUtils.isEmpty(account)) {
-			throw new IllegalStateException("The OAS Account is emtpy");
+			throw new IllegalArgumentException("The OAS Account is emtpy");
 		}
 		this.account = account;
 	}

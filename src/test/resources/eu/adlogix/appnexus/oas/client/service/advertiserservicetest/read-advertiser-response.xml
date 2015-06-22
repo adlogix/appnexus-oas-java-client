@@ -3,8 +3,8 @@
 
 <Response>
   <Advertiser>
-    <Id>TestAdvertiser_01</Id>
-    <Organization>AdvertiserTest</Organization>
+    <Id>test_advertiser_01</Id>
+    <Organization>Adlogix</Organization>
     <Notes/>
     <ContactFirstName></ContactFirstName>
     <ContactLastName></ContactLastName>
@@ -34,7 +34,7 @@
     <Exclusions>
       <SiteDomains/>
     </Exclusions>
-    <WhoCreated>RCSAPI</WhoCreated>
+    <WhoCreated>ADLOGIX_API</WhoCreated>
     <WhenCreated>06/10/2015 08:33:04</WhenCreated>
     <WhoModified></WhoModified>
     <WhenModified></WhenModified>

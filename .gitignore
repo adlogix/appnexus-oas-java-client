@@ -6,3 +6,4 @@ bin/
 conf/
 test-output/
 src/test/resources/eu/adlogix/appnexus/oas/certificate/
+src/test/java/eu/adlogix/appnexus/oas/client/runner

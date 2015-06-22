@@ -71,15 +71,10 @@ public class AdvertiserService extends AbstractOasService {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 
-		Advertiser existingAdvertiser = getAdvertiserById(advertiser.getId());
-
-		final String existingOrganization = existingAdvertiser.getOrganization();
-		final String organization = advertiser.getOrganization();
-
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
 				put("advertiserId", advertiser.getId());
-				put("advertiserName", (existingOrganization.equals(organization)) ? null : organization);
+				put("advertiserName", advertiser.getOrganization());
 			}
 		};
 

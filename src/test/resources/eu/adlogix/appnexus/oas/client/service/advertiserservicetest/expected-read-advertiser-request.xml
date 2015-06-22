@@ -3,7 +3,7 @@
   <Request type="Advertiser">
     <Database action="read">
       <Advertiser>
-        <Id>TestAdvertiser_01</Id>
+        <Id>test_advertiser_01</Id>
       </Advertiser>
     </Database>
   </Request>

@@ -26,9 +26,9 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = service.getAdvertiserById("TestAdvertiser_01");
-		assertEquals(advertiser.getId(), "TestAdvertiser_01");
-		assertEquals(advertiser.getOrganization(), "AdvertiserTest");
+		Advertiser advertiser = service.getAdvertiserById("test_advertiser_01");
+		assertEquals(advertiser.getId(), "test_advertiser_01");
+		assertEquals(advertiser.getOrganization(), "Adlogix");
 		assertEquals(advertiser.getBillingInformation().getCountry(), "US");
 		assertEquals(advertiser.getBillingInformation().getMethod(), "M");
 	}
@@ -43,7 +43,7 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-invalid-id-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		service.getAdvertiserById("TestAdvertiser_01");
+		service.getAdvertiserById("test_advertiser_01");
 	}
 
 	@Test
@@ -56,14 +56,14 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-successful-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = new Advertiser("TestAdvertiser_01", "AdvertiserTest");
+		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix");
 		service.addAdvertiser(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void addAdvertiser_AlreadyExisting_ThrowException() throws Exception {
+	public final void addAdvertiser_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -72,7 +72,7 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-id-already-exists-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = new Advertiser("TestAdvertiser_01", "AdvertiserTest");
+		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix");
 		service.addAdvertiser(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
@@ -91,12 +91,27 @@ public class AdvertiserServiceTest {
 		assertEquals(advertisers.size(), 5);
 
 		Advertiser advertiser1 = advertisers.get(0);
-		assertEquals(advertiser1.getId(), "Advertiser_Test_1");
+		assertEquals(advertiser1.getId(), "test_advertiser_01");
 		assertEquals(advertiser1.getOrganization(), "");
 
 		Advertiser advertiser2 = advertisers.get(1);
-		assertEquals(advertiser2.getId(), "Advertiser_Test_2");
-		assertEquals(advertiser2.getOrganization(), "Advertiser_Test");
+		assertEquals(advertiser2.getId(), "test_advertiser_02");
+		assertEquals(advertiser2.getOrganization(), "Adlogix");
 	}
 
+	@Test
+	public final void updateAdvertiser_UpdateOrganization_SuccessfullyUpdate() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		AdvertiserService service = new AdvertiserService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-update-advertiser-request.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-advertiser-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix_Advertiser");
+		service.updateAdvertiser(advertiser);
+		verify(mockedApiService).callApi(expectedRequest, false);
+
+	}
 }

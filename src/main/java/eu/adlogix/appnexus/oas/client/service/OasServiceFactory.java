@@ -1,6 +1,7 @@
 package eu.adlogix.appnexus.oas.client.service;
 
 import eu.adlogix.appnexus.oas.client.domain.Credentials;
+import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 
 
 /**
@@ -17,6 +18,8 @@ public class OasServiceFactory {
 	private NetworkService networkService;
 
 	private ReportService reportService;
+
+	private InsertionOrderService insertionOrderService;
 
 
 	/**
@@ -65,6 +68,18 @@ public class OasServiceFactory {
 			reportService = new ReportService(oasApiService);
 		}
 		return reportService;
+	}
+
+	/**
+	 * Getter Method for {@link InsertionOrder}
+	 * 
+	 * @return {@link InsertionOrder}
+	 */
+	public InsertionOrderService getiInsertionOrderService() {
+		if (insertionOrderService == null) {
+			insertionOrderService = new InsertionOrderService(oasApiService);
+		}
+		return insertionOrderService;
 	}
 
 }
