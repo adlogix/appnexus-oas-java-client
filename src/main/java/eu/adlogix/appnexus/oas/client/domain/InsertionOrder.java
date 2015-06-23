@@ -75,10 +75,18 @@ public class InsertionOrder extends StatefulDomain {
 	}
 
 
+	/**
+	 * Resets the modified flags.The {@link InsertionOrder} will be considered
+	 * as an unmodified {@link InsertionOrder} after calling this method.
+	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
 	}
 
+	/**
+	 * Returns a new {@link InsertionOrder} object with only the modified
+	 * attribute values.
+	 */
 	public InsertionOrder getInsertionOrderWithModifiedAttributes() {
 		return super.getObjectWithModifiedAttributes();
 	}
