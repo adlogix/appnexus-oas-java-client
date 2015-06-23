@@ -69,7 +69,7 @@ public class NetworkServiceTest {
 		sites.add(new Site("Aperol", "aperol"));
 		sites.add(new Site("cartest.it", null));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(sites, null);
+		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
 		assertEquals(pages.size(), 4);
 
@@ -151,7 +151,7 @@ public class NetworkServiceTest {
 		sites.add(new Site("adsolutions", null));
 		sites.add(new Site("dada", "dada"));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(sites, null);
+		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
 		assertEquals(pages.size(), 2);
 
@@ -229,7 +229,7 @@ public class NetworkServiceTest {
 		sites.add(new Site("Aperol", "aperol"));
 		sites.add(new Site("cartest.it", null));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(sites, null);
+		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
 		assertEquals(pages.size(), 6);
 
@@ -349,7 +349,7 @@ public class NetworkServiceTest {
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		service.getAllPagesWithPositionsModifiedSinceDate(new ArrayList<Site>(), null);
+		service.getAllPagesWithPositionsModifiedSinceDate(null, new ArrayList<Site>());
 
 	}
 
@@ -370,7 +370,7 @@ public class NetworkServiceTest {
 		sites.add(new Site("dada", "dada"));
 
 		DateTime lastModifiedDate = new DateTime(2014, 5, 10, 0, 0, 0, 0);
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(sites, lastModifiedDate);
+		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, sites);
 
 		assertEquals(pages.size(), 2);
 

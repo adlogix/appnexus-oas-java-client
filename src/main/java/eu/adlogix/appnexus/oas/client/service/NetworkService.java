@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
@@ -18,11 +19,13 @@ import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.utils.OasPageUrlParser;
-import eu.adlogix.appnexus.oas.client.utils.ValidatorUtils;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
+
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 public class NetworkService extends AbstractOasService {
 
@@ -58,20 +61,19 @@ public class NetworkService extends AbstractOasService {
 	/**
 	 * Retrieve list of pages with positions which are modified since the given
 	 * last modified date
-	 * 
+	 * @param lastModifiedDate
+	 *            Used to retrieve all modifications since this given date. If
+	 *            null, everything will be retrieved.
 	 * @param allSites
 	 *            {@link List} which contains all the OAS {@link Site}s mapped
 	 *            against their IDs
 	 * 
-	 * @param lastModifiedDate
-	 *            Used to retrieve all modifications since this given date. If
-	 *            null, everything will be retrieved.
 	 * @return
 	 */
-	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final List<Site> allSites,
-			final DateTime lastModifiedDate) {
+	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final DateTime lastModifiedDate,
+			final List<Site> allSites) {
 
-		ValidatorUtils.checkNotEmpty(allSites, "allSites");
+		checkNotEmpty(allSites, "allSites");
 
 		final Map<String, Site> siteMapById = Maps.uniqueIndex(allSites, new Function<Site, String>() {
 			@Override
@@ -80,7 +82,7 @@ public class NetworkService extends AbstractOasService {
 			}
 		});
 
-		return getAllPagesWithPositionsModifiedSinceDate(new Site.SiteIdMapBackedBuilder(siteMapById), lastModifiedDate);
+		return getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, siteMapById);
 	}
 
 	/**
@@ -95,11 +97,11 @@ public class NetworkService extends AbstractOasService {
 	 */
 	public List<Page> getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate) {
 
-		return getAllPagesWithPositionsModifiedSinceDate(new Site.OnlyIdBuilder(), lastModifiedDate);
+		return getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, new HashMap<String, Site>());
 	}
 
-	private List<Page> getAllPagesWithPositionsModifiedSinceDate(final Site.Builder siteBuilder,
-			final DateTime lastModifiedDate) {
+	private List<Page> getAllPagesWithPositionsModifiedSinceDate(final DateTime lastModifiedDate,
+			final Map<String, Site> siteMapById) {
 
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		if (lastModifiedDate != null) {
@@ -108,7 +110,10 @@ public class NetworkService extends AbstractOasService {
 
 		// The siteBuilder will inject the Site when Pages are created based on
 		// the siteBuilder implementation
-		final GetPageListResponseElementHandler getPageListResponseElementHandler = new GetPageListResponseElementHandler(siteBuilder);
+		final GetPageListResponseElementHandler getPageListResponseElementHandler = new GetPageListResponseElementHandler();
+		if (MapUtils.isNotEmpty(siteMapById)) {
+			getPageListResponseElementHandler.setSiteMapById(siteMapById);
+		}
 
 		performPagedRequest(getPageListRequestGenerator, parameters, "List", "//List/Page", getPageListResponseElementHandler);
 
@@ -154,6 +159,8 @@ public class NetworkService extends AbstractOasService {
 	 * @return
 	 */
 	public Section readSection(final String sectionId) {
+
+		checkNotNull(sectionId, "sectionId");
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> requestParameters = new HashMap<String, Object>() {
