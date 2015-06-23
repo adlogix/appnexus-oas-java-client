@@ -30,7 +30,7 @@ public abstract class StatefulDomain {
 	}
 	
 	/**
-	 * Resets the modified flags.The object will be considered as a non-modified
+	 * Resets the modified flags.The object will be considered as a unmodified
 	 * object after calling this method.
 	 * 
 	 */

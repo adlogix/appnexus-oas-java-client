@@ -88,7 +88,6 @@ public abstract class AbstractOasService {
 			final boolean suppressOasServerSideExceptions) {
 
 		final String xmlRequest = xmlRequestGenerator.generateRequest(parameters);
-
 		final String xmlResponse = performRequest(xmlRequest, retryOnConnectionErrors);
 
 		final ResponseParser parser = new ResponseParser(xmlResponse);

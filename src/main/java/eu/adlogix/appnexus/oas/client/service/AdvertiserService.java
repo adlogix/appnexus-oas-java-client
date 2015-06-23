@@ -58,6 +58,7 @@ public class AdvertiserService extends AbstractOasService {
 		};
 
 		performRequest(addAdvertiserRequestGenerator, parameters);
+		advertiser.resetModifiedFlags();
 	}
 
 	/**
@@ -71,14 +72,18 @@ public class AdvertiserService extends AbstractOasService {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 
+		final Advertiser modifiedAdvertiser = advertiser.getAdvertiserWithModifiedAttributes();
+
+
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
-				put("advertiserId", advertiser.getId());
-				put("advertiserName", advertiser.getOrganization());
+				put("advertiserId", modifiedAdvertiser.getId());
+				put("advertiserName", modifiedAdvertiser.getOrganization());
 			}
 		};
 
 		performRequest(updateAdvertiserRequestGenerator, parameters);
+		advertiser.resetModifiedFlags();
 	}
 
 	/**
@@ -93,11 +98,12 @@ public class AdvertiserService extends AbstractOasService {
 
 			@Override
 			public void processElement(ResponseElement element) {
-					Advertiser advertiser=new Advertiser();
+				Advertiser advertiser = new Advertiser();
 				advertiser.setId(element.getChild("Id"));
-					advertiser.setOrganization(element.getChild("Organization"));
-					result.add(advertiser);
-				}
+				advertiser.setOrganization(element.getChild("Organization"));
+				advertiser.resetModifiedFlags();
+				result.add(advertiser);
+			}
 			
 		};
 
@@ -127,7 +133,10 @@ public class AdvertiserService extends AbstractOasService {
 
 		final ResponseParser responseParser = performRequest(readAdvertisersRequestGenerator, parameters);
 
-		return parseAndCreateAdvertiser(responseParser);
+		Advertiser advertiser = parseAndCreateAdvertiser(responseParser);
+		advertiser.resetModifiedFlags();
+		return advertiser;
+
 	}
 
 	/**
