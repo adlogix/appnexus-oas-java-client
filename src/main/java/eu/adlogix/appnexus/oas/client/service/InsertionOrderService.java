@@ -62,6 +62,7 @@ public class InsertionOrderService extends AbstractOasService{
 
 
 		performRequest(addInsertionOrderRequestGenerator, parameters);
+		insertionOrder.resetModifiedFlags();
 	}
 
 	/**
@@ -94,6 +95,7 @@ public class InsertionOrderService extends AbstractOasService{
 		};
 
 		performRequest(updateInsertionOrderRequestGenerator, parameters);
+		insertionOrder.resetModifiedFlags();
 	}
 
 	/**

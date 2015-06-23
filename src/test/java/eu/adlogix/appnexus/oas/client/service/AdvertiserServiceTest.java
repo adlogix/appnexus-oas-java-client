@@ -56,7 +56,9 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-successful-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix");
+		Advertiser advertiser = new Advertiser();
+		advertiser.setId("test_advertiser_01");
+		advertiser.setOrganization("Adlogix");
 		service.addAdvertiser(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
@@ -72,7 +74,9 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-id-already-exists-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix");
+		Advertiser advertiser = new Advertiser();
+		advertiser.setId("test_advertiser_01");
+		advertiser.setOrganization("Adlogix");
 		service.addAdvertiser(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
@@ -109,7 +113,9 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-advertiser-successful-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = new Advertiser("test_advertiser_01", "Adlogix_Advertiser");
+		Advertiser advertiser = new Advertiser();
+		advertiser.setId("test_advertiser_01");
+		advertiser.setOrganization("Adlogix_Advertiser");
 		service.updateAdvertiser(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
