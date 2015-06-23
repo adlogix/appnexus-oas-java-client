@@ -7,11 +7,11 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 
-public abstract class ApiDomain {
+public abstract class StatefulDomain {
 
 	private Set<String> modifiedAttributes;
 			
-	protected ApiDomain() {
+	protected StatefulDomain() {
 		modifiedAttributes = new HashSet<String>();
 	}
 
@@ -20,10 +20,10 @@ public abstract class ApiDomain {
 	}
 	
 	protected void resetModifiedFlags() {
-		modifiedAttributes = new HashSet<String>();
+		modifiedAttributes.clear();
 	}
 
-	protected <T extends ApiDomain> T getObjectWithModifiedAttributes() {
+	protected <T extends StatefulDomain> T getObjectWithModifiedAttributes() {
 
 		try {
 

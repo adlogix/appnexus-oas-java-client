@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class InsertionOrder extends ApiDomain {
+public class InsertionOrder extends StatefulDomain {
 
 	private String id;
 	private String description;
