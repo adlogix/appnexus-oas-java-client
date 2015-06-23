@@ -7,23 +7,42 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 
-public abstract class ApiDomain {
+/**
+ * Maintains the state of modified attributes.
+ * 
+ */
+public abstract class StatefulDomain {
 
 	private Set<String> modifiedAttributes;
 			
-	protected ApiDomain() {
+	protected StatefulDomain() {
 		modifiedAttributes = new HashSet<String>();
 	}
 
+	/**
+	 * Sets the attribute as modified.
+	 * 
+	 * @param attribute
+	 *            - name of the attribute
+	 */
 	protected void setModifiedFlag(String attribute) {
 		modifiedAttributes.add(attribute);
 	}
 	
+	/**
+	 * Resets the modified flags.The object will be considered as a non-modified
+	 * object after calling this method.
+	 * 
+	 */
 	protected void resetModifiedFlags() {
-		modifiedAttributes = new HashSet<String>();
+		modifiedAttributes.clear();
 	}
 
-	protected <T extends ApiDomain> T getObjectWithModifiedAttributes() {
+	/**
+	 * Returns a new object with only the modified attribute values.
+	 * 
+	 */
+	protected <T extends StatefulDomain> T getObjectWithModifiedAttributes() {
 
 		try {
 
