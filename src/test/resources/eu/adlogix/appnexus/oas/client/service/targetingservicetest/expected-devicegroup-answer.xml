@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <DeviceGroup>Request OK.  Found 6 records.</DeviceGroup>
+  <List numberOfRows='6' pageIndex='1' pageSize='1000' totalNumberOfEntries='6'>
+    <DeviceGroup>
+      <Code>427</Code>
+      <Name>allblackberries</Name>
+      <Description/>
+    </DeviceGroup>
+    <DeviceGroup>
+      <Code>429</Code>
+      <Name>ipadipphonetc</Name>
+      <Description/>
+    </DeviceGroup>
+    <DeviceGroup>
+      <Code>370</Code>
+      <Name>iphones</Name>
+      <Description>all iphones</Description>
+    </DeviceGroup>
+    <DeviceGroup>
+      <Code>409</Code>
+      <Name>malik</Name>
+      <Description/>
+    </DeviceGroup>
+    <DeviceGroup>
+      <Code>371</Code>
+      <Name>mbcGPphone</Name>
+      <Description>mbcPhone group</Description>
+    </DeviceGroup>
+    <DeviceGroup>
+      <Code>121</Code>
+      <Name>prova</Name>
+      <Description>prova</Description>
+    </DeviceGroup>
+  </List>
+</Response>
+</AdXML>

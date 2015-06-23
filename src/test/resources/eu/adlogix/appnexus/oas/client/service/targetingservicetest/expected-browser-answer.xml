@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Browser>Request OK.  Found 17 records.</Browser>
+  <List numberOfRows='17'>
+    <Browser>
+      <Code>aol</Code>
+      <Name>AOL</Name>
+    </Browser>
+    <Browser>
+      <Code>Blackberry</Code>
+      <Name>Blackberry</Name>
+    </Browser>
+    <Browser>
+      <Code>firefox</Code>
+      <Name>Firefox</Name>
+    </Browser>
+    <Browser>
+      <Code>FF_Mobile</Code>
+      <Name>Firefox for Mobile</Name>
+    </Browser>
+    <Browser>
+      <Code>chrome</Code>
+      <Name>Google Chrome</Name>
+    </Browser>
+    <Browser>
+      <Code>IE_Mobile</Code>
+      <Name>IE Mobile</Name>
+    </Browser>
+    <Browser>
+      <Code>konqueror</Code>
+      <Name>Konqueror</Name>
+    </Browser>
+    <Browser>
+      <Code>lynx</Code>
+      <Name>Lynx</Name>
+    </Browser>
+    <Browser>
+      <Code>msie</Code>
+      <Name>Microsoft Explorer</Name>
+    </Browser>
+    <Browser>
+      <Code>netscape</Code>
+      <Name>Netscape</Name>
+    </Browser>
+    <Browser>
+      <Code>opera</Code>
+      <Name>Opera</Name>
+    </Browser>
+    <Browser>
+      <Code>Op_Mobile</Code>
+      <Name>Opera Mobile</Name>
+    </Browser>
+    <Browser>
+      <Code>safari</Code>
+      <Name>Safari</Name>
+    </Browser>
+    <Browser>
+      <Code>S_Mobile</Code>
+      <Name>Safari Mobile</Name>
+    </Browser>
+    <Browser>
+      <Code>seamonkey</Code>
+      <Name>SeaMonkey</Name>
+    </Browser>
+    <Browser>
+      <Code>WebOS</Code>
+      <Name>WebOS</Name>
+    </Browser>
+    <Browser>
+      <Code>webtv</Code>
+      <Name>WebTV</Name>
+    </Browser>
+  </List>
+</Response>
+</AdXML>
