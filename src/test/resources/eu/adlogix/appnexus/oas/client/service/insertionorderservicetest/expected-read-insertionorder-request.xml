@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="InsertionOrder">
+    <InsertionOrder action="read">
+      <Id>test_insertionorder</Id>
+    </InsertionOrder>
+  </Request>
+</AdXML>

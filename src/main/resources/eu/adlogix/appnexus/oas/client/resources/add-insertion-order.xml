@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="InsertionOrder">
+    <InsertionOrder action="add">
+      <Id>$insertionOrderId$</Id>
+$if(insertionOrderDescription)$      <Description>$insertionOrderDescription$</Description>$endif$
+      <CampaignsBy>$campaignsBy$</CampaignsBy>
+      <AdvertiserId>$advertiserId$</AdvertiserId>
+      <AgencyId>$agencyId$</AgencyId>
+      <Status>$status$</Status>
+$if(bookedImpressions)$      <BookedImpressions>$bookedImpressions$</BookedImpressions>$endif$
+$if(bookedClicks)$      <BookedClicks>$bookedClicks$</BookedClicks>$endif$
+$if(campaignIds)$      <Campaigns>
+        $campaignIds: {c|<CampaignId>$c$</CampaignId>}; separator="\n"$
+      </Campaigns>$endif$
+      <InternalQuickReport>$internalQuickReport$</InternalQuickReport>
+      <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>
+    </InsertionOrder>
+  </Request>
+</AdXML>

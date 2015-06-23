@@ -1,0 +1,10 @@
+<AdXML>
+  <Request type="Advertiser">
+    <Database action="update">
+      <Advertiser>
+        <Id>test_advertiser_01</Id>
+        <Organization>Adlogix_Advertiser</Organization>
+      </Advertiser>
+    </Database>
+  </Request>
+</AdXML>

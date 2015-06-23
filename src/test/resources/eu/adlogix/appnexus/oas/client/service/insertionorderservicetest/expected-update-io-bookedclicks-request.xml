@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="InsertionOrder">
+    <InsertionOrder action="update">
+      <Id>test_insertionorder</Id>
+      <BookedClicks>2500</BookedClicks>
+    </InsertionOrder>
+  </Request>
+</AdXML>

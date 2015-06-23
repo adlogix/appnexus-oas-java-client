@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <InsertionOrder>
+    <Exception errorCode='512'>ID Already Exists.</Exception>
+  </InsertionOrder>
+</Response>
+</AdXML>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="InsertionOrder">
+    <InsertionOrder action="add">
+      <Id>test_insertionorder</Id>
+      <Description>test</Description>
+      <CampaignsBy>A</CampaignsBy>
+      <AdvertiserId>test_advertiser</AdvertiserId>
+      <AgencyId>unknown_agency</AgencyId>
+      <Status>P</Status>
+      <BookedImpressions>1000</BookedImpressions>
+      <Campaigns>
+        <CampaignId>campaign_01</CampaignId>
+        <CampaignId>campaign_02</CampaignId>
+      </Campaigns>
+      <InternalQuickReport>short</InternalQuickReport>
+      <ExternalQuickReport>to-date</ExternalQuickReport>
+    </InsertionOrder>
+  </Request>
+</AdXML>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="InsertionOrder">
+    <InsertionOrder action="update">
+      <Id>test_insertionorder</Id>
+      <Campaigns>
+        <CampaignId>campaign_01</CampaignId>
+        <CampaignId>campaign_02</CampaignId>
+      </Campaigns>
+    </InsertionOrder>
+  </Request>
+</AdXML>

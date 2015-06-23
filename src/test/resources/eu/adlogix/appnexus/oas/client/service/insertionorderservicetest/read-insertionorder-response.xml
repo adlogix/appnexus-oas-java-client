@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <InsertionOrder>
+    <Id>test_insertionorder</Id>
+    <Description>test_description</Description>
+    <CampaignManager/>
+    <CampaignsBy>A</CampaignsBy>
+    <AdvertiserId>test_01</AdvertiserId>
+    <AgencyId>unknown_agency</AgencyId>
+    <Status>P</Status>
+    <BookedImpressions>5000</BookedImpressions>
+    <BookedClicks>2500</BookedClicks>
+    <StartDate></StartDate>
+    <EndDate></EndDate>
+    <SalesPerson>adlogix_salesperson</SalesPerson>
+    <InternalPO/>
+    <AgencyPO/>
+    <BookedRevenue/>
+    <StartOfWeek>1</StartOfWeek>
+    <ExternalUsers/>
+    <Campaigns>
+       <CampaignId>campaign_01</CampaignId>
+       <CampaignId>campaign_02</CampaignId>
+    </Campaigns>
+    <InternalQuickReport>short</InternalQuickReport>
+    <ExternalQuickReport>to-date</ExternalQuickReport>
+    <WhoCreated>ADLOGIX_API</WhoCreated>
+    <WhenCreated>2015-06-22 02:42:29</WhenCreated>
+    <WhoModified>ADLOGIX_API</WhoModified>
+    <WhenModified>2015-06-22 03:26:27</WhenModified>
+  </InsertionOrder>
+</Response>
+</AdXML>
