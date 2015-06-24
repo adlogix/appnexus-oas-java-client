@@ -23,6 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 public class NetworkServiceTest {
@@ -116,19 +117,19 @@ public class NetworkServiceTest {
 			assertNotNull(Page.getUrl());
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
-				assertEquals("adsolutions", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
-				assertEquals("dada", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
-				assertEquals("Aperol", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
-				assertEquals("cartest.it", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
@@ -199,12 +200,12 @@ public class NetworkServiceTest {
 			assertNotNull(Page.getUrl());
 			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
-				assertEquals("adsolutions", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
-				assertEquals("dada", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
@@ -302,34 +303,34 @@ public class NetworkServiceTest {
 			assertNotNull(Page.getUrl());
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
-				assertEquals("adsolutions", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
-				assertEquals("adsolutions", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
-				assertEquals("dada", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 			} else if (Page.getUrl().equals("www.dada.it/sport")) {
 				assertEquals("dada", Page.getSite().getId());
-				assertEquals("dada", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
-				assertEquals("Aperol", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
-				assertEquals("cartest.it", Page.getSite().getName());
+				assertNull(Page.getSite().getName());
 				assertTrue(Page.getPositions().isEmpty());
 
 			}
@@ -503,7 +504,8 @@ public class NetworkServiceTest {
 	}
 
 	@Test
-	public void getSectionList_WithoutLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
+	public void getSectionListModifiedSinceDate_WithoutLastModifiedDate_ReturnSectionList()
+			throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -541,7 +543,45 @@ public class NetworkServiceTest {
 	}
 
 	@Test
-	public void getSectionList_WithLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
+	public void getAllSections_HasSections_ReturnSectionList() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new NetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		final String expectedSectionRequest1 = (TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer1 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
+
+		final String expectedSectionRequest2 = (TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
+		final String mockedSectionAnswer2 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
+
+		List<Section> sections = service.getAllSections();
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertEquals(section2.getPages().size(), 1);
+		Page section2Page = section2.getPages().get(0);
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
+		assertEquals(section2Page.getPositions().size(), 1);
+		Position section2PagePosition = section2Page.getPositions().get(0);
+		assertEquals(section2PagePosition.getName(), "x96");
+
+	}
+
+	@Test
+	public void getSectionListModifiedSinceDate_WithLastModifiedDate_ReturnSectionList() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);

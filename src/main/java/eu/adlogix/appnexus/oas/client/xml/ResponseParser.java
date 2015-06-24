@@ -9,7 +9,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
-import eu.adlogix.appnexus.oas.client.utils.ValidatorUtils;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 
 public final class ResponseParser {
 
@@ -43,7 +43,7 @@ public final class ResponseParser {
 	private final Document responseDocument;
 
 	public ResponseParser(final String response) {
-		ValidatorUtils.checkNotEmpty(response, "response");
+		checkNotEmpty(response, "response");
 		try {
 			this.responseDocument = DocumentHelper.parseText(response);
 		} catch (final DocumentException exception) {

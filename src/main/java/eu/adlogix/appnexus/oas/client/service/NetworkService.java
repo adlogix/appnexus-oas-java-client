@@ -86,9 +86,19 @@ public class NetworkService extends AbstractOasService {
 	}
 
 	/**
+	 * Retrieve list of pages with positions. No {@link Site} details are loaded
+	 * since {@link Page#getSite()} only contains ID
+	 * 
+	 * @return
+	 */
+	public List<Page> getAllPagesWithPositionsWithoutSiteDetails() {
+		return getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
+	}
+
+	/**
 	 * Retrieve list of pages with positions which are modified since the given
 	 * last modified date. No {@link Site} details are loaded since
-	 * {@link Page#getSite()} only contains ID and the same value to the name
+	 * {@link Page#getSite()} only contains ID
 	 * 
 	 * @param lastModifiedDate
 	 *            Used to retrieve all modifications since this given date. If
@@ -108,8 +118,8 @@ public class NetworkService extends AbstractOasService {
 			parameters.put("lastModifiedDate", lastModifiedDate.toString(OAS_DATE_FORMAT));
 		}
 
-		// The siteBuilder will inject the Site when Pages are created based on
-		// the siteBuilder implementation
+		// If siteMap is empty, sites will not be loaded and will have site with
+		// just ID
 		final GetPageListResponseElementHandler getPageListResponseElementHandler = new GetPageListResponseElementHandler();
 		if (MapUtils.isNotEmpty(siteMapById)) {
 			getPageListResponseElementHandler.setSiteMapById(siteMapById);
@@ -118,6 +128,15 @@ public class NetworkService extends AbstractOasService {
 		performPagedRequest(getPageListRequestGenerator, parameters, "List", "//List/Page", getPageListResponseElementHandler);
 
 		return getPageListResponseElementHandler.getPages();
+	}
+
+	/**
+	 * Retrieve full list of sections
+	 * 
+	 * @return
+	 */
+	public List<Section> getAllSections() {
+		return getSectionListModifiedSinceDate(null);
 	}
 
 	/**
