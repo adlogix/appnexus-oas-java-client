@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="CampaignGroup">
+    <Database action="add">
+      <CampaignGroup>
+        <Id>$groupId$</Id>
+        <Description>Created by Adlogix.$if(groupDescription)$ $groupDescription$$endif$</Description>
+        <ExternalUsers>
+          $externalUserIds:{u|<UserId>$u$</UserId>}; separator="\n"$
+        </ExternalUsers>
+        <InternalQuickReport>to-date</InternalQuickReport>
+        <ExternalQuickReport>short</ExternalQuickReport>
+      </CampaignGroup>
+    </Database>
+  </Request>
+</AdXML>

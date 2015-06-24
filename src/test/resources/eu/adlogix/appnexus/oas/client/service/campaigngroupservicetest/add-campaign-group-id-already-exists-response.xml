@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <CampaignGroup>
+    <Exception errorCode='512'>ID Already Exists.</Exception>
+  </CampaignGroup>
+</Response>
+</AdXML>

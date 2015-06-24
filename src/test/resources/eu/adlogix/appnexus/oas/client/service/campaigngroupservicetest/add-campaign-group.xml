@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="CampaignGroup">
+    <Database action="add">
+      <CampaignGroup>
+        <Id>testCampaignGrpGuni</Id>
+        <Description>Created by Adlogix.</Description>
+        <ExternalUsers>
+        </ExternalUsers>
+        <InternalQuickReport>to-date</InternalQuickReport>
+        <ExternalQuickReport>short</ExternalQuickReport>
+      </CampaignGroup>
+    </Database>
+  </Request>
+</AdXML>
