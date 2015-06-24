@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="CompetitiveCategory">
+    <Database action="list">
+      <SearchCriteria>
+        <Id>%</Id>
+      </SearchCriteria>
+    </Database>
+  </Request>
+</AdXML>

@@ -1,7 +1,6 @@
 package eu.adlogix.appnexus.oas.client.service;
 
 import eu.adlogix.appnexus.oas.client.domain.Credentials;
-import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 
 
 /**
@@ -20,6 +19,12 @@ public class OasServiceFactory {
 	private ReportService reportService;
 
 	private InsertionOrderService insertionOrderService;
+
+	private TargetingService targetingService;
+
+	private CompetitiveCategoryService competitiveCategoryService;
+
+	private CampaignGroupService campaignGroupService;
 
 
 	/**
@@ -71,9 +76,9 @@ public class OasServiceFactory {
 	}
 
 	/**
-	 * Getter Method for {@link InsertionOrder}
+	 * Getter Method for {@link InsertionOrderService}
 	 * 
-	 * @return {@link InsertionOrder}
+	 * @return {@link InsertionOrderService}
 	 */
 	public InsertionOrderService getiInsertionOrderService() {
 		if (insertionOrderService == null) {
@@ -82,4 +87,39 @@ public class OasServiceFactory {
 		return insertionOrderService;
 	}
 
+	/**
+	 * Getter Method for {@link TargetingService}
+	 * 
+	 * @return {@link TargetingService}
+	 */
+	public TargetingService getTargetingService() {
+		if (targetingService == null) {
+			targetingService = new TargetingService(oasApiService);
+		}
+		return targetingService;
+	}
+
+	/**
+	 * Getter Method for {@link CompetitiveCategoryService}
+	 * 
+	 * @return {@link CompetitiveCategoryService}
+	 */
+	public CompetitiveCategoryService getCompetitiveCategoryService() {
+		if (competitiveCategoryService == null) {
+			competitiveCategoryService = new CompetitiveCategoryService(oasApiService);
+		}
+		return competitiveCategoryService;
+	}
+
+	/**
+	 * Getter Method for {@link CampaignGroupService}
+	 * 
+	 * @return {@link CampaignGroupService}
+	 */
+	public CampaignGroupService getCampaignGroupService() {
+		if (campaignGroupService == null) {
+			campaignGroupService = new CampaignGroupService(oasApiService);
+		}
+		return campaignGroupService;
+	}
 }
