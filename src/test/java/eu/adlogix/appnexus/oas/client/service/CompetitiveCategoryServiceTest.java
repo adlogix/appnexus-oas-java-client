@@ -10,10 +10,12 @@ import javax.xml.rpc.ServiceException;
 import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.CompetitiveCategory;
+import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
@@ -21,6 +23,7 @@ public class CompetitiveCategoryServiceTest {
 	@Test
 	public void getAllCompetitiveCategories_NoError_ReturnCategories() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
+
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
 
@@ -40,5 +43,38 @@ public class CompetitiveCategoryServiceTest {
 		assertEquals(categories.get(36), new CompetitiveCategory("Utilities"));
 		assertEquals(categories.get(37), new CompetitiveCategory("WebSites"));
 
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void addCompetitiveCategory_NoError_Success() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		service.addCompetitiveCategory(new CompetitiveCategory("testCompetitiveCategory00"));
+
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[512\\]: 'ID Already Exists.'")
+	public void addCompetitiveCategory_DuplicateError_Exception() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-id-already-exists-error.xml", CompetitiveCategoryServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		service.addCompetitiveCategory(new CompetitiveCategory("testCompetitiveCategory00"));
+
+		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 }

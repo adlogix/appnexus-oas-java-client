@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <CompetitiveCategory>
+    <Exception errorCode='512'>ID Already Exists.</Exception>
+  </CompetitiveCategory>
+</Response>
+</AdXML>

@@ -43,4 +43,16 @@ public class CompetitiveCategoryService extends AbstractOasService {
 		return categoryList;
 
 	}
+
+	public final void addCompetitiveCategory(final CompetitiveCategory competitiveCategory) {
+
+		@SuppressWarnings("serial")
+		final Map<String, Object> requestParameters = new HashMap<String, Object>() {
+			{
+				put("competitiveCategoryId", competitiveCategory.getId());
+			}
+		};
+
+		performRequest(addCompetitiveCategoryGenerator, requestParameters);
+	}
 }
