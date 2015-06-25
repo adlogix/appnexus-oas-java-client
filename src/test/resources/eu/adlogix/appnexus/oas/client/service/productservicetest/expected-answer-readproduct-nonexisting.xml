@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Product>
+    <Exception errorCode='544'>Invalid ProductId.</Exception>
+  </Product>
+</Response>
+</AdXML>

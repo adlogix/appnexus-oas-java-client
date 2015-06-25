@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AdXML>
+  <Request type="Product">
+    <Database action="read">
+      <Product>
+        <Id>TestProduct</Id>
+      </Product>
+    </Database>
+  </Request>
+</AdXML>

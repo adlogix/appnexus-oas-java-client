@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Product>
+    <Id>TestProduct</Id>
+    <Name>Test Product</Name>
+    <Notes>Adlogix created Product</Notes>
+    <WhoCreated>RCSAPI</WhoCreated>
+    <WhenCreated>08/04/2014 00:21:08</WhenCreated>
+    <WhoModified></WhoModified>
+    <WhenModified></WhenModified>
+  </Product>
+</Response>
+</AdXML>

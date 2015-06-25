@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Product>
+    <Exception errorCode='506'>Test_Product_1234567890_1234567890 contains too many characters for Id</Exception>
+  </Product>
+</Response>
+</AdXML>

@@ -1,0 +1,11 @@
+<AdXML>
+  <Request type="Product">
+    <Database action="add">
+      <Product> 
+        <Id>$productId$</Id>
+        <Name>$productName$</Name>
+        <Notes>Adlogix created Product</Notes>
+      </Product> 
+    </Database>
+  </Request>
+</AdXML>
