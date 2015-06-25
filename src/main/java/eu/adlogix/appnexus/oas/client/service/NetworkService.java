@@ -15,6 +15,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.GetPageListResponseElementHandler;
+import eu.adlogix.appnexus.oas.client.domain.CompanionPosition;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
@@ -35,6 +36,7 @@ public class NetworkService extends AbstractOasService {
 	private final XmlRequestGenerator getSectionListRequestGenerator = new XmlRequestGenerator("list-sections");
 	private final XmlRequestGenerator readSectionRequestGenerator = new XmlRequestGenerator("read-section.xml");
 	private final XmlRequestGenerator listPositionsRequestGenerator = new XmlRequestGenerator("list-positions");
+	private final XmlRequestGenerator listCompanionPositionsRequestGenerator = new XmlRequestGenerator("list-companion-positions.xml");
 
 	public NetworkService(OasApiService apiService) {
 		super(apiService);
@@ -288,5 +290,35 @@ public class NetworkService extends AbstractOasService {
 
 		return positions;
 
+	}
+
+	/**
+	 * Get all {@link CompanionPosition}s of OAS
+	 * 
+	 * @return all {@link CompanionPosition}s
+	 */
+	public final List<CompanionPosition> getAllCompanionsPositions() {
+		@SuppressWarnings("serial")
+		final HashMap<String, Object> requestParameters = new HashMap<String, Object>() {
+			{
+				put("positionShortName", "%");
+			}
+		};
+
+		final ResponseParser parser = performRequest(listCompanionPositionsRequestGenerator, requestParameters);
+
+		final List<CompanionPosition> companionPositions = Lists.newArrayList();
+
+		parser.getTrimmedElementList("//AdXML/Response/List/CompanionPosition/PositionShortName");
+		parser.forEachElement("//AdXML/Response/List/CompanionPosition", new ResponseElementHandler() {
+
+			@Override
+			public final void processElement(final ResponseElement element) {
+				final String shortname = element.getChild("PositionShortName");
+				companionPositions.add(new CompanionPosition(shortname));
+			}
+		});
+
+		return companionPositions;
 	}
 }

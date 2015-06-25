@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
+import eu.adlogix.appnexus.oas.client.domain.CompanionPosition;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
@@ -668,5 +669,27 @@ public class NetworkServiceTest {
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		service.getPositionByName("x7600");
+	}
+
+	@Test
+	public void getAllCompanionPositions_NoError_ReturnPositionList() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new NetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getallcompanionpositions.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getallcompanionpositions.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		List<CompanionPosition> positions = service.getAllCompanionsPositions();
+
+		assertEquals(positions.size(), 51);
+
+		assertEquals(positions.get(0), new CompanionPosition("01/02/03"));
+		assertEquals(positions.get(1), new CompanionPosition("B"));
+
+		assertEquals(positions.get(49), new CompanionPosition("T1/R"));
+		assertEquals(positions.get(50), new CompanionPosition("TL/TR"));
 	}
 }
