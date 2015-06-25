@@ -617,4 +617,56 @@ public class NetworkServiceTest {
 		assertEquals(section2PagePosition.getName(), "x96");
 
 	}
+
+	@Test
+	public void getAllPositions_NoError_ReturnPositionList() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new NetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpositions.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpositions.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		List<Position> positions = service.getAllPositions();
+
+		assertEquals(positions.size(), 126);
+
+		assertEquals(positions.get(0), new Position("Bottom", "B"));
+		assertEquals(positions.get(1), new Position("Bottom1", "B1"));
+
+		assertEquals(positions.get(124), new Position("x95", "95"));
+		assertEquals(positions.get(125), new Position("x96", "96"));
+	}
+
+	@Test
+	public void getPositionsByName_NoError_ReturnPosition() throws FileNotFoundException, URISyntaxException,
+			IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new NetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		Position position = service.getPositionByName("x76");
+
+		assertEquals(position, new Position("x76", "76"));
+	}
+
+	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "No Positions were found with name x7600")
+	public void getPositionsByName_NotFound_Exception() throws FileNotFoundException, URISyntaxException, IOException,
+			ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new NetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname-notexistname.xml", NetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname-notexistname.xml", NetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
+
+		service.getPositionByName("x7600");
+	}
 }

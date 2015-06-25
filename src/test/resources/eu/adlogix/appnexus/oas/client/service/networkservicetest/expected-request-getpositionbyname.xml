@@ -1,0 +1,9 @@
+<AdXML>
+  <Request type="Position">
+    <Database action="list">
+      <SearchCriteria pageIndex="">
+        <Name>x76</Name>
+      </SearchCriteria>
+    </Database>
+  </Request>
+</AdXML>

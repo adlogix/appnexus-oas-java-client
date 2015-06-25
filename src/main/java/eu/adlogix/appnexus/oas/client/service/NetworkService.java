@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.testng.collections.Lists;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
@@ -29,10 +30,11 @@ import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 public class NetworkService extends AbstractOasService {
 
-	final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
-	final XmlRequestGenerator getPageListRequestGenerator = new XmlRequestGenerator("list-pages");
-	final XmlRequestGenerator getSectionListRequestGenerator = new XmlRequestGenerator("list-sections");
-	final XmlRequestGenerator readSectionRequestGenerator = new XmlRequestGenerator("read-section.xml");
+	private final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
+	private final XmlRequestGenerator getPageListRequestGenerator = new XmlRequestGenerator("list-pages");
+	private final XmlRequestGenerator getSectionListRequestGenerator = new XmlRequestGenerator("list-sections");
+	private final XmlRequestGenerator readSectionRequestGenerator = new XmlRequestGenerator("read-section.xml");
+	private final XmlRequestGenerator listPositionsRequestGenerator = new XmlRequestGenerator("list-positions");
 
 	public NetworkService(OasApiService apiService) {
 		super(apiService);
@@ -214,5 +216,77 @@ public class NetworkService extends AbstractOasService {
 		oasSection.setPages(new ArrayList<Page>(mapPositionsPerPage.values()));
 
 		return oasSection;
+	}
+
+	/**
+	 * Get Position By Name
+	 * 
+	 * @param positionName
+	 *            Unique {@link Position#getName()}
+	 * @return {@link Position}
+	 */
+	public Position getPositionByName(final String positionName) {
+
+		checkNotEmpty(positionName, "positionName");
+
+		@SuppressWarnings("serial")
+		final Map<String, Object> requestParameters = new HashMap<String, Object>() {
+			{
+				put("positionName", positionName);
+			}
+		};
+
+
+		final ResponseParser parser = performRequest(listPositionsRequestGenerator, requestParameters);
+
+		final List<Position> positions = Lists.newArrayList();
+		parser.forEachElement("//AdXML/Response/List/Position", new ResponseElementHandler() {
+
+			@Override
+			public final void processElement(final ResponseElement element) {
+				if (element.getChild("Name").equals(positionName)) {
+					positions.add(new Position(positionName, element.getChild("PositionShortName")));
+				}
+			}
+		});
+
+		if (positions.isEmpty()) {
+			throw new RuntimeException("No Positions were found with name " + positionName);
+		}
+
+		return positions.get(0);
+	}
+
+	/**
+	 * Get all {@link Position}s in the Network
+	 * 
+	 * @return {@link List} of {@link Position}s
+	 */
+	public List<Position> getAllPositions() {
+
+		final List<Position> positions = Lists.newArrayList();
+
+		@SuppressWarnings("serial")
+		final HashMap<String, Object> requestParameters = new HashMap<String, Object>() {
+			{
+				put("positionName", "%");
+			}
+		};
+
+		final ResponseParser parser = performRequest(listPositionsRequestGenerator, requestParameters);
+
+		parser.forEachElement("//AdXML/Response/List/Position", new ResponseElementHandler() {
+
+			@Override
+			public final void processElement(final ResponseElement element) {
+				final String name = element.getChild("Name");
+				final String shortname = element.getChild("PositionShortName");
+				Position oasPosition = new Position(name, shortname);
+				positions.add(oasPosition);
+			}
+		});
+
+		return positions;
+
 	}
 }

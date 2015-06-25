@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Position>Request OK.  Found 1 records.</Position>
+  <List numberOfRows='1'>
+    <Position>
+      <Name>x76</Name>
+      <PositionShortName>76</PositionShortName>
+      <CustomPositionName/>
+    </Position>
+  </List>
+</Response>
+</AdXML>
