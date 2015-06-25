@@ -12,15 +12,26 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
+/**
+ * Service to communicate with OAS Competitive Category
+ */
 public class CompetitiveCategoryService extends AbstractOasService {
+
+	private final XmlRequestGenerator listCompetitiveCategoriesGenerator = new XmlRequestGenerator("list-competitive-categories");
+	private final XmlRequestGenerator addCompetitiveCategoryGenerator = new XmlRequestGenerator("add-competitive-category");
 
 	protected CompetitiveCategoryService(OasApiService apiService) {
 		super(apiService);
 	}
 
-	private final XmlRequestGenerator listCompetitiveCategoriesGenerator = new XmlRequestGenerator("list-competitive-categories");
-	private final XmlRequestGenerator addCompetitiveCategoryGenerator = new XmlRequestGenerator("add-competitive-category");
-
+	/**
+	 * Gets all Competitive Categories
+	 * 
+	 * @return The full {@link CompetitiveCategory} {@link List}
+	 */
 	public final List<CompetitiveCategory> getAllCompetitiveCategories() {
 
 		@SuppressWarnings("serial")
@@ -44,7 +55,16 @@ public class CompetitiveCategoryService extends AbstractOasService {
 
 	}
 
+	/**
+	 * Add a Competitive Category if it doesn't exist
+	 * 
+	 * @param competitiveCategory
+	 *            The {@link CompetitiveCategory} to create
+	 */
 	public final void addCompetitiveCategory(final CompetitiveCategory competitiveCategory) {
+
+		checkNotNull(competitiveCategory, "competitiveCategory");
+		checkNotEmpty(competitiveCategory.getId(), "competitiveCategory ID");
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> requestParameters = new HashMap<String, Object>() {

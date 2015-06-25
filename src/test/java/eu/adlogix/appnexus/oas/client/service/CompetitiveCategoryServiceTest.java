@@ -63,7 +63,7 @@ public class CompetitiveCategoryServiceTest {
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[512\\]: 'ID Already Exists.'")
-	public void addCompetitiveCategory_DuplicateError_Exception() throws FileNotFoundException, URISyntaxException,
+	public void addCompetitiveCategory_DuplicateError_NoException() throws FileNotFoundException, URISyntaxException,
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);

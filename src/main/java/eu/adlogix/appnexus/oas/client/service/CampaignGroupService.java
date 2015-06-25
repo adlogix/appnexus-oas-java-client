@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.CampaignGroup;
-import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
+
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 public class CampaignGroupService extends AbstractOasService {
 
-	private static final Integer ERRORCODE_ID_ALREADY_EXISTS = 512;
 	private final XmlRequestGenerator createCampaignGroupRequestGenerator = new XmlRequestGenerator("add-campaign-group");
 
 	protected CampaignGroupService(OasApiService apiService) {
@@ -17,14 +18,16 @@ public class CampaignGroupService extends AbstractOasService {
 	}
 
 	/**
-	 * Creates a Campaign Group with a particular ID
+	 * Creates a Campaign Group if it doesn't exist
 	 * 
 	 * @param group
 	 *            The campaignGroup to create on OAS
-	 * @return <code>true</code> if the group was created, <code>false</code> if
-	 *         the group already existed
 	 */
-	public final boolean createGroup(final CampaignGroup group) {
+	public final void createGroup(final CampaignGroup group) {
+
+		checkNotNull(group, "group");
+		checkNotEmpty(group.getId(), "group ID");
+
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
@@ -32,15 +35,6 @@ public class CampaignGroupService extends AbstractOasService {
 			}
 		};
 
-		try {
-			performRequest(createCampaignGroupRequestGenerator, parameters);
-		} catch (OasServerSideException e) {
-			if (ERRORCODE_ID_ALREADY_EXISTS.equals(e.getErrorCode())) {
-				return false;
-			} else {
-				throw e;
-			}
-		}
-		return true;
+		performRequest(createCampaignGroupRequestGenerator, parameters);
 	}
 }

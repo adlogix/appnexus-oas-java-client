@@ -16,8 +16,6 @@ import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 public class CampaignGroupServiceTest {
 	@Test
@@ -30,9 +28,8 @@ public class CampaignGroupServiceTest {
 		final String request = contentFromFile("add-campaign-group.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-campaign-group-successful-response.xml"));
 
-		boolean outcome = service.createGroup(new CampaignGroup("testCampaignGrpGuni"));
+		service.createGroup(new CampaignGroup("testCampaignGrpGuni"));
 
-		assertTrue(outcome);
 		verify(mockedApiService).callApi(request, false);
 	}
 
@@ -41,8 +38,8 @@ public class CampaignGroupServiceTest {
 		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, CampaignGroupServiceTest.class));
 	}
 
-	@Test
-	public void createGroup_AlreadyExists_Success() throws FileNotFoundException, URISyntaxException, IOException,
+	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[512\\]: 'ID Already Exists.'")
+	public void createGroup_AlreadyExists_Failure() throws FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException, ServiceException {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignGroupService service = new CampaignGroupService(mockedApiService);
@@ -50,9 +47,8 @@ public class CampaignGroupServiceTest {
 		final String request = contentFromFile("add-campaign-group.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-campaign-group-id-already-exists-response.xml"));
 
-		boolean outcome = service.createGroup(new CampaignGroup("testCampaignGrpGuni"));
+		service.createGroup(new CampaignGroup("testCampaignGrpGuni"));
 
-		assertFalse(outcome);
 		verify(mockedApiService).callApi(request, false);
 	}
 
