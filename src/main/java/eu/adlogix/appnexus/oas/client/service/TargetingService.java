@@ -13,8 +13,10 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 /**
- * Service to get Targeting info.
+ * Service to for OAS Targeting related activities
  */
 public class TargetingService extends AbstractOasService {
 
@@ -36,6 +38,8 @@ public class TargetingService extends AbstractOasService {
 	 * @return Possible values for the {@link TargetingCode}
 	 */
 	public List<TargetingCodeData> getTargetingCodeDataLists(final TargetingCode targetingCode) {
+
+		checkNotNull(targetingCode, "targetingCode");
 
 		final Map<String, Object> requestParameters = Maps.newHashMap();
 		requestParameters.put("requestType", targetingCode);

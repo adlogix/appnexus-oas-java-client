@@ -9,6 +9,9 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
+/**
+ * Service to for OAS {@link CampaignGroup} related activities
+ */
 public class CampaignGroupService extends AbstractOasService {
 
 	private final XmlRequestGenerator createCampaignGroupRequestGenerator = new XmlRequestGenerator("add-campaign-group");
