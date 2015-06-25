@@ -82,7 +82,7 @@ public class OasApiService {
 		renewCertificateIfExpired();
 
 		if (logger.isDebugEnabled())
-			logger.debug("Call Oas Api as '" + user + "' with pass: '" + password + "', account: '" + account
+			logger.debug("Call Oas Api as '" + user + "' ', account: '" + account
 					+ "' on '" + host + "'...");
 
 		final HostnameVerifier hv = new HostnameVerifier() {
