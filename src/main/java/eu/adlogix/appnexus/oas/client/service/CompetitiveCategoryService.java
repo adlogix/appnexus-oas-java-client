@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.collections.Lists;
+import com.google.common.collect.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.CompetitiveCategory;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;

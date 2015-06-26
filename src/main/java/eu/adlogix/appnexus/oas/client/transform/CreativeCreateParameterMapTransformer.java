@@ -1,12 +1,18 @@
 package eu.adlogix.appnexus.oas.client.transform;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
 
-import org.testng.collections.Maps;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.domain.Creative;
+import eu.adlogix.appnexus.oas.client.domain.Creative.CreativeFile;
 
 @AllArgsConstructor
 public class CreativeCreateParameterMapTransformer extends AbstractParameterMapTransformer {
@@ -26,7 +32,7 @@ public class CreativeCreateParameterMapTransformer extends AbstractParameterMapT
 		checkValueAndPutParam("noCache", creative.getNoCache(), parameters);
 		checkValueAndPutParam("expireImmediately", creative.getExpireImmediately(), parameters);
 		checkValueAndPutParam("description", creative.getDescription(), parameters);
-		checkValueAndPutParam("positions", creative.getPositions(), parameters);
+		checkValueAndPutParam("positions", creative.getPositionNames(), parameters);
 		checkValueAndPutParam("creativeTypeId", creative.getCreativeTypeId(), parameters);
 		checkValueAndPutParam("height", creative.getHeight(), parameters);
 		checkValueAndPutParam("width", creative.getWidth(), parameters);
@@ -44,23 +50,48 @@ public class CreativeCreateParameterMapTransformer extends AbstractParameterMapT
 		checkValueAndPutParam("sequenceNo", creative.getSequenceNo(), parameters);
 		checkValueAndPutParam("countOnDownload", creative.getCountOnDownload(), parameters);
 
-		if (creative.getCreativeFile() != null) {
+		if (isCreativeFileUpload()) {
+			addCreativeFileToParameters(parameters);
+			addComponentFilesToParameters(parameters);
 
+		} else if (StringUtils.isNotEmpty(creative.getRedirectUrl())) {
+			checkValueAndPutParam("redirectUrl", creative.getRedirectUrl(), parameters);
 		}
 
 		return parameters;
 	}
 
-	// public String getEncodedFileString(InputStream file) {
-	// InputStream inputStream;
-	// try {
-	// inputStream = mediaLibrary.getMediaLibraryStorage().getFile(media);
-	// return FileUtils.toBase64String(inputStream);
-	// } catch (Exception e) {
-	// throw new
-	// RuntimeException("Error while retrieving Media or encoding to Base64 for "
-	// + media, e);
-	// }
-	// }
+	private void addCreativeFileToParameters(final Map<String, Object> parameters) {
+		final CreativeFile creativeFile = creative.getCreativeFile();
+		if (creativeFile != null) {
+			checkValueAndPutParam("creativeFileName", creativeFile.getName(), parameters);
+			checkValueAndPutParam("creativeFileContentType", creativeFile.getContentType(), parameters);
+			checkValueAndPutParam("creativeFile", creativeFile.getFileAsBase64String(), parameters);
+		}
+	}
+
+	private void addComponentFilesToParameters(final Map<String, Object> parameters) {
+		if (CollectionUtils.isNotEmpty(creative.getComponentFiles())) {
+
+			final int size = creative.getComponentFiles().size();
+			final List<String> componentFileContentTypes = new ArrayList<String>(size);
+			final List<String> componentFileNames = new ArrayList<String>(size);
+			final List<String> componentFiles = new ArrayList<String>(size);
+
+			for (final CreativeFile componentFile : creative.getComponentFiles()) {
+				componentFileContentTypes.add(componentFile.getContentType());
+				componentFileNames.add(componentFile.getName());
+				componentFiles.add(componentFile.getFileAsBase64String());
+			}
+
+			checkValueAndPutParam("componentFileContentTypes", componentFileContentTypes, parameters);
+			checkValueAndPutParam("componentFileNames", componentFileNames, parameters);
+			checkValueAndPutParam("componentFiles", componentFiles, parameters);
+		}
+	}
+
+	private boolean isCreativeFileUpload() {
+		return creative.getCreativeFile() != null || CollectionUtils.isNotEmpty(creative.getComponentFiles());
+	}
 
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Creative">
+    <Creative action="add">
+      <CampaignId>TestCampaignId</CampaignId>
+      <Id>9337933_102</Id>
+      <Name>skin_repubblica_hp</Name>
+      <Description>skin_repubblica_hp</Description>
+      <ClickUrl>http://default.def</ClickUrl>
+      <Positions>
+        <Position>Top3</Position>
+      </Positions>
+      <CreativeTypesId>unknown_type</CreativeTypesId>
+      <Display>Y</Display>
+      <TargetWindow>_blank</TargetWindow>
+      <DiscountImpressions>N</DiscountImpressions>
+      <StartTime>00:00</StartTime>
+      <EndTime>23:59</EndTime>
+      <Weight>10</Weight>
+      <ExpireImmediately>N</ExpireImmediately>
+      <NoCache>N</NoCache>
+      <SequenceNo>0</SequenceNo>
+      <CountOnDownload>N</CountOnDownload>
+    </Creative>
+  </Request>
+</AdXML>

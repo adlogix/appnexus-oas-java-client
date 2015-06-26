@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Creative">
+    <Creative action="add">
+      <CampaignId>$campaignId$</CampaignId>
+      <Id>$creativeId$</Id>
+      <Name>$creativeName$</Name>
+$if(description)$      <Description>$description$</Description>$endif$
+      <ClickUrl>$clickUrl$</ClickUrl>
+$if(positions)$      <Positions>
+        $positions:{p|<Position>$p$</Position>}; separator="\n"$
+      </Positions>$endif$
+$if(creativeTypeId)$      <CreativeTypesId>$creativeTypeId$</CreativeTypesId>$endif$
+$if(redirectUrl)$      <RedirectUrl>$redirectUrl$</RedirectUrl>$endif$
+      <Display>$display$</Display>
+$if(height)$      <Height>$height$</Height>$endif$
+$if(width)$      <Width>$width$</Width>$endif$
+$if(richMediaCpm)$      <RichMediaCpm>$richMediaCpm$</RichMediaCpm>$endif$
+$if(targetwindow)$      <TargetWindow>$targetwindow$</TargetWindow>$endif$
+$if(altText)$      <AltText>$altText$</AltText>$endif$
+      <DiscountImpressions>$discountImpressions$</DiscountImpressions>
+$if(startDate)$      <StartDate>$startDate$</StartDate>$endif$
+$if(startTime)$      <StartTime>$startTime$</StartTime>$endif$
+$if(endDate)$      <EndDate>$endDate$</EndDate>$endif$
+$if(endTime)$      <EndTime>$endTime$</EndTime>$endif$
+$if(weight)$      <Weight>$weight$</Weight>$endif$
+      <ExpireImmediately>$expireImmediately$</ExpireImmediately>
+      <NoCache>$noCache$</NoCache>
+$if(extraHtml)$      <ExtraHTML>$extraHtml$</ExtraHTML>$endif$
+$if(extraText)$      <ExtraText>$extraText$</ExtraText>$endif$
+$if(browserV)$      <BrowserV>
+        $browserV:{p|<Code>$p$</Code>}; separator="\n"$
+      </BrowserV>$endif$
+$if(sequenceNo)$      <SequenceNo>$sequenceNo$</SequenceNo>$endif$
+$if(countOnDownload)$      <CountOnDownload>$countOnDownload$</CountOnDownload>$endif$
+$if(creativeFileName)$      <File contentType="$creativeFileContentType$" encoding="base64" fileType="creative" fileName="$creativeFileName$">$creativeFile$</File>$endif$
+$if(componentFileNames)$$componentFileNames,componentFiles,componentFileContentTypes:{ n,f,t |       <File contentType="$t$" encoding="base64" fileType="component" fileName="$n$">$f$</File>}; separator="\n"$$endif$
+    </Creative>
+  </Request>
+</AdXML>

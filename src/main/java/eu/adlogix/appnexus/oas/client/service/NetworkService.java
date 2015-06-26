@@ -9,18 +9,18 @@ import java.util.Map;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.testng.collections.Lists;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import eu.adlogix.appnexus.oas.client.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.domain.CompanionPosition;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.utils.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.xml.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -29,6 +29,11 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
+/**
+ * Service for Network related actions such as dealing with {@link Site}s,
+ * {@link Page}s, {@link Section}s, {@link Position}s and
+ * {@link CompanionPosition}s
+ */
 public class NetworkService extends AbstractOasService {
 
 	private final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
@@ -38,7 +43,7 @@ public class NetworkService extends AbstractOasService {
 	private final XmlRequestGenerator listPositionsRequestGenerator = new XmlRequestGenerator("list-positions");
 	private final XmlRequestGenerator listCompanionPositionsRequestGenerator = new XmlRequestGenerator("list-companion-positions.xml");
 
-	public NetworkService(OasApiService apiService) {
+	protected NetworkService(OasApiService apiService) {
 		super(apiService);
 	}
 

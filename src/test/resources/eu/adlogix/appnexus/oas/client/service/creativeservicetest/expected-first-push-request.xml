@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Creative">
+    <Creative action="add">
+      <CampaignId>TestCampaignId</CampaignId>
+      <Id>MyCreativeId_102</Id>
+      <Name>Api Creative</Name>
+      <Description>This is a creative</Description>
+      <ClickUrl>http://google.com</ClickUrl>
+      <Positions>
+        <Position>TopLeft</Position>
+        <Position>BottomLeft</Position>
+      </Positions>
+      <CreativeTypesId>unknown_type</CreativeTypesId>
+      <Display>Y</Display>
+      <Height>30</Height>
+      <Width>30</Width>
+      <RichMediaCpm>30</RichMediaCpm>
+      <TargetWindow>_self</TargetWindow>
+      <AltText>alt text value</AltText>
+      <DiscountImpressions>N</DiscountImpressions>
+      <StartDate>2005-12-01</StartDate>
+      <StartTime>04:00</StartTime>
+      <EndDate>2006-01-31</EndDate>
+      <EndTime>15:59</EndTime>
+      <Weight>10</Weight>
+      <ExpireImmediately>N</ExpireImmediately>
+      <NoCache>N</NoCache>
+      <ExtraHTML>extra html</ExtraHTML>
+      <ExtraText>extra text</ExtraText>
+      <BrowserV>
+        <Code>explorer6</Code>
+        <Code>netscape7</Code>
+      </BrowserV>
+      <SequenceNo>4</SequenceNo>
+      <CountOnDownload>Y</CountOnDownload>
+      <File contentType="text/html" encoding="base64" fileType="creative" fileName="hi.html">VGhpcyBpcyBhIHRlc3QgaW5wdXQgc3RyaW5nIGNyZWF0aXZlIQ==</File>
+      <File contentType="image/gif" encoding="base64" fileType="component" fileName="hi2.gif">VGhpcyBpcyBhIHRlc3QgaW5wdXQgc3RyaW5nIGNvbXBvbmVudCAxIQ==</File>
+      <File contentType="image/gif" encoding="base64" fileType="component" fileName="hi1.gif">VGhpcyBpcyBhIHRlc3QgaW5wdXQgc3RyaW5nIGNvbXBvbmVudCAyIQ==</File>
+    </Creative>
+  </Request>
+</AdXML>

@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Creative>
+    <Exception errorCode='573'>enddate_past</Exception>
+  </Creative>
+</Response>
+</AdXML>

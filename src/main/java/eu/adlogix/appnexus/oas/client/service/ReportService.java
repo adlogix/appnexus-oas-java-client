@@ -20,7 +20,8 @@ import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 /**
- * Service to invoke regarding Reports
+ * Service to invoke regarding Reports including Inventory reports in different
+ * levels
  */
 public class ReportService extends AbstractOasService {
 
