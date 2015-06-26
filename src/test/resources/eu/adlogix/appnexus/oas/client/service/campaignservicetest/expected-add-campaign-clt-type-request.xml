@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="add">
+      <Overview>
+        <Id>test_campaign_01</Id>
+        <Type>CLT</Type>
+        <AdvertiserId>test_advertiser</AdvertiserId>
+        <Name>test</Name>
+        <CreativeTargetId>SampleCreativeTarget</CreativeTargetId>
+        <AgencyId>unknown_agency</AgencyId>
+        <Description>Added from API</Description>
+        <ProductId>default-product</ProductId>
+        <CampaignGroups>
+          <CampaignGroupId>campaign_group_01</CampaignGroupId>
+        </CampaignGroups>
+        <InternalQuickReport>to-date</InternalQuickReport>
+        <ExternalQuickReport>short</ExternalQuickReport>
+      </Overview>
+      <Schedule>
+        <Impressions>250000</Impressions>
+        <Weight>100</Weight>
+        <PriorityLevel>0</PriorityLevel>
+        <Completion>S</Completion>
+        <StartDate>2016-01-01</StartDate>
+        <StartTime>00:00</StartTime>
+        <EndDate>2016-01-31</EndDate>
+        <EndTime>00:59</EndTime>
+        <Reach>O</Reach>
+        <SmoothOrAsap>S</SmoothOrAsap>
+        <ImpOverrun>0</ImpOverrun>
+        <PrimaryFrequency>
+          <ImpPerVisitor>1</ImpPerVisitor>
+          <ClickPerVisitor>0</ClickPerVisitor>
+          <FreqScope>1</FreqScope>
+        </PrimaryFrequency>
+        <SecondaryFrequency>
+          <ImpPerVisitor>0</ImpPerVisitor>
+          <FreqScope>0</FreqScope>
+        </SecondaryFrequency>
+        <UserTimeZone>N</UserTimeZone>
+      </Schedule>
+      <Pages>
+        <Url>test.com/home</Url>
+      </Pages>
+      <Exclude>
+      </Exclude>
+      <Billing>
+        <Cpm>4000.0</Cpm>
+        <!-- use “C” for Cash, “B” for Barter, “I” for In-House, and “T” Internal Transfer -->
+        <PaymentMethod>C</PaymentMethod>
+        <IsYieldManaged>N</IsYieldManaged>
+        <!-- use “A” for Advertiser, “G” for Agency -->
+        <BillTo>G</BillTo>
+        <Currency>EUR</Currency>
+      </Billing>
+    </Campaign>
+  </Request>
+</AdXML>

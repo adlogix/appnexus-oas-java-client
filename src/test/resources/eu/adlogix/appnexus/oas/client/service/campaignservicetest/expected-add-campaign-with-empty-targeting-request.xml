@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="add">
+      <Overview>
+        <Id>test_campaign_01</Id>
+        <AdvertiserId>test_advertiser</AdvertiserId>
+        <Name>test</Name>
+        <AgencyId>unknown_agency</AgencyId>
+        <ProductId>default-product</ProductId>
+        <InternalQuickReport>to-date</InternalQuickReport>
+        <ExternalQuickReport>short</ExternalQuickReport>
+      </Overview>
+      <Schedule>
+        <PriorityLevel>1</PriorityLevel>
+        <Completion>S</Completion>
+        <Reach>O</Reach>
+        <SmoothOrAsap>S</SmoothOrAsap>
+      </Schedule>
+      <Target>
+        <ExcludeTargets>N</ExcludeTargets>
+      </Target>
+      <Exclude>
+      </Exclude>
+      <Billing>
+        <!-- use “C” for Cash, “B” for Barter, “I” for In-House, and “T” Internal Transfer -->
+        <PaymentMethod>C</PaymentMethod>
+        <IsYieldManaged>N</IsYieldManaged>
+        <!-- use “A” for Advertiser, “G” for Agency -->
+        <BillTo>G</BillTo>
+      </Billing>
+    </Campaign>
+  </Request>
+</AdXML>

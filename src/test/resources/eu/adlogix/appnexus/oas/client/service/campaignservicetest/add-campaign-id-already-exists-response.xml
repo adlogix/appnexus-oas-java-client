@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<AdXML>
+
+<Response>
+  <Campaign>
+    <Exception errorCode='512'>Campaign ID already exists in Open AdStream.</Exception>
+  </Campaign>
+</Response>
+</AdXML>
