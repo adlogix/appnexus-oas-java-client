@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>$campaignId$</Id>
+$if(status)$        <Status>$status$</Status>$endif$
+$if(competitiveCategoryIds)$        <CompetitiveCategories>
+          $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
+        </CompetitiveCategories>$endif$
+      </Overview>
+$if(hasSchedule)$      <Schedule>
+$if(totalCampaignImpressions)$        <Impressions>$totalCampaignImpressions$</Impressions>$endif$
+$if(totalCampaignClicks)$        <Clicks>$totalCampaignClicks$</Clicks>$endif$
+$if(totalCampaignUniques)$        <Uniques>$totalCampaignUniques$</Uniques>$endif$
+$if(campaignWeight)$        <Weight>$campaignWeight$</Weight>$endif$
+$if(campaignPriority)$        <PriorityLevel>$campaignPriority$</PriorityLevel>$endif$
+$if(campaignCompletionStrategy)$        <Completion>$campaignCompletionStrategy$</Completion>$endif$
+$if(campaignStartDate)$        <StartDate>$campaignStartDate$</StartDate>$endif$
+$if(campaignEndDate)$        <EndDate>$campaignEndDate$</EndDate>$endif$
+$if(campaignReach)$        <Reach>$campaignReach$</Reach>$endif$
+$if(dailyCampaignImpressions)$        <DailyImp>$dailyCampaignImpressions$</DailyImp>$endif$
+$if(dailyCampaignClicks)$        <DailyClicks>$dailyCampaignClicks$</DailyClicks>$endif$
+$if(dailyCampaignUniques)$        <DailyUniq>$dailyCampaignUniques$</DailyUniq>$endif$
+$if(campaignDailyDeliveryDate)$        <SmoothOrAsap>$campaignDailyDeliveryDate$</SmoothOrAsap>$endif$
+$if(impressionsOverrun)$        <ImpOverrun>$impressionsOverrun$</ImpOverrun>$endif$
+$if(strictCompanions)$        <StrictCompanions>$strictCompanions$</StrictCompanions>$endif$
+        <SecondaryFrequency>
+$if(secondaryImpressionsPerVisitor)$          <ImpPerVisitor>$secondaryImpressionsPerVisitor$</ImpPerVisitor>$endif$
+$if(secondaryFrequencyScope)$          <FreqScope>$secondaryFrequencyScope$</FreqScope>$endif$
+        </SecondaryFrequency>
+ $if(hourOfDay)$      <HourOfDay>
+        $hourOfDay: {h|<Hour>$h$</Hour>}; separator="\n"$
+      </HourOfDay>$endif$
+$if(dayOfWeek)$        <DayOfWeek>
+          $dayOfWeek: {d|<Day>$d$</Day>}; separator="\n"$
+        </DayOfWeek>$endif$
+$if(userTimeZone)$        <UserTimeZone>$userTimeZone$</UserTimeZone>$endif$
+      </Schedule>$endif$
+        $if(targeting)$
+      <Target>
+        <ExcludeTargets>N</ExcludeTargets>
+      $if(topdomain)$
+        <ExcludeTopLevelDomain>$topdomainExclude$</ExcludeTopLevelDomain>
+        <TopLevelDomain>
+          $topdomain: {t|<Code>$t$</Code>}; separator="\n"$
+        </TopLevelDomain>
+      $endif$
+      $if(bandwidth)$
+        <ExcludeBandwidth>$bandwidthExclude$</ExcludeBandwidth>
+        <Bandwidth>
+          $bandwidth: {t|<Code>$t$</Code>}; separator="\n"$
+        </Bandwidth>
+      $endif$
+      $if(continent)$
+        <ExcludeContinent>$continentExclude$</ExcludeContinent>
+        <Continent>
+          $continent: {t|<Code>$t$</Code>}; separator="\n"$
+        </Continent>
+      $endif$
+      $if(country)$
+        <ExcludeCountry>$countryExclude$</ExcludeCountry>
+        <Country>
+          $country: {t|<Code>$t$</Code>}; separator="\n"$
+        </Country>
+      $endif$
+      $if(state)$
+        <ExcludeState>$stateExclude$</ExcludeState>
+        <State>
+          $state: {t|<Code>$t$</Code>}; separator="\n"$
+        </State>
+        $endif$
+      $if(msa)$
+        <ExcludeMsa>$msaExclude$</ExcludeMsa>
+        <Msa>
+          $msa: {t|<Code>$t$</Code>}; separator="\n"$
+        </Msa>
+        $endif$
+      $if(dma)$
+        <ExcludeDma>$dmaExclude$</ExcludeDma>
+        <Dma>
+          $dma: {t|<Code>$t$</Code>}; separator="\n"$
+        </Dma>
+      $endif$
+      $if(zone)$
+        <Zones>
+          $zone: {t|<Code>$t$</Code>}; separator="\n"$
+        </Zones>
+      $endif$
+      $if(os)$
+        <ExcludeOs>$osExclude$</ExcludeOs>
+        <Os>
+          $os: {t|<Code>$t$</Code>}; separator="\n"$
+        </Os>
+      $endif$
+      $if(browser)$
+        <ExcludeBrowser>$browserExclude$</ExcludeBrowser>
+        <Browser>
+          $browser: {t|<Code>$t$</Code>}; separator="\n"$
+        </Browser>
+      $endif$
+      $if(browserv)$
+        <ExcludeBrowserV>$browservExclude$</ExcludeBrowserV>
+        <BrowserV>
+          $browserv: {t|<Code>$t$</Code>}; separator="\n"$
+        </BrowserV>
+      $endif$
+      $if(ageExclude)$        <ExcludeAgeTargeting>$ageExclude$</ExcludeAgeTargeting>$endif$
+      $if(ageFrom)$        <AgeFrom>$ageFrom$</AgeFrom>$endif$
+      $if(ageTo)$        <AgeTo>$ageTo$</AgeTo>$endif$
+      $if(genderExclude)$        <ExcludeGenderTargeting>$genderExclude$</ExcludeGenderTargeting>$endif$
+      $if(gender)$        <Gender><Code>$gender$</Code></Gender>$endif$
+      $if(incomeExclude)$        <ExcludeIncomeTargeting>$incomeExclude$</ExcludeIncomeTargeting>$endif$
+      $if(incomeFrom)$        <IncomeFrom>$incomeFrom$</IncomeFrom>$endif$
+      $if(incomeTo)$        <IncomeTo>$incomeTo$</IncomeTo>$endif$
+      $if(subscriberExclude)$        <ExcludeSubscriberTargeting>$subscriberExclude$</ExcludeSubscriberTargeting>$endif$
+      $if(subscriber)$        <SubscriberCode>$subscriber$</SubscriberCode>$endif$
+      $if(preferenceExclude)$        <ExcludePreferenceTargeting>$preferenceExclude$</ExcludePreferenceTargeting>$endif$
+      $if(preference)$        <PreferenceFlags>$preference$</PreferenceFlags>$endif$
+      $if(segmentcluster)$
+        <ExcludeSegmentTargeting>$segmentclusterExclude$</ExcludeSegmentTargeting>
+        <Cluster>
+        $if(segmentType)$        <SegmentType>$segmentType$</SegmentType>$endif$
+          $segmentcluster: {s|<Segment>$s$</Segment>}; separator="\n"$
+        </Cluster>
+      $endif$
+      </Target>
+   $endif$
+$if(hasBilling)$      <Billing>  
+$if(cpm)$        <Cpm>$cpm$</Cpm>$endif$
+$if(cpc)$        <Cpc>$cpc$</Cpc>$endif$
+      </Billing>$endif$
+    </Campaign>
+  </Request>
+</AdXML>
