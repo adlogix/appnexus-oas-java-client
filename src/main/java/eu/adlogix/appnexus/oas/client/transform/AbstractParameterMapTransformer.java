@@ -23,7 +23,6 @@ public abstract class AbstractParameterMapTransformer implements ParameterMapTra
 	protected void checkValueAndPutParam(String paramName, Integer paramValue, Map<String, Object> result) {
 		if (paramValue != null)
 			result.put(paramName, paramValue);
-
 	}
 
 	protected void checkValueAndPutParam(String paramName, Boolean paramValue, Map<String, Object> result) {

@@ -26,6 +26,8 @@ public class OasServiceFactory {
 
 	private CampaignGroupService campaignGroupService;
 
+	private CreativeService creativeService;
+
 
 	/**
 	 * Initializes the OasServiceFactory with the provided {@link Credentials}
@@ -121,5 +123,17 @@ public class OasServiceFactory {
 			campaignGroupService = new CampaignGroupService(oasApiService);
 		}
 		return campaignGroupService;
+	}
+
+	/**
+	 * Getter Method for {@link CreativeService}
+	 * 
+	 * @return {@link CreativeService}
+	 */
+	public CreativeService getCreativeService() {
+		if (creativeService == null) {
+			creativeService = new CreativeService(oasApiService);
+		}
+		return creativeService;
 	}
 }

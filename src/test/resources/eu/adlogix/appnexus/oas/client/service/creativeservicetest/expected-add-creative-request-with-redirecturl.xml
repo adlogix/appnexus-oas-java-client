@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Creative">
+    <Creative action="add">
+      <CampaignId>TestCampaignId</CampaignId>
+      <Id>MyCreativeId_102</Id>
+      <Name>Api Creative</Name>
+      <Description>This is a creative</Description>
+      <ClickUrl>http://google.com</ClickUrl>
+      <Positions>
+        <Position>TopLeft</Position>
+        <Position>BottomLeft</Position>
+      </Positions>
+      <CreativeTypesId>unknown_type</CreativeTypesId>
+      <RedirectUrl>http://x.y.z/image.gif</RedirectUrl>
+      <Display>Y</Display>
+      <Height>30</Height>
+      <Width>30</Width>
+      <RichMediaCpm>30</RichMediaCpm>
+      <TargetWindow>_self</TargetWindow>
+      <AltText>alt text value</AltText>
+      <DiscountImpressions>N</DiscountImpressions>
+      <StartDate>2005-12-01</StartDate>
+      <StartTime>04:00</StartTime>
+      <EndDate>2006-01-31</EndDate>
+      <EndTime>15:59</EndTime>
+      <Weight>10</Weight>
+      <ExpireImmediately>N</ExpireImmediately>
+      <NoCache>N</NoCache>
+      <ExtraHTML>extra html</ExtraHTML>
+      <ExtraText>extra text</ExtraText>
+      <BrowserV>
+        <Code>explorer6</Code>
+        <Code>netscape7</Code>
+      </BrowserV>
+      <SequenceNo>4</SequenceNo>
+      <CountOnDownload>Y</CountOnDownload>
+    </Creative>
+  </Request>
+</AdXML>
