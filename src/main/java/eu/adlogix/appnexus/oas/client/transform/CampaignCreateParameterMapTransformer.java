@@ -125,9 +125,6 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 				checkValueAndPutParam(targetingType + "Exclude", targeting.getExculde(), parameters);
 
 				final List<String> values = targeting.getValues();
-				// if (!CollectionUtils.isEmpty(values)) {
-				// parameters.put(targetingType, values);
-				// }
 				checkValueAndPutParam(targetingType, values, parameters);
 			}
 		}
