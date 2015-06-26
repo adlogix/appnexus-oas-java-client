@@ -15,51 +15,35 @@ public abstract class AbstractParameterMapTransformer implements ParameterMapTra
 	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
 
-	protected void checkValueAndPutParam(String paramName, String paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, String paramValue, Map<String, Object> result) {
 		if (paramValue != null && !paramValue.isEmpty())
 			result.put(paramName, paramValue);
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
 	}
 
-	protected void checkValueAndPutParam(String paramName, Integer paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, Integer paramValue, Map<String, Object> result) {
 		if (paramValue != null)
 			result.put(paramName, paramValue);
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
+
 	}
 
-	protected void checkValueAndPutParam(String paramName, Boolean paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, Boolean paramValue, Map<String, Object> result) {
 		if (paramValue != null)
 			result.put(paramName, XmlBoolean.fromBoolean(paramValue).toString());
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
 	}
 
-	protected void checkValueAndPutParam(String paramName, LocalDate paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, LocalDate paramValue, Map<String, Object> result) {
 		if (paramValue != null)
 			result.put(paramName, DATE_FORMATTER.print(paramValue));
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
 	}
 
-	protected void checkValueAndPutParam(String paramName, LocalTime paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, LocalTime paramValue, Map<String, Object> result) {
 		if (paramValue != null)
 			result.put(paramName, TIME_FORMATTER.print(paramValue));
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
 	}
 
-	protected void checkValueAndPutParam(String paramName, List<String> paramValue, Map<String, Object> result,
-			boolean isMandotary) {
+	protected void checkValueAndPutParam(String paramName, List<String> paramValue, Map<String, Object> result) {
 		if (paramValue != null && !paramValue.isEmpty())
 			result.put(paramName, paramValue);
-		else if (isMandotary)
-			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
 	}
+
 }

@@ -17,34 +17,50 @@ public class CreativeCreateParameterMapTransformer extends AbstractParameterMapT
 	public Map<String, Object> transform() {
 		final Map<String, Object> parameters = Maps.newHashMap();
 
-		checkValueAndPutParam("campaignId", creative.getCampaignId(), parameters, true);
-		checkValueAndPutParam("creativeId", creative.getId(), parameters, true);
-		checkValueAndPutParam("creativeName", creative.getName(), parameters, true);
-		checkValueAndPutParam("clickUrl", creative.getClickUrl(), parameters, true);
-		checkValueAndPutParam("discountImpressions", creative.getDiscountImpressions(), parameters, true);
-		checkValueAndPutParam("display", creative.getDisplay(), parameters, true);
-		checkValueAndPutParam("noCache", creative.getNoCache(), parameters, true);
-		checkValueAndPutParam("expireImmediately", creative.getExpireImmediately(), parameters, true);
-		checkValueAndPutParam("description", creative.getDescription(), parameters, false);
-		checkValueAndPutParam("positions", creative.getPositions(), parameters, false);
-		checkValueAndPutParam("creativeTypeId", creative.getCreativeTypeId(), parameters, false);
-		checkValueAndPutParam("height", creative.getHeight(), parameters, false);
-		checkValueAndPutParam("width", creative.getWidth(), parameters, false);
-		checkValueAndPutParam("richMediaCpm", creative.getRichMediaCpm(), parameters, false);
-		checkValueAndPutParam("targetwindow", creative.getTargetWindow(), parameters, false);
-		checkValueAndPutParam("altText", creative.getAltText(), parameters, false);
-		checkValueAndPutParam("startDate", creative.getStartDate(), parameters, false);
-		checkValueAndPutParam("startTime", creative.getStartTime(), parameters, false);
-		checkValueAndPutParam("endDate", creative.getEndDate(), parameters, false);
-		checkValueAndPutParam("endTime", creative.getEndTime(), parameters, false);
-		checkValueAndPutParam("weight", creative.getWeight(), parameters, false);
-		checkValueAndPutParam("extraHtml", creative.getExtraHtml(), parameters, false);
-		checkValueAndPutParam("extraText", creative.getExtraText(), parameters, false);
-		checkValueAndPutParam("browserV", creative.getBrowserV(), parameters, false);
-		checkValueAndPutParam("sequenceNo", creative.getSequenceNo(), parameters, false);
-		checkValueAndPutParam("countOnDownload", creative.getCountOnDownload(), parameters, false);
+		checkValueAndPutParam("campaignId", creative.getCampaignId(), parameters);
+		checkValueAndPutParam("creativeId", creative.getId(), parameters);
+		checkValueAndPutParam("creativeName", creative.getName(), parameters);
+		checkValueAndPutParam("clickUrl", creative.getClickUrl(), parameters);
+		checkValueAndPutParam("discountImpressions", creative.getDiscountImpressions(), parameters);
+		checkValueAndPutParam("display", creative.getDisplay(), parameters);
+		checkValueAndPutParam("noCache", creative.getNoCache(), parameters);
+		checkValueAndPutParam("expireImmediately", creative.getExpireImmediately(), parameters);
+		checkValueAndPutParam("description", creative.getDescription(), parameters);
+		checkValueAndPutParam("positions", creative.getPositions(), parameters);
+		checkValueAndPutParam("creativeTypeId", creative.getCreativeTypeId(), parameters);
+		checkValueAndPutParam("height", creative.getHeight(), parameters);
+		checkValueAndPutParam("width", creative.getWidth(), parameters);
+		checkValueAndPutParam("richMediaCpm", creative.getRichMediaCpm(), parameters);
+		checkValueAndPutParam("targetwindow", creative.getTargetWindow(), parameters);
+		checkValueAndPutParam("altText", creative.getAltText(), parameters);
+		checkValueAndPutParam("startDate", creative.getStartDate(), parameters);
+		checkValueAndPutParam("startTime", creative.getStartTime(), parameters);
+		checkValueAndPutParam("endDate", creative.getEndDate(), parameters);
+		checkValueAndPutParam("endTime", creative.getEndTime(), parameters);
+		checkValueAndPutParam("weight", creative.getWeight(), parameters);
+		checkValueAndPutParam("extraHtml", creative.getExtraHtml(), parameters);
+		checkValueAndPutParam("extraText", creative.getExtraText(), parameters);
+		checkValueAndPutParam("browserV", creative.getBrowserV(), parameters);
+		checkValueAndPutParam("sequenceNo", creative.getSequenceNo(), parameters);
+		checkValueAndPutParam("countOnDownload", creative.getCountOnDownload(), parameters);
+
+		if (creative.getCreativeFile() != null) {
+
+		}
 
 		return parameters;
 	}
+
+	// public String getEncodedFileString(InputStream file) {
+	// InputStream inputStream;
+	// try {
+	// inputStream = mediaLibrary.getMediaLibraryStorage().getFile(media);
+	// return FileUtils.toBase64String(inputStream);
+	// } catch (Exception e) {
+	// throw new
+	// RuntimeException("Error while retrieving Media or encoding to Base64 for "
+	// + media, e);
+	// }
+	// }
 
 }
