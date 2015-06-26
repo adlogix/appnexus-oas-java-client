@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.transformers;
+package eu.adlogix.appnexus.oas.client.transform;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,14 @@ public abstract class AbstractParameterMapTransformer implements ParameterMapTra
 	protected void checkValueAndPutParam(String paramName, String paramValue, Map<String, Object> result,
 			boolean isMandotary) {
 		if (paramValue != null && !paramValue.isEmpty())
+			result.put(paramName, paramValue);
+		else if (isMandotary)
+			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
+	}
+
+	protected void checkValueAndPutParam(String paramName, Integer paramValue, Map<String, Object> result,
+			boolean isMandotary) {
+		if (paramValue != null)
 			result.put(paramName, paramValue);
 		else if (isMandotary)
 			throw new RuntimeException("Mandotary parameter required for creative upload is not set: " + paramName);
