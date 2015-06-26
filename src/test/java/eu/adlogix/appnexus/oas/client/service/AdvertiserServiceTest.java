@@ -47,7 +47,7 @@ public class AdvertiserServiceTest {
 	}
 
 	@Test
-	public final void addAdvertiser_ValidParameters_SuccessfullyAdd() throws Exception {
+	public final void addAdvertiser_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -104,7 +104,7 @@ public class AdvertiserServiceTest {
 	}
 
 	@Test
-	public final void updateAdvertiser_UpdateOrganization_SuccessfullyUpdate() throws Exception {
+	public final void updateAdvertiser_UpdateOrganization_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);

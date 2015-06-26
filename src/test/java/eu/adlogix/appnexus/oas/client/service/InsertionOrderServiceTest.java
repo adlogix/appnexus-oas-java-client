@@ -18,7 +18,7 @@ import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 public class InsertionOrderServiceTest {
 
 	@Test
-	public final void addInsertionOrder_ValidParameters_SuccessfullyAdd() throws Exception {
+	public final void addInsertionOrder_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -63,7 +63,7 @@ public class InsertionOrderServiceTest {
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateBookedImps_SuccessfullyUpdate() throws Exception {
+	public final void updateInsertionOrder_UpdateBookedImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -82,7 +82,7 @@ public class InsertionOrderServiceTest {
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateClicks_SuccessfullyUpdate() throws Exception {
+	public final void updateInsertionOrder_UpdateClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -101,7 +101,7 @@ public class InsertionOrderServiceTest {
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateCampaigns_SuccessfullyUpdate() throws Exception {
+	public final void updateInsertionOrder_UpdateCampaigns_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
