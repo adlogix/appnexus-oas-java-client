@@ -29,6 +29,11 @@ import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
+/**
+ * Service for Network related actions such as dealing with {@link Site}s,
+ * {@link Page}s, {@link Section}s, {@link Position}s and
+ * {@link CompanionPosition}s
+ */
 public class NetworkService extends AbstractOasService {
 
 	private final XmlRequestGenerator getSiteListRequestGenerator = new XmlRequestGenerator("list-sites");
@@ -38,7 +43,7 @@ public class NetworkService extends AbstractOasService {
 	private final XmlRequestGenerator listPositionsRequestGenerator = new XmlRequestGenerator("list-positions");
 	private final XmlRequestGenerator listCompanionPositionsRequestGenerator = new XmlRequestGenerator("list-companion-positions.xml");
 
-	public NetworkService(OasApiService apiService) {
+	protected NetworkService(OasApiService apiService) {
 		super(apiService);
 	}
 
