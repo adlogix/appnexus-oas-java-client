@@ -43,6 +43,7 @@ public class Advertiser extends StatefulDomain {
 	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
+		setModifiedFlag("id");
 	}
 
 	/**

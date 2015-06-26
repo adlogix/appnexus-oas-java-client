@@ -81,6 +81,7 @@ public class InsertionOrder extends StatefulDomain {
 	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
+		setModifiedFlag("id");
 	}
 
 	/**
