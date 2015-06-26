@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client;
+package eu.adlogix.appnexus.oas.client.xml;
 
 import java.util.ArrayList;
 import java.util.HashMap;

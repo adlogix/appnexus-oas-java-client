@@ -10,9 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
-import org.testng.collections.Maps;
-
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * Contains Campaign Delivery By Page and Position for a given time range

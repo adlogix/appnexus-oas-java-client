@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import org.joda.time.DateTime;
-import org.testng.collections.Lists;
+
+import com.google.common.collect.Lists;
 
 /**
  * Consists Delivery details of the Network for a given time range by date

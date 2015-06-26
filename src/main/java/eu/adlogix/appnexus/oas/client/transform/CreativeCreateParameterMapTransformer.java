@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.transform;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,8 +8,8 @@ import lombok.AllArgsConstructor;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.testng.collections.Lists;
-import org.testng.collections.Maps;
+
+import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.domain.Creative;
 import eu.adlogix.appnexus.oas.client.domain.Creative.CreativeFile;
@@ -72,9 +73,10 @@ public class CreativeCreateParameterMapTransformer extends AbstractParameterMapT
 	private void addComponentFilesToParameters(final Map<String, Object> parameters) {
 		if (CollectionUtils.isNotEmpty(creative.getComponentFiles())) {
 
-			final List<String> componentFileContentTypes = Lists.newArrayList(creative.getComponentFiles().size());
-			final List<String> componentFileNames = Lists.newArrayList(creative.getComponentFiles().size());
-			final List<String> componentFiles = Lists.newArrayList(creative.getComponentFiles().size());
+			final int size = creative.getComponentFiles().size();
+			final List<String> componentFileContentTypes = new ArrayList<String>(size);
+			final List<String> componentFileNames = new ArrayList<String>(size);
+			final List<String> componentFiles = new ArrayList<String>(size);
 
 			for (final CreativeFile componentFile : creative.getComponentFiles()) {
 				componentFileContentTypes.add(componentFile.getContentType());
