@@ -11,6 +11,7 @@ import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
+import eu.adlogix.appnexus.oas.client.parser.XmlToAdvertiserParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -133,28 +134,14 @@ public class AdvertiserService extends AbstractOasService {
 
 		final ResponseParser responseParser = performRequest(readAdvertisersRequestGenerator, parameters);
 
-		Advertiser advertiser = parseAndCreateAdvertiser(responseParser);
+		XmlToAdvertiserParser advertiserParser = new XmlToAdvertiserParser(responseParser);
+		Advertiser advertiser = advertiserParser.parse();
 		advertiser.resetModifiedFlags();
 		return advertiser;
 
 	}
 
-	/**
-	 * Creates an Advertiser object from the {@link ResponseParser}
-	 * 
-	 * @param parser
-	 * @return created {@link Advertiser} object
-	 */
-	private Advertiser parseAndCreateAdvertiser(ResponseParser parser) {
-		Advertiser advertiser = new Advertiser();
-		advertiser.setId(parser.getTrimmedElement("//Advertiser/Id"));
-		advertiser.setOrganization(parser.getTrimmedElement("//Advertiser/Organization"));
-		BillingInformation billingInformation = new BillingInformation();
-		billingInformation.setMethod(parser.getTrimmedElement("//Advertiser/BillingInformation/Method/Code"));
-		billingInformation.setCountry(parser.getTrimmedElement("//Advertiser/BillingInformation/Country/Code"));
-		advertiser.setBillingInformation(billingInformation);
-		return advertiser;
-	}
+
 
 	/**
 	 * Sets default values for the empty fields of the {@link Advertiser} object

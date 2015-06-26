@@ -22,6 +22,8 @@ public class OasServiceFactory {
 
 	private TargetingService targetingService;
 
+	private CampaignService campaignService;
+
 	private CompetitiveCategoryService competitiveCategoryService;
 
 	private CampaignGroupService campaignGroupService;
@@ -80,7 +82,7 @@ public class OasServiceFactory {
 	 * 
 	 * @return {@link InsertionOrderService}
 	 */
-	public InsertionOrderService getiInsertionOrderService() {
+	public InsertionOrderService getInsertionOrderService() {
 		if (insertionOrderService == null) {
 			insertionOrderService = new InsertionOrderService(oasApiService);
 		}
@@ -122,4 +124,16 @@ public class OasServiceFactory {
 		}
 		return campaignGroupService;
 	}
+	/**
+	 * Getter Method for {@link CampaignService}
+	 * 
+	 * @return {@link CampaignService}
+	 */
+	public CampaignService getCampaignService() {
+		if (campaignService == null) {
+			campaignService = new CampaignService(oasApiService);
+		}
+		return campaignService;
+	}
+
 }

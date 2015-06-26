@@ -16,7 +16,7 @@ public abstract class AbstractParameterMapTransformer implements ParameterMapTra
 	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
 
 	protected void checkValueAndPutParam(String paramName, String paramValue, Map<String, Object> result) {
-		if (paramValue != null && !paramValue.isEmpty())
+		if (paramValue != null)
 			result.put(paramName, paramValue);
 	}
 
@@ -41,8 +41,14 @@ public abstract class AbstractParameterMapTransformer implements ParameterMapTra
 			result.put(paramName, TIME_FORMATTER.print(paramValue));
 	}
 
+	protected void checkValueAndPutParam(String paramName, LocalTime paramValue, DateTimeFormatter timeFormatter,
+			Map<String, Object> result) {
+		if (paramValue != null)
+			result.put(paramName, timeFormatter.print(paramValue));
+	}
+
 	protected void checkValueAndPutParam(String paramName, List<String> paramValue, Map<String, Object> result) {
-		if (paramValue != null && !paramValue.isEmpty())
+		if (paramValue != null)
 			result.put(paramName, paramValue);
 	}
 

@@ -6,14 +6,14 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
+import eu.adlogix.appnexus.oas.client.parser.XmlToInsertionOrderParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
 /**
- * Service Class which provides functions for all Insertion Order related operations
+ * Service Class which provides functions for all Insertion Order related
+ * operations
  * 
  */
 @SuppressWarnings("serial")
@@ -120,7 +120,8 @@ public class InsertionOrderService extends AbstractOasService{
 
 		final ResponseParser responseParser = performRequest(readInsertionOrderRequestGenerator, parameters);
 
-		InsertionOrder insertionOrder = parseAndCreateInsertionOrder(responseParser);
+		XmlToInsertionOrderParser insertionOrderParser = new XmlToInsertionOrderParser(responseParser);
+		InsertionOrder insertionOrder = insertionOrderParser.parse();
 		insertionOrder.resetModifiedFlags();
 		return insertionOrder;
 	}
@@ -135,32 +136,6 @@ public class InsertionOrderService extends AbstractOasService{
 
 	}
 
-	/**
-	 * Creates an {@link InsertionOrder} object from the {@link ResponseParser}
-	 * 
-	 * @param parser
-	 * @return created {@link InsertionOrder} object
-	 */
-	private InsertionOrder parseAndCreateInsertionOrder(ResponseParser parser) {
-		InsertionOrder insertionOrder = new InsertionOrder();
-		insertionOrder.setId(parser.getTrimmedElement("//InsertionOrder/Id"));
-		insertionOrder.setDescription(parser.getTrimmedElement("//InsertionOrder/Description"));
-		insertionOrder.setCampaignsBy(parser.getTrimmedElement("//InsertionOrder/CampaignsBy"));
-		insertionOrder.setAdvertiserId(parser.getTrimmedElement("//InsertionOrder/AdvertiserId"));
-		insertionOrder.setAgencyId(parser.getTrimmedElement("//InsertionOrder/AgencyId"));
-		insertionOrder.setStatus(parser.getTrimmedElement("//InsertionOrder/Status"));
-		String bookedImps = parser.getTrimmedElement("//InsertionOrder/BookedImpressions");
-		if (!StringUtils.isEmpty(bookedImps)) {
-			insertionOrder.setBookedImpressions(Long.valueOf(bookedImps));
-		}
-		String bookedClicks = parser.getTrimmedElement("//InsertionOrder/BookedClicks");
-		if (!StringUtils.isEmpty(bookedClicks)) {
-			insertionOrder.setBookedClicks(Long.valueOf(bookedClicks));
-		}
-		insertionOrder.setCampaignIds(parser.getTrimmedElementList("//InsertionOrder/Campaigns/CampaignId"));
-		insertionOrder.setInternalQuickReport(parser.getTrimmedElement("//InsertionOrder/InternalQuickReport"));
-		insertionOrder.setExternalQuickReport(parser.getTrimmedElement("//InsertionOrder/ExternalQuickReport"));
-		return insertionOrder;
-	}
+
 
 }
