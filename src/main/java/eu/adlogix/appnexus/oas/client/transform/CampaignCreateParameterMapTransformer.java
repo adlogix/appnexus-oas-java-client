@@ -165,7 +165,7 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("segmentTargeting", "segmentTargeting");
 			parameters.put("segmentType", segmentTargeting.getSegmentClusterMatch());
 			parameters.put("segmentcluster", segmentTargeting.getValues());
-			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExculde(), parameters);
+			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExclude(), parameters);
 
 		}
 		return parameters;
