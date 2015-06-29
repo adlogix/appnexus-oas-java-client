@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
+import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
@@ -35,7 +36,10 @@ public class CampaignService extends AbstractOasService {
 		final ResponseParser responseParser = performRequest(readCampaignRequestGenerator, parameters);
 
 		XmlToCampaignParser campaignParser = new XmlToCampaignParser(responseParser);
-		return campaignParser.parse();
+		Campaign campaign = campaignParser.parse();
+		campaign.resetModifiedFlags();
+
+		return campaign;
 	}
 
 	public final void addCampaign(Campaign campaign) {
@@ -51,7 +55,7 @@ public class CampaignService extends AbstractOasService {
 		checkNotEmpty(campaign.getCompletion(), "completion");
 		checkNotEmpty(campaign.getPaymentMethod(), "paymentMethod");
 		if (StringUtils.equalsIgnoreCase("CLT", campaign.getType())) {
-			checkNotEmpty(campaign.getCreativeTargetid(), "creativeTargetId");
+			checkNotEmpty(campaign.getCreativeTargetId(), "creativeTargetId");
 		}
 
 		final Campaign campaignWithDefaults = setDefaultsForEmptyFields(campaign);
@@ -59,12 +63,21 @@ public class CampaignService extends AbstractOasService {
 		CampaignCreateParameterMapTransformer parameterTransformer = new CampaignCreateParameterMapTransformer(campaignWithDefaults);
 
 		performRequest(addCampaignRequestGenerator, parameterTransformer.transform());
+
+		campaign.resetModifiedFlags();
 	}
 
 	public final void updateCampaign(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");
 
+		final Campaign modifiedCampaign = campaign.getCampaignWithModifiedAttributes();
+
+		CampaignUpdateParameterMapTransformer parameterTransformer = new CampaignUpdateParameterMapTransformer(modifiedCampaign);
+
+		performRequest(updateCampaignRequestGenerator, parameterTransformer.transform());
+
+		campaign.resetModifiedFlags();
 	}
 
 

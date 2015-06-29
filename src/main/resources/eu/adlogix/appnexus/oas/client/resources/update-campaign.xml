@@ -25,10 +25,10 @@ $if(dailyCampaignUniques)$        <DailyUniq>$dailyCampaignUniques$</DailyUniq>$
 $if(campaignDailyDeliveryDate)$        <SmoothOrAsap>$campaignDailyDeliveryDate$</SmoothOrAsap>$endif$
 $if(impressionsOverrun)$        <ImpOverrun>$impressionsOverrun$</ImpOverrun>$endif$
 $if(strictCompanions)$        <StrictCompanions>$strictCompanions$</StrictCompanions>$endif$
-        <SecondaryFrequency>
+$if(secondaryFrequency)$        <SecondaryFrequency>
 $if(secondaryImpressionsPerVisitor)$          <ImpPerVisitor>$secondaryImpressionsPerVisitor$</ImpPerVisitor>$endif$
 $if(secondaryFrequencyScope)$          <FreqScope>$secondaryFrequencyScope$</FreqScope>$endif$
-        </SecondaryFrequency>
+        </SecondaryFrequency>$endif$
  $if(hourOfDay)$      <HourOfDay>
         $hourOfDay: {h|<Hour>$h$</Hour>}; separator="\n"$
       </HourOfDay>$endif$
