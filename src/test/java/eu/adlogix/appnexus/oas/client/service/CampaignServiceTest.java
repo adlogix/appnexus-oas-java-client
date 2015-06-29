@@ -1,11 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +17,13 @@ import eu.adlogix.appnexus.oas.client.domain.Targeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting.TargetingType;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
+
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -1495,17 +1496,18 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void updateCampaign_WithStartAndEndDatesAndTimes_Success() throws Exception {
+	public void updateCampaign_WithStartAndEndTimesHasNonStandardMinuteValues_StartTimeHas0MinsAndEndTime59Mins()
+			throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
-		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-hourofday.xml", this.getClass()));
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-starttime-endtime.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
-		campaign.setStartTime(new LocalTime(8, 0));
+		campaign.setStartTime(new LocalTime(8, 30));
 		campaign.setEndTime(new LocalTime(17, 0));
 
 		service.updateCampaign(campaign);
