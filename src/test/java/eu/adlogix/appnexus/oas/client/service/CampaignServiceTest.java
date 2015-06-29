@@ -1469,4 +1469,55 @@ public class CampaignServiceTest {
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
+
+	@Test
+	public void updateCampaign_WithOnlyState_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-state.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setStatus("X");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithOnlyCompanion_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-companion.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setStrictCompanions("Y");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithOnlyHourOfDay_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-hourofday.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
 }
