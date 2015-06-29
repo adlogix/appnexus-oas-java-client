@@ -7,8 +7,6 @@
       </Overview>
       <Schedule>
         <StrictCompanions>Y</StrictCompanions>
-        <SecondaryFrequency>
-        </SecondaryFrequency>
       </Schedule>
     </Campaign>
   </Request>

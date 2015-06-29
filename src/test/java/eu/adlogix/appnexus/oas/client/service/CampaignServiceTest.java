@@ -955,7 +955,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void updateCampaign_WithStartDateAndEndDateWithoutTimes_Success() throws Exception {
+	public void updateCampaign_WithCpm_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -970,10 +970,9 @@ public class CampaignServiceTest {
 		campaign.setImpressions(1000l);
 		campaign.setWeight("100");
 		campaign.setPriorityLevel("12");
+		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setPaymentMethod("B");
-		campaign.setCompletion("S");
 		campaign.setReach("O");
 		campaign.setDailyImps(50l);
 		campaign.setSmoothOrAsap("S");
@@ -1003,10 +1002,11 @@ public class CampaignServiceTest {
 		campaign.setClicks(1000l);
 		campaign.setWeight("100");
 		campaign.setPriorityLevel("12");
+		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
 		campaign.setReach("O");
-		campaign.setDailyImps(50l);
+		campaign.setDailyClicks(50l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setImpressionsOverrun(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
@@ -1030,19 +1030,6 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setImpressions(1000l);
-		campaign.setWeight("100");
-		campaign.setPriorityLevel("12");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
-		campaign.setDailyImps(50l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
 
 		campaign.setExcludeTargets(false);
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
@@ -1069,12 +1056,12 @@ public class CampaignServiceTest {
 
 		Targeting stateTargeting = new Targeting(TargetingType.STATE);
 		stateTargeting.setExculde(false);
-		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
+		stateTargeting.setValues(Arrays.asList("US:NJ", "US:PA"));
 		commonTargeting.add(stateTargeting);
 
 		Targeting msaTargeting = new Targeting(TargetingType.MSA);
 		msaTargeting.setExculde(false);
-		msaTargeting.setValues(Arrays.asList("11220"));
+		msaTargeting.setValues(Arrays.asList("11220", "10980"));
 		commonTargeting.add(msaTargeting);
 
 		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
@@ -1280,6 +1267,7 @@ public class CampaignServiceTest {
 		campaign.setImpressions(1000l);
 		campaign.setWeight("1000");
 		campaign.setPriorityLevel("15");
+		campaign.setCompletion("E");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
 		campaign.setReach("F");
@@ -1307,22 +1295,8 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setImpressions(1000l);
-		campaign.setWeight("1000");
-		campaign.setPriorityLevel("15");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("F");
-		campaign.setDailyImps(999999999l);
-		campaign.setSmoothOrAsap("A");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
 		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
 		campaign.setDayOfWeek(Lists.newArrayList("2", "3", "4"));
-		campaign.setUserTimeZone("N");
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1515,6 +1489,24 @@ public class CampaignServiceTest {
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithStartAndEndDatesAndTimes_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-hourofday.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setStartTime(new LocalTime(8, 0));
+		campaign.setEndTime(new LocalTime(17, 0));
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);

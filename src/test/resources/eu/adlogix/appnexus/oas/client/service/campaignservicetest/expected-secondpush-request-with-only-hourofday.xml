@@ -6,8 +6,6 @@
         <Id>0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278</Id>
       </Overview>
       <Schedule>
-        <SecondaryFrequency>
-        </SecondaryFrequency>
       <HourOfDay>
         <Hour>18</Hour>
         <Hour>19</Hour>
