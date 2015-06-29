@@ -1340,22 +1340,8 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setClicks(1000l);
-		campaign.setWeight("1000");
-		campaign.setPriorityLevel("15");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("F");
-		campaign.setDailyImps(999999999l);
-		campaign.setSmoothOrAsap("A");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
 		campaign.setHourOfDay(EMPTY_STRING_LIST);
 		campaign.setDayOfWeek(EMPTY_STRING_LIST);
-		campaign.setUserTimeZone("N");
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
