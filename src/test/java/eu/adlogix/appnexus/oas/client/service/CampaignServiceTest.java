@@ -1205,20 +1205,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setClicks(1000l);
-		campaign.setWeight("0");
-		campaign.setPriorityLevel("0");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
 
-		campaign.setExcludeTargets(false);
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
@@ -1274,6 +1261,101 @@ public class CampaignServiceTest {
 		campaign.setCommonTargeting(commonTargeting);
 
 		campaign.setZones(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDay_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hourofday.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setClicks(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDayAndDateOfWeek_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setClicks(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+		campaign.setDayOfWeek(Lists.newArrayList("2", "3", "4"));
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDayAndDateOfWeekEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setClicks(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setHourOfDay(EMPTY_STRING_LIST);
+		campaign.setDayOfWeek(EMPTY_STRING_LIST);
+		campaign.setUserTimeZone("N");
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
