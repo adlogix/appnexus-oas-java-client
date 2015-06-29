@@ -1448,4 +1448,25 @@ public class CampaignServiceTest {
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
+
+	@Test
+	public void updateCampaign_WithEmptySegmentTargeting_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-segment-targeting-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+
+		SegmentTargeting segmentTargeting = new SegmentTargeting();
+		segmentTargeting.setExculde(true);
+		segmentTargeting.setValues(EMPTY_STRING_LIST);
+		campaign.setSegmentTargeting(segmentTargeting);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
 }
