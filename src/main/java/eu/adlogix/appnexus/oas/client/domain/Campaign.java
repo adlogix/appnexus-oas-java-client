@@ -94,7 +94,7 @@ public class Campaign extends StatefulDomain {
 		setModifiedFlag("advertiserId");
 	}
 
-	public void setCreativeTargetid(String creativeTargetId) {
+	public void setCreativeTargetId(String creativeTargetId) {
 		this.creativeTargetId = creativeTargetId;
 		setModifiedFlag("creativeTargetId");
 	}
