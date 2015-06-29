@@ -14,8 +14,8 @@ $if(productId)$        <ProductId>$productId$</ProductId>$endif$
 $if(competitiveCategoryIds)$        <CompetitiveCategories>
           $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
         </CompetitiveCategories>$endif$
-        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>
-        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>
+$if(internalQuickReport)$        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>$endif$
+$if(externalQuickReport)$        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>$endif$
       </Overview>
 $if(hasSchedule)$      <Schedule>
 $if(totalCampaignImpressions)$        <Impressions>$totalCampaignImpressions$</Impressions>$endif$
