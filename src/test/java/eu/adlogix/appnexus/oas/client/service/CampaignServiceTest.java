@@ -167,7 +167,7 @@ public class CampaignServiceTest {
 
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
 		assertEquals(segmentTargeting.getSegmentClusterMatch(), "A");
-		assertEquals(segmentTargeting.getExculde().booleanValue(), false);
+		assertEquals(segmentTargeting.getExclude().booleanValue(), false);
 		assertEquals(segmentTargeting.getValues(), Arrays.asList(new String[] { "HockeyFans" }));
 
 		assertEquals(campaign.getExcludedSiteIds(), Arrays.asList(new String[] { "site_001" }));
@@ -581,7 +581,7 @@ public class CampaignServiceTest {
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
 		segmentTargeting.setSegmentClusterMatch("L");
-		segmentTargeting.setExculde(true);
+		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
 
@@ -1415,7 +1415,7 @@ public class CampaignServiceTest {
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
 		segmentTargeting.setSegmentClusterMatch("L");
-		segmentTargeting.setExculde(true);
+		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
 
@@ -1436,7 +1436,7 @@ public class CampaignServiceTest {
 		campaign.setId("ADID");
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setExculde(true);
+		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setSegmentTargeting(segmentTargeting);
 
