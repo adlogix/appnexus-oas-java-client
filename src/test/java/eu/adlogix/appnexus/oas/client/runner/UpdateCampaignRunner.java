@@ -15,15 +15,15 @@ public class UpdateCampaignRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CampaignService service = factory.getCampaignService();
 
-		Campaign campaign = service.getCampaignById("test_1");
+		Campaign campaign = service.getCampaignById("test");
 
 		campaign.setImpressions(12500l);
-		campaign.setAdvertiserId("UnitTestAdvertiser_OASUnitTestAdvertiser_EXT_ID");
+		campaign.setAdvertiserId("TestAdvertiser");
 		campaign.setName("test adlogix");
-		campaign.setAgencyId("agency_01");
+		campaign.setAgencyId("agency1");
 		campaign.setDescription("Description Updated");
-		campaign.setProductId("default-product");
-		campaign.setCampaignManager("test");
+		campaign.setProductId("TestProduct");
+		campaign.setCampaignManager("TestCampaignManager");
 		campaign.setInternalQuickReport("short");
 		campaign.setExternalQuickReport("to-date");
 		campaign.setStartTime(new LocalTime(20, 30));
