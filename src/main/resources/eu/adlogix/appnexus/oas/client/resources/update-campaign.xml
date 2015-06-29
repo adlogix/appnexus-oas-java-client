@@ -5,9 +5,17 @@
       <Overview>
         <Id>$campaignId$</Id>
 $if(status)$        <Status>$status$</Status>$endif$
+$if(advertiserId)$        <AdvertiserId>$advertiserId$</AdvertiserId>$endif$
+$if(campaignName)$        <Name>$campaignName$</Name>$endif$
+$if(agencyId)$        <AgencyId>$agencyId$</AgencyId>$endif$
+$if(campaignDescription)$        <Description>$campaignDescription$</Description>$endif$
+$if(campaignManagerId)$        <CampaignManager>$campaignManagerId$</CampaignManager>$endif$
+$if(productId)$        <ProductId>$productId$</ProductId>$endif$
 $if(competitiveCategoryIds)$        <CompetitiveCategories>
           $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
         </CompetitiveCategories>$endif$
+        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>
+        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>
       </Overview>
 $if(hasSchedule)$      <Schedule>
 $if(totalCampaignImpressions)$        <Impressions>$totalCampaignImpressions$</Impressions>$endif$
@@ -17,14 +25,24 @@ $if(campaignWeight)$        <Weight>$campaignWeight$</Weight>$endif$
 $if(campaignPriority)$        <PriorityLevel>$campaignPriority$</PriorityLevel>$endif$
 $if(campaignCompletionStrategy)$        <Completion>$campaignCompletionStrategy$</Completion>$endif$
 $if(campaignStartDate)$        <StartDate>$campaignStartDate$</StartDate>$endif$
+$if(campaignStartTime)$        <StartTime>$campaignStartTime$</StartTime>$endif$
 $if(campaignEndDate)$        <EndDate>$campaignEndDate$</EndDate>$endif$
+$if(campaignEndTime)$        <EndTime>$campaignEndTime$</EndTime>$endif$
 $if(campaignReach)$        <Reach>$campaignReach$</Reach>$endif$
 $if(dailyCampaignImpressions)$        <DailyImp>$dailyCampaignImpressions$</DailyImp>$endif$
 $if(dailyCampaignClicks)$        <DailyClicks>$dailyCampaignClicks$</DailyClicks>$endif$
 $if(dailyCampaignUniques)$        <DailyUniq>$dailyCampaignUniques$</DailyUniq>$endif$
 $if(campaignDailyDeliveryDate)$        <SmoothOrAsap>$campaignDailyDeliveryDate$</SmoothOrAsap>$endif$
 $if(impressionsOverrun)$        <ImpOverrun>$impressionsOverrun$</ImpOverrun>$endif$
+$if(companionPositions)$        <CompanionPositions>
+          $companionPositions: {p|<CompanionPosition>$p$</CompanionPosition>}; separator="\n"$
+        </CompanionPositions>$endif$
 $if(strictCompanions)$        <StrictCompanions>$strictCompanions$</StrictCompanions>$endif$
+$if(primaryFrequency)$        <PrimaryFrequency>
+          <ImpPerVisitor>$primaryImpressionsPerVisitor$</ImpPerVisitor>
+          <ClickPerVisitor>$primaryClicksPerVisitor$</ClickPerVisitor>
+          <FreqScope>$primaryFrequencyScope$</FreqScope>
+        </PrimaryFrequency>$endif$
 $if(secondaryFrequency)$        <SecondaryFrequency>
 $if(secondaryImpressionsPerVisitor)$          <ImpPerVisitor>$secondaryImpressionsPerVisitor$</ImpPerVisitor>$endif$
 $if(secondaryFrequencyScope)$          <FreqScope>$secondaryFrequencyScope$</FreqScope>$endif$
@@ -129,6 +147,16 @@ $if(userTimeZone)$        <UserTimeZone>$userTimeZone$</UserTimeZone>$endif$
 $if(hasBilling)$      <Billing>  
 $if(cpm)$        <Cpm>$cpm$</Cpm>$endif$
 $if(cpc)$        <Cpc>$cpc$</Cpc>$endif$
+$if(cpa)$        <Cpa>$cpa$</Cpa>$endif$
+$if(flatRate)$        <FlatRate>$flatRate$</FlatRate>$endif$
+$if(tax)$        <Tax>$tax$</Tax>$endif$
+$if(agencyCommission)$        <AgencyCommission>$agencyCommission$</AgencyCommission>$endif$
+        <!-- use “C” for Cash, “B” for Barter, “I” for In-House, and “T” Internal Transfer -->
+$if(paymentMethod)$        <PaymentMethod>$paymentMethod$</PaymentMethod>$endif$
+$if(isYieldManaged)$        <IsYieldManaged>$isYieldManaged$</IsYieldManaged>$endif$
+        <!-- use “A” for Advertiser, “G” for Agency -->
+$if(billTo)$        <BillTo>$billTo$</BillTo>$endif$
+$if(currency)$        <Currency>$currency$</Currency>$endif$
       </Billing>$endif$
     </Campaign>
   </Request>

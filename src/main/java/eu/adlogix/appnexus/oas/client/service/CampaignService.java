@@ -6,6 +6,7 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
@@ -73,6 +74,8 @@ public class CampaignService extends AbstractOasService {
 
 		final Campaign modifiedCampaign = campaign.getCampaignWithModifiedAttributes();
 
+		checkUpdateNotSupportedFields(modifiedCampaign);
+
 		CampaignUpdateParameterMapTransformer parameterTransformer = new CampaignUpdateParameterMapTransformer(modifiedCampaign);
 
 		performRequest(updateCampaignRequestGenerator, parameterTransformer.transform());
@@ -84,7 +87,7 @@ public class CampaignService extends AbstractOasService {
 	/**
 	 * Sets default values for the empty fields of the {@link Campaign} object
 	 * 
-	 * @param advertiser
+	 * @param campaign
 	 * @return {@link Campaign} object with default values
 	 */
 	private Campaign setDefaultsForEmptyFields(Campaign campaign) {
@@ -100,5 +103,25 @@ public class CampaignService extends AbstractOasService {
 	}
 
 
+	private void checkUpdateNotSupportedFields(Campaign campaign) {
+		if (!StringUtils.isEmpty(campaign.getType())) {
+			throw new RuntimeException("Type cannot be updated in updateCampaign");
+		}
+		if (!StringUtils.isEmpty(campaign.getCreativeTargetId())) {
+			throw new RuntimeException("CreativeTargetId cannot be updated in updateCampaign");
+		}
+		if (!CollectionUtils.isEmpty(campaign.getCampaignGroupIds())) {
+			throw new RuntimeException("CampaignGroupIds cannot be updated in updateCampaign");
+		}
+		if (!CollectionUtils.isEmpty(campaign.getExternalUserIds())) {
+			throw new RuntimeException("ExternalUserIds cannot be updated in updateCampaign");
+		}
+		if (!CollectionUtils.isEmpty(campaign.getSectionIds())) {
+			throw new RuntimeException("SectionIds cannot be updated in updateCampaign");
+		}
+		if (!CollectionUtils.isEmpty(campaign.getPageUrls())) {
+			throw new RuntimeException("PageUrls cannot be updated in updateCampaign");
+		}
+	}
 
 }
