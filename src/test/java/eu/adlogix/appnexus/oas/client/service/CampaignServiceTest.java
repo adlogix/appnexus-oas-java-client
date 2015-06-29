@@ -1,11 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +7,8 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
@@ -22,7 +18,16 @@ import eu.adlogix.appnexus.oas.client.domain.Targeting.TargetingType;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
 public class CampaignServiceTest {
+
+	private static final List<String> EMPTY_STRING_LIST = Lists.newArrayList();
 
 	@Test
 	public void getCampaignById_ExistingCampaign_ReturnCampaign() throws Exception {
@@ -950,4 +955,569 @@ public class CampaignServiceTest {
 
 	}
 
+	@Test
+	public void updateCampaign_WithStartDateAndEndDateWithoutTimes_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-cpm.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("100");
+		campaign.setPriorityLevel("12");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setPaymentMethod("B");
+		campaign.setCompletion("S");
+		campaign.setReach("O");
+		campaign.setDailyImps(50l);
+		campaign.setSmoothOrAsap("S");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+
+	}
+
+	@Test
+	public void updateCampaign_WithCpc_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-cpc.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setClicks(1000l);
+		campaign.setWeight("100");
+		campaign.setPriorityLevel("12");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("O");
+		campaign.setDailyImps(50l);
+		campaign.setSmoothOrAsap("S");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+
+	}
+
+	@Test
+	public void updateCampaign_WithTargeting_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("100");
+		campaign.setPriorityLevel("12");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("O");
+		campaign.setDailyImps(50l);
+		campaign.setSmoothOrAsap("S");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		campaign.setExcludeTargets(false);
+		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+
+		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
+		topLevelDomain.setExculde(false);
+		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
+		commonTargeting.add(topLevelDomain);
+
+		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
+		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
+		commonTargeting.add(bandwidthTargeting);
+
+		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
+		continentTargeting.setExculde(false);
+		continentTargeting.setValues(Arrays.asList("AU", "EU"));
+		commonTargeting.add(continentTargeting);
+
+		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
+		countryTargeting.setExculde(true);
+		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
+		commonTargeting.add(countryTargeting);
+
+		Targeting stateTargeting = new Targeting(TargetingType.STATE);
+		stateTargeting.setExculde(false);
+		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
+		commonTargeting.add(stateTargeting);
+
+		Targeting msaTargeting = new Targeting(TargetingType.MSA);
+		msaTargeting.setExculde(false);
+		msaTargeting.setValues(Arrays.asList("11220"));
+		commonTargeting.add(msaTargeting);
+
+		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
+		dmaTargeting.setExculde(false);
+		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
+		commonTargeting.add(dmaTargeting);
+
+		Targeting osTargeting = new Targeting(TargetingType.OS);
+		osTargeting.setExculde(false);
+		osTargeting.setValues(Arrays.asList("winxp", "unix"));
+		commonTargeting.add(osTargeting);
+
+		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
+		browserTargeting.setExculde(false);
+		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
+		commonTargeting.add(browserTargeting);
+
+		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
+		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
+		commonTargeting.add(browserVersionTargeting);
+
+		campaign.setCommonTargeting(commonTargeting);
+
+		campaign.setZones(Lists.newArrayList("1", "2"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+
+	}
+
+	@Test
+	public void updateCampaign_WithTargetingHavingSingleValue_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-single-value.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("0");
+		campaign.setPriorityLevel("0");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("O");
+		campaign.setSmoothOrAsap("S");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		campaign.setExcludeTargets(false);
+		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+
+		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
+		topLevelDomain.setExculde(false);
+		topLevelDomain.setValues(Arrays.asList("US"));
+		commonTargeting.add(topLevelDomain);
+
+		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
+		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setValues(Arrays.asList("LAN"));
+		commonTargeting.add(bandwidthTargeting);
+
+		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
+		continentTargeting.setExculde(false);
+		continentTargeting.setValues(Arrays.asList("AU"));
+		commonTargeting.add(continentTargeting);
+
+		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
+		countryTargeting.setExculde(true);
+		countryTargeting.setValues(Arrays.asList("BE"));
+		commonTargeting.add(countryTargeting);
+
+		Targeting stateTargeting = new Targeting(TargetingType.STATE);
+		stateTargeting.setExculde(false);
+		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
+		commonTargeting.add(stateTargeting);
+
+		Targeting msaTargeting = new Targeting(TargetingType.MSA);
+		msaTargeting.setExculde(false);
+		msaTargeting.setValues(Arrays.asList("11220"));
+		commonTargeting.add(msaTargeting);
+
+		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
+		dmaTargeting.setExculde(false);
+		dmaTargeting.setValues(Arrays.asList("803"));
+		commonTargeting.add(dmaTargeting);
+
+		Targeting osTargeting = new Targeting(TargetingType.OS);
+		osTargeting.setExculde(false);
+		osTargeting.setValues(Arrays.asList("winxp"));
+		commonTargeting.add(osTargeting);
+
+		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
+		browserTargeting.setExculde(false);
+		browserTargeting.setValues(Arrays.asList("opera"));
+		commonTargeting.add(browserTargeting);
+
+		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
+		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setValues(Arrays.asList("firefox19"));
+		commonTargeting.add(browserVersionTargeting);
+
+		campaign.setCommonTargeting(commonTargeting);
+
+		campaign.setZones(Lists.newArrayList("1"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithTargetingHavingEmptyValue_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-empty-value.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+
+		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+
+		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
+		topLevelDomain.setExculde(false);
+		topLevelDomain.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(topLevelDomain);
+
+		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
+		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(bandwidthTargeting);
+
+		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
+		continentTargeting.setExculde(false);
+		continentTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(continentTargeting);
+
+		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
+		countryTargeting.setExculde(true);
+		countryTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(countryTargeting);
+
+		Targeting stateTargeting = new Targeting(TargetingType.STATE);
+		stateTargeting.setExculde(false);
+		stateTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(stateTargeting);
+
+		Targeting msaTargeting = new Targeting(TargetingType.MSA);
+		msaTargeting.setExculde(false);
+		msaTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(msaTargeting);
+
+		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
+		dmaTargeting.setExculde(false);
+		dmaTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(dmaTargeting);
+
+		Targeting osTargeting = new Targeting(TargetingType.OS);
+		osTargeting.setExculde(false);
+		osTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(osTargeting);
+
+		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
+		browserTargeting.setExculde(false);
+		browserTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(browserTargeting);
+
+		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
+		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setValues(EMPTY_STRING_LIST);
+		commonTargeting.add(browserVersionTargeting);
+
+		campaign.setCommonTargeting(commonTargeting);
+
+		campaign.setZones(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDay_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hourofday.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDayAndDateOfWeek_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+		campaign.setDayOfWeek(Lists.newArrayList("2", "3", "4"));
+		campaign.setUserTimeZone("N");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithHourOfDayAndDateOfWeekEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setHourOfDay(EMPTY_STRING_LIST);
+		campaign.setDayOfWeek(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithRdbTargeting_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-rdb-targeting.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setCompletion("E");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		campaign.setExcludeTargets(false);
+
+		RdbTargeting rdbTargeting = new RdbTargeting();
+		rdbTargeting.setAgeExclude(true);
+		rdbTargeting.setAgeFrom(13);
+		rdbTargeting.setAgeTo(30);
+		rdbTargeting.setGenderExclude(true);
+		rdbTargeting.setGender("M");
+		rdbTargeting.setIncomeExclude(true);
+		rdbTargeting.setIncomeFrom(13l);
+		rdbTargeting.setIncomeTo(30l);
+		rdbTargeting.setSubscriberCodeExclude(true);
+		rdbTargeting.setSubscriberCode("TEST");
+		rdbTargeting.setPreferenceFlagsExclude(true);
+		rdbTargeting.setPreferenceFlags("012345678911");
+		campaign.setRdbTargeting(rdbTargeting);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithSegmentTargeting_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-segment-targeting.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+		campaign.setStatus("W");
+		campaign.setImpressions(1000l);
+		campaign.setWeight("1000");
+		campaign.setPriorityLevel("15");
+		campaign.setCompletion("E");
+		campaign.setStartDate(new LocalDate(2010, 10, 31));
+		campaign.setEndDate(new LocalDate(2010, 10, 31));
+		campaign.setReach("F");
+		campaign.setDailyImps(999999999l);
+		campaign.setSmoothOrAsap("A");
+		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
+		campaign.setSecondaryImpsPerVisitor(0l);
+		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setUserTimeZone("N");
+
+		campaign.setExcludeTargets(false);
+
+		campaign.setExcludeTargets(false);
+		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+
+		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
+		topLevelDomain.setExculde(false);
+		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
+		commonTargeting.add(topLevelDomain);
+
+		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
+		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
+		commonTargeting.add(bandwidthTargeting);
+
+		campaign.setCommonTargeting(commonTargeting);
+
+		SegmentTargeting segmentTargeting = new SegmentTargeting();
+		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setExculde(true);
+		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
+		campaign.setSegmentTargeting(segmentTargeting);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithEmptySegmentTargeting_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-segment-targeting-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+
+		SegmentTargeting segmentTargeting = new SegmentTargeting();
+		segmentTargeting.setExculde(true);
+		segmentTargeting.setValues(EMPTY_STRING_LIST);
+		campaign.setSegmentTargeting(segmentTargeting);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithOnlyState_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-state.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setStatus("X");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithOnlyCompanion_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-companion.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setStrictCompanions("Y");
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithOnlyHourOfDay_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-hourofday.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
 }

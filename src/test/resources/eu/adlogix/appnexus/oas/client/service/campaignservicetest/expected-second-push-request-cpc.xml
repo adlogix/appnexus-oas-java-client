@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>ADID</Id>
+        <Status>W</Status>
+      </Overview>
+      <Schedule>
+        <Clicks>1000</Clicks>
+        <Weight>100</Weight>
+        <PriorityLevel>12</PriorityLevel>
+        <Completion>S</Completion>
+        <StartDate>2010-10-31</StartDate>
+        <EndDate>2010-10-31</EndDate>
+        <Reach>O</Reach>
+        <DailyClicks>50</DailyClicks>
+        <SmoothOrAsap>S</SmoothOrAsap>
+        <ImpOverrun>0</ImpOverrun>
+        <SecondaryFrequency>
+          <ImpPerVisitor>0</ImpPerVisitor>
+          <FreqScope>0</FreqScope>
+        </SecondaryFrequency>
+        <UserTimeZone>N</UserTimeZone>
+      </Schedule>
+    </Campaign>
+  </Request>
+</AdXML>

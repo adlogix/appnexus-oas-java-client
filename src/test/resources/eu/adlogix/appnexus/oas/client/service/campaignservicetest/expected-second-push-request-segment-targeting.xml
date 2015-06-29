@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>ADID</Id>
+        <Status>W</Status>
+      </Overview>
+      <Schedule>
+        <Impressions>1000</Impressions>
+        <Weight>0</Weight>
+        <PriorityLevel>0</PriorityLevel>
+        <Completion>S</Completion>
+        <StartDate>2010-10-31</StartDate>
+        <EndDate>2010-10-31</EndDate>
+        <Reach>O</Reach>
+        <SmoothOrAsap>S</SmoothOrAsap>
+        <ImpOverrun>0</ImpOverrun>
+        <StrictCompanions>N</StrictCompanions>
+        <SecondaryFrequency>
+          <ImpPerVisitor>0</ImpPerVisitor>
+          <FreqScope>0</FreqScope>
+        </SecondaryFrequency>
+        <UserTimeZone>N</UserTimeZone>
+      </Schedule>
+      <Target>
+        <ExcludeTargets>N</ExcludeTargets>
+        <ExcludeTopLevelDomain>N</ExcludeTopLevelDomain>
+        <TopLevelDomain>
+          <Code>US</Code>
+          <Code>COM</Code>
+          <Code>EDU</Code>
+        </TopLevelDomain>
+        <ExcludeBandwidth>Y</ExcludeBandwidth>
+        <Bandwidth>
+          <Code>LAN</Code>
+          <Code>DSL/Cable</Code>
+        </Bandwidth>
+        <ExcludeSegmentTargeting>Y</ExcludeSegmentTargeting>
+        <Cluster>
+        <SegmentType>L</SegmentType>
+          <Segment>AlaSegTest1</Segment>
+          <Segment>AlaSegTest2</Segment>
+        </Cluster>
+      </Target>
+    </Campaign>
+  </Request>
+</AdXML>
