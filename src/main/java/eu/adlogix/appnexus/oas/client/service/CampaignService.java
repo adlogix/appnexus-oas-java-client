@@ -22,6 +22,7 @@ public class CampaignService extends AbstractOasService {
 
 	private final XmlRequestGenerator readCampaignRequestGenerator = new XmlRequestGenerator("read-campaign");
 	private final XmlRequestGenerator addCampaignRequestGenerator = new XmlRequestGenerator("add-campaign");
+	private final XmlRequestGenerator updateCampaignRequestGenerator = new XmlRequestGenerator("update-campaign");
 
 	final public Campaign getCampaignById(final String id) {
 
@@ -60,6 +61,11 @@ public class CampaignService extends AbstractOasService {
 		performRequest(addCampaignRequestGenerator, parameterTransformer.transform());
 	}
 
+	public final void updateCampaign(Campaign campaign) {
+
+		checkNotEmpty(campaign.getId(), "campaignId");
+
+	}
 
 
 	/**
