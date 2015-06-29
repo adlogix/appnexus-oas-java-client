@@ -159,12 +159,11 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
-		if (segmentTargeting != null && segmentTargeting.getSegmentClusterMatch() != null
-				&& segmentTargeting.getValues() != null) {
+		if (segmentTargeting != null) {
 			parameters.put("segmentTargeting", "segmentTargeting");
 			parameters.put("segmentType", segmentTargeting.getSegmentClusterMatch());
 			parameters.put("segmentcluster", segmentTargeting.getValues());
-			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExculde(), parameters);
+			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExclude(), parameters);
 
 		}
 		return parameters;
