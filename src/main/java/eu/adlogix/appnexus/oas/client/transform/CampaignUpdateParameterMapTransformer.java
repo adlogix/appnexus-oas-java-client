@@ -91,8 +91,13 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 				parameters.put("secondaryImpressionsPerVisitor", campaign.getSecondaryImpsPerVisitor());
 				parameters.put("secondaryFrequencyScope", campaign.getSecondaryFrequencyScope());
 			}
+
+			parameters.put("hourOfDayIsNotNull", campaign.getHourOfDay() != null);
 			parameters.put("hourOfDay", campaign.getHourOfDay());
+
+			parameters.put("dayOfWeekIsNotNull", campaign.getDayOfWeek() != null);
 			parameters.put("dayOfWeek", campaign.getDayOfWeek());
+
 			parameters.put("userTimeZone", campaign.getUserTimeZone());
 
 		}
