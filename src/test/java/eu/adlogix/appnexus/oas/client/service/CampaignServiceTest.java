@@ -1334,6 +1334,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
+		campaign.setExcludeTargets(false);
 
 		RdbTargeting rdbTargeting = new RdbTargeting();
 		rdbTargeting.setAgeExclude(true);
