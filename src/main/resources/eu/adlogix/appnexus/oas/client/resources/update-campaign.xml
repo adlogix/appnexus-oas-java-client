@@ -58,46 +58,46 @@ $if(userTimeZone)$        <UserTimeZone>$userTimeZone$</UserTimeZone>$endif$
 $if(target)$      <Target>
 $if(excludeTargets)$        <ExcludeTargets>$excludeTargets$</ExcludeTargets>$endif$
 $if(topleveldomainExclude)$        <ExcludeTopLevelDomain>$topleveldomainExclude$</ExcludeTopLevelDomain>$endif$
-$if(topleveldomain)$        <TopLevelDomain>
+$if(topleveldomainIsNotNull)$        <TopLevelDomain>
           $topleveldomain: {t|<Code>$t$</Code>}; separator="\n"$
         </TopLevelDomain>$endif$
 $if(bandwidthExclude)$        <ExcludeBandwidth>$bandwidthExclude$</ExcludeBandwidth>$endif$
-$if(bandwidth)$        <Bandwidth>
+$if(bandwidthIsNotNull)$        <Bandwidth>
           $bandwidth: {t|<Code>$t$</Code>}; separator="\n"$
         </Bandwidth>$endif$
 $if(continentExclude)$        <ExcludeContinent>$continentExclude$</ExcludeContinent>$endif$
-$if(continent)$        <Continent>
+$if(continentIsNotNull)$        <Continent>
           $continent: {t|<Code>$t$</Code>}; separator="\n"$
         </Continent>$endif$
 $if(countryExclude)$        <ExcludeCountry>$countryExclude$</ExcludeCountry>$endif$
-$if(country)$        <Country>
+$if(countryIsNotNull)$        <Country>
           $country: {t|<Code>$t$</Code>}; separator="\n"$
         </Country>$endif$
 $if(stateExclude)$        <ExcludeState>$stateExclude$</ExcludeState>$endif$
-$if(state)$        <State>
+$if(stateIsNotNull)$        <State>
           $state: {t|<Code>$t$</Code>}; separator="\n"$
         </State>$endif$
 $if(msaExclude)$        <ExcludeMsa>$msaExclude$</ExcludeMsa>$endif$
-$if(msa)$        <Msa>
+$if(msaIsNotNull)$        <Msa>
           $msa: {t|<Code>$t$</Code>}; separator="\n"$
         </Msa>$endif$
 $if(dmaExclude)$        <ExcludeDma>$dmaExclude$</ExcludeDma>$endif$
-$if(dma)$        <Dma>
+$if(dmaIsNotNull)$        <Dma>
           $dma: {t|<Code>$t$</Code>}; separator="\n"$
         </Dma>$endif$
-$if(zone)$        <Zones>
+$if(zoneIsNotNull)$        <Zones>
           $zone: {t|<Code>$t$</Code>}; separator="\n"$
         </Zones>$endif$
 $if(osExclude)$        <ExcludeOs>$osExclude$</ExcludeOs>$endif$
-$if(os)$        <Os>
+$if(osIsNotNull)$        <Os>
           $os: {t|<Code>$t$</Code>}; separator="\n"$
         </Os>$endif$
 $if(browserExclude)$        <ExcludeBrowser>$browserExclude$</ExcludeBrowser>$endif$
-$if(browser)$        <Browser>
+$if(browserIsNotNull)$        <Browser>
           $browser: {t|<Code>$t$</Code>}; separator="\n"$
         </Browser>$endif$
 $if(browservExclude)$        <ExcludeBrowserV>$browservExclude$</ExcludeBrowserV>$endif$
-$if(browserv)$        <BrowserV>
+$if(browservIsNotNull)$        <BrowserV>
           $browserv: {t|<Code>$t$</Code>}; separator="\n"$
         </BrowserV>$endif$
 $if(ageExclude)$        <ExcludeAgeTargeting>$ageExclude$</ExcludeAgeTargeting>$endif$

@@ -133,7 +133,10 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 				checkValueAndPutParam(targetingType + "Exclude", targeting.getExclude(), parameters);
 
 				final List<String> values = targeting.getValues();
-				checkValueAndPutParam(targetingType, values, parameters);
+				if (values != null) {
+					parameters.put(targetingType + "IsNotNull", true);
+					parameters.put(targetingType, values);
+				}
 			}
 		}
 		return parameters;
