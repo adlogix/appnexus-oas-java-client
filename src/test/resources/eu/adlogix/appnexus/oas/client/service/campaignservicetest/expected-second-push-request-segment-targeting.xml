@@ -38,7 +38,7 @@
         </Bandwidth>
         <ExcludeSegmentTargeting>Y</ExcludeSegmentTargeting>
         <Cluster>
-        <SegmentType>L</SegmentType>
+          <SegmentType>L</SegmentType>
           <Segment>AlaSegTest1</Segment>
           <Segment>AlaSegTest2</Segment>
         </Cluster>

@@ -1382,14 +1382,13 @@ public class CampaignServiceTest {
 		campaign.setId("ADID");
 		campaign.setStatus("W");
 		campaign.setImpressions(1000l);
-		campaign.setWeight("1000");
-		campaign.setPriorityLevel("15");
-		campaign.setCompletion("E");
+		campaign.setWeight("0");
+		campaign.setPriorityLevel("0");
+		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("F");
-		campaign.setDailyImps(999999999l);
-		campaign.setSmoothOrAsap("A");
+		campaign.setReach("O");
+		campaign.setSmoothOrAsap("S");
 		campaign.setImpressionsOverrun(0l);
 		campaign.setStrictCompanions("N");
 		campaign.setSecondaryImpsPerVisitor(0l);
@@ -1472,6 +1471,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
 		campaign.setStrictCompanions("Y");
 
 		service.updateCampaign(campaign);
