@@ -119,7 +119,10 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		parameters.putAll(getCommonTargetingParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));
-		parameters.put("zone", campaign.getZones());
+		if (campaign.getZones() != null) {
+			parameters.put("zoneIsNotNull", true);
+			parameters.put("zone", campaign.getZones());
+		}
 		return parameters;
 	}
 
