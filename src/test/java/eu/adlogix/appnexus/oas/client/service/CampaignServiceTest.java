@@ -1423,7 +1423,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void updateCampaign_WithEmptySegmentTargeting_Success() throws Exception {
+	public void updateCampaign_WithSegmentTargetingEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
