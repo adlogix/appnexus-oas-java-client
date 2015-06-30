@@ -1,11 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +17,13 @@ import eu.adlogix.appnexus.oas.client.domain.Targeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting.TargetingType;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
+
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -1109,11 +1110,13 @@ public class CampaignServiceTest {
 		campaign.setImpressions(1000l);
 		campaign.setWeight("0");
 		campaign.setPriorityLevel("0");
+		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setImpressionsOverrun(0l);
+		campaign.setStrictCompanions("N");
 		campaign.setSecondaryImpsPerVisitor(0l);
 		campaign.setSecondaryFrequencyScope(0l);
 		campaign.setUserTimeZone("N");
@@ -1331,23 +1334,6 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		// campaign.setStatus("W");
-		// campaign.setImpressions(1000l);
-		// campaign.setWeight("1000");
-		// campaign.setPriorityLevel("15");
-		// campaign.setCompletion("E");
-		// campaign.setStartDate(new LocalDate(2010, 10, 31));
-		// campaign.setEndDate(new LocalDate(2010, 10, 31));
-		// campaign.setReach("F");
-		// campaign.setDailyImps(999999999l);
-		// campaign.setSmoothOrAsap("A");
-		// campaign.setImpressionsOverrun(0l);
-		// campaign.setStrictCompanions("N");
-		// campaign.setSecondaryImpsPerVisitor(0l);
-		// campaign.setSecondaryFrequencyScope(0l);
-		// campaign.setUserTimeZone("N");
-		//
-		// campaign.setExcludeTargets(false);
 
 		RdbTargeting rdbTargeting = new RdbTargeting();
 		rdbTargeting.setAgeExclude(true);
