@@ -122,7 +122,7 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 
 			for (Targeting targeting : campaign.getCommonTargeting()) {
 				String targetingType = targeting.getTargetingType().toString().toLowerCase();
-				checkValueAndPutParam(targetingType + "Exclude", targeting.getExculde(), parameters);
+				checkValueAndPutParam(targetingType + "Exclude", targeting.getExclude(), parameters);
 
 				final List<String> values = targeting.getValues();
 				checkValueAndPutParam(targetingType, values, parameters);

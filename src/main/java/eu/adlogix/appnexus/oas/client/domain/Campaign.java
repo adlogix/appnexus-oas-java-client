@@ -1,9 +1,11 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -389,6 +391,18 @@ public class Campaign extends StatefulDomain {
 		if (segmentTargeting != null) {
 			modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
 		}
+
+		if (!CollectionUtils.isEmpty(commonTargeting)) {
+			List<Targeting> modifiedTageting = new ArrayList<Targeting>();
+			for (Targeting targeting : commonTargeting) {
+				modifiedTageting.add(targeting.getTargetingWithModifiedAttributes());
+			}
+			modifiedCampaign.setCommonTargeting(modifiedTageting);
+		}
+
+		if (rdbTargeting != null) {
+			modifiedCampaign.setRdbTargeting(rdbTargeting.getRdbargetingWithModifiedAttributes());
+		}
 		return modifiedCampaign;
 	}
 
@@ -398,6 +412,17 @@ public class Campaign extends StatefulDomain {
 	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
+		if (segmentTargeting != null) {
+			segmentTargeting.resetModifiedFlags();
+		}
+		if (!CollectionUtils.isEmpty(commonTargeting)) {
+			for (Targeting targeting : commonTargeting) {
+				targeting.resetModifiedFlags();
+			}
+		}
+		if (rdbTargeting != null) {
+			rdbTargeting.resetModifiedFlags();
+		}
 		setModifiedFlag("id");
 	}
 

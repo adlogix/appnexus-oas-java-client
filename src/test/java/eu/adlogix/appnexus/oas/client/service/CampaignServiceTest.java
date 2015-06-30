@@ -1,5 +1,11 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +23,6 @@ import eu.adlogix.appnexus.oas.client.domain.Targeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting.TargetingType;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
-
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -109,44 +108,44 @@ public class CampaignServiceTest {
 		for (Targeting targeting : targetingList) {
 			if (targeting.getTargetingType().equals(TargetingType.TOP_DOMAIN)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "COM", "EDU" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.BANDWIDTH)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "LAN", "DSL/Cable" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.CONTINENT)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AS", "EU", "NA" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.COUNTRY)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "CA", "AF" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.STATE)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AL:BERAT", "AL:FIER", "AM:ARTASHAT" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.MSA)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "0240", "0280", "6280" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.DMA)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "507", "508" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.OS)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "winxp", "unix" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.BROWSER)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "msie", "netscape", "mozilla" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			} else if (targeting.getTargetingType().equals(TargetingType.BROWSER_VERSIONS)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "explorer6", "mozilla0", "mozilla1",
 						"netscape7" }));
-				assertEquals(targeting.getExculde().booleanValue(), false);
+				assertEquals(targeting.getExclude().booleanValue(), false);
 
 			}
 		}
@@ -500,52 +499,52 @@ public class CampaignServiceTest {
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
-		topLevelDomain.setExculde(false);
+		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		commonTargeting.add(topLevelDomain);
 
 		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
-		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		commonTargeting.add(bandwidthTargeting);
 
 		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
-		continentTargeting.setExculde(false);
+		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
 		commonTargeting.add(continentTargeting);
 
 		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
-		countryTargeting.setExculde(true);
+		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
 		commonTargeting.add(countryTargeting);
 
 		Targeting stateTargeting = new Targeting(TargetingType.STATE);
-		stateTargeting.setExculde(false);
+		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
 		commonTargeting.add(stateTargeting);
 
 		Targeting msaTargeting = new Targeting(TargetingType.MSA);
-		msaTargeting.setExculde(false);
+		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
 		commonTargeting.add(msaTargeting);
 
 		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
-		dmaTargeting.setExculde(false);
+		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
 		commonTargeting.add(dmaTargeting);
 
 		Targeting osTargeting = new Targeting(TargetingType.OS);
-		osTargeting.setExculde(false);
+		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
 		commonTargeting.add(osTargeting);
 
 		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
-		browserTargeting.setExculde(false);
+		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
 		commonTargeting.add(browserTargeting);
 
 		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
-		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
 		commonTargeting.add(browserVersionTargeting);
 
@@ -1036,52 +1035,52 @@ public class CampaignServiceTest {
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
-		topLevelDomain.setExculde(false);
+		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		commonTargeting.add(topLevelDomain);
 
 		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
-		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		commonTargeting.add(bandwidthTargeting);
 
 		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
-		continentTargeting.setExculde(false);
+		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
 		commonTargeting.add(continentTargeting);
 
 		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
-		countryTargeting.setExculde(true);
+		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
 		commonTargeting.add(countryTargeting);
 
 		Targeting stateTargeting = new Targeting(TargetingType.STATE);
-		stateTargeting.setExculde(false);
+		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("US:NJ", "US:PA"));
 		commonTargeting.add(stateTargeting);
 
 		Targeting msaTargeting = new Targeting(TargetingType.MSA);
-		msaTargeting.setExculde(false);
+		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220", "10980"));
 		commonTargeting.add(msaTargeting);
 
 		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
-		dmaTargeting.setExculde(false);
+		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
 		commonTargeting.add(dmaTargeting);
 
 		Targeting osTargeting = new Targeting(TargetingType.OS);
-		osTargeting.setExculde(false);
+		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
 		commonTargeting.add(osTargeting);
 
 		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
-		browserTargeting.setExculde(false);
+		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
 		commonTargeting.add(browserTargeting);
 
 		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
-		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
 		commonTargeting.add(browserVersionTargeting);
 
@@ -1123,52 +1122,52 @@ public class CampaignServiceTest {
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
-		topLevelDomain.setExculde(false);
+		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US"));
 		commonTargeting.add(topLevelDomain);
 
 		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
-		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN"));
 		commonTargeting.add(bandwidthTargeting);
 
 		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
-		continentTargeting.setExculde(false);
+		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU"));
 		commonTargeting.add(continentTargeting);
 
 		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
-		countryTargeting.setExculde(true);
+		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE"));
 		commonTargeting.add(countryTargeting);
 
 		Targeting stateTargeting = new Targeting(TargetingType.STATE);
-		stateTargeting.setExculde(false);
+		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
 		commonTargeting.add(stateTargeting);
 
 		Targeting msaTargeting = new Targeting(TargetingType.MSA);
-		msaTargeting.setExculde(false);
+		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
 		commonTargeting.add(msaTargeting);
 
 		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
-		dmaTargeting.setExculde(false);
+		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803"));
 		commonTargeting.add(dmaTargeting);
 
 		Targeting osTargeting = new Targeting(TargetingType.OS);
-		osTargeting.setExculde(false);
+		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp"));
 		commonTargeting.add(osTargeting);
 
 		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
-		browserTargeting.setExculde(false);
+		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera"));
 		commonTargeting.add(browserTargeting);
 
 		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
-		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19"));
 		commonTargeting.add(browserVersionTargeting);
 
@@ -1196,52 +1195,52 @@ public class CampaignServiceTest {
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
-		topLevelDomain.setExculde(false);
+		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(topLevelDomain);
 
 		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
-		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(bandwidthTargeting);
 
 		Targeting continentTargeting = new Targeting(TargetingType.CONTINENT);
-		continentTargeting.setExculde(false);
+		continentTargeting.setExclude(false);
 		continentTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(continentTargeting);
 
 		Targeting countryTargeting = new Targeting(TargetingType.COUNTRY);
-		countryTargeting.setExculde(true);
+		countryTargeting.setExclude(true);
 		countryTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(countryTargeting);
 
 		Targeting stateTargeting = new Targeting(TargetingType.STATE);
-		stateTargeting.setExculde(false);
+		stateTargeting.setExclude(false);
 		stateTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(stateTargeting);
 
 		Targeting msaTargeting = new Targeting(TargetingType.MSA);
-		msaTargeting.setExculde(false);
+		msaTargeting.setExclude(false);
 		msaTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(msaTargeting);
 
 		Targeting dmaTargeting = new Targeting(TargetingType.DMA);
-		dmaTargeting.setExculde(false);
+		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(dmaTargeting);
 
 		Targeting osTargeting = new Targeting(TargetingType.OS);
-		osTargeting.setExculde(false);
+		osTargeting.setExclude(false);
 		osTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(osTargeting);
 
 		Targeting browserTargeting = new Targeting(TargetingType.BROWSER);
-		browserTargeting.setExculde(false);
+		browserTargeting.setExclude(false);
 		browserTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(browserTargeting);
 
 		Targeting browserVersionTargeting = new Targeting(TargetingType.BROWSER_VERSIONS);
-		browserVersionTargeting.setExculde(false);
+		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(EMPTY_STRING_LIST);
 		commonTargeting.add(browserVersionTargeting);
 
@@ -1332,23 +1331,23 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setImpressions(1000l);
-		campaign.setWeight("1000");
-		campaign.setPriorityLevel("15");
-		campaign.setCompletion("E");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("F");
-		campaign.setDailyImps(999999999l);
-		campaign.setSmoothOrAsap("A");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
-
-		campaign.setExcludeTargets(false);
+		// campaign.setStatus("W");
+		// campaign.setImpressions(1000l);
+		// campaign.setWeight("1000");
+		// campaign.setPriorityLevel("15");
+		// campaign.setCompletion("E");
+		// campaign.setStartDate(new LocalDate(2010, 10, 31));
+		// campaign.setEndDate(new LocalDate(2010, 10, 31));
+		// campaign.setReach("F");
+		// campaign.setDailyImps(999999999l);
+		// campaign.setSmoothOrAsap("A");
+		// campaign.setImpressionsOverrun(0l);
+		// campaign.setStrictCompanions("N");
+		// campaign.setSecondaryImpsPerVisitor(0l);
+		// campaign.setSecondaryFrequencyScope(0l);
+		// campaign.setUserTimeZone("N");
+		//
+		// campaign.setExcludeTargets(false);
 
 		RdbTargeting rdbTargeting = new RdbTargeting();
 		rdbTargeting.setAgeExclude(true);
@@ -1401,12 +1400,12 @@ public class CampaignServiceTest {
 		List<Targeting> commonTargeting = new ArrayList<Targeting>();
 
 		Targeting topLevelDomain = new Targeting(TargetingType.TOP_DOMAIN);
-		topLevelDomain.setExculde(false);
+		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		commonTargeting.add(topLevelDomain);
 
 		Targeting bandwidthTargeting = new Targeting(TargetingType.BANDWIDTH);
-		bandwidthTargeting.setExculde(true);
+		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		commonTargeting.add(bandwidthTargeting);
 

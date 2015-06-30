@@ -141,7 +141,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 			targeting.setValues(values);
 
 			String exculdeStr = parser.getTrimmedElement("//Campaign/Target/Exclude" + targetingType.toString());
-			targeting.setExculde(createBooleanFromXmlString(exculdeStr));
+			targeting.setExclude(createBooleanFromXmlString(exculdeStr));
 			targetingList.add(targeting);
 		}
 		return targetingList;
