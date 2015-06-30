@@ -5,7 +5,6 @@ import java.util.List;
 
 import lombok.Getter;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -388,11 +387,11 @@ public class Campaign extends StatefulDomain {
 	public Campaign getCampaignWithModifiedAttributes() {
 		Campaign modifiedCampaign = super.getObjectWithModifiedAttributes();
 
-		if (segmentTargeting != null) {
+		if (isModified("segmentTargeting")) {
 			modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
 		}
 
-		if (!CollectionUtils.isEmpty(commonTargeting)) {
+		if (isModified("commonTargeting")) {
 			List<Targeting> modifiedTageting = new ArrayList<Targeting>();
 			for (Targeting targeting : commonTargeting) {
 				modifiedTageting.add(targeting.getTargetingWithModifiedAttributes());
@@ -400,7 +399,7 @@ public class Campaign extends StatefulDomain {
 			modifiedCampaign.setCommonTargeting(modifiedTageting);
 		}
 
-		if (rdbTargeting != null) {
+		if (isModified("rdbTargeting")) {
 			modifiedCampaign.setRdbTargeting(rdbTargeting.getRdbargetingWithModifiedAttributes());
 		}
 		return modifiedCampaign;
@@ -412,15 +411,15 @@ public class Campaign extends StatefulDomain {
 	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
-		if (segmentTargeting != null) {
+		if (isModified("segmentTargeting")) {
 			segmentTargeting.resetModifiedFlags();
 		}
-		if (!CollectionUtils.isEmpty(commonTargeting)) {
+		if (isModified("commonTargeting")) {
 			for (Targeting targeting : commonTargeting) {
 				targeting.resetModifiedFlags();
 			}
 		}
-		if (rdbTargeting != null) {
+		if (isModified("rdbTargeting")) {
 			rdbTargeting.resetModifiedFlags();
 		}
 		setModifiedFlag("id");

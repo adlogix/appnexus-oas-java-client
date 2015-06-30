@@ -39,6 +39,14 @@ public abstract class StatefulDomain {
 	}
 
 	/**
+	 * Checks if an attibute is modified
+	 * 
+	 */
+	boolean isModified(String attribute) {
+		return modifiedAttributes.contains(attribute);
+	}
+
+	/**
 	 * Returns a new object with only the modified attribute values.
 	 * 
 	 */
