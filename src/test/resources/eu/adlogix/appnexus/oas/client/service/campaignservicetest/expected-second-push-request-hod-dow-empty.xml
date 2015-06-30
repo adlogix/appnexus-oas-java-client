@@ -6,8 +6,8 @@
         <Id>ADID</Id>
       </Overview>
       <Schedule>
-      <HourOfDay>
-      </HourOfDay>
+        <HourOfDay>
+        </HourOfDay>
         <DayOfWeek>
         </DayOfWeek>
       </Schedule>

@@ -22,11 +22,11 @@
           <ImpPerVisitor>0</ImpPerVisitor>
           <FreqScope>0</FreqScope>
         </SecondaryFrequency>
-      <HourOfDay>
-        <Hour>18</Hour>
-        <Hour>19</Hour>
-        <Hour>20</Hour>
-      </HourOfDay>
+        <HourOfDay>
+          <Hour>18</Hour>
+          <Hour>19</Hour>
+          <Hour>20</Hour>
+        </HourOfDay>
         <UserTimeZone>N</UserTimeZone>
       </Schedule>
     </Campaign>
