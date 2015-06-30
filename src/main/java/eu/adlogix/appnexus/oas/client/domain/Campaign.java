@@ -385,7 +385,10 @@ public class Campaign extends StatefulDomain {
 	 */
 	public Campaign getCampaignWithModifiedAttributes() {
 		Campaign modifiedCampaign = super.getObjectWithModifiedAttributes();
-		modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
+
+		if (segmentTargeting != null) {
+			modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
+		}
 		return modifiedCampaign;
 	}
 
