@@ -11,6 +11,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.ExcludableTargeting;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting;
@@ -119,10 +120,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		parameters.putAll(getCommonTargetingParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));
-		if (campaign.getZones() != null) {
-			parameters.put("zoneIsNotNull", true);
-			parameters.put("zone", campaign.getZones());
-		}
+
 		return parameters;
 	}
 
@@ -132,8 +130,11 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		if (!CollectionUtils.isEmpty(campaign.getCommonTargeting())) {
 
 			for (Targeting targeting : campaign.getCommonTargeting()) {
-				String targetingType = targeting.getTargetingType().toString().toLowerCase();
-				checkValueAndPutParam(targetingType + "Exclude", targeting.getExclude(), parameters);
+				final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
+				
+				if (targeting.isSupportingExcludeFlag()) {
+					checkValueAndPutParam(targetingType + "Exclude", ((ExcludableTargeting) targeting).getExclude(), parameters);
+				}
 
 				final List<String> values = targeting.getValues();
 				if (values != null) {

@@ -3,59 +3,28 @@ package eu.adlogix.appnexus.oas.client.domain;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class Targeting extends StatefulDomain {
 
-	public enum TargetingType {
-		TOP_DOMAIN("TopLevelDomain"),
-		BANDWIDTH("Bandwidth"),
-		CONTINENT("Continent"),
-		COUNTRY("Country"),
-		STATE("State"),
-		MSA("Msa"),
-		DMA("Dma"),
-		OS("Os"),
-		BROWSER("Browser"),
-		BROWSER_VERSIONS("BrowserV");
-
-		private final String code;
-
-		private TargetingType(String code) {
-			this.code = code;
-		}
-
-		@Override
-		public String toString() {
-			return code;
-		}
-	}
-
-	private Boolean exclude;
-	private TargetingType targetingType;
+	private TargetingCode code;
 	private List<String> values;
 
-	protected Targeting() {
-		super();
+	public Targeting(TargetingCode code) {
+		this.code = code;
+		setModifiedFlag("code");
 	}
 
-	public Targeting(TargetingType type) {
-		this.targetingType = type;
-		setModifiedFlag("targetingType");
-	}
-
-	public void setExclude(Boolean exclude) {
-		this.exclude = exclude;
-		setModifiedFlag("exclude");
+	public void setCode(TargetingCode code) {
+		this.code = code;
+		setModifiedFlag("code");
 	}
 
 	public void setValues(List<String> values) {
 		this.values = values;
 		setModifiedFlag("values");
-	}
-
-	public void setTargetingType(TargetingType targetingType) {
-		this.targetingType = targetingType;
 	}
 
 	/**
@@ -74,5 +43,7 @@ public class Targeting extends StatefulDomain {
 		return super.getObjectWithModifiedAttributes();
 	}
 
-
+	public boolean isSupportingExcludeFlag() {
+		return code.isSupportingExcludeFlagForCampaigns();
+	}
 }

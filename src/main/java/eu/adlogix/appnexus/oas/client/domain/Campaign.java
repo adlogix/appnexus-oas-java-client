@@ -58,7 +58,6 @@ public class Campaign extends StatefulDomain {
 
 	private Boolean excludeTargets;
 	private List<Targeting> commonTargeting;
-	private List<String> zones;
 	private RdbTargeting rdbTargeting;
 	private SegmentTargeting segmentTargeting;
 
@@ -305,11 +304,6 @@ public class Campaign extends StatefulDomain {
 		setModifiedFlag("commonTargeting");
 	}
 
-	public void setZones(List<String> zones) {
-		this.zones = zones;
-		setModifiedFlag("zones");
-	}
-
 	public void setRdbTargeting(RdbTargeting rdbTargeting) {
 		this.rdbTargeting = rdbTargeting;
 		setModifiedFlag("rdbTargeting");
@@ -426,7 +420,7 @@ public class Campaign extends StatefulDomain {
 	}
 
 	public boolean hasTargeting() {
-		return (commonTargeting != null || zones != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
+		return (commonTargeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
 	}
 
 	public boolean hasPrimaryFrequency() {

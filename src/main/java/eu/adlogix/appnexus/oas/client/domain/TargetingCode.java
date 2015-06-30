@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Getter;
  * creation/updating. The code String is accessible via {@link #toString()} or
  * via {@link #getCode()}
  */
+@AllArgsConstructor
 @Getter
 public enum TargetingCode {
 	TOP_DOMAIN("TopDomain", "TopLevelDomain"),
@@ -19,7 +21,7 @@ public enum TargetingCode {
 	OS("Os"),
 	BROWSER("Browser"),
 	BROWSER_VERSIONS("BrowserV"),
-	ZONE("Zone"),
+	ZONE("Zone", false),
 	DEVICE_GROUP("DeviceGroup", SupportedFetchDatabaseAction.SELECTEDLIST);
 
 	public enum SupportedFetchDatabaseAction {
@@ -38,26 +40,26 @@ public enum TargetingCode {
 
 	private final String code;
 
-	private final String readingCampaignCode;
+	private final String codeForCampaigns;
+
+	private final boolean isSupportingExcludeFlagForCampaigns;
 
 	private final SupportedFetchDatabaseAction databaseAction;
 
 	private TargetingCode(String code) {
-		this.code = code;
-		this.readingCampaignCode = code;
-		this.databaseAction = SupportedFetchDatabaseAction.getDefault();
+		this(code, code, true, SupportedFetchDatabaseAction.getDefault());
 	}
 
 	private TargetingCode(String code, SupportedFetchDatabaseAction databaseAction) {
-		this.code = code;
-		this.readingCampaignCode = code;
-		this.databaseAction = databaseAction;
+		this(code, code, true, databaseAction);
 	}
 
 	private TargetingCode(String code, String readingCampaignCode) {
-		this.code = code;
-		this.readingCampaignCode = readingCampaignCode;
-		this.databaseAction = SupportedFetchDatabaseAction.getDefault();
+		this(code, readingCampaignCode, true, SupportedFetchDatabaseAction.getDefault());
+	}
+
+	private TargetingCode(final String code, final boolean isSupportingExcludeFlagForCampaigns) {
+		this(code, code, isSupportingExcludeFlagForCampaigns, SupportedFetchDatabaseAction.getDefault());
 	}
 
 	@Override
