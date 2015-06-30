@@ -47,9 +47,9 @@ $if(secondaryFrequency)$        <SecondaryFrequency>
 $if(secondaryImpressionsPerVisitor)$          <ImpPerVisitor>$secondaryImpressionsPerVisitor$</ImpPerVisitor>$endif$
 $if(secondaryFrequencyScope)$          <FreqScope>$secondaryFrequencyScope$</FreqScope>$endif$
         </SecondaryFrequency>$endif$
- $if(hourOfDayIsNotNull)$      <HourOfDay>
-        $hourOfDay: {h|<Hour>$h$</Hour>}; separator="\n"$
-      </HourOfDay>$endif$
+$if(hourOfDayIsNotNull)$        <HourOfDay>
+          $hourOfDay: {h|<Hour>$h$</Hour>}; separator="\n"$
+        </HourOfDay>$endif$
 $if(dayOfWeekIsNotNull)$        <DayOfWeek>
           $dayOfWeek: {d|<Day>$d$</Day>}; separator="\n"$
         </DayOfWeek>$endif$

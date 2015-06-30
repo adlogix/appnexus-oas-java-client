@@ -6,11 +6,11 @@
         <Id>ADID</Id>
       </Overview>
       <Schedule>
-      <HourOfDay>
-        <Hour>18</Hour>
-        <Hour>19</Hour>
-        <Hour>20</Hour>
-      </HourOfDay>
+        <HourOfDay>
+          <Hour>18</Hour>
+          <Hour>19</Hour>
+          <Hour>20</Hour>
+        </HourOfDay>
         <DayOfWeek>
           <Day>2</Day>
           <Day>3</Day>
