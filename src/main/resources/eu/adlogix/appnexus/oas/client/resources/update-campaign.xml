@@ -17,6 +17,9 @@ $if(campaignGroupIdsNotNull)$        <CampaignGroups>
 $if(competitiveCategoryIds)$        <CompetitiveCategories>
           $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
         </CompetitiveCategories>$endif$
+$if(externalUserIdsNotNull)$        <ExternalUsers>
+          $externalUserIds:{u|<UserId>$u$</UserId>}; separator="\n"$
+        </ExternalUsers>$endif$
 $if(internalQuickReport)$        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>$endif$
 $if(externalQuickReport)$        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>$endif$
       </Overview>

@@ -1574,7 +1574,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("test_campaign_gunith_1");
-		campaign.setPageUrls(Lists.newArrayList(EMPTY_STRING_LIST));
+		campaign.setPageUrls(EMPTY_STRING_LIST);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1608,7 +1608,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("test_campaign_gunith_1");
-		campaign.setSectionIds(Lists.newArrayList(EMPTY_STRING_LIST));
+		campaign.setSectionIds(EMPTY_STRING_LIST);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1642,7 +1642,41 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("test_campaign_gunith_1");
-		campaign.setCampaignGroupIds(Lists.newArrayList(EMPTY_STRING_LIST));
+		campaign.setCampaignGroupIds(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExternalUserIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_2_clt");
+		campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExternalUserIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_2_clt");
+		campaign.setExternalUserIds(EMPTY_STRING_LIST);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);

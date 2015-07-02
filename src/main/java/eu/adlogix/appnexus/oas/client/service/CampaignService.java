@@ -3,7 +3,6 @@ package eu.adlogix.appnexus.oas.client.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
@@ -75,8 +74,6 @@ public class CampaignService extends AbstractOasService {
 
 		final Campaign modifiedCampaign = campaign.getCampaignWithModifiedAttributes();
 
-		checkUpdateNotSupportedFields(modifiedCampaign);
-
 		CampaignUpdateParameterMapTransformer parameterTransformer = new CampaignUpdateParameterMapTransformer(modifiedCampaign);
 
 		performRequest(updateCampaignRequestGenerator, parameterTransformer.transform());
@@ -103,15 +100,5 @@ public class CampaignService extends AbstractOasService {
 		return campaign;
 	}
 
-
-	private void checkUpdateNotSupportedFields(Campaign campaign) {
-
-		if (!StringUtils.isEmpty(campaign.getCreativeTargetId())) {
-			throw new RuntimeException("CreativeTargetId cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getExternalUserIds())) {
-			throw new RuntimeException("ExternalUserIds cannot be updated in updateCampaign");
-		}
-	}
 
 }

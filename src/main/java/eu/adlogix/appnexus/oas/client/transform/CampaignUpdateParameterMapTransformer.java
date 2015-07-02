@@ -7,17 +7,22 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.ExcludableTargeting;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
 public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapTransformer {
+
+	private static final Logger logger = LogUtils.getLogger(CampaignUpdateParameterMapTransformer.class);
 
 	private static final DateTimeFormatter startTimeFormatter = DateTimeFormat.forPattern("HH:00");
 	private static final DateTimeFormatter endTimeFormatter = DateTimeFormat.forPattern("HH:59");
@@ -70,6 +75,11 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 	}
 
 	final Map<String, Object> getOverviewParameters(Campaign campaign) {
+
+		if (StringUtils.isNotEmpty(campaign.getCreativeTargetId())) {
+			logger.warn("CreativeTargetId cannot be updated in updateCampaign");
+		}
+
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("campaignId", campaign.getId());
 		parameters.put("status", campaign.getStatus());
@@ -80,6 +90,10 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("campaignManagerId", campaign.getCampaignManager());
 		parameters.put("productId", campaign.getProductId());
 		parameters.put("competitiveCategoryIds", campaign.getCompetitiveCategroryIds());
+		if (campaign.getExternalUserIds() != null) {
+			parameters.put("externalUserIdsNotNull", true);
+			parameters.put("externalUserIds", campaign.getExternalUserIds());
+		}
 		parameters.put("internalQuickReport", campaign.getInternalQuickReport());
 		parameters.put("externalQuickReport", campaign.getExternalQuickReport());
 		if (campaign.getCampaignGroupIds() != null) {

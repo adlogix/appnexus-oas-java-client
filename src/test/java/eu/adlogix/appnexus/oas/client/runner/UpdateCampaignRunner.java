@@ -13,7 +13,7 @@ public class UpdateCampaignRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CampaignService service = factory.getCampaignService();
 
-		Campaign campaign = service.getCampaignById("test_campaign_gunith_1");
+		Campaign campaign = service.getCampaignById("test_campaign_gunith_2_clt");
 
 		// campaign.setImpressions(12500l);
 		// campaign.setAdvertiserId("TestAdvertiser");
@@ -71,11 +71,12 @@ public class UpdateCampaignRunner {
 		// campaign.setCampaignGroupIds(Arrays.asList(new String[] {
 		// "0521_AGEN313394_Campaig_010313_12948_152",
 		// "055CASHME388747_Campaig_010313_12947_152" }));
-		campaign.setCampaignGroupIds(Arrays.asList(new String[] {}));
+		//campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
+		campaign.setExternalUserIds(Arrays.asList(new String[0]));
 
 		service.updateCampaign(campaign);
 
-		Campaign updatedCampaign = service.getCampaignById("test_campaign_gunith_1");
+		Campaign updatedCampaign = service.getCampaignById("test_campaign_gunith_2_clt");
 
 	}
 }
