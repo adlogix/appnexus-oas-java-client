@@ -11,6 +11,9 @@ $if(agencyId)$        <AgencyId>$agencyId$</AgencyId>$endif$
 $if(campaignDescription)$        <Description>$campaignDescription$</Description>$endif$
 $if(campaignManagerId)$        <CampaignManager>$campaignManagerId$</CampaignManager>$endif$
 $if(productId)$        <ProductId>$productId$</ProductId>$endif$
+$if(campaignGroupIdsNotNull)$        <CampaignGroups>
+          $campaignGroupIds:{g|<CampaignGroupId>$g$</CampaignGroupId>}; separator="\n"$
+        </CampaignGroups>$endif$
 $if(competitiveCategoryIds)$        <CompetitiveCategories>
           $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
         </CompetitiveCategories>$endif$

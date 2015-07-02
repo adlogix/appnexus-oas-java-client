@@ -105,14 +105,9 @@ public class CampaignService extends AbstractOasService {
 
 
 	private void checkUpdateNotSupportedFields(Campaign campaign) {
-		if (!StringUtils.isEmpty(campaign.getType())) {
-			throw new RuntimeException("Type cannot be updated in updateCampaign");
-		}
+
 		if (!StringUtils.isEmpty(campaign.getCreativeTargetId())) {
 			throw new RuntimeException("CreativeTargetId cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getCampaignGroupIds())) {
-			throw new RuntimeException("CampaignGroupIds cannot be updated in updateCampaign");
 		}
 		if (!CollectionUtils.isEmpty(campaign.getExternalUserIds())) {
 			throw new RuntimeException("ExternalUserIds cannot be updated in updateCampaign");

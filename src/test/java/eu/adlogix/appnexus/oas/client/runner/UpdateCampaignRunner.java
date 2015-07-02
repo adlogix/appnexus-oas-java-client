@@ -2,8 +2,6 @@ package eu.adlogix.appnexus.oas.client.runner;
 
 import java.util.Arrays;
 
-import com.google.common.collect.Lists;
-
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.service.CampaignService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
@@ -65,8 +63,15 @@ public class UpdateCampaignRunner {
 		// campaign.setSectionIds(Arrays.asList(new String[0]));
 //		campaign.setExcludedSiteIds(Lists.newArrayList("mkarlov.com", "apiSite2"));
 //		campaign.setExcludedPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
-		campaign.setExcludedSiteIds(Lists.newArrayList(Arrays.asList(new String[0])));
-		campaign.setExcludedPageUrls(Lists.newArrayList(Arrays.asList(new String[0])));
+		// campaign.setExcludedSiteIds(Lists.newArrayList(Arrays.asList(new
+		// String[0])));
+		// campaign.setExcludedPageUrls(Lists.newArrayList(Arrays.asList(new
+		// String[0])));
+		
+		// campaign.setCampaignGroupIds(Arrays.asList(new String[] {
+		// "0521_AGEN313394_Campaig_010313_12948_152",
+		// "055CASHME388747_Campaig_010313_12947_152" }));
+		campaign.setCampaignGroupIds(Arrays.asList(new String[] {}));
 
 		service.updateCampaign(campaign);
 

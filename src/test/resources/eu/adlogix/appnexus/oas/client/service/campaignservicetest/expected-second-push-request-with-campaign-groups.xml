@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>test_campaign_gunith_1</Id>
+        <CampaignGroups>
+          <CampaignGroupId>0521_AGEN313394_Campaig_010313_12948_152</CampaignGroupId>
+          <CampaignGroupId>055CASHME388747_Campaig_010313_12947_152</CampaignGroupId>
+        </CampaignGroups>
+      </Overview>
+    </Campaign>
+  </Request>
+</AdXML>

@@ -82,6 +82,10 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("competitiveCategoryIds", campaign.getCompetitiveCategroryIds());
 		parameters.put("internalQuickReport", campaign.getInternalQuickReport());
 		parameters.put("externalQuickReport", campaign.getExternalQuickReport());
+		if (campaign.getCampaignGroupIds() != null) {
+			parameters.put("campaignGroupIdsNotNull", true);
+			parameters.put("campaignGroupIds", campaign.getCampaignGroupIds());
+		}
 		return parameters;
 	}
 
