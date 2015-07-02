@@ -440,6 +440,10 @@ public class Campaign extends StatefulDomain {
 				|| hasPrimaryFrequency() || sectionIds != null);
 	}
 
+	public boolean hasExclude() {
+		return excludedPageUrls != null || excludedSiteIds != null;
+	}
+
 	public boolean hasBilling() {
 		return (cpm != null || cpc != null || cpa != null || flatRate != null || tax != null
 				|| agencyCommission != null || paymentMethod != null || isYieldManaged != null || billTo != null || currency != null);

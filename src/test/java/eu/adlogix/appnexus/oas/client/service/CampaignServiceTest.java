@@ -1509,4 +1509,108 @@ public class CampaignServiceTest {
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
+
+	@Test
+	public void updateCampaign_WithExcludeSiteAndPageIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setExcludedSiteIds(Lists.newArrayList("mkarlov.com", "apiSite2"));
+		campaign.setExcludedPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExcludeSiteAndPageIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setExcludedSiteIds(EMPTY_STRING_LIST);
+		campaign.setExcludedPageUrls(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithPageUrls_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithPageUrlsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setPageUrls(Lists.newArrayList(EMPTY_STRING_LIST));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithSectionIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setSectionIds(Lists.newArrayList("383section", "AASec", "Adulte"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithSectionIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setSectionIds(Lists.newArrayList(EMPTY_STRING_LIST));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
 }

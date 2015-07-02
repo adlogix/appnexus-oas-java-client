@@ -33,12 +33,39 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 				putAll(getOverviewParameters(campaign));
 				putAll(getScheduleParameters(campaign));
 				putAll(getTargetingParameters(campaign));
-				put("excludedSiteIds", campaign.getExcludedSiteIds());
-				put("excludedPageIds", campaign.getExcludedPageUrls());
+				putAll(getPageParameters(campaign));
+				putAll(getExcludeParameters(campaign));
 				putAll(getBillingParameters(campaign));
 			}
 		};
 
+		return parameters;
+	}
+
+	private final Map<String, Object> getPageParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+		if (campaign.getPageUrls() != null) {
+			parameters.put("pageUrlsNotNull", true);
+			parameters.put("pageUrls", campaign.getPageUrls());
+		}
+		return parameters;
+	}
+
+	private final Map<String, Object> getExcludeParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+
+		if (campaign.hasExclude()) {
+			parameters.put("hasExclude", true);
+			if (campaign.getExcludedSiteIds() != null) {
+				parameters.put("excludedSiteIdsNotNull", true);
+				parameters.put("excludedSiteIds", campaign.getExcludedSiteIds());
+			}
+
+			if (campaign.getExcludedPageUrls() != null) {
+				parameters.put("excludedPageIdsNotNull", true);
+				parameters.put("excludedPageIds", campaign.getExcludedPageUrls());
+			}
+		}
 		return parameters;
 	}
 
@@ -104,6 +131,11 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			}
 
 			parameters.put("userTimeZone", campaign.getUserTimeZone());
+
+			if (campaign.getSectionIds() != null) {
+				parameters.put("sectionIdsNotNull", true);
+				parameters.put("sectionIds", campaign.getSectionIds());
+			}
 
 		}
 		return parameters;
