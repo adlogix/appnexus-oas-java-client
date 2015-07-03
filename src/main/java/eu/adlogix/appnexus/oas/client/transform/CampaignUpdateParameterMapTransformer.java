@@ -167,6 +167,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("target", "target");
 		}
 		checkValueAndPutParam("excludeTargets", campaign.getExcludeTargets(), parameters);
+		checkValueAndPutParam("mobileDeviceExclude", campaign.getExcludeMobileDevice(), parameters);
 		parameters.putAll(getTargetingGeneralParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));

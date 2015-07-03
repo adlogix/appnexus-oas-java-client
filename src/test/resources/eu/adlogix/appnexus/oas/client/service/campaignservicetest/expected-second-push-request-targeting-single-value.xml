@@ -68,6 +68,9 @@
         <BrowserV>
           <Code>firefox19</Code>
         </BrowserV>
+        <DeviceGroup>
+          <Code>427</Code>
+        </DeviceGroup>
       </Target>
     </Campaign>
   </Request>

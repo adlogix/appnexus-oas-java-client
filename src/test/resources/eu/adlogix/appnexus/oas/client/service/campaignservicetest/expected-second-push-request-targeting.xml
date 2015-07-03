@@ -63,6 +63,11 @@
           <Code>firefox19</Code>
           <Code>opera12</Code>
         </BrowserV>
+        <ExcludeMobileDevice>N</ExcludeMobileDevice>
+        <DeviceGroup>
+          <Code>427</Code>
+          <Code>429</Code>
+        </DeviceGroup>
       </Target>
     </Campaign>
   </Request>

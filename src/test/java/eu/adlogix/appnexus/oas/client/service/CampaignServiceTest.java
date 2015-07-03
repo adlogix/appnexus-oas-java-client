@@ -554,7 +554,13 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
+
+		campaign.setExcludeMobileDevice(false);
 
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1094,7 +1100,13 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
+
+		campaign.setExcludeMobileDevice(false);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1185,6 +1197,10 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
 
 		service.updateCampaign(campaign);
@@ -1259,6 +1275,10 @@ public class CampaignServiceTest {
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		targeting.add(zoneTargeting);
+
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(EMPTY_STRING_LIST);
+		targeting.add(deviceGroupTargeting);
 
 		campaign.setTargeting(targeting);
 		service.updateCampaign(campaign);

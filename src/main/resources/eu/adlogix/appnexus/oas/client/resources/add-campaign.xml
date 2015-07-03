@@ -113,6 +113,10 @@ $if(browservExclude)$        <ExcludeBrowserV>$browservExclude$</ExcludeBrowserV
 $if(browserv)$        <BrowserV>
           $browserv: {t|<Code>$t$</Code>}; separator="\n"$
         </BrowserV>$endif$
+$if(mobileDeviceExclude)$        <ExcludeMobileDevice>$mobileDeviceExclude$</ExcludeMobileDevice>$endif$
+$if(devicegroup)$        <DeviceGroup>
+          $devicegroup: {t|<Code>$t$</Code>}; separator="\n"$
+        </DeviceGroup>$endif$
 $if(ageExclude)$        <ExcludeAgeTargeting>$ageExclude$</ExcludeAgeTargeting>$endif$
 $if(ageFrom)$        <AgeFrom>$ageFrom$</AgeFrom>$endif$
 $if(ageTo)$        <AgeTo>$ageTo$</AgeTo>$endif$
