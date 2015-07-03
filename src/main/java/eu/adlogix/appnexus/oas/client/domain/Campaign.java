@@ -11,6 +11,9 @@ import org.joda.time.LocalTime;
 @Getter
 public class Campaign extends StatefulDomain {
 
+	private static final String ATTRNAME_RDBTARGETING = "rdbTargeting";
+	private static final String ATTRNAME_SEGMENTTARGETING = "segmentTargeting";
+	private static final String ATTRNAME_TARGETING = "targeting";
 	private String id;
 	private String type;
 	private String insertionOrderId;
@@ -57,7 +60,7 @@ public class Campaign extends StatefulDomain {
 	private List<String> pageUrls;
 
 	private Boolean excludeTargets;
-	private List<Targeting> commonTargeting;
+	private List<Targeting> targeting;
 	private RdbTargeting rdbTargeting;
 	private SegmentTargeting segmentTargeting;
 
@@ -299,19 +302,19 @@ public class Campaign extends StatefulDomain {
 		setModifiedFlag("excludeTargets");
 	}
 
-	public void setCommonTargeting(List<Targeting> commonTargeting) {
-		this.commonTargeting = commonTargeting;
-		setModifiedFlag("commonTargeting");
+	public void setTargeting(List<Targeting> targeting) {
+		this.targeting = targeting;
+		setModifiedFlag(ATTRNAME_TARGETING);
 	}
 
 	public void setRdbTargeting(RdbTargeting rdbTargeting) {
 		this.rdbTargeting = rdbTargeting;
-		setModifiedFlag("rdbTargeting");
+		setModifiedFlag(ATTRNAME_RDBTARGETING);
 	}
 
 	public void setSegmentTargeting(SegmentTargeting segmentTargeting) {
 		this.segmentTargeting = segmentTargeting;
-		setModifiedFlag("segmentTargeting");
+		setModifiedFlag(ATTRNAME_SEGMENTTARGETING);
 	}
 
 	public void setExcludedSiteIds(List<String> excludedSiteIds) {
@@ -381,19 +384,19 @@ public class Campaign extends StatefulDomain {
 	public Campaign getCampaignWithModifiedAttributes() {
 		Campaign modifiedCampaign = super.getObjectWithModifiedAttributes();
 
-		if (isModified("segmentTargeting")) {
+		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
 			modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
 		}
 
-		if (isModified("commonTargeting")) {
+		if (isModified(ATTRNAME_TARGETING)) {
 			List<Targeting> modifiedTageting = new ArrayList<Targeting>();
-			for (Targeting targeting : commonTargeting) {
+			for (Targeting targeting : targeting) {
 				modifiedTageting.add(targeting.getTargetingWithModifiedAttributes());
 			}
-			modifiedCampaign.setCommonTargeting(modifiedTageting);
+			modifiedCampaign.setTargeting(modifiedTageting);
 		}
 
-		if (isModified("rdbTargeting")) {
+		if (isModified(ATTRNAME_RDBTARGETING)) {
 			modifiedCampaign.setRdbTargeting(rdbTargeting.getRdbargetingWithModifiedAttributes());
 		}
 		return modifiedCampaign;
@@ -405,22 +408,22 @@ public class Campaign extends StatefulDomain {
 	 */
 	public void resetModifiedFlags() {
 		super.resetModifiedFlags();
-		if (isModified("segmentTargeting")) {
+		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
 			segmentTargeting.resetModifiedFlags();
 		}
-		if (isModified("commonTargeting")) {
-			for (Targeting targeting : commonTargeting) {
+		if (isModified(ATTRNAME_TARGETING)) {
+			for (Targeting targeting : targeting) {
 				targeting.resetModifiedFlags();
 			}
 		}
-		if (isModified("rdbTargeting")) {
+		if (isModified(ATTRNAME_RDBTARGETING)) {
 			rdbTargeting.resetModifiedFlags();
 		}
 		setModifiedFlag("id");
 	}
 
 	public boolean hasTargeting() {
-		return (commonTargeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
+		return (targeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
 	}
 
 	public boolean hasPrimaryFrequency() {
