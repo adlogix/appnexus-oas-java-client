@@ -1376,37 +1376,6 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setImpressions(1000l);
-		campaign.setWeight("0");
-		campaign.setPriorityLevel("0");
-		campaign.setCompletion("S");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
-
-		campaign.setExcludeTargets(false);
-
-		campaign.setExcludeTargets(false);
-		List<Targeting> targeting = new ArrayList<Targeting>();
-
-		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
-		topLevelDomain.setExclude(false);
-		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
-
-		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
-		bandwidthTargeting.setExclude(true);
-		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
-
-		campaign.setTargeting(targeting);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
 		segmentTargeting.setSegmentClusterMatch("L");
