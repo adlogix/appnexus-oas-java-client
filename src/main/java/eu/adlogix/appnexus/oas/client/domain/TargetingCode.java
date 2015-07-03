@@ -22,7 +22,7 @@ public enum TargetingCode {
 	BROWSER("Browser"),
 	BROWSER_VERSIONS("BrowserV"),
 	ZONE("Zone", false),
-	DEVICE_GROUP("DeviceGroup", SupportedFetchDatabaseAction.SELECTEDLIST);
+	DEVICE_GROUP("DeviceGroup", false, SupportedFetchDatabaseAction.SELECTEDLIST);
 
 	public enum SupportedFetchDatabaseAction {
 		LIST, SELECTEDLIST;
@@ -50,8 +50,9 @@ public enum TargetingCode {
 		this(code, code, true, SupportedFetchDatabaseAction.getDefault());
 	}
 
-	private TargetingCode(String code, SupportedFetchDatabaseAction databaseAction) {
-		this(code, code, true, databaseAction);
+	private TargetingCode(final String code, final boolean isSupportingExcludeFlagForCampaigns,
+			final SupportedFetchDatabaseAction databaseAction) {
+		this(code, code, isSupportingExcludeFlagForCampaigns, databaseAction);
 	}
 
 	private TargetingCode(String code, String readingCampaignCode) {

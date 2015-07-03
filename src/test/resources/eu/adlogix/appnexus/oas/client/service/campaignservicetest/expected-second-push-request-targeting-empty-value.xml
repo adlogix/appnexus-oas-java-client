@@ -38,6 +38,8 @@
         <ExcludeBrowserV>N</ExcludeBrowserV>
         <BrowserV>
         </BrowserV>
+        <DeviceGroup>
+        </DeviceGroup>
       </Target>
     </Campaign>
   </Request>

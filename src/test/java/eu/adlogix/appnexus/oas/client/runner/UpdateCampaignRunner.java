@@ -2,7 +2,11 @@ package eu.adlogix.appnexus.oas.client.runner;
 
 import java.util.Arrays;
 
+import org.testng.collections.Lists;
+
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.Targeting;
+import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.service.CampaignService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
 import eu.adlogix.appnexus.oas.client.util.TestCredentials;
@@ -72,7 +76,11 @@ public class UpdateCampaignRunner {
 		// "0521_AGEN313394_Campaig_010313_12948_152",
 		// "055CASHME388747_Campaig_010313_12947_152" }));
 		//campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
-		campaign.setExternalUserIds(Arrays.asList(new String[0]));
+		// campaign.setExternalUserIds(Arrays.asList(new String[0]));
+
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		campaign.setTargeting(Lists.newArrayList((deviceGroupTargeting)));
 
 		service.updateCampaign(campaign);
 

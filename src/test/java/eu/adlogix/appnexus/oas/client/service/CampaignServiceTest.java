@@ -554,7 +554,13 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
+
+		campaign.setExcludeMobileDevice(false);
 
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1094,7 +1100,13 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
+
+		campaign.setExcludeMobileDevice(false);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1185,6 +1197,10 @@ public class CampaignServiceTest {
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1" }));
 		targeting.add(zoneTargeting);
 
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427" }));
+		targeting.add(deviceGroupTargeting);
+
 		campaign.setTargeting(targeting);
 
 		service.updateCampaign(campaign);
@@ -1259,6 +1275,10 @@ public class CampaignServiceTest {
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		targeting.add(zoneTargeting);
+
+		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		deviceGroupTargeting.setValues(EMPTY_STRING_LIST);
+		targeting.add(deviceGroupTargeting);
 
 		campaign.setTargeting(targeting);
 		service.updateCampaign(campaign);
@@ -1376,37 +1396,6 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
-		campaign.setImpressions(1000l);
-		campaign.setWeight("0");
-		campaign.setPriorityLevel("0");
-		campaign.setCompletion("S");
-		campaign.setStartDate(new LocalDate(2010, 10, 31));
-		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
-		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
-
-		campaign.setExcludeTargets(false);
-
-		campaign.setExcludeTargets(false);
-		List<Targeting> targeting = new ArrayList<Targeting>();
-
-		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
-		topLevelDomain.setExclude(false);
-		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
-
-		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
-		bandwidthTargeting.setExclude(true);
-		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
-
-		campaign.setTargeting(targeting);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
 		segmentTargeting.setSegmentClusterMatch("L");

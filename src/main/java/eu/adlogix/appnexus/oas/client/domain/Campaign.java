@@ -14,6 +14,7 @@ public class Campaign extends StatefulDomainWithId {
 	private static final String ATTRNAME_RDBTARGETING = "rdbTargeting";
 	private static final String ATTRNAME_SEGMENTTARGETING = "segmentTargeting";
 	private static final String ATTRNAME_TARGETING = "targeting";
+
 	private String type;
 	private String insertionOrderId;
 	private String advertiserId;
@@ -59,6 +60,7 @@ public class Campaign extends StatefulDomainWithId {
 	private List<String> pageUrls;
 
 	private Boolean excludeTargets;
+	private Boolean excludeMobileDevice;
 	private List<Targeting> targeting;
 	private RdbTargeting rdbTargeting;
 	private SegmentTargeting segmentTargeting;
@@ -296,6 +298,11 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("excludeTargets");
 	}
 
+	public void setExcludeMobileDevice(Boolean excludeMobileDevice) {
+		this.excludeMobileDevice = excludeMobileDevice;
+		addModifiedAttribute("excludeMobileDevice");
+	}
+
 	public void setTargeting(List<Targeting> targeting) {
 		this.targeting = Collections.unmodifiableList(targeting);
 		addModifiedAttribute(ATTRNAME_TARGETING);
@@ -374,7 +381,7 @@ public class Campaign extends StatefulDomainWithId {
 
 
 	public boolean hasTargeting() {
-		return (targeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
+		return (targeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null || excludeMobileDevice != null);
 	}
 
 	public boolean hasPrimaryFrequency() {
