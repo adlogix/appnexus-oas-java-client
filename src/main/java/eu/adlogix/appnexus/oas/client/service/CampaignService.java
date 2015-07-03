@@ -10,6 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
@@ -38,7 +39,8 @@ public class CampaignService extends AbstractOasService {
 
 		XmlToCampaignParser campaignParser = new XmlToCampaignParser(responseParser);
 		Campaign campaign = campaignParser.parse();
-		campaign.resetModifiedFlags();
+
+		campaign.resetModifiedAttributes();
 
 		return campaign;
 	}
@@ -65,14 +67,14 @@ public class CampaignService extends AbstractOasService {
 
 		performRequest(addCampaignRequestGenerator, parameterTransformer.transform());
 
-		campaign.resetModifiedFlags();
+		campaign.resetModifiedAttributes();
 	}
 
 	public final void updateCampaign(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");
 
-		final Campaign modifiedCampaign = campaign.getCampaignWithModifiedAttributes();
+		final Campaign modifiedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 
 		checkUpdateNotSupportedFields(modifiedCampaign);
 
@@ -80,7 +82,8 @@ public class CampaignService extends AbstractOasService {
 
 		performRequest(updateCampaignRequestGenerator, parameterTransformer.transform());
 
-		campaign.resetModifiedFlags();
+		campaign.resetModifiedAttributes();
+
 	}
 
 

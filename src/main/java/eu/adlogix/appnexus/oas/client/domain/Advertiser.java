@@ -4,54 +4,30 @@ import lombok.Getter;
 
 @Getter
 
-public class Advertiser extends StatefulDomain {
+public class Advertiser extends StatefulDomainWithId {
 
-	private String id;
 	private String organization;
 	private BillingInformation billingInformation;
 	private String internalQuickReport;
 	private String externalQuickReport;
 
-	public void setId(String id) {
-		this.id = id;
-		setModifiedFlag("id");
-	}
-
 	public void setOrganization(String organization) {
 		this.organization = organization;
-		setModifiedFlag("organization");
+		addModifiedAttribute("organization");
 	}
 
 	public void setBillingInformation(BillingInformation billingInformation) {
 		this.billingInformation = billingInformation;
-		setModifiedFlag("billingInformation");
+		addModifiedAttribute("billingInformation");
 	}
 
 	public void setInternalQuickReport(String internalQuickReport) {
 		this.internalQuickReport = internalQuickReport;
-		setModifiedFlag("internalQuickReport");
+		addModifiedAttribute("internalQuickReport");
 	}
 
 	public void setExternalQuickReport(String externalQuickReport) {
 		this.externalQuickReport = externalQuickReport;
-		setModifiedFlag("externalQuickReport");
+		addModifiedAttribute("externalQuickReport");
 	}
-
-	/**
-	 * Resets the modified flags.The {@link Advertiser} will be considered as an
-	 * unmodified {@link Advertiser} after calling this method.
-	 */
-	public void resetModifiedFlags() {
-		super.resetModifiedFlags();
-		setModifiedFlag("id");
-	}
-
-	/**
-	 * Returns a new {@link Advertiser} object with only the modified attribute
-	 * values.
-	 */
-	public Advertiser getAdvertiserWithModifiedAttributes() {
-		return super.getObjectWithModifiedAttributes();
-	}
-
 }

@@ -6,42 +6,42 @@ import java.util.Arrays;
 
 import org.testng.annotations.Test;
 
-public class InsertionOrderTest {
+public class StatefulDomainManagerTest {
 
 	@Test
-	public final void getInsertionOrderWithModifiedAttributes_ObjectModified_ReturnIOWithModifiedAttributes() {
+	public final void getModifiedObject_ObjectModified_ReturnObjectWithModifiedAttributes() {
 
 		InsertionOrder insertionOrder = new InsertionOrder();
 		insertionOrder.setId("insertion_order_1");
 		insertionOrder.setDescription("test");
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_1", "campaign_2" }));
-		InsertionOrder updatedInsertionOrder = insertionOrder.getInsertionOrderWithModifiedAttributes();
+		InsertionOrder updatedInsertionOrder =new StatefulDomainManager().getModifiedObject(insertionOrder);
 		assertEquals("insertion_order_1", updatedInsertionOrder.getId());
 		assertEquals("test", updatedInsertionOrder.getDescription());
 		assertEquals(2, updatedInsertionOrder.getCampaignIds().size());
 	}
 
 	@Test
-	public final void getInsertionOrderWithModifiedAttributes_ObjectResetAndModified_ReturnIOWithOnlyModifiedAttributes() {
+	public final void getModifiedObject_ObjectResetAndModified_ReturnObjectWithOnlyModifiedAttributes() {
 
 		InsertionOrder insertionOrder = new InsertionOrder();
 		insertionOrder.setId("insertion_order_1");
 		insertionOrder.setDescription("test");
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_1", "campaign_2" }));
-		insertionOrder.resetModifiedFlags();
+		insertionOrder.resetModifiedAttributes();
 		insertionOrder.setBookedClicks(1000l);
-		InsertionOrder updatedInsertionOrder = insertionOrder.getInsertionOrderWithModifiedAttributes();
-		assertEquals(null, updatedInsertionOrder.getId());
+		InsertionOrder updatedInsertionOrder = new StatefulDomainManager().getModifiedObject(insertionOrder);
+		assertEquals("insertion_order_1", updatedInsertionOrder.getId());
 		assertEquals(null, updatedInsertionOrder.getDescription());
 		assertEquals(null, updatedInsertionOrder.getCampaignIds());
 		assertEquals(1000l, updatedInsertionOrder.getBookedClicks().longValue());
 	}
 
 	@Test
-	public final void getInsertionOrderWithModifiedAttributes_ObjectNotModified_ReturnEmptyInsertionOrder() {
+	public final void getModifiedObject_ObjectNotModified_ReturnEmptyObject() {
 
 		InsertionOrder insertionOrder = new InsertionOrder();
-		InsertionOrder updatedInsertionOrder = insertionOrder.getInsertionOrderWithModifiedAttributes();
+		InsertionOrder updatedInsertionOrder = new StatefulDomainManager().getModifiedObject(insertionOrder);
 		assertEquals(null, updatedInsertionOrder.getId());
 		assertEquals(null, updatedInsertionOrder.getDescription());
 		assertEquals(null, updatedInsertionOrder.getCampaignIds());

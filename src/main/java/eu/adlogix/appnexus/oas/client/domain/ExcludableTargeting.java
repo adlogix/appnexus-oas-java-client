@@ -20,7 +20,7 @@ public class ExcludableTargeting extends Targeting {
 
 	public void setExclude(Boolean exclude) {
 		this.exclude = exclude;
-		setModifiedFlag("exclude");
+		addModifiedAttribute("exclude");
 	}
 
 }

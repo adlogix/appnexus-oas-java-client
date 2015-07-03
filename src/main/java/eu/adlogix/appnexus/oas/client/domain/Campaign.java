@@ -1,6 +1,5 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -9,9 +8,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 @Getter
-public class Campaign extends StatefulDomain {
+public class Campaign extends StatefulDomainWithId {
 
-	private String id;
 	private String type;
 	private String insertionOrderId;
 	private String advertiserId;
@@ -74,350 +72,301 @@ public class Campaign extends StatefulDomain {
 	private String billTo;
 	private String currency;
 
-	public void setId(String id) {
-		this.id = id;
-		setModifiedFlag("id");
-	}
-
 	public void setType(String type) {
 		this.type = type;
-		setModifiedFlag("type");
+		addModifiedAttribute("type");
 	}
 
 	public void setInsertionOrderId(String insertionOrderId) {
 		this.insertionOrderId = insertionOrderId;
-		setModifiedFlag("insertionOrderId");
+		addModifiedAttribute("insertionOrderId");
 	}
 
 	public void setAdvertiserId(String advertiserId) {
 		this.advertiserId = advertiserId;
-		setModifiedFlag("advertiserId");
+		addModifiedAttribute("advertiserId");
 	}
 
 	public void setCreativeTargetId(String creativeTargetId) {
 		this.creativeTargetId = creativeTargetId;
-		setModifiedFlag("creativeTargetId");
+		addModifiedAttribute("creativeTargetId");
 	}
 
 	public void setName(String name) {
 		this.name = name;
-		setModifiedFlag("name");
+		addModifiedAttribute("name");
 	}
 
 	public void setAgencyId(String agencyId) {
 		this.agencyId = agencyId;
-		setModifiedFlag("agencyId");
+		addModifiedAttribute("agencyId");
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-		setModifiedFlag("description");
+		addModifiedAttribute("description");
 	}
 
 	public void setCampaignManager(String campaignManager) {
 		this.campaignManager = campaignManager;
-		setModifiedFlag("campaignManager");
+		addModifiedAttribute("campaignManager");
 	}
 
 	public void setProductId(String productId) {
 		this.productId = productId;
-		setModifiedFlag("productId");
+		addModifiedAttribute("productId");
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-		setModifiedFlag("status");
+		addModifiedAttribute("status");
 	}
 
 	public void setCampaignGroupIds(List<String> campaignGroupIds) {
 		this.campaignGroupIds = campaignGroupIds;
-		setModifiedFlag("campaignGroupIds");
+		addModifiedAttribute("campaignGroupIds");
 	}
 
 	public void setCompetitiveCategroryIds(List<String> competitiveCategroryIds) {
 		this.competitiveCategroryIds = competitiveCategroryIds;
-		setModifiedFlag("competitiveCategroryIds");
+		addModifiedAttribute("competitiveCategroryIds");
 	}
 
 	public void setExternalUserIds(List<String> externalUserIds) {
 		this.externalUserIds = externalUserIds;
-		setModifiedFlag("externalUserIds");
+		addModifiedAttribute("externalUserIds");
 	}
 
 	public void setInternalQuickReport(String internalQuickReport) {
 		this.internalQuickReport = internalQuickReport;
-		setModifiedFlag("internalQuickReport");
+		addModifiedAttribute("internalQuickReport");
 	}
 
 	public void setExternalQuickReport(String externalQuickReport) {
 		this.externalQuickReport = externalQuickReport;
-		setModifiedFlag("externalQuickReport");
+		addModifiedAttribute("externalQuickReport");
 	}
 
 	public void setImpressions(Long impressions) {
 		this.impressions = impressions;
-		setModifiedFlag("impressions");
+		addModifiedAttribute("impressions");
 	}
 
 	public void setClicks(Long clicks) {
 		this.clicks = clicks;
-		setModifiedFlag("clicks");
+		addModifiedAttribute("clicks");
 	}
 
 	public void setUniques(Long uniques) {
 		this.uniques = uniques;
-		setModifiedFlag("uniques");
+		addModifiedAttribute("uniques");
 	}
 
 	public void setWeight(String weight) {
 		this.weight = weight;
-		setModifiedFlag("weight");
+		addModifiedAttribute("weight");
 	}
 
 	public void setPriorityLevel(String priorityLevel) {
 		this.priorityLevel = priorityLevel;
-		setModifiedFlag("priorityLevel");
+		addModifiedAttribute("priorityLevel");
 	}
 
 	public void setCompletion(String completion) {
 		this.completion = completion;
-		setModifiedFlag("completion");
+		addModifiedAttribute("completion");
 	}
 
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
-		setModifiedFlag("startDate");
+		addModifiedAttribute("startDate");
 	}
 
 	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
-		setModifiedFlag("startTime");
+		addModifiedAttribute("startTime");
 	}
 
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
-		setModifiedFlag("endDate");
+		addModifiedAttribute("endDate");
 	}
 
 	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
-		setModifiedFlag("endTime");
+		addModifiedAttribute("endTime");
 	}
 
 	public void setReach(String reach) {
 		this.reach = reach;
-		setModifiedFlag("reach");
+		addModifiedAttribute("reach");
 	}
 
 	public void setDailyImps(Long dailyImps) {
 		this.dailyImps = dailyImps;
-		setModifiedFlag("dailyImps");
+		addModifiedAttribute("dailyImps");
 	}
 
 	public void setDailyClicks(Long dailyClicks) {
 		this.dailyClicks = dailyClicks;
-		setModifiedFlag("dailyClicks");
+		addModifiedAttribute("dailyClicks");
 	}
 
 	public void setDailyUniques(Long dailyUniques) {
 		this.dailyUniques = dailyUniques;
-		setModifiedFlag("dailyUniques");
+		addModifiedAttribute("dailyUniques");
 	}
 
 	public void setSmoothOrAsap(String smoothOrAsap) {
 		this.smoothOrAsap = smoothOrAsap;
-		setModifiedFlag("smoothOrAsap");
+		addModifiedAttribute("smoothOrAsap");
 	}
 
 	public void setImpressionsOverrun(Long impressionsOverrun) {
 		this.impressionsOverrun = impressionsOverrun;
-		setModifiedFlag("impressionsOverrun");
+		addModifiedAttribute("impressionsOverrun");
 	}
 
 	public void setCompanionPositions(List<String> companionPositions) {
 		this.companionPositions = companionPositions;
-		setModifiedFlag("companionPositions");
+		addModifiedAttribute("companionPositions");
 	}
 
 	public void setStrictCompanions(String strictCompanions) {
 		this.strictCompanions = strictCompanions;
-		setModifiedFlag("strictCompanions");
+		addModifiedAttribute("strictCompanions");
 	}
 
 	public void setPrimaryImpsPerVisitor(Long primaryImpsPerVisitor) {
 		this.primaryImpsPerVisitor = primaryImpsPerVisitor;
-		setModifiedFlag("primaryImpsPerVisitor");
+		addModifiedAttribute("primaryImpsPerVisitor");
 	}
 
 	public void setPrimaryClicksPerVisitor(Long primaryClicksPerVisitor) {
 		this.primaryClicksPerVisitor = primaryClicksPerVisitor;
-		setModifiedFlag("primaryClicksPerVisitor");
+		addModifiedAttribute("primaryClicksPerVisitor");
 	}
 
 	public void setPrimaryFrequencyScope(Long primaryFrequencyScope) {
 		this.primaryFrequencyScope = primaryFrequencyScope;
-		setModifiedFlag("primaryFrequencyScope");
+		addModifiedAttribute("primaryFrequencyScope");
 	}
 
 	public void setSecondaryImpsPerVisitor(Long secondaryImpsPerVisitor) {
 		this.secondaryImpsPerVisitor = secondaryImpsPerVisitor;
-		setModifiedFlag("secondaryImpsPerVisitor");
+		addModifiedAttribute("secondaryImpsPerVisitor");
 	}
 
 	public void setSecondaryFrequencyScope(Long secondaryFrequencyScope) {
 		this.secondaryFrequencyScope = secondaryFrequencyScope;
-		setModifiedFlag("secondaryFrequencyScope");
+		addModifiedAttribute("secondaryFrequencyScope");
 	}
 
 	public void setHourOfDay(List<String> hourOfDay) {
 		this.hourOfDay = hourOfDay;
-		setModifiedFlag("hourOfDay");
+		addModifiedAttribute("hourOfDay");
 	}
 
 	public void setDayOfWeek(List<String> dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
-		setModifiedFlag("dayOfWeek");
+		addModifiedAttribute("dayOfWeek");
 	}
 
 	public void setUserTimeZone(String userTimeZone) {
 		this.userTimeZone = userTimeZone;
-		setModifiedFlag("userTimeZone");
+		addModifiedAttribute("userTimeZone");
 	}
 
 	public void setSectionIds(List<String> sectionIds) {
 		this.sectionIds = sectionIds;
-		setModifiedFlag("sectionIds");
+		addModifiedAttribute("sectionIds");
 	}
 
 	public void setPageUrls(List<String> pageUrls) {
 		this.pageUrls = pageUrls;
-		setModifiedFlag("pageUrls");
+		addModifiedAttribute("pageUrls");
 	}
 
 	public void setExcludeTargets(Boolean excludeTargets) {
 		this.excludeTargets = excludeTargets;
-		setModifiedFlag("excludeTargets");
+		addModifiedAttribute("excludeTargets");
 	}
 
 	public void setCommonTargeting(List<Targeting> commonTargeting) {
 		this.commonTargeting = commonTargeting;
-		setModifiedFlag("commonTargeting");
+		addModifiedAttribute("commonTargeting");
 	}
 
 	public void setRdbTargeting(RdbTargeting rdbTargeting) {
 		this.rdbTargeting = rdbTargeting;
-		setModifiedFlag("rdbTargeting");
+		addModifiedAttribute("rdbTargeting");
 	}
 
 	public void setSegmentTargeting(SegmentTargeting segmentTargeting) {
 		this.segmentTargeting = segmentTargeting;
-		setModifiedFlag("segmentTargeting");
+		addModifiedAttribute("segmentTargeting");
 	}
 
 	public void setExcludedSiteIds(List<String> excludedSiteIds) {
 		this.excludedSiteIds = excludedSiteIds;
-		setModifiedFlag("excludedSiteIds");
+		addModifiedAttribute("excludedSiteIds");
 	}
 
 	public void setExcludedPageUrls(List<String> excludedPageUrls) {
 		this.excludedPageUrls = excludedPageUrls;
-		setModifiedFlag("excludedPageUrls");
+		addModifiedAttribute("excludedPageUrls");
 	}
 
 	public void setCpm(Double cpm) {
 		this.cpm = cpm;
-		setModifiedFlag("cpm");
+		addModifiedAttribute("cpm");
 	}
 
 	public void setCpc(Double cpc) {
 		this.cpc = cpc;
-		setModifiedFlag("cpc");
+		addModifiedAttribute("cpc");
 	}
 
 	public void setCpa(Double cpa) {
 		this.cpa = cpa;
-		setModifiedFlag("cpa");
+		addModifiedAttribute("cpa");
 	}
 
 	public void setFlatRate(Double flatRate) {
 		this.flatRate = flatRate;
-		setModifiedFlag("flatRate");
+		addModifiedAttribute("flatRate");
 	}
 
 	public void setTax(Double tax) {
 		this.tax = tax;
-		setModifiedFlag("tax");
+		addModifiedAttribute("tax");
 	}
 
 	public void setAgencyCommission(Double agencyCommission) {
 		this.agencyCommission = agencyCommission;
-		setModifiedFlag("agencyCommission");
+		addModifiedAttribute("agencyCommission");
 	}
 
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
-		setModifiedFlag("paymentMethod");
+		addModifiedAttribute("paymentMethod");
 	}
 
 	public void setIsYieldManaged(String isYieldManaged) {
 		this.isYieldManaged = isYieldManaged;
-		setModifiedFlag("isYieldManaged");
+		addModifiedAttribute("isYieldManaged");
 	}
 
 	public void setBillTo(String billTo) {
 		this.billTo = billTo;
-		setModifiedFlag("billTo");
+		addModifiedAttribute("billTo");
 	}
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
-		setModifiedFlag("currency");
+		addModifiedAttribute("currency");
 	}
 
-	/**
-	 * Returns a new {@link Campaign} object with only the modified attribute
-	 * values.
-	 */
-	public Campaign getCampaignWithModifiedAttributes() {
-		Campaign modifiedCampaign = super.getObjectWithModifiedAttributes();
-
-		if (isModified("segmentTargeting")) {
-			modifiedCampaign.setSegmentTargeting(segmentTargeting.getSegmentTargetingWithModifiedAttributes());
-		}
-
-		if (isModified("commonTargeting")) {
-			List<Targeting> modifiedTageting = new ArrayList<Targeting>();
-			for (Targeting targeting : commonTargeting) {
-				modifiedTageting.add(targeting.getTargetingWithModifiedAttributes());
-			}
-			modifiedCampaign.setCommonTargeting(modifiedTageting);
-		}
-
-		if (isModified("rdbTargeting")) {
-			modifiedCampaign.setRdbTargeting(rdbTargeting.getRdbargetingWithModifiedAttributes());
-		}
-		return modifiedCampaign;
-	}
-
-	/**
-	 * Resets the modified flags.The {@link Campaign} will be considered as an
-	 * unmodified {@link Campaign} after calling this method.
-	 */
-	public void resetModifiedFlags() {
-		super.resetModifiedFlags();
-		if (isModified("segmentTargeting")) {
-			segmentTargeting.resetModifiedFlags();
-		}
-		if (isModified("commonTargeting")) {
-			for (Targeting targeting : commonTargeting) {
-				targeting.resetModifiedFlags();
-			}
-		}
-		if (isModified("rdbTargeting")) {
-			rdbTargeting.resetModifiedFlags();
-		}
-		setModifiedFlag("id");
-	}
 
 	public boolean hasTargeting() {
 		return (commonTargeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null);
@@ -443,5 +392,25 @@ public class Campaign extends StatefulDomain {
 	public boolean hasBilling() {
 		return (cpm != null || cpc != null || cpa != null || flatRate != null || tax != null
 				|| agencyCommission != null || paymentMethod != null || isYieldManaged != null || billTo != null || currency != null);
+	}
+
+	/**
+	 * Resets the modified attributes.The {@link Campaign} will be considered as
+	 * an unmodified {@link Campaign} after calling this method.
+	 */
+	public void resetModifiedAttributes() {
+		if (isModified("segmentTargeting")) {
+			segmentTargeting.resetModifiedAttributes();
+		}
+		if (isModified("commonTargeting")) {
+			for (Targeting targeting : commonTargeting) {
+				targeting.resetModifiedAttributes();
+			}
+		}
+		if (isModified("rdbTargeting")) {
+			rdbTargeting.resetModifiedAttributes();
+		}
+		super.resetModifiedAttributes();
+
 	}
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
+import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToInsertionOrderParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
@@ -24,6 +25,8 @@ public class InsertionOrderService extends AbstractOasService{
 	private final XmlRequestGenerator addInsertionOrderRequestGenerator = new XmlRequestGenerator("add-insertion-order");
 
 	private final XmlRequestGenerator updateInsertionOrderRequestGenerator = new XmlRequestGenerator("update-insertion-order");
+
+	StatefulDomainManager statefulObjectManager = new StatefulDomainManager();
 
 	InsertionOrderService(OasApiService apiService) {
 		super(apiService);
@@ -62,7 +65,7 @@ public class InsertionOrderService extends AbstractOasService{
 
 
 		performRequest(addInsertionOrderRequestGenerator, parameters);
-		insertionOrder.resetModifiedFlags();
+		insertionOrder.resetModifiedAttributes();
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class InsertionOrderService extends AbstractOasService{
 
 		checkNotEmpty(insertionOrder.getId(), "insertionOrderId");
 
-		final InsertionOrder modifiedInsertionOrder = insertionOrder.getInsertionOrderWithModifiedAttributes();
+		final InsertionOrder modifiedInsertionOrder = new StatefulDomainManager().getModifiedObject(insertionOrder);
 
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
 			{
@@ -95,7 +98,7 @@ public class InsertionOrderService extends AbstractOasService{
 		};
 
 		performRequest(updateInsertionOrderRequestGenerator, parameters);
-		insertionOrder.resetModifiedFlags();
+		insertionOrder.resetModifiedAttributes();
 	}
 
 	/**
@@ -122,7 +125,7 @@ public class InsertionOrderService extends AbstractOasService{
 
 		XmlToInsertionOrderParser insertionOrderParser = new XmlToInsertionOrderParser(responseParser);
 		InsertionOrder insertionOrder = insertionOrderParser.parse();
-		insertionOrder.resetModifiedFlags();
+		insertionOrder.resetModifiedAttributes();
 		return insertionOrder;
 	}
 

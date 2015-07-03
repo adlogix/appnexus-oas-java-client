@@ -11,6 +11,7 @@ import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
+import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToAdvertiserParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
@@ -59,7 +60,7 @@ public class AdvertiserService extends AbstractOasService {
 		};
 
 		performRequest(addAdvertiserRequestGenerator, parameters);
-		advertiser.resetModifiedFlags();
+		advertiser.resetModifiedAttributes();
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class AdvertiserService extends AbstractOasService {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 
-		final Advertiser modifiedAdvertiser = advertiser.getAdvertiserWithModifiedAttributes();
+		final Advertiser modifiedAdvertiser = new StatefulDomainManager().getModifiedObject(advertiser);
 
 
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
@@ -84,7 +85,7 @@ public class AdvertiserService extends AbstractOasService {
 		};
 
 		performRequest(updateAdvertiserRequestGenerator, parameters);
-		advertiser.resetModifiedFlags();
+		advertiser.resetModifiedAttributes();
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class AdvertiserService extends AbstractOasService {
 				Advertiser advertiser = new Advertiser();
 				advertiser.setId(element.getChild("Id"));
 				advertiser.setOrganization(element.getChild("Organization"));
-				advertiser.resetModifiedFlags();
+				advertiser.resetModifiedAttributes();
 				result.add(advertiser);
 			}
 			
@@ -136,7 +137,7 @@ public class AdvertiserService extends AbstractOasService {
 
 		XmlToAdvertiserParser advertiserParser = new XmlToAdvertiserParser(responseParser);
 		Advertiser advertiser = advertiserParser.parse();
-		advertiser.resetModifiedFlags();
+		advertiser.resetModifiedAttributes();
 		return advertiser;
 
 	}

@@ -24,77 +24,62 @@ public class RdbTargeting extends StatefulDomain {
 
 	public void setAgeFrom(Integer ageFrom) {
 		this.ageFrom = ageFrom;
-		setModifiedFlag("ageFrom");
+		addModifiedAttribute("ageFrom");
 	}
 
 	public void setAgeTo(Integer ageTo) {
 		this.ageTo = ageTo;
-		setModifiedFlag("ageTo");
+		addModifiedAttribute("ageTo");
 	}
 
 	public void setAgeExclude(Boolean ageExclude) {
 		this.ageExclude = ageExclude;
-		setModifiedFlag("ageExclude");
+		addModifiedAttribute("ageExclude");
 	}
 
 	public void setGender(String gender) {
 		this.gender = gender;
-		setModifiedFlag("gender");
+		addModifiedAttribute("gender");
 	}
 
 	public void setGenderExclude(Boolean genderExclude) {
 		this.genderExclude = genderExclude;
-		setModifiedFlag("genderExclude");
+		addModifiedAttribute("genderExclude");
 	}
 
 	public void setIncomeFrom(Long incomeFrom) {
 		this.incomeFrom = incomeFrom;
-		setModifiedFlag("incomeFrom");
+		addModifiedAttribute("incomeFrom");
 	}
 
 	public void setIncomeTo(Long incomeTo) {
 		this.incomeTo = incomeTo;
-		setModifiedFlag("incomeTo");
+		addModifiedAttribute("incomeTo");
 	}
 
 	public void setIncomeExclude(Boolean incomeExclude) {
 		this.incomeExclude = incomeExclude;
-		setModifiedFlag("incomeExclude");
+		addModifiedAttribute("incomeExclude");
 	}
 
 	public void setSubscriberCode(String subscriberCode) {
 		this.subscriberCode = subscriberCode;
-		setModifiedFlag("subscriberCode");
+		addModifiedAttribute("subscriberCode");
 	}
 
 	public void setSubscriberCodeExclude(Boolean subscriberCodeExclude) {
 		this.subscriberCodeExclude = subscriberCodeExclude;
-		setModifiedFlag("subscriberCodeExclude");
+		addModifiedAttribute("subscriberCodeExclude");
 	}
 
 	public void setPreferenceFlags(String preferenceFlags) {
 		this.preferenceFlags = preferenceFlags;
-		setModifiedFlag("preferenceFlags");
+		addModifiedAttribute("preferenceFlags");
 	}
 
 	public void setPreferenceFlagsExclude(Boolean preferenceFlagsExclude) {
 		this.preferenceFlagsExclude = preferenceFlagsExclude;
-		setModifiedFlag("preferenceFlagsExclude");
+		addModifiedAttribute("preferenceFlagsExclude");
 	}
 
-	/**
-	 * Resets the modified flags.The {@link RdbTargeting} will be considered as
-	 * an unmodified {@link RdbTargeting} after calling this method.
-	 */
-	public void resetModifiedFlags() {
-		super.resetModifiedFlags();
-	}
-
-	/**
-	 * Returns a new {@link RdbTargeting} object with only the modified
-	 * attribute values.
-	 */
-	public RdbTargeting getRdbargetingWithModifiedAttributes() {
-		return super.getObjectWithModifiedAttributes();
-	}
 }

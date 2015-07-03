@@ -13,33 +13,17 @@ public class SegmentTargeting extends StatefulDomain {
 
 	public void setExclude(Boolean exclude) {
 		this.exclude = exclude;
-		setModifiedFlag("exclude");
+		addModifiedAttribute("exclude");
 	}
 
 	public void setValues(List<String> values) {
 		this.values = values;
-		setModifiedFlag("values");
+		addModifiedAttribute("values");
 	}
 
 	public void setSegmentClusterMatch(String segmentClusterMatch) {
 		this.segmentClusterMatch = segmentClusterMatch;
-		setModifiedFlag("segmentClusterMatch");
-	}
-
-	/**
-	 * Resets the modified flags.The {@link SegmentTargeting} will be considered
-	 * as an unmodified {@link SegmentTargeting} after calling this method.
-	 */
-	public void resetModifiedFlags() {
-		super.resetModifiedFlags();
-	}
-
-	/**
-	 * Returns a new {@link SegmentTargeting} object with only the modified
-	 * attribute values.
-	 */
-	public SegmentTargeting getSegmentTargetingWithModifiedAttributes() {
-		return super.getObjectWithModifiedAttributes();
+		addModifiedAttribute("segmentClusterMatch");
 	}
 
 }
