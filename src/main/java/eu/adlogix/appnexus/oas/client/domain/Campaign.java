@@ -13,7 +13,6 @@ public class Campaign extends StatefulDomainWithId {
 	private static final String ATTRNAME_RDBTARGETING = "rdbTargeting";
 	private static final String ATTRNAME_SEGMENTTARGETING = "segmentTargeting";
 	private static final String ATTRNAME_TARGETING = "targeting";
-	private String id;
 	private String type;
 	private String insertionOrderId;
 	private String advertiserId;
@@ -303,11 +302,13 @@ public class Campaign extends StatefulDomainWithId {
 
 	public void setRdbTargeting(RdbTargeting rdbTargeting) {
 		this.rdbTargeting = rdbTargeting;
-		setModifiedFlag(ATTRNAME_RDBTARGETING);	}
+		addModifiedAttribute(ATTRNAME_RDBTARGETING);
+	}
 
 	public void setSegmentTargeting(SegmentTargeting segmentTargeting) {
 		this.segmentTargeting = segmentTargeting;
-		setModifiedFlag(ATTRNAME_SEGMENTTARGETING);	}
+		addModifiedAttribute(ATTRNAME_SEGMENTTARGETING);
+	}
 
 	public void setExcludedSiteIds(List<String> excludedSiteIds) {
 		this.excludedSiteIds = excludedSiteIds;
@@ -401,23 +402,23 @@ public class Campaign extends StatefulDomainWithId {
 				|| agencyCommission != null || paymentMethod != null || isYieldManaged != null || billTo != null || currency != null);
 	}
 
-/**
-	 * Resets the modified flags.The {@link Campaign} will be considered as an
-	 * unmodified {@link Campaign} after calling this method.
+	/**
+	 * Resets the modified attributes.The {@link Campaign} will be considered as
+	 * an unmodified {@link Campaign} after calling this method.
 	 */
-	public void resetModifiedFlags() {
+	public void resetModifiedAttributes() {
 		
 		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
-			segmentTargeting.resetModifiedFlags();
+			segmentTargeting.resetModifiedAttributes();
 		}
 		if (isModified(ATTRNAME_TARGETING)) {
-			for (Targeting targeting : targeting) {
-				targeting.resetModifiedFlags();
+			for (Targeting targetingValue : targeting) {
+				targetingValue.resetModifiedAttributes();
 			}
 		}
 		if (isModified(ATTRNAME_RDBTARGETING)) {
-			rdbTargeting.resetModifiedFlags();
+			rdbTargeting.resetModifiedAttributes();
 		}
-		super.resetModifiedFlags();
+		super.resetModifiedAttributes();
 	}
 }
