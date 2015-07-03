@@ -106,7 +106,7 @@ public class CampaignServiceTest {
 
 		assertEquals(campaign.getExcludeTargets().booleanValue(), false);
 
-		List<Targeting> targetingList = campaign.getCommonTargeting();
+		List<Targeting> targetingList = campaign.getTargeting();
 		for (Targeting targeting : targetingList) {
 			if (targeting.getCode().equals(TargetingCode.TOP_DOMAIN)) {
 				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "COM", "EDU" }));
@@ -477,7 +477,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void addCampaign_WithCommonTargetingAndZones_Success() throws Exception {
+	public void addCampaign_WithTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -498,63 +498,63 @@ public class CampaignServiceTest {
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
 
-		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+		List<Targeting> targeting = new ArrayList<Targeting>();
 
 		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		commonTargeting.add(topLevelDomain);
+		targeting.add(topLevelDomain);
 
 		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		commonTargeting.add(bandwidthTargeting);
+		targeting.add(bandwidthTargeting);
 
 		ExcludableTargeting continentTargeting = new ExcludableTargeting(TargetingCode.CONTINENT);
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
-		commonTargeting.add(continentTargeting);
+		targeting.add(continentTargeting);
 
 		ExcludableTargeting countryTargeting = new ExcludableTargeting(TargetingCode.COUNTRY);
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
-		commonTargeting.add(countryTargeting);
+		targeting.add(countryTargeting);
 
 		ExcludableTargeting stateTargeting = new ExcludableTargeting(TargetingCode.STATE);
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
-		commonTargeting.add(stateTargeting);
+		targeting.add(stateTargeting);
 
 		ExcludableTargeting msaTargeting = new ExcludableTargeting(TargetingCode.MSA);
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
-		commonTargeting.add(msaTargeting);
+		targeting.add(msaTargeting);
 
 		ExcludableTargeting dmaTargeting = new ExcludableTargeting(TargetingCode.DMA);
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
-		commonTargeting.add(dmaTargeting);
+		targeting.add(dmaTargeting);
 
 		ExcludableTargeting osTargeting = new ExcludableTargeting(TargetingCode.OS);
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
-		commonTargeting.add(osTargeting);
+		targeting.add(osTargeting);
 
 		ExcludableTargeting browserTargeting = new ExcludableTargeting(TargetingCode.BROWSER);
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
-		commonTargeting.add(browserTargeting);
+		targeting.add(browserTargeting);
 
 		ExcludableTargeting browserVersionTargeting = new ExcludableTargeting(TargetingCode.BROWSER_VERSIONS);
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
-		commonTargeting.add(browserVersionTargeting);
+		targeting.add(browserVersionTargeting);
 
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
-		commonTargeting.add(zoneTargeting);
+		targeting.add(zoneTargeting);
 
-		campaign.setCommonTargeting(commonTargeting);
+		campaign.setTargeting(targeting);
 
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -659,7 +659,7 @@ public class CampaignServiceTest {
 
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
-		campaign.setCommonTargeting(Lists.newArrayList(zoneTargeting));
+		campaign.setTargeting(Lists.newArrayList(zoneTargeting));
 		campaign.setSegmentTargeting(new SegmentTargeting());
 		campaign.setRdbTargeting(new RdbTargeting());
 		service.addCampaign(campaign);
@@ -1038,63 +1038,63 @@ public class CampaignServiceTest {
 		campaign.setId("ADID");
 
 		campaign.setExcludeTargets(false);
-		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+		List<Targeting> targeting = new ArrayList<Targeting>();
 
 		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		commonTargeting.add(topLevelDomain);
+		targeting.add(topLevelDomain);
 
 		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		commonTargeting.add(bandwidthTargeting);
+		targeting.add(bandwidthTargeting);
 
 		ExcludableTargeting continentTargeting = new ExcludableTargeting(TargetingCode.CONTINENT);
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
-		commonTargeting.add(continentTargeting);
+		targeting.add(continentTargeting);
 
 		ExcludableTargeting countryTargeting = new ExcludableTargeting(TargetingCode.COUNTRY);
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
-		commonTargeting.add(countryTargeting);
+		targeting.add(countryTargeting);
 
 		ExcludableTargeting stateTargeting = new ExcludableTargeting(TargetingCode.STATE);
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("US:NJ", "US:PA"));
-		commonTargeting.add(stateTargeting);
+		targeting.add(stateTargeting);
 
 		ExcludableTargeting msaTargeting = new ExcludableTargeting(TargetingCode.MSA);
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220", "10980"));
-		commonTargeting.add(msaTargeting);
+		targeting.add(msaTargeting);
 
 		ExcludableTargeting dmaTargeting = new ExcludableTargeting(TargetingCode.DMA);
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
-		commonTargeting.add(dmaTargeting);
+		targeting.add(dmaTargeting);
 
 		ExcludableTargeting osTargeting = new ExcludableTargeting(TargetingCode.OS);
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
-		commonTargeting.add(osTargeting);
+		targeting.add(osTargeting);
 
 		ExcludableTargeting browserTargeting = new ExcludableTargeting(TargetingCode.BROWSER);
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
-		commonTargeting.add(browserTargeting);
+		targeting.add(browserTargeting);
 
 		ExcludableTargeting browserVersionTargeting = new ExcludableTargeting(TargetingCode.BROWSER_VERSIONS);
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
-		commonTargeting.add(browserVersionTargeting);
+		targeting.add(browserVersionTargeting);
 
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
-		commonTargeting.add(zoneTargeting);
+		targeting.add(zoneTargeting);
 
-		campaign.setCommonTargeting(commonTargeting);
+		campaign.setTargeting(targeting);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1129,63 +1129,63 @@ public class CampaignServiceTest {
 		campaign.setUserTimeZone("N");
 
 		campaign.setExcludeTargets(false);
-		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+		List<Targeting> targeting = new ArrayList<Targeting>();
 
 		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US"));
-		commonTargeting.add(topLevelDomain);
+		targeting.add(topLevelDomain);
 
 		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN"));
-		commonTargeting.add(bandwidthTargeting);
+		targeting.add(bandwidthTargeting);
 
 		ExcludableTargeting continentTargeting = new ExcludableTargeting(TargetingCode.CONTINENT);
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU"));
-		commonTargeting.add(continentTargeting);
+		targeting.add(continentTargeting);
 
 		ExcludableTargeting countryTargeting = new ExcludableTargeting(TargetingCode.COUNTRY);
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE"));
-		commonTargeting.add(countryTargeting);
+		targeting.add(countryTargeting);
 
 		ExcludableTargeting stateTargeting = new ExcludableTargeting(TargetingCode.STATE);
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
-		commonTargeting.add(stateTargeting);
+		targeting.add(stateTargeting);
 
 		ExcludableTargeting msaTargeting = new ExcludableTargeting(TargetingCode.MSA);
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
-		commonTargeting.add(msaTargeting);
+		targeting.add(msaTargeting);
 
 		ExcludableTargeting dmaTargeting = new ExcludableTargeting(TargetingCode.DMA);
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803"));
-		commonTargeting.add(dmaTargeting);
+		targeting.add(dmaTargeting);
 
 		ExcludableTargeting osTargeting = new ExcludableTargeting(TargetingCode.OS);
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp"));
-		commonTargeting.add(osTargeting);
+		targeting.add(osTargeting);
 
 		ExcludableTargeting browserTargeting = new ExcludableTargeting(TargetingCode.BROWSER);
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera"));
-		commonTargeting.add(browserTargeting);
+		targeting.add(browserTargeting);
 
 		ExcludableTargeting browserVersionTargeting = new ExcludableTargeting(TargetingCode.BROWSER_VERSIONS);
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19"));
-		commonTargeting.add(browserVersionTargeting);
+		targeting.add(browserVersionTargeting);
 
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1" }));
-		commonTargeting.add(zoneTargeting);
+		targeting.add(zoneTargeting);
 
-		campaign.setCommonTargeting(commonTargeting);
+		campaign.setTargeting(targeting);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1204,63 +1204,63 @@ public class CampaignServiceTest {
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
 
-		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+		List<Targeting> targeting = new ArrayList<Targeting>();
 
 		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(topLevelDomain);
+		targeting.add(topLevelDomain);
 
 		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(bandwidthTargeting);
+		targeting.add(bandwidthTargeting);
 
 		ExcludableTargeting continentTargeting = new ExcludableTargeting(TargetingCode.CONTINENT);
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(continentTargeting);
+		targeting.add(continentTargeting);
 
 		ExcludableTargeting countryTargeting = new ExcludableTargeting(TargetingCode.COUNTRY);
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(countryTargeting);
+		targeting.add(countryTargeting);
 
 		ExcludableTargeting stateTargeting = new ExcludableTargeting(TargetingCode.STATE);
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(stateTargeting);
+		targeting.add(stateTargeting);
 
 		ExcludableTargeting msaTargeting = new ExcludableTargeting(TargetingCode.MSA);
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(msaTargeting);
+		targeting.add(msaTargeting);
 
 		ExcludableTargeting dmaTargeting = new ExcludableTargeting(TargetingCode.DMA);
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(dmaTargeting);
+		targeting.add(dmaTargeting);
 
 		ExcludableTargeting osTargeting = new ExcludableTargeting(TargetingCode.OS);
 		osTargeting.setExclude(false);
 		osTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(osTargeting);
+		targeting.add(osTargeting);
 
 		ExcludableTargeting browserTargeting = new ExcludableTargeting(TargetingCode.BROWSER);
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(browserTargeting);
+		targeting.add(browserTargeting);
 
 		ExcludableTargeting browserVersionTargeting = new ExcludableTargeting(TargetingCode.BROWSER_VERSIONS);
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(browserVersionTargeting);
+		targeting.add(browserVersionTargeting);
 
 		Targeting zoneTargeting = new Targeting(TargetingCode.ZONE);
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
-		commonTargeting.add(zoneTargeting);
+		targeting.add(zoneTargeting);
 
-		campaign.setCommonTargeting(commonTargeting);
+		campaign.setTargeting(targeting);
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
@@ -1394,19 +1394,19 @@ public class CampaignServiceTest {
 		campaign.setExcludeTargets(false);
 
 		campaign.setExcludeTargets(false);
-		List<Targeting> commonTargeting = new ArrayList<Targeting>();
+		List<Targeting> targeting = new ArrayList<Targeting>();
 
 		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		commonTargeting.add(topLevelDomain);
+		targeting.add(topLevelDomain);
 
 		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		commonTargeting.add(bandwidthTargeting);
+		targeting.add(bandwidthTargeting);
 
-		campaign.setCommonTargeting(commonTargeting);
+		campaign.setTargeting(targeting);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
 		segmentTargeting.setSegmentClusterMatch("L");
@@ -1505,6 +1505,178 @@ public class CampaignServiceTest {
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setStartTime(new LocalTime(8, 30));
 		campaign.setEndTime(new LocalTime(17, 0));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExcludeSiteAndPageIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setExcludedSiteIds(Lists.newArrayList("mkarlov.com", "apiSite2"));
+		campaign.setExcludedPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExcludeSiteAndPageIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setExcludedSiteIds(EMPTY_STRING_LIST);
+		campaign.setExcludedPageUrls(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithPageUrls_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
+		campaign.setPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithPageUrlsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setPageUrls(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithSectionIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setSectionIds(Lists.newArrayList("383section", "AASec", "Adulte"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithSectionIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setSectionIds(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithCampaignGroupIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-campaign-groups.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setCampaignGroupIds(Lists.newArrayList("0521_AGEN313394_Campaig_010313_12948_152", "055CASHME388747_Campaig_010313_12947_152"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithCampaignGroupIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-campaign-groups-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_1");
+		campaign.setCampaignGroupIds(EMPTY_STRING_LIST);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExternalUserIds_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_2_clt");
+		campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithExternalUserIdsEmpty_Success() throws Exception {
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids-empty.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("test_campaign_gunith_2_clt");
+		campaign.setExternalUserIds(EMPTY_STRING_LIST);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);

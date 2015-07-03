@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>test_campaign_gunith_1</Id>
+      </Overview>
+      <Schedule>
+        <Sections>
+        </Sections>
+      </Schedule>
+    </Campaign>
+  </Request>
+</AdXML>

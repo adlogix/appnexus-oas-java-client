@@ -7,17 +7,22 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.ExcludableTargeting;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Targeting;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
 public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapTransformer {
+
+	private static final Logger logger = LogUtils.getLogger(CampaignUpdateParameterMapTransformer.class);
 
 	private static final DateTimeFormatter startTimeFormatter = DateTimeFormat.forPattern("HH:00");
 	private static final DateTimeFormatter endTimeFormatter = DateTimeFormat.forPattern("HH:59");
@@ -33,8 +38,8 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 				putAll(getOverviewParameters(campaign));
 				putAll(getScheduleParameters(campaign));
 				putAll(getTargetingParameters(campaign));
-				put("excludedSiteIds", campaign.getExcludedSiteIds());
-				put("excludedPageIds", campaign.getExcludedPageUrls());
+				putAll(getPageParameters(campaign));
+				putAll(getExcludeParameters(campaign));
 				putAll(getBillingParameters(campaign));
 			}
 		};
@@ -42,7 +47,39 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		return parameters;
 	}
 
+	private final Map<String, Object> getPageParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+		if (campaign.getPageUrls() != null) {
+			parameters.put("pageUrlsNotNull", true);
+			parameters.put("pageUrls", campaign.getPageUrls());
+		}
+		return parameters;
+	}
+
+	private final Map<String, Object> getExcludeParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+
+		if (campaign.hasExclude()) {
+			parameters.put("hasExclude", true);
+			if (campaign.getExcludedSiteIds() != null) {
+				parameters.put("excludedSiteIdsNotNull", true);
+				parameters.put("excludedSiteIds", campaign.getExcludedSiteIds());
+			}
+
+			if (campaign.getExcludedPageUrls() != null) {
+				parameters.put("excludedPageIdsNotNull", true);
+				parameters.put("excludedPageIds", campaign.getExcludedPageUrls());
+			}
+		}
+		return parameters;
+	}
+
 	final Map<String, Object> getOverviewParameters(Campaign campaign) {
+
+		if (StringUtils.isNotEmpty(campaign.getCreativeTargetId())) {
+			logger.warn("CreativeTargetId cannot be updated in updateCampaign");
+		}
+
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("campaignId", campaign.getId());
 		parameters.put("status", campaign.getStatus());
@@ -53,8 +90,16 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("campaignManagerId", campaign.getCampaignManager());
 		parameters.put("productId", campaign.getProductId());
 		parameters.put("competitiveCategoryIds", campaign.getCompetitiveCategroryIds());
+		if (campaign.getExternalUserIds() != null) {
+			parameters.put("externalUserIdsNotNull", true);
+			parameters.put("externalUserIds", campaign.getExternalUserIds());
+		}
 		parameters.put("internalQuickReport", campaign.getInternalQuickReport());
 		parameters.put("externalQuickReport", campaign.getExternalQuickReport());
+		if (campaign.getCampaignGroupIds() != null) {
+			parameters.put("campaignGroupIdsNotNull", true);
+			parameters.put("campaignGroupIds", campaign.getCampaignGroupIds());
+		}
 		return parameters;
 	}
 
@@ -105,6 +150,11 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 
 			parameters.put("userTimeZone", campaign.getUserTimeZone());
 
+			if (campaign.getSectionIds() != null) {
+				parameters.put("sectionIdsNotNull", true);
+				parameters.put("sectionIds", campaign.getSectionIds());
+			}
+
 		}
 		return parameters;
 
@@ -117,19 +167,19 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("target", "target");
 		}
 		checkValueAndPutParam("excludeTargets", campaign.getExcludeTargets(), parameters);
-		parameters.putAll(getCommonTargetingParameters(campaign));
+		parameters.putAll(getTargetingGeneralParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));
 
 		return parameters;
 	}
 
-	final Map<String, Object> getCommonTargetingParameters(Campaign campaign) {
+	final Map<String, Object> getTargetingGeneralParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
-		if (!CollectionUtils.isEmpty(campaign.getCommonTargeting())) {
+		if (!CollectionUtils.isEmpty(campaign.getTargeting())) {
 
-			for (Targeting targeting : campaign.getCommonTargeting()) {
+			for (Targeting targeting : campaign.getTargeting()) {
 				final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
 				
 				if (targeting.isSupportingExcludeFlag()) {

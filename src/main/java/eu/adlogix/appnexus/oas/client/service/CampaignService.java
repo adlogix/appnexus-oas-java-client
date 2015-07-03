@@ -1,12 +1,8 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
@@ -16,6 +12,10 @@ import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransf
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
+
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 public class CampaignService extends AbstractOasService {
 
@@ -76,8 +76,6 @@ public class CampaignService extends AbstractOasService {
 
 		final Campaign modifiedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 
-		checkUpdateNotSupportedFields(modifiedCampaign);
-
 		CampaignUpdateParameterMapTransformer parameterTransformer = new CampaignUpdateParameterMapTransformer(modifiedCampaign);
 
 		performRequest(updateCampaignRequestGenerator, parameterTransformer.transform());
@@ -105,26 +103,5 @@ public class CampaignService extends AbstractOasService {
 		return campaign;
 	}
 
-
-	private void checkUpdateNotSupportedFields(Campaign campaign) {
-		if (!StringUtils.isEmpty(campaign.getType())) {
-			throw new RuntimeException("Type cannot be updated in updateCampaign");
-		}
-		if (!StringUtils.isEmpty(campaign.getCreativeTargetId())) {
-			throw new RuntimeException("CreativeTargetId cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getCampaignGroupIds())) {
-			throw new RuntimeException("CampaignGroupIds cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getExternalUserIds())) {
-			throw new RuntimeException("ExternalUserIds cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getSectionIds())) {
-			throw new RuntimeException("SectionIds cannot be updated in updateCampaign");
-		}
-		if (!CollectionUtils.isEmpty(campaign.getPageUrls())) {
-			throw new RuntimeException("PageUrls cannot be updated in updateCampaign");
-		}
-	}
 
 }

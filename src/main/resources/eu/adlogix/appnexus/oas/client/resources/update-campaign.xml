@@ -11,9 +11,15 @@ $if(agencyId)$        <AgencyId>$agencyId$</AgencyId>$endif$
 $if(campaignDescription)$        <Description>$campaignDescription$</Description>$endif$
 $if(campaignManagerId)$        <CampaignManager>$campaignManagerId$</CampaignManager>$endif$
 $if(productId)$        <ProductId>$productId$</ProductId>$endif$
+$if(campaignGroupIdsNotNull)$        <CampaignGroups>
+          $campaignGroupIds:{g|<CampaignGroupId>$g$</CampaignGroupId>}; separator="\n"$
+        </CampaignGroups>$endif$
 $if(competitiveCategoryIds)$        <CompetitiveCategories>
           $competitiveCategoryIds:{c|<CompetitiveCategoryId>$c$</CompetitiveCategoryId>}; separator="\n"$
         </CompetitiveCategories>$endif$
+$if(externalUserIdsNotNull)$        <ExternalUsers>
+          $externalUserIds:{u|<UserId>$u$</UserId>}; separator="\n"$
+        </ExternalUsers>$endif$
 $if(internalQuickReport)$        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>$endif$
 $if(externalQuickReport)$        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>$endif$
       </Overview>
@@ -54,7 +60,13 @@ $if(dayOfWeekIsNotNull)$        <DayOfWeek>
           $dayOfWeek: {d|<Day>$d$</Day>}; separator="\n"$
         </DayOfWeek>$endif$
 $if(userTimeZone)$        <UserTimeZone>$userTimeZone$</UserTimeZone>$endif$
+$if(sectionIdsNotNull)$        <Sections>
+          $sectionIds: {s|<SectionId>$s$</SectionId>}; separator="\n"$
+        </Sections>$endif$
       </Schedule>$endif$
+$if(pageUrlsNotNull)$      <Pages>
+        $pageUrls: {p|<Url>$p$</Url>}; separator="\n"$
+      </Pages>$endif$
 $if(target)$      <Target>
 $if(excludeTargets)$        <ExcludeTargets>$excludeTargets$</ExcludeTargets>$endif$
 $if(topleveldomainExclude)$        <ExcludeTopLevelDomain>$topleveldomainExclude$</ExcludeTopLevelDomain>$endif$
@@ -118,6 +130,14 @@ $if(segmentType)$          <SegmentType>$segmentType$</SegmentType>$endif$
           $segmentcluster: {s|<Segment>$s$</Segment>}; separator="\n"$
         </Cluster>$endif$
       </Target>$endif$
+$if(hasExclude)$      <Exclude>
+$if(excludedSiteIdsNotNull)$        <Sites>
+          $excludedSiteIds: {s|<SiteId>$s$</SiteId>}; separator="\n"$
+        </Sites>$endif$
+$if(excludedPageIdsNotNull)$        <Pages>
+          $excludedPageIds: {p|<Url>$p$</Url>}; separator="\n"$
+        </Pages>$endif$
+      </Exclude>$endif$
 $if(hasBilling)$      <Billing>  
 $if(cpm)$        <Cpm>$cpm$</Cpm>$endif$
 $if(cpc)$        <Cpc>$cpc$</Cpc>$endif$

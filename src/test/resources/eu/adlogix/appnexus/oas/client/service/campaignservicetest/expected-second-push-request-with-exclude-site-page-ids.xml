@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="Campaign">
+    <Campaign action="update">
+      <Overview>
+        <Id>test_campaign_gunith_1</Id>
+      </Overview>
+      <Exclude>
+        <Sites>
+          <SiteId>mkarlov.com</SiteId>
+          <SiteId>apiSite2</SiteId>
+        </Sites>
+        <Pages>
+          <Url>www.spon.de/sport/wm-spezial/center</Url>
+          <Url>www.testfz.com</Url>
+          <Url>www.mkarlov.com/sports</Url>
+        </Pages>
+      </Exclude>
+    </Campaign>
+  </Request>
+</AdXML>

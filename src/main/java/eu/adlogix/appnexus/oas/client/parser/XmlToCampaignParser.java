@@ -108,7 +108,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	private Campaign parseAndSetTargetingAttributes(final ResponseParser parser, Campaign campaign) {
 		campaign.setExcludeTargets(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeTargets")));
-		campaign.setCommonTargeting(parseAndCreateCommonTargeting(parser));
+		campaign.setTargeting(parseAndCreateTargeting(parser));
 		campaign.setRdbTargeting(parseAndCreateRdbTargeting(parser));
 		campaign.setSegmentTargeting(parseAndCreateSegmentTargeting(parser));
 		return campaign;
@@ -130,7 +130,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	}
 
-	private List<Targeting> parseAndCreateCommonTargeting(final ResponseParser parser) {
+	private List<Targeting> parseAndCreateTargeting(final ResponseParser parser) {
 
 		List<Targeting> targetingList = new ArrayList<Targeting>();
 

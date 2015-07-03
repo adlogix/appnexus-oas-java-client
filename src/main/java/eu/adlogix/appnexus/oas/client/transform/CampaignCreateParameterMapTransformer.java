@@ -109,18 +109,18 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("target", "target");
 		}
 		checkValueAndPutParam("excludeTargets", campaign.getExcludeTargets(), parameters);
-		parameters.putAll(getCommonTargetingParameters(campaign));
+		parameters.putAll(getTargetingGeneralParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));
 		return parameters;
 	}
 
-	final Map<String, Object> getCommonTargetingParameters(Campaign campaign) {
+	final Map<String, Object> getTargetingGeneralParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
-		if (!CollectionUtils.isEmpty(campaign.getCommonTargeting())) {
+		if (!CollectionUtils.isEmpty(campaign.getTargeting())) {
 
-			for (Targeting targeting : campaign.getCommonTargeting()) {
+			for (Targeting targeting : campaign.getTargeting()) {
 				final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
 
 				if (targeting.isSupportingExcludeFlag()) {
