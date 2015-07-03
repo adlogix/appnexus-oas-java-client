@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -126,17 +127,17 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setCampaignGroupIds(List<String> campaignGroupIds) {
-		this.campaignGroupIds = campaignGroupIds;
+		this.campaignGroupIds = Collections.unmodifiableList(campaignGroupIds);
 		addModifiedAttribute("campaignGroupIds");
 	}
 
 	public void setCompetitiveCategroryIds(List<String> competitiveCategroryIds) {
-		this.competitiveCategroryIds = competitiveCategroryIds;
+		this.competitiveCategroryIds = Collections.unmodifiableList(competitiveCategroryIds);
 		addModifiedAttribute("competitiveCategroryIds");
 	}
 
 	public void setExternalUserIds(List<String> externalUserIds) {
-		this.externalUserIds = externalUserIds;
+		this.externalUserIds = Collections.unmodifiableList(externalUserIds);
 		addModifiedAttribute("externalUserIds");
 	}
 
@@ -231,7 +232,7 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setCompanionPositions(List<String> companionPositions) {
-		this.companionPositions = companionPositions;
+		this.companionPositions = Collections.unmodifiableList(companionPositions);
 		addModifiedAttribute("companionPositions");
 	}
 
@@ -266,12 +267,12 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setHourOfDay(List<String> hourOfDay) {
-		this.hourOfDay = hourOfDay;
+		this.hourOfDay = Collections.unmodifiableList(hourOfDay);
 		addModifiedAttribute("hourOfDay");
 	}
 
 	public void setDayOfWeek(List<String> dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
+		this.dayOfWeek = Collections.unmodifiableList(dayOfWeek);
 		addModifiedAttribute("dayOfWeek");
 	}
 
@@ -281,12 +282,12 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setSectionIds(List<String> sectionIds) {
-		this.sectionIds = sectionIds;
+		this.sectionIds = Collections.unmodifiableList(sectionIds);
 		addModifiedAttribute("sectionIds");
 	}
 
 	public void setPageUrls(List<String> pageUrls) {
-		this.pageUrls = pageUrls;
+		this.pageUrls = Collections.unmodifiableList(pageUrls);
 		addModifiedAttribute("pageUrls");
 	}
 
@@ -296,7 +297,7 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setTargeting(List<Targeting> targeting) {
-		this.targeting = targeting;
+		this.targeting = Collections.unmodifiableList(targeting);
 		addModifiedAttribute(ATTRNAME_TARGETING);
 	}
 
@@ -311,12 +312,12 @@ public class Campaign extends StatefulDomainWithId {
 	}
 
 	public void setExcludedSiteIds(List<String> excludedSiteIds) {
-		this.excludedSiteIds = excludedSiteIds;
+		this.excludedSiteIds = Collections.unmodifiableList(excludedSiteIds);
 		addModifiedAttribute("excludedSiteIds");
 	}
 
 	public void setExcludedPageUrls(List<String> excludedPageUrls) {
-		this.excludedPageUrls = excludedPageUrls;
+		this.excludedPageUrls = Collections.unmodifiableList(excludedPageUrls);
 		addModifiedAttribute("excludedPageUrls");
 	}
 
@@ -407,7 +408,7 @@ public class Campaign extends StatefulDomainWithId {
 	 * an unmodified {@link Campaign} after calling this method.
 	 */
 	public void resetModifiedAttributes() {
-		
+
 		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
 			segmentTargeting.resetModifiedAttributes();
 		}

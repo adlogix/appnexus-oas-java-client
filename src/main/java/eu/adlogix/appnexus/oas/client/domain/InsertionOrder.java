@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -44,7 +45,7 @@ public class InsertionOrder extends StatefulDomainWithId {
 	}
 
 	public void setCampaignIds(List<String> campaignIds) {
-		this.campaignIds = campaignIds;
+		this.campaignIds = Collections.unmodifiableList(campaignIds);
 		addModifiedAttribute("campaignIds");
 	}
 

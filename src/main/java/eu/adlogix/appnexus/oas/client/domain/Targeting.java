@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Targeting extends StatefulDomain {
 	}
 
 	public void setValues(List<String> values) {
-		this.values = values;
+		this.values = Collections.unmodifiableList(values);
 		addModifiedAttribute("values");
 	}
 
