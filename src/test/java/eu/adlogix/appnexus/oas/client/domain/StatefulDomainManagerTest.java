@@ -1,14 +1,14 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
 
 public class StatefulDomainManagerTest {
 
@@ -151,32 +151,32 @@ public class StatefulDomainManagerTest {
 		campaign.setId("ADID");
 		campaign.setStatus("W");
 
-		List<Targeting> targeting = new ArrayList<Targeting>();
+		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
-		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
+		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		targeting.add(topLevelDomain);
 
-		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
+		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		targeting.add(bandwidthTargeting);
 
-		campaign.setTargeting(targeting);
+		campaign.setTargetings(targeting);
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals("W", updatedCampaign.getStatus());
 
-		List<Targeting> updatedTargeting = updatedCampaign.getTargeting();
+		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(2, updatedTargeting.size());
 
-		ExcludableTargeting updatedTopLevelDomain = (ExcludableTargeting) updatedTargeting.get(0);
+		AbstractExcludableCampaignTargeting updatedTopLevelDomain = (AbstractExcludableCampaignTargeting) updatedTargeting.get(0);
 		assertEquals(false, updatedTopLevelDomain.getExclude().booleanValue());
 		assertEquals(Arrays.asList("US", "COM", "EDU"), updatedTopLevelDomain.getValues());
 
-		ExcludableTargeting updatedBandwidth = (ExcludableTargeting) updatedTargeting.get(1);
+		AbstractExcludableCampaignTargeting updatedBandwidth = (AbstractExcludableCampaignTargeting) updatedTargeting.get(1);
 		assertEquals(true, updatedBandwidth.getExclude().booleanValue());
 		assertEquals(Arrays.asList("LAN", "DSL/Cable"), updatedBandwidth.getValues());
 
@@ -189,19 +189,19 @@ public class StatefulDomainManagerTest {
 		campaign.setId("ADID");
 		campaign.setStatus("W");
 
-		List<Targeting> targeting = new ArrayList<Targeting>();
+		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
-		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
+		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		targeting.add(topLevelDomain);
 
-		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
+		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		targeting.add(bandwidthTargeting);
 
-		campaign.setTargeting(targeting);
+		campaign.setTargetings(targeting);
 
 		campaign.resetModifiedAttributes();
 
@@ -209,7 +209,7 @@ public class StatefulDomainManagerTest {
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals(null, updatedCampaign.getStatus());
 
-		List<Targeting> updatedTargeting = updatedCampaign.getTargeting();
+		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(null, updatedTargeting);
 
 	}
@@ -221,35 +221,35 @@ public class StatefulDomainManagerTest {
 		campaign.setId("ADID");
 		campaign.setStatus("W");
 
-		List<Targeting> targeting = new ArrayList<Targeting>();
+		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
-		ExcludableTargeting topLevelDomain = new ExcludableTargeting(TargetingCode.TOP_DOMAIN);
+		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
 		targeting.add(topLevelDomain);
 
-		ExcludableTargeting bandwidthTargeting = new ExcludableTargeting(TargetingCode.BANDWIDTH);
+		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
 		targeting.add(bandwidthTargeting);
 
-		campaign.setTargeting(targeting);
+		campaign.setTargetings(targeting);
 
 		campaign.resetModifiedAttributes();
 
-		ExcludableTargeting countryTargeting = new ExcludableTargeting(TargetingCode.COUNTRY);
+		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE"));
 
-		List<Targeting> campaignTargeting = new ArrayList<Targeting>(campaign.getTargeting());
+		List<GeneralCampaignTargeting> campaignTargeting = new ArrayList<GeneralCampaignTargeting>(campaign.getTargetings());
 		campaignTargeting.add(countryTargeting);
-		campaign.setTargeting(campaignTargeting);
+		campaign.setTargetings(campaignTargeting);
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals(null, updatedCampaign.getStatus());
 
-		List<Targeting> updatedTargeting = updatedCampaign.getTargeting();
+		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(3, updatedTargeting.size());
 
 	}

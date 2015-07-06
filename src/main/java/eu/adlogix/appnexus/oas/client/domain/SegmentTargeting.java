@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class SegmentTargeting extends StatefulDomain {
+public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
 
 	private Boolean exclude;
 	private List<String> values;
@@ -27,4 +27,8 @@ public class SegmentTargeting extends StatefulDomain {
 		addModifiedAttribute("segmentClusterMatch");
 	}
 
+	@Override
+	public TargetGroup getGroup() {
+		return TargetGroup.SEGMENT;
+	}
 }

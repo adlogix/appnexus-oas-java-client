@@ -1,6 +1,5 @@
 package eu.adlogix.appnexus.oas.client.parser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -9,12 +8,17 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.google.common.collect.Lists;
+
+import eu.adlogix.appnexus.oas.client.domain.AbstractCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.AbstractExcludableCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
-import eu.adlogix.appnexus.oas.client.domain.ExcludableTargeting;
+import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
-import eu.adlogix.appnexus.oas.client.domain.Targeting;
+import eu.adlogix.appnexus.oas.client.domain.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
+import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
@@ -108,7 +112,8 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	private Campaign parseAndSetTargetingAttributes(final ResponseParser parser, Campaign campaign) {
 		campaign.setExcludeTargets(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeTargets")));
-		campaign.setTargeting(parseAndCreateTargeting(parser));
+		campaign.setTargetings(parseAndCreateGeneralTargeting(parser));
+		campaign.setZoneTargeting(parseAndCreateZoneTargeting(parser));
 		campaign.setRdbTargeting(parseAndCreateRdbTargeting(parser));
 		campaign.setSegmentTargeting(parseAndCreateSegmentTargeting(parser));
 		return campaign;
@@ -130,37 +135,35 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	}
 
-	private List<Targeting> parseAndCreateTargeting(final ResponseParser parser) {
+	private List<GeneralCampaignTargeting> parseAndCreateGeneralTargeting(final ResponseParser parser) {
 
-		List<Targeting> targetingList = new ArrayList<Targeting>();
+		List<GeneralCampaignTargeting> targetingList = Lists.newArrayList();
 
-		for (TargetingCode targetingCode : TargetingCode.values()) {
+		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.GENERAL)) {
 
-			if (targetingCode.isSupportingExcludeFlagForCampaigns()) {
-
-				final ExcludableTargeting targeting = new ExcludableTargeting(targetingCode);
-				populateTargetingValues(targeting, targetingCode, parser);
-				populateTargetingExcludeFlag(targeting, parser, targetingCode);
-				targetingList.add(targeting);
-
-			} else {
-
-				final Targeting targeting = new Targeting(targetingCode);
-				populateTargetingValues(targeting, targetingCode, parser);
-				targetingList.add(targeting);
-			}
+			final GeneralCampaignTargeting targeting = new GeneralCampaignTargeting(targetingCode);
+			populateTargetingValues(targeting, targetingCode, parser);
+			populateTargetingExcludeFlag(targeting, parser, targetingCode);
+			targetingList.add(targeting);
 		}
 		return targetingList;
 	}
 
-	private void populateTargetingExcludeFlag(final ExcludableTargeting targeting, final ResponseParser parser,
+	private ZoneCampaignTargeting parseAndCreateZoneTargeting(final ResponseParser parser) {
+
+		final ZoneCampaignTargeting targeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		populateTargetingValues(targeting, TargetingCode.ZONE, parser);
+		return targeting;
+	}
+
+	private void populateTargetingExcludeFlag(final AbstractExcludableCampaignTargeting targeting, final ResponseParser parser,
 			TargetingCode targetingCode) {
 		String exculdeStr = parser.getTrimmedElement("//Campaign/Target/Exclude"
 				+ targetingCode.getCodeForCampaigns());
 		targeting.setExclude(createBooleanFromXmlString(exculdeStr));
 	}
 
-	private void populateTargetingValues(Targeting targeting, TargetingCode targetingCode, final ResponseParser parser) {
+	private void populateTargetingValues(AbstractCampaignTargeting targeting, TargetingCode targetingCode, final ResponseParser parser) {
 		List<String> values = parser.getTrimmedElementList("//Campaign/Target/" + targetingCode.getCodeForCampaigns()
 				+ "/Code");
 		targeting.setValues(values);

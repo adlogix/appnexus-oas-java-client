@@ -1,11 +1,13 @@
 package eu.adlogix.appnexus.oas.client.runner;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
-import eu.adlogix.appnexus.oas.client.domain.Targeting;
+import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.service.CampaignService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
@@ -78,9 +80,13 @@ public class UpdateCampaignRunner {
 		//campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
 		// campaign.setExternalUserIds(Arrays.asList(new String[0]));
 
-		Targeting deviceGroupTargeting = new Targeting(TargetingCode.DEVICE_GROUP);
+		MobileCampaignTargeting deviceGroupTargeting = new MobileCampaignTargeting(TargetingCode.DEVICE_GROUP);
 		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
-		campaign.setTargeting(Lists.newArrayList((deviceGroupTargeting)));
+		List<MobileCampaignTargeting> mobileTargetings = Lists.newArrayList(deviceGroupTargeting);
+		MobileTargetingGroup mobileTargeting = new MobileTargetingGroup();
+		mobileTargeting.setExcludeMobileDevice(false);
+		mobileTargeting.setTargetings(mobileTargetings);
+		campaign.setMobileTargeting(mobileTargeting);
 
 		service.updateCampaign(campaign);
 

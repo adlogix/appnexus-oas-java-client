@@ -12,11 +12,13 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 
+import eu.adlogix.appnexus.oas.client.domain.AbstractCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.AbstractExcludableCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
-import eu.adlogix.appnexus.oas.client.domain.ExcludableTargeting;
+import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
-import eu.adlogix.appnexus.oas.client.domain.Targeting;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
@@ -167,34 +169,66 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("target", "target");
 		}
 		checkValueAndPutParam("excludeTargets", campaign.getExcludeTargets(), parameters);
-		checkValueAndPutParam("mobileDeviceExclude", campaign.getExcludeMobileDevice(), parameters);
+
 		parameters.putAll(getTargetingGeneralParameters(campaign));
+		parameters.putAll(getTargetingZoneParameters(campaign));
+		parameters.putAll(getMobileTargetingParameters(campaign));
 		parameters.putAll(getRdbTargetingParameters(campaign));
 		parameters.putAll(getSegmentTargetingParameters(campaign));
 
 		return parameters;
 	}
 
+	private Map<String, Object> getTargetingZoneParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+		addTargetingToParameters(campaign.getZoneTargeting(), parameters);
+		return parameters;
+	}
+
 	final Map<String, Object> getTargetingGeneralParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
-		if (!CollectionUtils.isEmpty(campaign.getTargeting())) {
+		final List<GeneralCampaignTargeting> targetings = campaign.getTargetings();
+		addTargetingsToParameters(targetings, parameters);
+		return parameters;
+	}
 
-			for (Targeting targeting : campaign.getTargeting()) {
-				final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
-				
-				if (targeting.isSupportingExcludeFlag()) {
-					checkValueAndPutParam(targetingType + "Exclude", ((ExcludableTargeting) targeting).getExclude(), parameters);
-				}
+	private Map<String, Object> getMobileTargetingParameters(Campaign campaign) {
+		final Map<String, Object> parameters = new HashMap<String, Object>();
+		MobileTargetingGroup mobileTargeting = campaign.getMobileTargeting();
 
-				final List<String> values = targeting.getValues();
-				if (values != null) {
-					parameters.put(targetingType + "IsNotNull", true);
-					parameters.put(targetingType, values);
-				}
-			}
+		if (mobileTargeting != null) {
+			checkValueAndPutParam("mobileDeviceExclude", mobileTargeting.getExcludeMobileDevice(), parameters);
+			addTargetingsToParameters(mobileTargeting.getTargetings(), parameters);
 		}
 		return parameters;
+	}
+
+	private void addTargetingsToParameters(final List<? extends AbstractCampaignTargeting> targetings,
+			final Map<String, Object> parameters) {
+
+		if (CollectionUtils.isNotEmpty(targetings)) {
+			for (AbstractCampaignTargeting targeting : targetings) {
+				addTargetingToParameters(targeting, parameters);
+			}
+		}
+	}
+
+	private void addTargetingToParameters(AbstractCampaignTargeting targeting, final Map<String, Object> parameters) {
+
+		if (targeting != null) {
+			final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
+
+			if (targeting.isSupportingExcludeFlag()) {
+				checkValueAndPutParam(targetingType + "Exclude", ((AbstractExcludableCampaignTargeting) targeting).getExclude(), parameters);
+			}
+
+			final List<String> values = targeting.getValues();
+			if (values != null) {
+				parameters.put(targetingType + "IsNotNull", true);
+				parameters.put(targetingType, values);
+			}
+		}
 	}
 
 	final Map<String, Object> getRdbTargetingParameters(Campaign campaign) {

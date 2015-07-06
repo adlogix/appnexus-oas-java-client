@@ -3,7 +3,7 @@ package eu.adlogix.appnexus.oas.client.domain;
 import lombok.Getter;
 
 @Getter
-public class RdbTargeting extends StatefulDomain {
+public class RdbTargeting extends StatefulDomain implements CampaignTarget {
 
 	private Integer ageFrom;
 	private Integer ageTo;
@@ -80,6 +80,11 @@ public class RdbTargeting extends StatefulDomain {
 	public void setPreferenceFlagsExclude(Boolean preferenceFlagsExclude) {
 		this.preferenceFlagsExclude = preferenceFlagsExclude;
 		addModifiedAttribute("preferenceFlagsExclude");
+	}
+
+	@Override
+	public TargetGroup getGroup() {
+		return TargetGroup.RDB;
 	}
 
 }

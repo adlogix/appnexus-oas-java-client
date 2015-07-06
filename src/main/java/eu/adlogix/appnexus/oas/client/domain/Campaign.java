@@ -11,9 +11,10 @@ import org.joda.time.LocalTime;
 @Getter
 public class Campaign extends StatefulDomainWithId {
 
+	private static final String ATTRNAME_MOBILETARGETING = "mobileTargeting";
 	private static final String ATTRNAME_RDBTARGETING = "rdbTargeting";
 	private static final String ATTRNAME_SEGMENTTARGETING = "segmentTargeting";
-	private static final String ATTRNAME_TARGETING = "targeting";
+	private static final String ATTRNAME_TARGETING = "targetings";
 
 	private String type;
 	private String insertionOrderId;
@@ -60,8 +61,9 @@ public class Campaign extends StatefulDomainWithId {
 	private List<String> pageUrls;
 
 	private Boolean excludeTargets;
-	private Boolean excludeMobileDevice;
-	private List<Targeting> targeting;
+	private List<GeneralCampaignTargeting> targetings;
+	private ZoneCampaignTargeting zoneTargeting;
+	private MobileTargetingGroup mobileTargeting;
 	private RdbTargeting rdbTargeting;
 	private SegmentTargeting segmentTargeting;
 
@@ -298,13 +300,18 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("excludeTargets");
 	}
 
-	public void setExcludeMobileDevice(Boolean excludeMobileDevice) {
-		this.excludeMobileDevice = excludeMobileDevice;
-		addModifiedAttribute("excludeMobileDevice");
+	public void setZoneTargeting(ZoneCampaignTargeting zoneTargeting) {
+		this.zoneTargeting = zoneTargeting;
+		addModifiedAttribute("zoneTargeting");
 	}
 
-	public void setTargeting(List<Targeting> targeting) {
-		this.targeting = Collections.unmodifiableList(targeting);
+	public void setMobileTargeting(MobileTargetingGroup mobileTargeting) {
+		this.mobileTargeting = mobileTargeting;
+		addModifiedAttribute(ATTRNAME_MOBILETARGETING);
+	}
+
+	public void setTargetings(List<GeneralCampaignTargeting> targeting) {
+		this.targetings = Collections.unmodifiableList(targeting);
 		addModifiedAttribute(ATTRNAME_TARGETING);
 	}
 
@@ -381,7 +388,8 @@ public class Campaign extends StatefulDomainWithId {
 
 
 	public boolean hasTargeting() {
-		return (targeting != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null || excludeMobileDevice != null);
+		return (targetings != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null
+				|| mobileTargeting != null || zoneTargeting != null);
 	}
 
 	public boolean hasPrimaryFrequency() {
@@ -420,12 +428,15 @@ public class Campaign extends StatefulDomainWithId {
 			segmentTargeting.resetModifiedAttributes();
 		}
 		if (isModified(ATTRNAME_TARGETING)) {
-			for (Targeting targetingValue : targeting) {
+			for (AbstractCampaignTargeting targetingValue : targetings) {
 				targetingValue.resetModifiedAttributes();
 			}
 		}
 		if (isModified(ATTRNAME_RDBTARGETING)) {
 			rdbTargeting.resetModifiedAttributes();
+		}
+		if (isModified(ATTRNAME_MOBILETARGETING)) {
+			mobileTargeting.resetModifiedAttributes();
 		}
 		super.resetModifiedAttributes();
 	}
