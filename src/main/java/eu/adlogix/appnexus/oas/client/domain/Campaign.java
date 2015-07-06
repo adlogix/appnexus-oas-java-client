@@ -33,7 +33,7 @@ public class Campaign extends StatefulDomainWithId {
 	private Long impressions;
 	private Long clicks;
 	private Long uniques;
-	private String weight;
+	private Long weight;
 	private String priorityLevel;
 	private String completion;
 	private LocalDate startDate;
@@ -168,7 +168,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("uniques");
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(Long weight) {
 		this.weight = weight;
 		addModifiedAttribute("weight");
 	}

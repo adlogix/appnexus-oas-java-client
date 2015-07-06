@@ -41,7 +41,7 @@ public abstract class StatefulDomain {
 	}
 
 	/**
-	 * Resets the modified attributes.The object will be considered as a
+	 * Resets the modified attributes.The object will be considered as an
 	 * unmodified object after calling this method.
 	 * 
 	 */
