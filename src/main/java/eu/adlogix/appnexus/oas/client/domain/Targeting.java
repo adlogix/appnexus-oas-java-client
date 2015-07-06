@@ -14,11 +14,23 @@ public class Targeting extends StatefulDomain {
 	private List<String> values;
 
 	public Targeting(TargetingCode code) {
+		validateTargetingCode(code);
 		this.code = code;
 		addModifiedAttribute("code");
 	}
 
+	/**
+	 * Hook for subclasses to override to validate the {@link Targeting} against
+	 * the {@link TargetingCode} when setting the code
+	 * 
+	 * @param code
+	 *            The {@link TargetingCode} of the {@link Targeting}
+	 */
+	protected void validateTargetingCode(TargetingCode code) {
+	}
+
 	public void setCode(TargetingCode code) {
+		validateTargetingCode(code);
 		this.code = code;
 		addModifiedAttribute("code");
 	}
