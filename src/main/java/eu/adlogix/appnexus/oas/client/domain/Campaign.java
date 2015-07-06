@@ -34,7 +34,7 @@ public class Campaign extends StatefulDomainWithId {
 	private Long clicks;
 	private Long uniques;
 	private Long weight;
-	private String priorityLevel;
+	private Long priorityLevel;
 	private String completion;
 	private LocalDate startDate;
 	private LocalTime startTime;
@@ -173,7 +173,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("weight");
 	}
 
-	public void setPriorityLevel(String priorityLevel) {
+	public void setPriorityLevel(Long priorityLevel) {
 		this.priorityLevel = priorityLevel;
 		addModifiedAttribute("priorityLevel");
 	}

@@ -69,7 +69,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setClicks(createLong(parser.getTrimmedElement("//Campaign/Schedule/Clicks")));
 		campaign.setUniques(createLong(parser.getTrimmedElement("//Campaign/Schedule/Uniques")));
 		campaign.setWeight(createLong(parser.getTrimmedElement("//Campaign/Schedule/Weight")));
-		campaign.setPriorityLevel(parser.getTrimmedElement("//Campaign/Schedule/PriorityLevel"));
+		campaign.setPriorityLevel(createLong(parser.getTrimmedElement("//Campaign/Schedule/PriorityLevel")));
 		campaign.setCompletion(parser.getTrimmedElement("//Campaign/Schedule/Completion"));
 
 		String startDateString = parser.getTrimmedElement("//Campaign/Schedule/StartDate");

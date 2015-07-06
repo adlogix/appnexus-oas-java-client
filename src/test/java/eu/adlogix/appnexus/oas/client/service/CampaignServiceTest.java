@@ -71,7 +71,7 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getClicks().longValue(), 0l);
 		assertEquals(campaign.getUniques().longValue(), 0l);
 		assertEquals(campaign.getWeight().longValue(), 1000l);
-		assertEquals(campaign.getPriorityLevel(), "5");
+		assertEquals(campaign.getPriorityLevel().longValue(), 5l);
 		assertEquals(campaign.getCompletion(), "S");
 
 		assertEquals(campaign.getStartDate(), new LocalDate(2012, 2, 27));
@@ -202,7 +202,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -228,7 +228,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("Test_Campaign");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("12");
+		campaign.setPriorityLevel(12l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setDescription("Added from API");
@@ -272,7 +272,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -300,7 +300,7 @@ public class CampaignServiceTest {
 		campaign.setCreativeTargetId("SampleCreativeTarget");
 		campaign.setProductId("default-product");
 		campaign.setPaymentMethod("B");
-		campaign.setPriorityLevel("0");
+		campaign.setPriorityLevel(0l);
 		campaign.setCompletion("S");
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
@@ -330,7 +330,7 @@ public class CampaignServiceTest {
 		campaign.setPaymentMethod("B");
 		campaign.setImpressions(250000l);
 		campaign.setWeight(100l);
-		campaign.setPriorityLevel("0");
+		campaign.setPriorityLevel(0l);
 		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2016, 1, 1));
 		campaign.setEndDate(new LocalDate(2016, 1, 31));
@@ -369,7 +369,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -397,7 +397,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -424,7 +424,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -459,7 +459,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -491,7 +491,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -582,7 +582,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -615,7 +615,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -656,7 +656,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -688,7 +688,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -716,7 +716,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -752,7 +752,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -786,7 +786,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -821,7 +821,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -857,7 +857,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -892,7 +892,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
@@ -924,7 +924,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -951,7 +951,7 @@ public class CampaignServiceTest {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");
@@ -980,7 +980,7 @@ public class CampaignServiceTest {
 		campaign.setStatus("W");
 		campaign.setImpressions(1000l);
 		campaign.setWeight(100l);
-		campaign.setPriorityLevel("12");
+		campaign.setPriorityLevel(12l);
 		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
@@ -1012,7 +1012,7 @@ public class CampaignServiceTest {
 		campaign.setStatus("W");
 		campaign.setClicks(1000l);
 		campaign.setWeight(100l);
-		campaign.setPriorityLevel("12");
+		campaign.setPriorityLevel(12l);
 		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
@@ -1127,7 +1127,7 @@ public class CampaignServiceTest {
 		campaign.setStatus("W");
 		campaign.setImpressions(1000l);
 		campaign.setWeight(0l);
-		campaign.setPriorityLevel("0");
+		campaign.setPriorityLevel(0l);
 		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
@@ -1298,7 +1298,7 @@ public class CampaignServiceTest {
 		campaign.setStatus("W");
 		campaign.setImpressions(1000l);
 		campaign.setWeight(1000l);
-		campaign.setPriorityLevel("15");
+		campaign.setPriorityLevel(15l);
 		campaign.setCompletion("E");
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));

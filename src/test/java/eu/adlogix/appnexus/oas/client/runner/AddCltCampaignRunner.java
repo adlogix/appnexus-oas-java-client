@@ -19,7 +19,7 @@ public class AddCltCampaignRunner {
 		campaign.setType("CLT");
 		campaign.setCreativeTargetId("test_clt_gunith_1");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");

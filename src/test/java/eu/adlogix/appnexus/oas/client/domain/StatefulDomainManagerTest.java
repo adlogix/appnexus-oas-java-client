@@ -62,7 +62,7 @@ public class StatefulDomainManagerTest {
 		campaign.setStatus("W");
 		campaign.setImpressions(1000l);
 		campaign.setWeight(0l);
-		campaign.setPriorityLevel("0");
+		campaign.setPriorityLevel(0l);
 		campaign.setCompletion("S");
 		campaign.setStartDate(new LocalDate(2010, 10, 1));
 		campaign.setEndDate(new LocalDate(2010, 11, 2));
@@ -78,7 +78,7 @@ public class StatefulDomainManagerTest {
 		assertEquals("W", updatedCampaign.getStatus());
 		assertEquals(1000l, updatedCampaign.getImpressions().longValue());
 		assertEquals(0l, updatedCampaign.getWeight().longValue());
-		assertEquals("0", updatedCampaign.getPriorityLevel());
+		assertEquals(0l, updatedCampaign.getPriorityLevel().longValue());
 		assertEquals(new LocalDate(2010, 10, 1), updatedCampaign.getStartDate());
 		assertEquals(new LocalDate(2010, 11, 2), updatedCampaign.getEndDate());
 
