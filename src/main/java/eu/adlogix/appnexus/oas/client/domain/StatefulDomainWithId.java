@@ -18,7 +18,6 @@ public abstract class StatefulDomainWithId extends StatefulDomain {
 			throw new IllegalStateException("Id cannot be modified");
 		}
 		this.id = id;
-		addModifiedAttribute("id");
 	}
 
 }

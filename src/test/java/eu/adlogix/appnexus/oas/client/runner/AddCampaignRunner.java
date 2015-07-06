@@ -17,7 +17,7 @@ public class AddCampaignRunner {
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setProductId("default-product");
-		campaign.setPriorityLevel("1");
+		campaign.setPriorityLevel(1l);
 		campaign.setReach("O");
 		campaign.setSmoothOrAsap("S");
 		campaign.setCompletion("S");

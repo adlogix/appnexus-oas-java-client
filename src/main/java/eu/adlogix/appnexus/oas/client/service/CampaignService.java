@@ -1,5 +1,9 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +16,6 @@ import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransf
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
-
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 public class CampaignService extends AbstractOasService {
 
@@ -52,7 +52,7 @@ public class CampaignService extends AbstractOasService {
 		checkNotEmpty(campaign.getName(), "campaignName");
 		checkNotEmpty(campaign.getAgencyId(), "agencyId");
 		checkNotEmpty(campaign.getProductId(), "productId");
-		checkNotEmpty(campaign.getPriorityLevel(), "priorityLevel");
+		checkNotNull(campaign.getPriorityLevel(), "priorityLevel");
 		checkNotEmpty(campaign.getReach(), "reach");
 		checkNotEmpty(campaign.getSmoothOrAsap(), "smoothOrAsap");
 		checkNotEmpty(campaign.getCompletion(), "completion");
