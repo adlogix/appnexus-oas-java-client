@@ -11,16 +11,21 @@ public class ExcludableTargeting extends Targeting {
 
 	public ExcludableTargeting(TargetingCode code) {
 		super(code);
-
-		if (!code.isSupportingExcludeFlagForCampaigns()) {
-			throw new IllegalArgumentException("ExcludableTargeting can only be created by for TargetingCodes which supports exclude flag. Passed TargetingCode: "
-					+ code);
-		}
 	}
 
 	public void setExclude(Boolean exclude) {
 		this.exclude = exclude;
 		addModifiedAttribute("exclude");
+	}
+
+	@Override
+	protected void validateTargetingCode(TargetingCode code) {
+		super.validateTargetingCode(code);
+
+		if (!code.isSupportingExcludeFlagForCampaigns()) {
+			throw new IllegalArgumentException("ExcludableTargeting can only be created by for TargetingCodes which supports exclude flag. Passed TargetingCode: "
+					+ code);
+		}
 	}
 
 }
