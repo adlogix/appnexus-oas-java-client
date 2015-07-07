@@ -9,7 +9,7 @@ public class RdbTargeting extends StatefulDomain implements CampaignTarget {
 	private Integer ageTo;
 	private Boolean ageExclude;
 
-	private String gender;
+	private Gender gender;
 	private Boolean genderExclude;
 
 	private Long incomeFrom;
@@ -37,7 +37,7 @@ public class RdbTargeting extends StatefulDomain implements CampaignTarget {
 		addModifiedAttribute("ageExclude");
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 		addModifiedAttribute("gender");
 	}

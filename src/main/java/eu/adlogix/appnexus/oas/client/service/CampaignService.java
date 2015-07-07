@@ -7,9 +7,9 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
+import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignType;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
@@ -53,11 +53,11 @@ public class CampaignService extends AbstractOasService {
 		checkNotEmpty(campaign.getAgencyId(), "agencyId");
 		checkNotEmpty(campaign.getProductId(), "productId");
 		checkNotNull(campaign.getPriorityLevel(), "priorityLevel");
-		checkNotEmpty(campaign.getReach(), "reach");
-		checkNotEmpty(campaign.getSmoothOrAsap(), "smoothOrAsap");
-		checkNotEmpty(campaign.getCompletion(), "completion");
-		checkNotEmpty(campaign.getPaymentMethod(), "paymentMethod");
-		if (StringUtils.equalsIgnoreCase("CLT", campaign.getType())) {
+		checkNotNull(campaign.getReach(), "reach");
+		checkNotNull(campaign.getSmoothOrAsap(), "smoothOrAsap");
+		checkNotNull(campaign.getCompletion(), "completion");
+		checkNotNull(campaign.getPaymentMethod(), "paymentMethod");
+		if (campaign.getType() != null && campaign.getType() == CampaignType.CLT) {
 			checkNotEmpty(campaign.getCreativeTargetId(), "creativeTargetId");
 		}
 
@@ -95,8 +95,8 @@ public class CampaignService extends AbstractOasService {
 
 		campaign.setInternalQuickReport(defaultIfEmpty(campaign.getInternalQuickReport(), "to-date"));
 		campaign.setExternalQuickReport(defaultIfEmpty(campaign.getExternalQuickReport(), "short"));
-		campaign.setIsYieldManaged(defaultIfEmpty(campaign.getIsYieldManaged(), "N"));
-		campaign.setBillTo(defaultIfEmpty(campaign.getBillTo(), "G"));
+		campaign.setIsYieldManaged(campaign.getIsYieldManaged() == null ? false : campaign.getIsYieldManaged());
+		campaign.setBillTo(campaign.getBillTo() == null ? BillTo.AGENCY : campaign.getBillTo());
 		if (campaign.hasTargeting() && campaign.getExcludeTargets() == null) {
 			campaign.setExcludeTargets(new Boolean(false));
 		}

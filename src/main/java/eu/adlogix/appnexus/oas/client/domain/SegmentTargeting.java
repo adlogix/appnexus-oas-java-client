@@ -10,7 +10,7 @@ public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
 
 	private Boolean exclude;
 	private List<String> values;
-	private String segmentClusterMatch;
+	private SegmentType segmentType;
 
 	public void setExclude(Boolean exclude) {
 		this.exclude = exclude;
@@ -22,9 +22,9 @@ public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
 		addModifiedAttribute("values");
 	}
 
-	public void setSegmentClusterMatch(String segmentClusterMatch) {
-		this.segmentClusterMatch = segmentClusterMatch;
-		addModifiedAttribute("segmentClusterMatch");
+	public void setSegmentType(SegmentType segmentType) {
+		this.segmentType = segmentType;
+		addModifiedAttribute("segmentType");
 	}
 
 	@Override

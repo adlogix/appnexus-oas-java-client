@@ -1,6 +1,11 @@
 package eu.adlogix.appnexus.oas.client.runner;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignType;
+import eu.adlogix.appnexus.oas.client.domain.Completion;
+import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
+import eu.adlogix.appnexus.oas.client.domain.Reach;
+import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.service.CampaignService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
 import eu.adlogix.appnexus.oas.client.util.TestCredentials;
@@ -16,14 +21,14 @@ public class AddCltCampaignRunner {
 		campaign.setAdvertiserId("test_advertiser");
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
-		campaign.setType("CLT");
+		campaign.setType(CampaignType.CLT);
 		campaign.setCreativeTargetId("test_clt_gunith_1");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 		service.addCampaign(campaign);
 	}
 }

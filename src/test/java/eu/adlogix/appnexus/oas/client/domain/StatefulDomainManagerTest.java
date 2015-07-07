@@ -59,23 +59,23 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 		campaign.setImpressions(1000l);
 		campaign.setWeight(0l);
 		campaign.setPriorityLevel(0l);
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2010, 10, 1));
 		campaign.setEndDate(new LocalDate(2010, 11, 2));
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setSegmentType(SegmentType.ALL);
 		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 		assertEquals("ADID", updatedCampaign.getId());
-		assertEquals("W", updatedCampaign.getStatus());
+		assertEquals(CampaignStatus.WORK_IN_PROGRESS, updatedCampaign.getStatus());
 		assertEquals(1000l, updatedCampaign.getImpressions().longValue());
 		assertEquals(0l, updatedCampaign.getWeight().longValue());
 		assertEquals(0l, updatedCampaign.getPriorityLevel().longValue());
@@ -83,7 +83,7 @@ public class StatefulDomainManagerTest {
 		assertEquals(new LocalDate(2010, 11, 2), updatedCampaign.getEndDate());
 
 		SegmentTargeting updatedSegmentTargeting = updatedCampaign.getSegmentTargeting();
-		assertEquals("L", updatedSegmentTargeting.getSegmentClusterMatch());
+		assertEquals(SegmentType.ALL, updatedSegmentTargeting.getSegmentType());
 		assertEquals(true, updatedSegmentTargeting.getExclude().booleanValue());
 		assertEquals(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }), updatedSegmentTargeting.getValues());
 
@@ -94,10 +94,10 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setSegmentType(SegmentType.ALL);
 		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
@@ -118,10 +118,10 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setSegmentType(SegmentType.ALL);
 		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
@@ -129,7 +129,7 @@ public class StatefulDomainManagerTest {
 		campaign.resetModifiedAttributes();
 
 		SegmentTargeting segmentTargetingAfterReset = campaign.getSegmentTargeting();
-		segmentTargetingAfterReset.setSegmentClusterMatch("L");
+		segmentTargetingAfterReset.setSegmentType(SegmentType.ALL);
 		campaign.setSegmentTargeting(segmentTargetingAfterReset);
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
@@ -138,7 +138,7 @@ public class StatefulDomainManagerTest {
 
 		SegmentTargeting updatedSegmentTargeting = updatedCampaign.getSegmentTargeting();
 		assertNotNull(updatedSegmentTargeting);
-		assertEquals("L", updatedSegmentTargeting.getSegmentClusterMatch());
+		assertEquals(SegmentType.ALL, updatedSegmentTargeting.getSegmentType());
 		assertEquals(null, updatedSegmentTargeting.getExclude());
 		assertEquals(null, updatedSegmentTargeting.getValues());
 
@@ -149,7 +149,7 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
 		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
@@ -167,7 +167,7 @@ public class StatefulDomainManagerTest {
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 		assertEquals("ADID", updatedCampaign.getId());
-		assertEquals("W", updatedCampaign.getStatus());
+		assertEquals(CampaignStatus.WORK_IN_PROGRESS, updatedCampaign.getStatus());
 
 		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(2, updatedTargeting.size());
@@ -187,7 +187,7 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
 		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
@@ -219,7 +219,7 @@ public class StatefulDomainManagerTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
 		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
