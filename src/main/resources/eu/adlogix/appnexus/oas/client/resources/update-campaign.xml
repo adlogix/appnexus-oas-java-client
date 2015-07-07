@@ -97,8 +97,8 @@ $if(dmaExclude)$        <ExcludeDma>$dmaExclude$</ExcludeDma>$endif$
 $if(dmaIsNotNull)$        <Dma>
           $dma: {t|<Code>$t$</Code>}; separator="\n"$
         </Dma>$endif$
-$if(zoneIsNotNull)$        <Zones>
-          $zone: {t|<Code>$t$</Code>}; separator="\n"$
+$if(zonesIsNotNull)$        <Zones>
+          $zones: {t|<Code>$t$</Code>}; separator="\n"$
         </Zones>$endif$
 $if(osExclude)$        <ExcludeOs>$osExclude$</ExcludeOs>$endif$
 $if(osIsNotNull)$        <Os>

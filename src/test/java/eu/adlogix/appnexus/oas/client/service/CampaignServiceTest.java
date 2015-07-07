@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
@@ -154,6 +155,16 @@ public class CampaignServiceTest {
 			}
 		}
 
+		ZoneCampaignTargeting zoneCampaignTargeting = campaign.getZoneTargeting();
+		assertEquals(zoneCampaignTargeting.getValues(), EMPTY_STRING_LIST);
+
+		MobileTargetingGroup mobileCampaignTargetingGroup = campaign.getMobileTargeting();
+		assertEquals(mobileCampaignTargetingGroup.getExcludeMobileDevice(), null);
+		List<MobileCampaignTargeting> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
+		assertEquals(mobileCampaignTargetings.size(), 1);
+		assertEquals(mobileCampaignTargetings.get(0).getCode(), TargetingCode.DEVICE_GROUP);
+		assertEquals(mobileCampaignTargetings.get(0).getValues(), EMPTY_STRING_LIST);
+
 		RdbTargeting rdbTargeting = campaign.getRdbTargeting();
 		assertEquals(rdbTargeting.getAgeExclude().booleanValue(), false);
 		assertEquals(rdbTargeting.getAgeFrom().intValue(), 15);
@@ -186,6 +197,166 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getIsYieldManaged(), "N");
 		assertEquals(campaign.getBillTo(), "G");
 		assertEquals(campaign.getCurrency(), "EUR");
+
+	}
+
+	@Test
+	public void getCampaignById_ExistingCltCampaignWithMobileZoneTargeting_ReturnCampaign() throws Exception {
+
+		final String campaignId = "test_campaign_gunith_2_clt";
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-clt-campaign-request.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-clt-campaign-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = service.getCampaignById(campaignId);
+
+		assertEquals(campaign.getId(), campaignId);
+		assertEquals(campaign.getType(), "CLT");
+		assertEquals(campaign.getInsertionOrderId(), StringUtils.EMPTY);
+		assertEquals(campaign.getAdvertiserId(), "test_advertiser");
+		assertEquals(campaign.getName(), "test");
+		assertEquals(campaign.getAgencyId(), "unknown_agency");
+		assertEquals(campaign.getDescription(), StringUtils.EMPTY);
+		assertEquals(campaign.getCampaignManager(), StringUtils.EMPTY);
+		assertEquals(campaign.getProductId(), "default-product");
+		assertEquals(campaign.getStatus(), "W");
+
+		assertEquals(campaign.getCampaignGroupIds(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getCompetitiveCategroryIds(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getExternalUserIds(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getInternalQuickReport(), "to-date");
+		assertEquals(campaign.getExternalQuickReport(), "short");
+
+		assertEquals(campaign.getImpressions().longValue(), 0l);
+		assertEquals(campaign.getClicks().longValue(), 0l);
+		assertEquals(campaign.getUniques().longValue(), 0l);
+		assertEquals(campaign.getWeight().longValue(), 0l);
+		assertEquals(campaign.getPriorityLevel().longValue(), 1l);
+		assertEquals(campaign.getCompletion(), "S");
+
+		assertEquals(campaign.getStartDate(), null);
+		assertEquals(campaign.getStartTime(), null);
+		assertEquals(campaign.getEndDate(), null);
+		assertEquals(campaign.getEndTime(), null);
+
+		assertEquals(campaign.getReach(), "O");
+		assertEquals(campaign.getDailyImps(), new Long(0l));
+		assertEquals(campaign.getDailyClicks(), new Long(0));
+		assertEquals(campaign.getDailyUniques(), new Long(0));
+		assertEquals(campaign.getSmoothOrAsap(), "S");
+		assertEquals(campaign.getImpressionsOverrun(), new Long(0));
+
+		assertEquals(campaign.getCompanionPositions(), EMPTY_STRING_LIST);
+		assertEquals(campaign.getStrictCompanions(), null);
+		assertEquals(campaign.getPrimaryImpsPerVisitor(), new Long(0));
+		assertEquals(campaign.getPrimaryClicksPerVisitor(), new Long(0));
+		assertEquals(campaign.getPrimaryFrequencyScope(), new Long(0));
+		assertEquals(campaign.getSecondaryImpsPerVisitor(), new Long(0));
+		assertEquals(campaign.getSecondaryFrequencyScope(), new Long(0));
+
+		assertEquals(campaign.getHourOfDay(), EMPTY_STRING_LIST);
+		assertEquals(campaign.getDayOfWeek(), EMPTY_STRING_LIST);
+		assertEquals(campaign.getUserTimeZone(), "N");
+
+		assertEquals(campaign.getSectionIds(), EMPTY_STRING_LIST);
+		assertEquals(campaign.getPageUrls(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getExcludeTargets().booleanValue(), false);
+
+		List<GeneralCampaignTargeting> targetingList = campaign.getTargetings();
+		for (GeneralCampaignTargeting targeting : targetingList) {
+			if (targeting.getCode().equals(TargetingCode.TOP_DOMAIN)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.BANDWIDTH)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.CONTINENT)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.COUNTRY)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.STATE)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.MSA)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.DMA)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.OS)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.BROWSER)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			} else if (targeting.getCode().equals(TargetingCode.BROWSER_VERSIONS)) {
+				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+
+			}
+		}
+
+		ZoneCampaignTargeting zoneCampaignTargeting = campaign.getZoneTargeting();
+		assertEquals(zoneCampaignTargeting.getValues(), Lists.newArrayList("1", "2"));
+
+		MobileTargetingGroup mobileCampaignTargetingGroup = campaign.getMobileTargeting();
+		assertEquals(mobileCampaignTargetingGroup.getExcludeMobileDevice().booleanValue(), false);
+		List<MobileCampaignTargeting> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
+		assertEquals(mobileCampaignTargetings.size(), 1);
+		assertEquals(mobileCampaignTargetings.get(0).getCode(), TargetingCode.DEVICE_GROUP);
+		assertEquals(mobileCampaignTargetings.get(0).getValues(), Lists.newArrayList("427", "429"));
+
+		RdbTargeting rdbTargeting = campaign.getRdbTargeting();
+		assertEquals(rdbTargeting.getAgeExclude().booleanValue(), false);
+		assertEquals(rdbTargeting.getAgeFrom(), null);
+		assertEquals(rdbTargeting.getAgeTo(), null);
+		assertEquals(rdbTargeting.getGenderExclude().booleanValue(), false);
+		assertEquals(rdbTargeting.getGender().toString(), "E");
+		assertEquals(rdbTargeting.getIncomeExclude().booleanValue(), false);
+		assertEquals(rdbTargeting.getIncomeFrom(), null);
+		assertEquals(rdbTargeting.getIncomeTo(), null);
+		assertEquals(rdbTargeting.getSubscriberCodeExclude().booleanValue(), false);
+		assertEquals(rdbTargeting.getSubscriberCode(), "");
+		assertEquals(rdbTargeting.getPreferenceFlagsExclude().booleanValue(), false);
+		assertEquals(rdbTargeting.getPreferenceFlags(), "");
+
+		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
+		assertEquals(segmentTargeting.getSegmentClusterMatch(), null);
+		assertEquals(segmentTargeting.getExclude().booleanValue(), false);
+		assertEquals(segmentTargeting.getValues(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getExcludedSiteIds(), EMPTY_STRING_LIST);
+		assertEquals(campaign.getExcludedPageUrls(), EMPTY_STRING_LIST);
+
+		assertEquals(campaign.getCpm(), new Double(0.0));
+		assertEquals(campaign.getCpc(), new Double(0.0));
+		assertEquals(campaign.getCpa(), new Double(0.0));
+		assertEquals(campaign.getFlatRate(), new Double(0.0));
+		assertEquals(campaign.getTax(), new Double(0.0));
+		assertEquals(campaign.getAgencyCommission(), new Double(0.0));
+		assertEquals(campaign.getPaymentMethod(), "C");
+		assertEquals(campaign.getIsYieldManaged(), "N");
+		assertEquals(campaign.getBillTo(), "G");
+		assertEquals(campaign.getCurrency(), "USD");
 
 	}
 
