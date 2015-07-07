@@ -151,7 +151,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	private ZoneCampaignTargeting parseAndCreateZoneTargeting(final ResponseParser parser) {
 
-		final ZoneCampaignTargeting targeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		final ZoneCampaignTargeting targeting = new ZoneCampaignTargeting();
 		populateTargetingValues(targeting, TargetingCode.ZONE, parser);
 		return targeting;
 	}
