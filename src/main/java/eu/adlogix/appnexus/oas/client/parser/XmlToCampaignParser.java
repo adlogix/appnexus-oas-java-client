@@ -1,13 +1,5 @@
 package eu.adlogix.appnexus.oas.client.parser;
 
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +20,13 @@ import eu.adlogix.appnexus.oas.client.domain.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
+
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 
 @AllArgsConstructor
 public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{

@@ -1,11 +1,5 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +20,13 @@ import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
+
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -553,7 +554,7 @@ public class CampaignServiceTest {
 
 		campaign.setTargetings(targeting);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		campaign.setZoneTargeting(zoneTargeting);
 
@@ -667,7 +668,7 @@ public class CampaignServiceTest {
 		campaign.setCompletion("S");
 		campaign.setPaymentMethod("C");
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setZoneTargeting(zoneTargeting);
 		campaign.setSegmentTargeting(new SegmentTargeting());
@@ -1110,7 +1111,7 @@ public class CampaignServiceTest {
 		mobileTargeting.setTargetings(mobileTargetings);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		campaign.setZoneTargeting(zoneTargeting);
 
@@ -1201,7 +1202,7 @@ public class CampaignServiceTest {
 
 		campaign.setTargetings(targeting);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1" }));
 		campaign.setZoneTargeting(zoneTargeting);
 
@@ -1283,7 +1284,7 @@ public class CampaignServiceTest {
 
 		campaign.setTargetings(targeting);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting(TargetingCode.ZONE);
+		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setZoneTargeting(zoneTargeting);
 

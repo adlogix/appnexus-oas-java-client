@@ -2,11 +2,19 @@ package eu.adlogix.appnexus.oas.client.domain;
 
 import java.util.List;
 
-public class GeneralCampaignTargeting extends AbstractExcludableCampaignTargeting {
+import lombok.NoArgsConstructor;
 
-	public GeneralCampaignTargeting() {
-		super();
-	}
+/**
+ * Used when setting and reading {@link Campaign#getTargetings()}.
+ * {@link TargetingCode}s related to this type is any code with
+ * {@link TargetGroup#GENERAL}
+ * 
+ * @see AbstractCampaignTargeting#getValues()
+ * @see AbstractCampaignTargeting#getCode()
+ * @see TargetingCode
+ */
+@NoArgsConstructor
+public class GeneralCampaignTargeting extends AbstractExcludableCampaignTargeting {
 
 	public GeneralCampaignTargeting(TargetingCode code) {
 		super(code);

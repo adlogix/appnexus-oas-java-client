@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public abstract class AbstractExcludableCampaignTargeting extends AbstractCampaignTargeting {
 
+	/**
+	 * Excludable flag for Targeting
+	 */
 	private Boolean exclude;
 
 	public AbstractExcludableCampaignTargeting(TargetingCode code) {

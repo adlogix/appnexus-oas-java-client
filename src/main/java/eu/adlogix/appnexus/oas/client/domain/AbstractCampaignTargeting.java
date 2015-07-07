@@ -10,7 +10,16 @@ import lombok.NoArgsConstructor;
 @Getter
 public abstract class AbstractCampaignTargeting extends StatefulDomain implements CampaignTarget {
 
+	/**
+	 * Relevant {@link TargetingCode}
+	 */
 	private TargetingCode code;
+
+	/**
+	 * Set Targeting values of a {@link Campaign} for a particular
+	 * {@link TargetingCode}. Should contain permittable values for this
+	 * {@link TargetingCode}
+	 */
 	private List<String> values;
 
 	public AbstractCampaignTargeting(TargetingCode code) {
@@ -42,11 +51,24 @@ public abstract class AbstractCampaignTargeting extends StatefulDomain implement
 		addModifiedAttribute("code");
 	}
 
+	/**
+	 * Set Targeting values of a {@link Campaign} for a particular
+	 * {@link TargetingCode}
+	 * 
+	 * @param values
+	 *            The permittable values for this {@link TargetingCode}
+	 */
 	public void setValues(List<String> values) {
 		this.values = Collections.unmodifiableList(values);
 		addModifiedAttribute("values");
 	}
 
+	/**
+	 * If exclude flag is enabled for this Targetting
+	 * 
+	 * @return value based on
+	 *         {@link TargetingCode#isSupportingExcludeFlagForCampaigns()}
+	 */
 	public boolean isSupportingExcludeFlag() {
 		return code.isSupportingExcludeFlagForCampaigns();
 	}

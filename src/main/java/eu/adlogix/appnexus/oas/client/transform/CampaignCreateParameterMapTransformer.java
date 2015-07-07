@@ -18,6 +18,8 @@ import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 @AllArgsConstructor
 public class CampaignCreateParameterMapTransformer extends AbstractParameterMapTransformer {
 
@@ -159,6 +161,10 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 	private void addTargetingToParameters(AbstractCampaignTargeting targeting, final Map<String, Object> parameters) {
 
 		if (targeting != null) {
+
+			checkNotNull(targeting.getCode(), "Targeting code of targeting object having values "
+					+ targeting.getValues());
+
 			final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
 
 			if (targeting.isSupportingExcludeFlag()) {

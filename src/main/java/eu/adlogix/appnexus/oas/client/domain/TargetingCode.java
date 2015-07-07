@@ -16,16 +16,16 @@ import com.google.common.collect.Lists;
 @AllArgsConstructor
 @Getter
 public enum TargetingCode {
-	TOP_DOMAIN("TopDomain", "TopLevelDomain"),
-	BANDWIDTH("Bandwidth"),
-	CONTINENT("Continent"),
-	COUNTRY("Country"),
-	STATE("State"),
-	MSA("Msa"),
-	DMA("Dma"),
-	OS("Os"),
-	BROWSER("Browser"),
-	BROWSER_VERSIONS("BrowserV"),
+	TOP_DOMAIN("TopDomain", "TopLevelDomain", TargetGroup.GENERAL),
+	BANDWIDTH("Bandwidth", TargetGroup.GENERAL),
+	CONTINENT("Continent", TargetGroup.GENERAL),
+	COUNTRY("Country", TargetGroup.GENERAL),
+	STATE("State", TargetGroup.GENERAL),
+	MSA("Msa", TargetGroup.GENERAL),
+	DMA("Dma", TargetGroup.GENERAL),
+	OS("Os", TargetGroup.GENERAL),
+	BROWSER("Browser", TargetGroup.GENERAL),
+	BROWSER_VERSIONS("BrowserV", TargetGroup.GENERAL),
 	ZONE("Zone", TargetGroup.ZONE, false),
 	DEVICE_GROUP("DeviceGroup", TargetGroup.MOBILE, false, SupportedFetchDatabaseAction.SELECTEDLIST);
 
@@ -53,8 +53,8 @@ public enum TargetingCode {
 
 	private final SupportedFetchDatabaseAction databaseAction;
 
-	private TargetingCode(String code) {
-		this(code, code, TargetGroup.getDefault(), true, SupportedFetchDatabaseAction.getDefault());
+	private TargetingCode(String code, final TargetGroup group) {
+		this(code, code, group, true, SupportedFetchDatabaseAction.getDefault());
 	}
 
 	private TargetingCode(final String code, final TargetGroup group,
@@ -63,8 +63,8 @@ public enum TargetingCode {
 		this(code, code, group, isSupportingExcludeFlagForCampaigns, databaseAction);
 	}
 
-	private TargetingCode(String code, String readingCampaignCode) {
-		this(code, readingCampaignCode, TargetGroup.getDefault(), true, SupportedFetchDatabaseAction.getDefault());
+	private TargetingCode(String code, String readingCampaignCode, final TargetGroup group) {
+		this(code, readingCampaignCode, group, true, SupportedFetchDatabaseAction.getDefault());
 	}
 
 	private TargetingCode(final String code, final TargetGroup group, final boolean isSupportingExcludeFlagForCampaigns) {

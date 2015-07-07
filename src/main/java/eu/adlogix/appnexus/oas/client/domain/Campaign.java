@@ -61,6 +61,12 @@ public class Campaign extends StatefulDomainWithId {
 	private List<String> pageUrls;
 
 	private Boolean excludeTargets;
+
+	/**
+	 * Valid {@link GeneralCampaignTargeting}s. Make sure {@link TargetingCode}s
+	 * related to GeneralCampaignTargeting types is any code with
+	 * {@link TargetGroup#GENERAL}
+	 */
 	private List<GeneralCampaignTargeting> targetings;
 	private ZoneCampaignTargeting zoneTargeting;
 	private MobileTargetingGroup mobileTargeting;
