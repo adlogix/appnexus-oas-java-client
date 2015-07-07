@@ -11,12 +11,24 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
+import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.CampaignType;
+import eu.adlogix.appnexus.oas.client.domain.Completion;
+import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
+import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
+import eu.adlogix.appnexus.oas.client.domain.Gender;
 import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
 import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
+import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
+import eu.adlogix.appnexus.oas.client.domain.Reach;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
+import eu.adlogix.appnexus.oas.client.domain.SegmentType;
+import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
@@ -48,7 +60,7 @@ public class CampaignServiceTest {
 		Campaign campaign = service.getCampaignById(campaignId);
 
 		assertEquals(campaign.getId(), "0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
-		assertEquals(campaign.getType(), "RM");
+		assertEquals(campaign.getType(), CampaignType.REGULAR);
 		assertEquals(campaign.getInsertionOrderId(), "IOID");
 		assertEquals(campaign.getAdvertiserId(), "GROUPEZENITHOPTIMEDIA_ZENI0D");
 		assertEquals(campaign.getName(), "[3] 1017981imps entree site du 27/02 au 31/03");
@@ -56,7 +68,7 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getDescription(), "[3] 1017981imps entree site du 27/02 au 31/03");
 		assertEquals(campaign.getCampaignManager(), "Campaign_mangaer_01");
 		assertEquals(campaign.getProductId(), "default-product");
-		assertEquals(campaign.getStatus(), "L");
+		assertEquals(campaign.getStatus(), CampaignStatus.LIVE);
 
 		List<String> groupsExpected = Arrays.asList(new String[] { "GROUPE_ZENITHOPTIMEDIA_0212_229",
 				"GROUPE_GROUPE_ZE_0212_229" });
@@ -76,31 +88,33 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getUniques().longValue(), 0l);
 		assertEquals(campaign.getWeight().longValue(), 1000l);
 		assertEquals(campaign.getPriorityLevel().longValue(), 5l);
-		assertEquals(campaign.getCompletion(), "S");
+		assertEquals(campaign.getCompletion(), Completion.SOONEST);
 
 		assertEquals(campaign.getStartDate(), new LocalDate(2012, 2, 27));
 		assertEquals(campaign.getStartTime(), new LocalTime(04, 00));
 		assertEquals(campaign.getEndDate(), new LocalDate(2012, 3, 30));
 		assertEquals(campaign.getEndTime(), new LocalTime(20, 59));
 
-		assertEquals(campaign.getReach(), "D");
+		assertEquals(campaign.getReach(), Reach.DYNAMIC);
 		assertEquals(campaign.getDailyImps(), new Long(54642l));
 		assertEquals(campaign.getDailyClicks(), new Long(0));
 		assertEquals(campaign.getDailyUniques(), new Long(0));
-		assertEquals(campaign.getSmoothOrAsap(), "S");
+		assertEquals(campaign.getSmoothOrAsap(), SmoothAsap.SMOOTH);
 		assertEquals(campaign.getImpressionsOverrun(), new Long(50));
 
 		assertEquals(campaign.getCompanionPositions(), Arrays.asList(new String[] { "M/M2/T" }));
-		assertEquals(campaign.getStrictCompanions(), "Y");
+		assertEquals(campaign.getStrictCompanions().booleanValue(), true);
 		assertEquals(campaign.getPrimaryImpsPerVisitor(), new Long(4));
 		assertEquals(campaign.getPrimaryClicksPerVisitor(), new Long(0));
-		assertEquals(campaign.getPrimaryFrequencyScope(), new Long(1));
+		assertEquals(campaign.getPrimaryFrequencyScope(), FrequencyScope.SESSION);
 		assertEquals(campaign.getSecondaryImpsPerVisitor(), new Long(6));
-		assertEquals(campaign.getSecondaryFrequencyScope(), new Long(0));
+		assertEquals(campaign.getSecondaryFrequencyScope(), FrequencyScope.ZERO);
 
-		assertEquals(campaign.getHourOfDay(), Arrays.asList(new String[] { "18", "19", "20" }));
-		assertEquals(campaign.getDayOfWeek(), Arrays.asList(new String[] { "0", "2", "4", "6" }));
-		assertEquals(campaign.getUserTimeZone(), "N");
+		assertEquals(campaign.getHourOfDay(), Arrays.asList(new HourOfDay[] { HourOfDay.EIGHTEEN, HourOfDay.NINETEEN,
+				HourOfDay.TWENTY }));
+		assertEquals(campaign.getDayOfWeek(), Arrays.asList(new DayOfWeek[] { DayOfWeek.SUNDAY, DayOfWeek.TUESDAY,
+				DayOfWeek.THURSDAY, DayOfWeek.SATURDAY }));
+		assertEquals(campaign.getUserTimeZone().booleanValue(), false);
 
 		assertEquals(campaign.getSectionIds(), Arrays.asList(new String[] { "ALL_EXPRESS_STYLES" }));
 		assertEquals(campaign.getPageUrls(), Arrays.asList(new String[] { "express_styles/CONCOURS",
@@ -180,7 +194,7 @@ public class CampaignServiceTest {
 		assertEquals(rdbTargeting.getPreferenceFlags(), "");
 
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
-		assertEquals(segmentTargeting.getSegmentClusterMatch(), "A");
+		assertEquals(segmentTargeting.getSegmentType(), SegmentType.ANY);
 		assertEquals(segmentTargeting.getExclude().booleanValue(), false);
 		assertEquals(segmentTargeting.getValues(), Arrays.asList(new String[] { "HockeyFans" }));
 
@@ -193,9 +207,9 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getFlatRate(), new Double(0.5));
 		assertEquals(campaign.getTax(), new Double(1.0));
 		assertEquals(campaign.getAgencyCommission(), new Double(10.0));
-		assertEquals(campaign.getPaymentMethod(), "C");
-		assertEquals(campaign.getIsYieldManaged(), "N");
-		assertEquals(campaign.getBillTo(), "G");
+		assertEquals(campaign.getPaymentMethod(), PaymentMethod.CASH);
+		assertEquals(campaign.getIsYieldManaged().booleanValue(), false);
+		assertEquals(campaign.getBillTo(), BillTo.AGENCY);
 		assertEquals(campaign.getCurrency(), "EUR");
 
 	}
@@ -215,7 +229,7 @@ public class CampaignServiceTest {
 		Campaign campaign = service.getCampaignById(campaignId);
 
 		assertEquals(campaign.getId(), campaignId);
-		assertEquals(campaign.getType(), "CLT");
+		assertEquals(campaign.getType(), CampaignType.CLT);
 		assertEquals(campaign.getInsertionOrderId(), StringUtils.EMPTY);
 		assertEquals(campaign.getAdvertiserId(), "test_advertiser");
 		assertEquals(campaign.getName(), "test");
@@ -223,7 +237,7 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getDescription(), StringUtils.EMPTY);
 		assertEquals(campaign.getCampaignManager(), StringUtils.EMPTY);
 		assertEquals(campaign.getProductId(), "default-product");
-		assertEquals(campaign.getStatus(), "W");
+		assertEquals(campaign.getStatus(), CampaignStatus.WORK_IN_PROGRESS);
 
 		assertEquals(campaign.getCampaignGroupIds(), EMPTY_STRING_LIST);
 
@@ -239,31 +253,31 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getUniques().longValue(), 0l);
 		assertEquals(campaign.getWeight().longValue(), 0l);
 		assertEquals(campaign.getPriorityLevel().longValue(), 1l);
-		assertEquals(campaign.getCompletion(), "S");
+		assertEquals(campaign.getCompletion(), Completion.SOONEST);
 
 		assertEquals(campaign.getStartDate(), null);
 		assertEquals(campaign.getStartTime(), null);
 		assertEquals(campaign.getEndDate(), null);
 		assertEquals(campaign.getEndTime(), null);
 
-		assertEquals(campaign.getReach(), "O");
+		assertEquals(campaign.getReach(), Reach.OPEN);
 		assertEquals(campaign.getDailyImps(), new Long(0l));
 		assertEquals(campaign.getDailyClicks(), new Long(0));
 		assertEquals(campaign.getDailyUniques(), new Long(0));
-		assertEquals(campaign.getSmoothOrAsap(), "S");
+		assertEquals(campaign.getSmoothOrAsap(), SmoothAsap.SMOOTH);
 		assertEquals(campaign.getImpressionsOverrun(), new Long(0));
 
 		assertEquals(campaign.getCompanionPositions(), EMPTY_STRING_LIST);
 		assertEquals(campaign.getStrictCompanions(), null);
 		assertEquals(campaign.getPrimaryImpsPerVisitor(), new Long(0));
 		assertEquals(campaign.getPrimaryClicksPerVisitor(), new Long(0));
-		assertEquals(campaign.getPrimaryFrequencyScope(), new Long(0));
+		assertEquals(campaign.getPrimaryFrequencyScope(), FrequencyScope.ZERO);
 		assertEquals(campaign.getSecondaryImpsPerVisitor(), new Long(0));
-		assertEquals(campaign.getSecondaryFrequencyScope(), new Long(0));
+		assertEquals(campaign.getSecondaryFrequencyScope(), FrequencyScope.ZERO);
 
 		assertEquals(campaign.getHourOfDay(), EMPTY_STRING_LIST);
 		assertEquals(campaign.getDayOfWeek(), EMPTY_STRING_LIST);
-		assertEquals(campaign.getUserTimeZone(), "N");
+		assertEquals(campaign.getUserTimeZone().booleanValue(), false);
 
 		assertEquals(campaign.getSectionIds(), EMPTY_STRING_LIST);
 		assertEquals(campaign.getPageUrls(), EMPTY_STRING_LIST);
@@ -330,7 +344,7 @@ public class CampaignServiceTest {
 		assertEquals(rdbTargeting.getAgeFrom(), null);
 		assertEquals(rdbTargeting.getAgeTo(), null);
 		assertEquals(rdbTargeting.getGenderExclude().booleanValue(), false);
-		assertEquals(rdbTargeting.getGender().toString(), "E");
+		assertEquals(rdbTargeting.getGender(), Gender.E);
 		assertEquals(rdbTargeting.getIncomeExclude().booleanValue(), false);
 		assertEquals(rdbTargeting.getIncomeFrom(), null);
 		assertEquals(rdbTargeting.getIncomeTo(), null);
@@ -340,7 +354,7 @@ public class CampaignServiceTest {
 		assertEquals(rdbTargeting.getPreferenceFlags(), "");
 
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
-		assertEquals(segmentTargeting.getSegmentClusterMatch(), null);
+		assertEquals(segmentTargeting.getSegmentType(), null);
 		assertEquals(segmentTargeting.getExclude().booleanValue(), false);
 		assertEquals(segmentTargeting.getValues(), EMPTY_STRING_LIST);
 
@@ -353,9 +367,9 @@ public class CampaignServiceTest {
 		assertEquals(campaign.getFlatRate(), new Double(0.0));
 		assertEquals(campaign.getTax(), new Double(0.0));
 		assertEquals(campaign.getAgencyCommission(), new Double(0.0));
-		assertEquals(campaign.getPaymentMethod(), "C");
-		assertEquals(campaign.getIsYieldManaged(), "N");
-		assertEquals(campaign.getBillTo(), "G");
+		assertEquals(campaign.getPaymentMethod(), PaymentMethod.CASH);
+		assertEquals(campaign.getIsYieldManaged().booleanValue(), false);
+		assertEquals(campaign.getBillTo(), BillTo.AGENCY);
 		assertEquals(campaign.getCurrency(), "USD");
 
 	}
@@ -377,10 +391,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
@@ -403,28 +417,28 @@ public class CampaignServiceTest {
 		campaign.setName("Test_Campaign");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(12l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setDescription("Added from API");
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2016, 1, 1));
 		campaign.setEndDate(new LocalDate(2016, 1, 31));
 		campaign.setStartTime(new LocalTime(0, 0));
 		campaign.setEndTime(new LocalTime(0, 59));
-		campaign.setPaymentMethod("B");
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCampaignGroupIds(Arrays.asList(new String[] { "campaign_group_01" }));
 		campaign.setImpressions(250000l);
 		campaign.setWeight(100l);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setPrimaryImpsPerVisitor(1l);
 		campaign.setPrimaryClicksPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(1l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.SESSION);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setUserTimeZone(false);
 		campaign.setPageUrls(Arrays.asList(new String[] { "test.com/home" }));
 		campaign.setCpm(4000.0);
-		campaign.setPaymentMethod("C");
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setCurrency("EUR");
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -447,10 +461,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
@@ -467,17 +481,17 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("test_campaign_01");
-		campaign.setType("CLT");
+		campaign.setType(CampaignType.CLT);
 		campaign.setAdvertiserId("test_advertiser");
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
 		campaign.setCreativeTargetId("SampleCreativeTarget");
 		campaign.setProductId("default-product");
-		campaign.setPaymentMethod("B");
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setPriorityLevel(0l);
-		campaign.setCompletion("S");
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		service.addCampaign(campaign);
 	}
 
@@ -493,7 +507,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("test_campaign_01");
-		campaign.setType("CLT");
+		campaign.setType(CampaignType.CLT);
 		campaign.setAdvertiserId("test_advertiser");
 		campaign.setAgencyId("unknown_agency");
 		campaign.setName("test");
@@ -501,27 +515,27 @@ public class CampaignServiceTest {
 		campaign.setProductId("default-product");
 		campaign.setDescription("Added from API");
 		campaign.setCampaignGroupIds(Arrays.asList(new String[] { "campaign_group_01" }));
-		campaign.setPaymentMethod("B");
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setImpressions(250000l);
 		campaign.setWeight(100l);
 		campaign.setPriorityLevel(0l);
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2016, 1, 1));
 		campaign.setEndDate(new LocalDate(2016, 1, 31));
 		campaign.setStartTime(new LocalTime(0, 0));
 		campaign.setEndTime(new LocalTime(0, 59));
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setPrimaryImpsPerVisitor(1l);
 		campaign.setPrimaryClicksPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(1l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.SESSION);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setUserTimeZone(false);
 		campaign.setPageUrls(Arrays.asList(new String[] { "test.com/home" }));
 		campaign.setCpm(4000.0);
-		campaign.setPaymentMethod("C");
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setCurrency("EUR");
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -544,12 +558,12 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
-		campaign.setStrictCompanions("N");
+		campaign.setStrictCompanions(false);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
@@ -572,10 +586,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -599,18 +613,18 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setImpressions(250000l);
 		campaign.setDailyImps(50l);
 		campaign.setImpressionsOverrun(10l);
 		campaign.setPrimaryImpsPerVisitor(10l);
-		campaign.setPrimaryFrequencyScope(1l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.SESSION);
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(10l);
-		campaign.setSecondaryFrequencyScope(2l);
+		campaign.setSecondaryFrequencyScope(FrequencyScope.HOURLY);
 		campaign.setCpm(4000.0);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -634,15 +648,15 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setClicks(250000l);
 		campaign.setDailyClicks(50l);
 		campaign.setPrimaryImpsPerVisitor(0l);
 		campaign.setPrimaryClicksPerVisitor(10l);
-		campaign.setPrimaryFrequencyScope(1l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.SESSION);
 		campaign.setCpc(4.0);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -666,10 +680,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 
 		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
@@ -760,13 +774,13 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setSegmentType(SegmentType.ALL);
 		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
@@ -793,17 +807,17 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 
 		RdbTargeting rdbTargeting = new RdbTargeting();
 		rdbTargeting.setAgeExclude(true);
 		rdbTargeting.setAgeFrom(13);
 		rdbTargeting.setAgeTo(30);
 		rdbTargeting.setGenderExclude(true);
-		rdbTargeting.setGender("M");
+		rdbTargeting.setGender(Gender.M);
 		rdbTargeting.setIncomeExclude(true);
 		rdbTargeting.setIncomeFrom(13l);
 		rdbTargeting.setIncomeTo(30l);
@@ -834,10 +848,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
 
 		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
@@ -866,12 +880,13 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setHourOfDay(Arrays.asList(new String[] { "18", "19", "20" }));
-		campaign.setDayOfWeek(Arrays.asList(new String[] { "2", "3", "4" }));
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
+		campaign.setDayOfWeek(Arrays.asList(new DayOfWeek[] { DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+				DayOfWeek.THURSDAY }));
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
@@ -894,19 +909,19 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("F");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.FIXED);
 		campaign.setImpressions(250000l);
 		campaign.setDailyImps(50l);
 		campaign.setCpm(4000.0);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setPrimaryImpsPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
 		service.addCampaign(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -930,17 +945,17 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("F");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.FIXED);
 		campaign.setImpressions(1l);
 		campaign.setDailyImps(1l);
 		campaign.setClicks(250000l);
 		campaign.setDailyClicks(50l);
 		campaign.setPrimaryImpsPerVisitor(0l);
 		campaign.setPrimaryClicksPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -964,19 +979,19 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("D");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.DYNAMIC);
 		campaign.setImpressions(250000l);
 		campaign.setDailyImps(50l);
 		campaign.setCpm(4000.0);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setPrimaryImpsPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
@@ -999,17 +1014,17 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("D");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.DYNAMIC);
 		campaign.setImpressions(1l);
 		campaign.setDailyImps(1l);
 		campaign.setClicks(250000l);
 		campaign.setDailyClicks(50l);
 		campaign.setPrimaryImpsPerVisitor(0l);
 		campaign.setPrimaryClicksPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
 
 		service.addCampaign(campaign);
@@ -1035,18 +1050,18 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("O");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.OPEN);
 		campaign.setImpressions(250000l);
 		campaign.setCpm(4000.0);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setPrimaryImpsPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
 		service.addCampaign(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1070,14 +1085,14 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("C");
-		campaign.setReach("O");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.CASH);
+		campaign.setReach(Reach.OPEN);
 		campaign.setClicks(250000l);
 		campaign.setPrimaryImpsPerVisitor(0l);
 		campaign.setPrimaryClicksPerVisitor(0l);
-		campaign.setPrimaryFrequencyScope(0l);
+		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
 		service.addCampaign(campaign);
 
@@ -1102,10 +1117,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCampaignManager("test_campaign_manager");
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1129,10 +1144,10 @@ public class CampaignServiceTest {
 		campaign.setName("test");
 		campaign.setProductId("default-product");
 		campaign.setPriorityLevel(1l);
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
-		campaign.setCompletion("S");
-		campaign.setPaymentMethod("B");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
+		campaign.setCompletion(Completion.SOONEST);
+		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setStartDate(new LocalDate(2016, 6, 29));
 		campaign.setStartTime(new LocalTime(4, 00));
 		campaign.setEndDate(new LocalDate(2016, 7, 8));
@@ -1154,20 +1169,20 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 		campaign.setImpressions(1000l);
 		campaign.setWeight(100l);
 		campaign.setPriorityLevel(12l);
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
+		campaign.setReach(Reach.OPEN);
 		campaign.setDailyImps(50l);
-		campaign.setSmoothOrAsap("S");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setUserTimeZone(false);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1186,20 +1201,20 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 		campaign.setClicks(1000l);
 		campaign.setWeight(100l);
 		campaign.setPriorityLevel(12l);
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
+		campaign.setReach(Reach.OPEN);
 		campaign.setDailyClicks(50l);
-		campaign.setSmoothOrAsap("S");
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setImpressionsOverrun(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setUserTimeZone(false);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1303,20 +1318,20 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 		campaign.setImpressions(1000l);
 		campaign.setWeight(0l);
 		campaign.setPriorityLevel(0l);
-		campaign.setCompletion("S");
+		campaign.setCompletion(Completion.SOONEST);
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("O");
-		campaign.setSmoothOrAsap("S");
+		campaign.setReach(Reach.OPEN);
+		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
+		campaign.setStrictCompanions(false);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setUserTimeZone(false);
 
 		campaign.setExcludeTargets(false);
 		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
@@ -1481,22 +1496,22 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setStatus("W");
+		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 		campaign.setImpressions(1000l);
 		campaign.setWeight(1000l);
 		campaign.setPriorityLevel(15l);
-		campaign.setCompletion("E");
+		campaign.setCompletion(Completion.END_DATE);
 		campaign.setStartDate(new LocalDate(2010, 10, 31));
 		campaign.setEndDate(new LocalDate(2010, 10, 31));
-		campaign.setReach("F");
+		campaign.setReach(Reach.FIXED);
 		campaign.setDailyImps(999999999l);
-		campaign.setSmoothOrAsap("A");
+		campaign.setSmoothOrAsap(SmoothAsap.ASAP);
 		campaign.setImpressionsOverrun(0l);
-		campaign.setStrictCompanions("N");
+		campaign.setStrictCompanions(false);
 		campaign.setSecondaryImpsPerVisitor(0l);
-		campaign.setSecondaryFrequencyScope(0l);
-		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
-		campaign.setUserTimeZone("N");
+		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
+		campaign.setHourOfDay(Lists.newArrayList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
+		campaign.setUserTimeZone(false);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1513,8 +1528,8 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
-		campaign.setDayOfWeek(Lists.newArrayList("2", "3", "4"));
+		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
+		campaign.setDayOfWeek(Lists.newArrayList(DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1531,8 +1546,8 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
-		campaign.setHourOfDay(EMPTY_STRING_LIST);
-		campaign.setDayOfWeek(EMPTY_STRING_LIST);
+		campaign.setHourOfDay(new ArrayList<HourOfDay>());
+		campaign.setDayOfWeek(new ArrayList<DayOfWeek>());
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1556,7 +1571,7 @@ public class CampaignServiceTest {
 		rdbTargeting.setAgeFrom(13);
 		rdbTargeting.setAgeTo(30);
 		rdbTargeting.setGenderExclude(true);
-		rdbTargeting.setGender("M");
+		rdbTargeting.setGender(Gender.M);
 		rdbTargeting.setIncomeExclude(true);
 		rdbTargeting.setIncomeFrom(13l);
 		rdbTargeting.setIncomeTo(30l);
@@ -1583,7 +1598,7 @@ public class CampaignServiceTest {
 		campaign.setId("ADID");
 
 		SegmentTargeting segmentTargeting = new SegmentTargeting();
-		segmentTargeting.setSegmentClusterMatch("L");
+		segmentTargeting.setSegmentType(SegmentType.ALL);
 		segmentTargeting.setExclude(true);
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
@@ -1624,7 +1639,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
-		campaign.setStatus("X");
+		campaign.setStatus(CampaignStatus.CANCELLED);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1642,7 +1657,7 @@ public class CampaignServiceTest {
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
-		campaign.setStrictCompanions("Y");
+		campaign.setStrictCompanions(true);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1659,7 +1674,7 @@ public class CampaignServiceTest {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
-		campaign.setHourOfDay(Lists.newArrayList("18", "19", "20"));
+		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);

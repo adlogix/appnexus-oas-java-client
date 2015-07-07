@@ -16,7 +16,7 @@ public class Campaign extends StatefulDomainWithId {
 	private static final String ATTRNAME_SEGMENTTARGETING = "segmentTargeting";
 	private static final String ATTRNAME_TARGETING = "targetings";
 
-	private String type;
+	private CampaignType type;
 	private String insertionOrderId;
 	private String advertiserId;
 	private String creativeTargetId;
@@ -25,7 +25,7 @@ public class Campaign extends StatefulDomainWithId {
 	private String description;
 	private String campaignManager;
 	private String productId;
-	private String status;
+	private CampaignStatus status;
 	private List<String> campaignGroupIds;
 	private List<String> competitiveCategroryIds;
 	private List<String> externalUserIds;
@@ -36,27 +36,27 @@ public class Campaign extends StatefulDomainWithId {
 	private Long uniques;
 	private Long weight;
 	private Long priorityLevel;
-	private String completion;
+	private Completion completion;
 	private LocalDate startDate;
 	private LocalTime startTime;
 	private LocalDate endDate;
 	private LocalTime endTime;
-	private String reach;
+	private Reach reach;
 	private Long dailyImps;
 	private Long dailyClicks;
 	private Long dailyUniques;
-	private String smoothOrAsap;
+	private SmoothAsap smoothOrAsap;
 	private Long impressionsOverrun;
 	private List<String> companionPositions;
-	private String strictCompanions;
+	private Boolean strictCompanions;
 	private Long primaryImpsPerVisitor;
 	private Long primaryClicksPerVisitor;
-	private Long primaryFrequencyScope;
+	private FrequencyScope primaryFrequencyScope;
 	private Long secondaryImpsPerVisitor;
-	private Long secondaryFrequencyScope;
-	private List<String> hourOfDay;
-	private List<String> dayOfWeek;
-	private String userTimeZone;
+	private FrequencyScope secondaryFrequencyScope;
+	private List<HourOfDay> hourOfDay;
+	private List<DayOfWeek> dayOfWeek;
+	private Boolean userTimeZone;
 	private List<String> sectionIds;
 	private List<String> pageUrls;
 
@@ -81,12 +81,12 @@ public class Campaign extends StatefulDomainWithId {
 	private Double flatRate;
 	private Double tax;
 	private Double agencyCommission;
-	private String paymentMethod;
-	private String isYieldManaged;
-	private String billTo;
+	private PaymentMethod paymentMethod;
+	private Boolean isYieldManaged;
+	private BillTo billTo;
 	private String currency;
 
-	public void setType(String type) {
+	public void setType(CampaignType type) {
 		this.type = type;
 		addModifiedAttribute("type");
 	}
@@ -131,7 +131,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("productId");
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(CampaignStatus status) {
 		this.status = status;
 		addModifiedAttribute("status");
 	}
@@ -186,7 +186,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("priorityLevel");
 	}
 
-	public void setCompletion(String completion) {
+	public void setCompletion(Completion completion) {
 		this.completion = completion;
 		addModifiedAttribute("completion");
 	}
@@ -211,7 +211,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("endTime");
 	}
 
-	public void setReach(String reach) {
+	public void setReach(Reach reach) {
 		this.reach = reach;
 		addModifiedAttribute("reach");
 	}
@@ -231,7 +231,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("dailyUniques");
 	}
 
-	public void setSmoothOrAsap(String smoothOrAsap) {
+	public void setSmoothOrAsap(SmoothAsap smoothOrAsap) {
 		this.smoothOrAsap = smoothOrAsap;
 		addModifiedAttribute("smoothOrAsap");
 	}
@@ -246,7 +246,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("companionPositions");
 	}
 
-	public void setStrictCompanions(String strictCompanions) {
+	public void setStrictCompanions(Boolean strictCompanions) {
 		this.strictCompanions = strictCompanions;
 		addModifiedAttribute("strictCompanions");
 	}
@@ -261,7 +261,7 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("primaryClicksPerVisitor");
 	}
 
-	public void setPrimaryFrequencyScope(Long primaryFrequencyScope) {
+	public void setPrimaryFrequencyScope(FrequencyScope primaryFrequencyScope) {
 		this.primaryFrequencyScope = primaryFrequencyScope;
 		addModifiedAttribute("primaryFrequencyScope");
 	}
@@ -271,22 +271,22 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("secondaryImpsPerVisitor");
 	}
 
-	public void setSecondaryFrequencyScope(Long secondaryFrequencyScope) {
+	public void setSecondaryFrequencyScope(FrequencyScope secondaryFrequencyScope) {
 		this.secondaryFrequencyScope = secondaryFrequencyScope;
 		addModifiedAttribute("secondaryFrequencyScope");
 	}
 
-	public void setHourOfDay(List<String> hourOfDay) {
+	public void setHourOfDay(List<HourOfDay> hourOfDay) {
 		this.hourOfDay = Collections.unmodifiableList(hourOfDay);
 		addModifiedAttribute("hourOfDay");
 	}
 
-	public void setDayOfWeek(List<String> dayOfWeek) {
+	public void setDayOfWeek(List<DayOfWeek> dayOfWeek) {
 		this.dayOfWeek = Collections.unmodifiableList(dayOfWeek);
 		addModifiedAttribute("dayOfWeek");
 	}
 
-	public void setUserTimeZone(String userTimeZone) {
+	public void setUserTimeZone(Boolean userTimeZone) {
 		this.userTimeZone = userTimeZone;
 		addModifiedAttribute("userTimeZone");
 	}
@@ -371,17 +371,17 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("agencyCommission");
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
 		addModifiedAttribute("paymentMethod");
 	}
 
-	public void setIsYieldManaged(String isYieldManaged) {
+	public void setIsYieldManaged(Boolean isYieldManaged) {
 		this.isYieldManaged = isYieldManaged;
 		addModifiedAttribute("isYieldManaged");
 	}
 
-	public void setBillTo(String billTo) {
+	public void setBillTo(BillTo billTo) {
 		this.billTo = billTo;
 		addModifiedAttribute("billTo");
 	}

@@ -6,7 +6,9 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
+import eu.adlogix.appnexus.oas.client.domain.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
+import eu.adlogix.appnexus.oas.client.domain.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToInsertionOrderParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
@@ -130,8 +132,10 @@ public class InsertionOrderService extends AbstractOasService{
 	}
 
 	private InsertionOrder setDefaultsForEmptyFields(InsertionOrder insertionOrder) {
-		insertionOrder.setCampaignsBy(defaultIfEmpty(insertionOrder.getCampaignsBy(), "A"));
-		insertionOrder.setStatus(defaultIfEmpty(insertionOrder.getStatus(), "P"));
+		insertionOrder.setCampaignsBy(insertionOrder.getCampaignsBy() == null ? CampaignsBy.ADVERTISER
+				: insertionOrder.getCampaignsBy());
+		insertionOrder.setStatus(insertionOrder.getStatus() == null ? InsertionOrderStatus.PENDING
+				: insertionOrder.getStatus());
 		insertionOrder.setInternalQuickReport(defaultIfEmpty(insertionOrder.getInternalQuickReport(), "short"));
 		insertionOrder.setExternalQuickReport(defaultIfEmpty(insertionOrder.getExternalQuickReport(), "to-date"));
 		insertionOrder.setAgencyId(defaultIfEmpty(insertionOrder.getAgencyId(), "unknown_agency"));

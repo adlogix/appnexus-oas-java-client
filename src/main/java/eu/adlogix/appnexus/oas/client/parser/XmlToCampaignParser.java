@@ -1,5 +1,13 @@
 package eu.adlogix.appnexus.oas.client.parser;
 
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -12,23 +20,28 @@ import com.google.common.collect.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.AbstractCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.AbstractExcludableCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.CampaignType;
+import eu.adlogix.appnexus.oas.client.domain.Completion;
+import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
+import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
+import eu.adlogix.appnexus.oas.client.domain.Gender;
 import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
+import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
+import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
+import eu.adlogix.appnexus.oas.client.domain.Reach;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
+import eu.adlogix.appnexus.oas.client.domain.SegmentType;
+import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
-
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 
 @AllArgsConstructor
 public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
@@ -53,7 +66,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	private Campaign parseAndSetOverviewAttributes(final ResponseParser parser, Campaign campaign) {
 		campaign.setId(parser.getTrimmedElement("//Campaign/Overview/Id"));
-		campaign.setType(parser.getTrimmedElement("//Campaign/Overview/Type"));
+		campaign.setType(CampaignType.fromString(parser.getTrimmedElement("//Campaign/Overview/Type")));
 		campaign.setInsertionOrderId(parser.getTrimmedElement("//Campaign/Overview/InsertionOrderId"));
 		campaign.setAdvertiserId(parser.getTrimmedElement("//Campaign/Overview/AdvertiserId"));
 		campaign.setName(parser.getTrimmedElement("//Campaign/Overview/Name"));
@@ -61,7 +74,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setDescription(parser.getTrimmedElement("//Campaign/Overview/Description"));
 		campaign.setCampaignManager(parser.getTrimmedElement("//Campaign/Overview/CampaignManager"));
 		campaign.setProductId(parser.getTrimmedElement("//Campaign/Overview/ProductId"));
-		campaign.setStatus(parser.getTrimmedElement("//Campaign/Overview/Status"));
+		campaign.setStatus(CampaignStatus.fromString(parser.getTrimmedElement("//Campaign/Overview/Status")));
 		campaign.setCampaignGroupIds(parser.getTrimmedElementList("//Campaign/Overview/CampaignGroups/CampaignGroupId"));
 		campaign.setCompetitiveCategroryIds(parser.getTrimmedElementList("//Campaign/Overview/CompetitiveCategories/CompetitiveCategoryId"));
 		campaign.setExternalUserIds(parser.getTrimmedElementList("//Campaign/Overview/ExternalUsers/UserId"));
@@ -76,7 +89,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setUniques(createLong(parser.getTrimmedElement("//Campaign/Schedule/Uniques")));
 		campaign.setWeight(createLong(parser.getTrimmedElement("//Campaign/Schedule/Weight")));
 		campaign.setPriorityLevel(createLong(parser.getTrimmedElement("//Campaign/Schedule/PriorityLevel")));
-		campaign.setCompletion(parser.getTrimmedElement("//Campaign/Schedule/Completion"));
+		campaign.setCompletion(Completion.fromString(parser.getTrimmedElement("//Campaign/Schedule/Completion")));
 
 		String startDateString = parser.getTrimmedElement("//Campaign/Schedule/StartDate");
 		campaign.setStartDate(createLocalDate(startDateString, dateFormatter));
@@ -90,23 +103,40 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		String endTimeString = parser.getTrimmedElement("//Campaign/Schedule/EndTime");
 		campaign.setEndTime(createLocalTime(endTimeString, timeFormatter));
 
-		campaign.setReach(parser.getTrimmedElement("//Campaign/Schedule/Reach"));
+		campaign.setReach(Reach.fromString(parser.getTrimmedElement("//Campaign/Schedule/Reach")));
 		campaign.setDailyImps(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyImp")));
 		campaign.setDailyClicks(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyClicks")));
 		campaign.setDailyUniques(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyUniq")));
 
-		campaign.setSmoothOrAsap(parser.getTrimmedElement("//Campaign/Schedule/SmoothOrAsap"));
+		campaign.setSmoothOrAsap(SmoothAsap.fromString(parser.getTrimmedElement("//Campaign/Schedule/SmoothOrAsap")));
 		campaign.setImpressionsOverrun(createLong(parser.getTrimmedElement("//Campaign/Schedule/ImpOverrun")));
 		campaign.setCompanionPositions(parser.getTrimmedElementList("//Campaign/Schedule/CompanionPositions/CompanionPosition"));
-		campaign.setStrictCompanions(parser.getTrimmedElement("//Campaign/Schedule/StrictCompanions"));
+		campaign.setStrictCompanions(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Schedule/StrictCompanions")));
 		campaign.setPrimaryImpsPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ImpPerVisitor")));
 		campaign.setPrimaryClicksPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ClickPerVisitor")));
-		campaign.setPrimaryFrequencyScope(createLong(parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/FreqScope")));
+		campaign.setPrimaryFrequencyScope(FrequencyScope.fromString((parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/FreqScope"))));
 		campaign.setSecondaryImpsPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/ImpPerVisitor")));
-		campaign.setSecondaryFrequencyScope(createLong(parser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/FreqScope")));
-		campaign.setHourOfDay(parser.getTrimmedElementList("//Campaign/Schedule/HourOfDay/Hour"));
-		campaign.setDayOfWeek(parser.getTrimmedElementList("//Campaign/Schedule/DayOfWeek/Day"));
-		campaign.setUserTimeZone(parser.getTrimmedElement("//Campaign/Schedule/UserTimeZone"));
+		campaign.setSecondaryFrequencyScope(FrequencyScope.fromString(parser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/FreqScope")));
+
+		List<String> hourOfDayCodes = parser.getTrimmedElementList("//Campaign/Schedule/HourOfDay/Hour");
+		if (hourOfDayCodes != null) {
+			List<HourOfDay> hoursOfDay = new ArrayList<HourOfDay>();
+			for (String hourCode : hourOfDayCodes) {
+				hoursOfDay.add(HourOfDay.fromString(hourCode));
+			}
+			campaign.setHourOfDay(hoursOfDay);
+		}
+
+		List<String> daysOfWeekCodes = parser.getTrimmedElementList("//Campaign/Schedule/DayOfWeek/Day");
+		if (daysOfWeekCodes != null) {
+			List<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
+			for (String dayOfWeekCode : daysOfWeekCodes) {
+				daysOfWeek.add(DayOfWeek.fromString(dayOfWeekCode));
+			}
+			campaign.setDayOfWeek(daysOfWeek);
+		}
+
+		campaign.setUserTimeZone(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Schedule/UserTimeZone")));
 		campaign.setSectionIds(parser.getTrimmedElementList("//Campaign/Schedule/Sections/SectionId"));
 		return campaign;
 
@@ -148,9 +178,9 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setFlatRate(createDouble(parser.getTrimmedElement("//Campaign/Billing/FlatRate")));
 		campaign.setTax(createDouble(parser.getTrimmedElement("//Campaign/Billing/Tax")));
 		campaign.setAgencyCommission(NumberUtils.createDouble(parser.getTrimmedElement("//Campaign/Billing/AgencyCommission")));
-		campaign.setPaymentMethod(parser.getTrimmedElement("//Campaign/Billing/PaymentMethod"));
-		campaign.setIsYieldManaged(parser.getTrimmedElement("//Campaign/Billing/IsYieldManaged"));
-		campaign.setBillTo(parser.getTrimmedElement("//Campaign/Billing/BillTo"));
+		campaign.setPaymentMethod(PaymentMethod.fromString(parser.getTrimmedElement("//Campaign/Billing/PaymentMethod")));
+		campaign.setIsYieldManaged(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Billing/IsYieldManaged")));
+		campaign.setBillTo(BillTo.fromString(parser.getTrimmedElement("//Campaign/Billing/BillTo")));
 		campaign.setCurrency(parser.getTrimmedElement("//Campaign/Billing/Currency"));
 		return campaign;
 
@@ -206,7 +236,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		rdbTargeting.setGenderExclude(createBooleanFromXmlString(genderExculdeStr));
 
 		String genderStr = parser.getTrimmedElement("//Campaign/Target/Gender/Code");
-		rdbTargeting.setGender(genderStr);
+		rdbTargeting.setGender(Gender.valueOf(genderStr));
 
 		String incomeExcludeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeIncomeTargeting");
 		rdbTargeting.setIncomeExclude(createBooleanFromXmlString(incomeExcludeStr));
@@ -235,7 +265,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 	private SegmentTargeting parseAndCreateSegmentTargeting(final ResponseParser parser) {
 
 		SegmentTargeting targeting = new SegmentTargeting();
-		targeting.setSegmentClusterMatch(parser.getTrimmedElement("//Campaign/Target/Cluster/SegmentType"));
+		targeting.setSegmentType(SegmentType.fromString(parser.getTrimmedElement("//Campaign/Target/Cluster/SegmentType")));
 		String exculdeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeSegmentTargeting");
 		List<String> targetingValues = parser.getTrimmedElementList("//Campaign/Target/Cluster/Segment");
 		targeting.setValues(targetingValues);

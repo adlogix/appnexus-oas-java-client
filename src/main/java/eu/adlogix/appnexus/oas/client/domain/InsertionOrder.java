@@ -9,10 +9,10 @@ import lombok.Getter;
 public class InsertionOrder extends StatefulDomainWithId {
 
 	private String description;
-	private String campaignsBy;
+	private CampaignsBy campaignsBy;
 	private String advertiserId;
 	private String agencyId;
-	private String status;
+	private InsertionOrderStatus status;
 	private List<String> campaignIds;
 	private String internalQuickReport;
 	private String externalQuickReport;
@@ -24,7 +24,7 @@ public class InsertionOrder extends StatefulDomainWithId {
 		addModifiedAttribute("description");
 	}
 
-	public void setCampaignsBy(String campaignsBy) {
+	public void setCampaignsBy(CampaignsBy campaignsBy) {
 		this.campaignsBy = campaignsBy;
 		addModifiedAttribute("campaignsBy");
 	}
@@ -39,7 +39,7 @@ public class InsertionOrder extends StatefulDomainWithId {
 		addModifiedAttribute("agencyId");
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(InsertionOrderStatus status) {
 		this.status = status;
 		addModifiedAttribute("status");
 	}

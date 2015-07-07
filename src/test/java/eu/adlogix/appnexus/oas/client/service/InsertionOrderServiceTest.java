@@ -11,7 +11,9 @@ import java.util.Arrays;
 
 import org.testng.annotations.Test;
 
+import eu.adlogix.appnexus.oas.client.domain.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
+import eu.adlogix.appnexus.oas.client.domain.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
@@ -132,10 +134,10 @@ public class InsertionOrderServiceTest {
 		InsertionOrder insertionOrder = service.getInsertionOrderById("test_insertionorder");
 		assertEquals(insertionOrder.getId(), "test_insertionorder");
 		assertEquals(insertionOrder.getDescription(), "test_description");
-		assertEquals(insertionOrder.getCampaignsBy(), "A");
+		assertEquals(insertionOrder.getCampaignsBy(), CampaignsBy.ADVERTISER);
 		assertEquals(insertionOrder.getAdvertiserId(), "test_01");
 		assertEquals(insertionOrder.getAgencyId(), "unknown_agency");
-		assertEquals(insertionOrder.getStatus(), "P");
+		assertEquals(insertionOrder.getStatus(), InsertionOrderStatus.PENDING);
 		assertEquals(insertionOrder.getBookedImpressions().longValue(), 5000l);
 		assertEquals(insertionOrder.getBookedClicks().longValue(), 2500l);
 

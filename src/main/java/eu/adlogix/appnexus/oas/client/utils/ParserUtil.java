@@ -56,7 +56,7 @@ public class ParserUtil {
 		if (StringUtils.isEmpty(string)) {
 			return null;
 		}
-		return XmlBoolean.valueOf(string).toBoolean();
+		return XmlBoolean.fromString(string).toBoolean();
 	}
 
 }

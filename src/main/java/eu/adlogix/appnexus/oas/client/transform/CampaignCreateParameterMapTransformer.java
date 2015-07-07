@@ -85,7 +85,7 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("campaignDailyDeliveryDate", campaign.getSmoothOrAsap());
 		parameters.put("impressionsOverrun", campaign.getImpressionsOverrun());
 		parameters.put("companionPositions", campaign.getCompanionPositions());
-		parameters.put("strictCompanions", campaign.getStrictCompanions());
+		checkValueAndPutParam("strictCompanions", campaign.getStrictCompanions(), parameters);
 
 		if (campaign.hasPrimaryFrequency()) {
 			parameters.put("primaryFrequency", "primaryFrequency");
@@ -102,7 +102,7 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("hourOfDay", campaign.getHourOfDay());
 		parameters.put("dayOfWeek", campaign.getDayOfWeek());
 		parameters.put("sectionIds", campaign.getSectionIds());
-		parameters.put("userTimeZone", campaign.getUserTimeZone());
+		checkValueAndPutParam("userTimeZone", campaign.getUserTimeZone(), parameters);
 		return parameters;
 
 	}
@@ -205,10 +205,10 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
-		if (segmentTargeting != null && segmentTargeting.getSegmentClusterMatch() != null
+		if (segmentTargeting != null && segmentTargeting.getSegmentType() != null
 				&& segmentTargeting.getValues() != null) {
 			parameters.put("segmentTargeting", "segmentTargeting");
-			parameters.put("segmentType", segmentTargeting.getSegmentClusterMatch());
+			parameters.put("segmentType", segmentTargeting.getSegmentType());
 			parameters.put("segmentcluster", segmentTargeting.getValues());
 			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExclude(), parameters);
 
@@ -225,7 +225,7 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 		parameters.put("tax", campaign.getTax());
 		parameters.put("agencyCommission", campaign.getAgencyCommission());
 		parameters.put("paymentMethod", campaign.getPaymentMethod());
-		parameters.put("isYieldManaged", campaign.getIsYieldManaged());
+		checkValueAndPutParam("isYieldManaged", campaign.getIsYieldManaged(), parameters);
 		parameters.put("billTo", campaign.getBillTo());
 		parameters.put("currency", campaign.getCurrency());
 		return parameters;

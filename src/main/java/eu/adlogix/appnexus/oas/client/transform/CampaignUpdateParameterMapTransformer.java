@@ -128,7 +128,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("campaignDailyDeliveryDate", campaign.getSmoothOrAsap());
 			parameters.put("impressionsOverrun", campaign.getImpressionsOverrun());
 			parameters.put("companionPositions", campaign.getCompanionPositions());
-			parameters.put("strictCompanions", campaign.getStrictCompanions());
+			checkValueAndPutParam("strictCompanions", campaign.getStrictCompanions(), parameters);
 
 			if (campaign.hasPrimaryFrequency()) {
 				parameters.put("primaryFrequency", "primaryFrequency");
@@ -152,7 +152,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 				parameters.put("dayOfWeek", campaign.getDayOfWeek());
 			}
 
-			parameters.put("userTimeZone", campaign.getUserTimeZone());
+			checkValueAndPutParam("userTimeZone", campaign.getUserTimeZone(), parameters);
 
 			if (campaign.getSectionIds() != null) {
 				parameters.put("sectionIdsNotNull", true);
@@ -268,7 +268,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		SegmentTargeting segmentTargeting = campaign.getSegmentTargeting();
 		if (segmentTargeting != null) {
 			parameters.put("segmentTargeting", "segmentTargeting");
-			parameters.put("segmentType", segmentTargeting.getSegmentClusterMatch());
+			parameters.put("segmentType", segmentTargeting.getSegmentType());
 			parameters.put("segmentcluster", segmentTargeting.getValues());
 			checkValueAndPutParam("segmentclusterExclude", segmentTargeting.getExclude(), parameters);
 
@@ -287,7 +287,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			parameters.put("tax", campaign.getTax());
 			parameters.put("agencyCommission", campaign.getAgencyCommission());
 			parameters.put("paymentMethod", campaign.getPaymentMethod());
-			parameters.put("isYieldManaged", campaign.getIsYieldManaged());
+			checkValueAndPutParam("isYieldManaged", campaign.getIsYieldManaged(), parameters);
 			parameters.put("billTo", campaign.getBillTo());
 			parameters.put("currency", campaign.getCurrency());
 		}
