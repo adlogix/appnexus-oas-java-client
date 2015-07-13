@@ -1,5 +1,7 @@
 package eu.adlogix.appnexus.oas.client.transform;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
 
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.CampaignExcludableTargetValues;
@@ -17,14 +20,15 @@ import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
-
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
 public class CampaignCreateParameterMapTransformer extends AbstractParameterMapTransformer {
 
 	private static final DateTimeFormatter startTimeFormatter = DateTimeFormat.forPattern("HH:00");
 	private static final DateTimeFormatter endTimeFormatter = DateTimeFormat.forPattern("HH:59");
+
+	private static final Logger logger = LogUtils.getLogger(CampaignCreateParameterMapTransformer.class);
 
 	private Campaign campaign;
 
@@ -48,6 +52,11 @@ public class CampaignCreateParameterMapTransformer extends AbstractParameterMapT
 	}
 
 	final Map<String, Object> getOverviewParameters(Campaign campaign) {
+
+		if (campaign.getStatus() != null)
+			logger.warn("Status cannot be added in addCampaign. Campaign ID:" + campaign.getId() + " Status:"
+					+ campaign.getStatus());
+
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("campaignId", campaign.getId());
 		parameters.put("type", campaign.getType());

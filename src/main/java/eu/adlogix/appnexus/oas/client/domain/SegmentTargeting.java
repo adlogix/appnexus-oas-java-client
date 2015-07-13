@@ -5,6 +5,10 @@ import java.util.List;
 
 import lombok.Getter;
 
+/**
+ * Domain class which represents OAS Segment Targeting. This can be used in
+ * Campaign creation, update and retrieval operations.
+ */
 @Getter
 public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
 

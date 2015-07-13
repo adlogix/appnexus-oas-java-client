@@ -1,5 +1,7 @@
 package eu.adlogix.appnexus.oas.client.transform;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +22,6 @@ import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
-
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 @AllArgsConstructor
 public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapTransformer {
@@ -80,9 +80,13 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 
 	final Map<String, Object> getOverviewParameters(Campaign campaign) {
 
-		if (StringUtils.isNotEmpty(campaign.getCreativeTargetId())) {
-			logger.warn("CreativeTargetId cannot be updated in updateCampaign");
-		}
+		if (campaign.getType() != null)
+			logger.warn("Type cannot be updated in updateCampaign. Campaign ID:" + campaign.getId() + " Type:"
+					+ campaign.getType());
+
+		if (StringUtils.isNotEmpty(campaign.getCreativeTargetId()))
+			logger.warn("Creative Target ID cannot be updated in updateCampaign. Campaign ID:" + campaign.getId()
+					+ " Creative Target ID:" + campaign.getCreativeTargetId());
 
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("campaignId", campaign.getId());

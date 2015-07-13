@@ -2,6 +2,11 @@ package eu.adlogix.appnexus.oas.client.domain;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * "Completion" values which can be assigned to a {@link Campaign} in Campaign
+ * creation, update and retrieval. The OAS code is accessible via
+ * {@link #toString()}
+ */
 @AllArgsConstructor
 public enum Completion {
 

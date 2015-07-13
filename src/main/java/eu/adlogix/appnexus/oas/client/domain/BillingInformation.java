@@ -1,9 +1,15 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class BillingInformation {
+/**
+ * "Billing Information" which can be assigned to an {@link Advertiser} in
+ * Advertiser creation, update and retrieval.
+ */
+@Getter
+@Setter
+public class BillingInformation extends StatefulDomain {
 
 	private String country;
 	private String method;

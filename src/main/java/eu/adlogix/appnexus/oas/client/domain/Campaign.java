@@ -11,6 +11,10 @@ import lombok.Getter;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+/**
+ * Domain class which represents an OAS Campaign. This can be used in Campaign
+ * creation, update and retrieval operations.
+ */
 @Getter
 public class Campaign extends StatefulDomainWithId {
 
@@ -480,19 +484,43 @@ public class Campaign extends StatefulDomainWithId {
 
 
 
+	/**
+	 * Checks if the {@link Campaign} has Targeting
+	 * 
+	 * @return true if {@link Campaign} has Targeting, false if {@link Campaign}
+	 *         doesn't have Targeting.
+	 */
 	public boolean hasTargeting() {
 		return (targetings != null || rdbTargeting != null || segmentTargeting != null || excludeTargets != null
 				|| mobileTargeting != null || zoneTargeting != null);
 	}
 
+	/**
+	 * Checks if the {@link Campaign} has Primary Frequency
+	 * 
+	 * @return true if {@link Campaign} has Primary Frequency, false if
+	 *         {@link Campaign} doesn't have Primary Frequency.
+	 */
 	public boolean hasPrimaryFrequency() {
 		return (primaryImpsPerVisitor != null || primaryClicksPerVisitor != null || primaryFrequencyScope != null);
 	}
 
+	/**
+	 * Checks if the {@link Campaign} has Secondary Frequency
+	 * 
+	 * @return true if {@link Campaign} has Secondary Frequency, false if
+	 *         {@link Campaign} doesn't have Secondary Frequency.
+	 */
 	public boolean hasSecondaryFrequency() {
 		return (secondaryImpsPerVisitor != null || secondaryFrequencyScope != null);
 	}
 
+	/**
+	 * Checks if the {@link Campaign} has Schedule Section
+	 * 
+	 * @return true if {@link Campaign} has Schedule, false if {@link Campaign}
+	 *         doesn't have Schedule.
+	 */
 	public boolean hasSchedule() {
 		return (impressions != null || clicks != null || uniques != null || weight != null || priorityLevel != null
 				|| completion != null || startDate != null || endDate != null || reach != null || dailyImps != null
@@ -502,10 +530,22 @@ public class Campaign extends StatefulDomainWithId {
 				|| hasPrimaryFrequency() || sectionIds != null);
 	}
 
+	/**
+	 * Checks if the {@link Campaign} has Exclude Section
+	 * 
+	 * @return true if {@link Campaign} has Exclude, false if {@link Campaign}
+	 *         doesn't have Exclude.
+	 */
 	public boolean hasExclude() {
 		return excludedPageUrls != null || excludedSiteIds != null;
 	}
 
+	/**
+	 * Checks if the {@link Campaign} has Billing Section
+	 * 
+	 * @return true if {@link Campaign} has Billing, false if {@link Campaign}
+	 *         doesn't have Billing.
+	 */
 	public boolean hasBilling() {
 		return (cpm != null || cpc != null || cpa != null || flatRate != null || tax != null
 				|| agencyCommission != null || paymentMethod != null || isYieldManaged != null || billTo != null || currency != null);

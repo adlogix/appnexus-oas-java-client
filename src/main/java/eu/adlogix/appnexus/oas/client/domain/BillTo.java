@@ -2,6 +2,11 @@ package eu.adlogix.appnexus.oas.client.domain;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * "Bill To" values which can be assigned to a {@link Campaign} in Campaign
+ * creation, update and retrieval. The OAS code is accessible via
+ * {@link #toString()}
+ */
 @AllArgsConstructor
 public enum BillTo {
 
@@ -9,11 +14,22 @@ public enum BillTo {
 
 	private final String code;
 
+	/**
+	 * Returns the OAS code
+	 */
 	@Override
 	public String toString() {
 		return code;
 	}
 
+
+	/**
+	 * Returns a {@link BillTo} object which corresponds to the given OAS code
+	 * 
+	 * @param code
+	 *            - OAS Code
+	 * @return {@link BillTo} object
+	 */
 	public static BillTo fromString(String code) {
 		if (code == null)
 			return null;

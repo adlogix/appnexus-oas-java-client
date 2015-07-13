@@ -2,8 +2,11 @@ package eu.adlogix.appnexus.oas.client.domain;
 
 import lombok.Getter;
 
+/**
+ * Domain class which represents an OAS Advertiser. This can be used in
+ * Advertiser creation, update and retrieval operations.
+ */
 @Getter
-
 public class Advertiser extends StatefulDomainWithId {
 
 	private String organization;
