@@ -5,8 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * OasPageUrlParser class handles OAS Page url parsing related functions.
  * 
- * @author Piumika Welagedara
- * 
  */
 public class OasPageUrlParser {
 

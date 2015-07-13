@@ -17,6 +17,10 @@ import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransf
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+/**
+ * Service Class which provides functions for all Campaign related operations
+ * 
+ */
 public class CampaignService extends AbstractOasService {
 
 	protected CampaignService(OasApiService apiService) {
