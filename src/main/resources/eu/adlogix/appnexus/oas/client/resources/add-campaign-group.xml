@@ -4,12 +4,13 @@
     <Database action="add">
       <CampaignGroup>
         <Id>$groupId$</Id>
-        <Description>Created by Adlogix.$if(groupDescription)$ $groupDescription$$endif$</Description>
-        <ExternalUsers>
+$if(groupDescription)$        <Description>$groupDescription$</Description>$endif$
+$if(notes)$        <Notes>$notes$</Notes>$endif$
+$if(externalUserIds)$        <ExternalUsers>
           $externalUserIds:{u|<UserId>$u$</UserId>}; separator="\n"$
-        </ExternalUsers>
-        <InternalQuickReport>to-date</InternalQuickReport>
-        <ExternalQuickReport>short</ExternalQuickReport>
+        </ExternalUsers>$endif$
+        <InternalQuickReport>$internalQuickReport$</InternalQuickReport>
+        <ExternalQuickReport>$externalQuickReport$</ExternalQuickReport>
       </CampaignGroup>
     </Database>
   </Request>
