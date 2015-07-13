@@ -7,6 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Used when setting and reading {@link Campaign#getZoneTargeting()} and
+ * {@link MobileTargetings} attributes mapped with the related
+ * {@link TargetingCode}
+ * 
+ * @see TargetingCode
+ */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

@@ -557,20 +557,26 @@ public class Campaign extends StatefulDomainWithId {
 	 */
 	public void resetModifiedAttributes() {
 
-		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
+		if (isModified(ATTRNAME_TARGETING)) {
+			resetModifiedTargetingAttributes();
+		}
+		if (isModified(ATTRNAME_SEGMENTTARGETING) && segmentTargeting != null) {
 			segmentTargeting.resetModifiedAttributes();
 		}
-		if (isModified(ATTRNAME_TARGETING)) {
-			for (Entry<TargetingCode, CampaignExcludableTargetValues> targetingValue : targetings.entrySet()) {
-				targetingValue.getValue().resetModifiedAttributes();
-			}
-		}
-		if (isModified(ATTRNAME_RDBTARGETING)) {
+		if (isModified(ATTRNAME_RDBTARGETING) && rdbTargeting != null) {
 			rdbTargeting.resetModifiedAttributes();
 		}
-		if (isModified(ATTRNAME_MOBILETARGETING)) {
+		if (isModified(ATTRNAME_MOBILETARGETING) && mobileTargeting != null) {
 			mobileTargeting.resetModifiedAttributes();
 		}
 		super.resetModifiedAttributes();
+	}
+
+	private void resetModifiedTargetingAttributes() {
+		for (Entry<TargetingCode, CampaignExcludableTargetValues> targetingValue : targetings.entrySet()) {
+			if (targetingValue.getValue() != null) {
+				targetingValue.getValue().resetModifiedAttributes();
+			}
+		}
 	}
 }
