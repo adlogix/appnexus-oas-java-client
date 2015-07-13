@@ -30,6 +30,8 @@ public class OasServiceFactory {
 
 	private CreativeService creativeService;
 
+	private ProductService productService;
+
 
 	/**
 	 * Initializes the OasServiceFactory with the provided {@link Credentials}
@@ -148,6 +150,18 @@ public class OasServiceFactory {
 			campaignService = new CampaignService(oasApiService);
 		}
 		return campaignService;
+	}
+
+	/**
+	 * Getter Method for {@link ProductService}
+	 * 
+	 * @return {@link ProductService}
+	 */
+	public ProductService getProductService() {
+		if (productService == null) {
+			productService = new ProductService(oasApiService);
+		}
+		return productService;
 	}
 
 }

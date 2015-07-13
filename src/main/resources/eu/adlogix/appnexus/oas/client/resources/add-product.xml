@@ -4,7 +4,7 @@
       <Product> 
         <Id>$productId$</Id>
         <Name>$productName$</Name>
-        <Notes>Adlogix created Product</Notes>
+$if(notes)$        <Notes>$notes$</Notes>$endif$
       </Product> 
     </Database>
   </Request>

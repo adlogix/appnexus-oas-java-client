@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdXML>
+  <Request type="CampaignGroup">
+    <Database action="add">
+      <CampaignGroup>
+        <Id>testCampaignGroup</Id>
+        <Description>test</Description>
+        <Notes>test note</Notes>
+        <ExternalUsers>
+          <UserId>User_001</UserId>
+        </ExternalUsers>
+        <InternalQuickReport>to-date</InternalQuickReport>
+        <ExternalQuickReport>short</ExternalQuickReport>
+      </CampaignGroup>
+    </Database>
+  </Request>
+</AdXML>

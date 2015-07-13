@@ -1,5 +1,10 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,10 +18,6 @@ import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class ProductServiceTest {
 	@Test
@@ -60,7 +61,7 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	public void createProduct_WithValidProductNameAndId_Success() throws FileNotFoundException, URISyntaxException,
+	public void createProduct_WithValidParameters_Success() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -71,7 +72,11 @@ public class ProductServiceTest {
 
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
-		service.createProduct(new Product("TestProduct02", "Test Product 02"));
+		Product product = new Product();
+		product.setId("TestProduct02");
+		product.setName("Test Product 02");
+		product.setNotes("test note");
+		service.createProduct(product);
 
 		assertTrue(true);
 

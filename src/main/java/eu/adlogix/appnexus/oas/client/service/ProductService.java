@@ -1,15 +1,15 @@
 
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.Product;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 /**
  * Service to for OAS {@link Product} related activities
@@ -41,6 +41,7 @@ public class ProductService extends AbstractOasService {
 			{
 				put("productId", product.getId());
 				put("productName", product.getName());
+				put("notes", product.getNotes());
 			}
 		};
 

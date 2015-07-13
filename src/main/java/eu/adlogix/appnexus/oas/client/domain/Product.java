@@ -3,21 +3,30 @@
  */
 package eu.adlogix.appnexus.oas.client.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * OAS Product
  */
-@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Product {
 	/**
 	 * Unique ID of the product
 	 */
-	private final String id;
+	private String id;
 	/**
 	 * Name of the Product
 	 */
-	private final String name;
+	private String name;
+	/**
+	 * Notes
+	 */
+	private String notes;
+
+	public Product(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 }

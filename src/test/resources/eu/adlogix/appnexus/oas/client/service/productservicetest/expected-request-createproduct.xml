@@ -4,7 +4,7 @@
       <Product> 
         <Id>TestProduct02</Id>
         <Name>Test Product 02</Name>
-        <Notes>Adlogix created Product</Notes>
+        <Notes>test note</Notes>
       </Product> 
     </Database>
   </Request>
