@@ -90,7 +90,7 @@ public class UpdateCampaignRunner {
 
 		service.updateCampaign(campaign);
 
-		Campaign updatedCampaign = service.getCampaignById("test_campaign_gunith_2_clt");
+		service.getCampaignById("test_campaign_gunith_2_clt");
 
 	}
 }

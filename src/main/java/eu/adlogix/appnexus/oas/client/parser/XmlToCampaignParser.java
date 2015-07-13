@@ -29,6 +29,8 @@ import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
 import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
 import eu.adlogix.appnexus.oas.client.domain.Gender;
 import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
 import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
 import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
@@ -144,10 +146,29 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setExcludeTargets(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeTargets")));
 		campaign.setTargetings(parseAndCreateGeneralTargeting(parser));
 		campaign.setZoneTargeting(parseAndCreateZoneTargeting(parser));
+		campaign.setMobileTargeting(parseAndCreateMobileTargeting(parser));
 		campaign.setRdbTargeting(parseAndCreateRdbTargeting(parser));
 		campaign.setSegmentTargeting(parseAndCreateSegmentTargeting(parser));
 		return campaign;
 
+	}
+
+	private MobileTargetingGroup parseAndCreateMobileTargeting(ResponseParser parser) {
+
+		MobileTargetingGroup mobileTargetingGroup = new MobileTargetingGroup();
+
+		mobileTargetingGroup.setExcludeMobileDevice(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeMobileTargeting")));
+
+		List<MobileCampaignTargeting> targetingList = Lists.newArrayList();
+		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.MOBILE)) {
+
+			final MobileCampaignTargeting targeting = new MobileCampaignTargeting(targetingCode);
+			populateTargetingValues(targeting, targetingCode, parser);
+			targetingList.add(targeting);
+		}
+
+		mobileTargetingGroup.setTargetings(targetingList);
+		return mobileTargetingGroup;
 	}
 
 	private Campaign parseAndSetBillingAttributes(final ResponseParser parser, Campaign campaign) {

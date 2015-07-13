@@ -26,7 +26,7 @@ public enum TargetingCode {
 	OS("Os", TargetGroup.GENERAL),
 	BROWSER("Browser", TargetGroup.GENERAL),
 	BROWSER_VERSIONS("BrowserV", TargetGroup.GENERAL),
-	ZONE("Zone", TargetGroup.ZONE, false),
+	ZONE("Zone", "Zones", TargetGroup.ZONE, false, SupportedFetchDatabaseAction.getDefault()),
 	DEVICE_GROUP("DeviceGroup", TargetGroup.MOBILE, false, SupportedFetchDatabaseAction.SELECTEDLIST);
 
 	public enum SupportedFetchDatabaseAction {
