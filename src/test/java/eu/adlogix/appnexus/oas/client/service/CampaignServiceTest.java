@@ -1,5 +1,11 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,13 +39,6 @@ import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
-
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -1518,7 +1517,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void updateCampaign_WithHourOfDayAndDateOfWeek_Success() throws Exception {
+	public void updateCampaign_WithHourOfDayAndDayOfWeek_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1536,7 +1535,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void updateCampaign_WithHourOfDayAndDateOfWeekEmpty_Success() throws Exception {
+	public void updateCampaign_WithHourOfDayAndDayOfWeekEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
