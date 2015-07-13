@@ -1,14 +1,8 @@
 package eu.adlogix.appnexus.oas.client.parser;
 
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 
@@ -16,22 +10,20 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
-import eu.adlogix.appnexus.oas.client.domain.AbstractCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.AbstractExcludableCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignExcludableTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.CampaignType;
 import eu.adlogix.appnexus.oas.client.domain.Completion;
 import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
 import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
 import eu.adlogix.appnexus.oas.client.domain.Gender;
-import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
 import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Reach;
@@ -40,8 +32,14 @@ import eu.adlogix.appnexus.oas.client.domain.SegmentType;
 import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
-import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
+
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalDate;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLocalTime;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 
 @AllArgsConstructor
 public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
@@ -153,21 +151,22 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	}
 
-	private MobileTargetingGroup parseAndCreateMobileTargeting(ResponseParser parser) {
+	private MobileTargetings parseAndCreateMobileTargeting(ResponseParser parser) {
 
-		MobileTargetingGroup mobileTargetingGroup = new MobileTargetingGroup();
+		MobileTargetings mobileTargetingGroup = new MobileTargetings();
 
 		mobileTargetingGroup.setExcludeMobileDevice(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeMobileTargeting")));
 
-		List<MobileCampaignTargeting> targetingList = Lists.newArrayList();
+		final Map<TargetingCode, CampaignTargetValues> targetings = Maps.newHashMap();
 		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.MOBILE)) {
 
-			final MobileCampaignTargeting targeting = new MobileCampaignTargeting(targetingCode);
-			populateTargetingValues(targeting, targetingCode, parser);
-			targetingList.add(targeting);
+			final List<String> values = populateTargetingValues(targetingCode, parser);
+			final CampaignTargetValues targeting = new CampaignTargetValues();
+			targeting.setValues(values);
+			targetings.put(targetingCode, targeting);
 		}
 
-		mobileTargetingGroup.setTargetings(targetingList);
+		mobileTargetingGroup.setTargetings(targetings);
 		return mobileTargetingGroup;
 	}
 
@@ -186,38 +185,45 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 
 	}
 
-	private List<GeneralCampaignTargeting> parseAndCreateGeneralTargeting(final ResponseParser parser) {
+	private Map<TargetingCode, CampaignExcludableTargetValues> parseAndCreateGeneralTargeting(
+			final ResponseParser parser) {
 
-		List<GeneralCampaignTargeting> targetingList = Lists.newArrayList();
+		final Map<TargetingCode, CampaignExcludableTargetValues> targetings = Maps.newHashMap();
 
 		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.GENERAL)) {
 
-			final GeneralCampaignTargeting targeting = new GeneralCampaignTargeting(targetingCode);
-			populateTargetingValues(targeting, targetingCode, parser);
-			populateTargetingExcludeFlag(targeting, parser, targetingCode);
-			targetingList.add(targeting);
+			final List<String> values = populateTargetingValues(targetingCode, parser);
+			final Boolean exclude = populateTargetingExcludeFlag(parser, targetingCode);
+
+			final CampaignExcludableTargetValues targeting = new CampaignExcludableTargetValues();
+			targeting.setExclude(exclude);
+			targeting.setValues(values);
+
+			targetings.put(targetingCode, targeting);
 		}
-		return targetingList;
+		return targetings;
 	}
 
-	private ZoneCampaignTargeting parseAndCreateZoneTargeting(final ResponseParser parser) {
+	private CampaignTargetValues parseAndCreateZoneTargeting(final ResponseParser parser) {
 
-		final ZoneCampaignTargeting targeting = new ZoneCampaignTargeting();
-		populateTargetingValues(targeting, TargetingCode.ZONE, parser);
+		List<String> values = populateTargetingValues(TargetingCode.ZONE, parser);
+
+		final CampaignTargetValues targeting = new CampaignTargetValues();
+		targeting.setValues(values);
+
 		return targeting;
 	}
 
-	private void populateTargetingExcludeFlag(final AbstractExcludableCampaignTargeting targeting, final ResponseParser parser,
+	private Boolean populateTargetingExcludeFlag(final ResponseParser parser,
 			TargetingCode targetingCode) {
 		String exculdeStr = parser.getTrimmedElement("//Campaign/Target/Exclude"
 				+ targetingCode.getCodeForCampaigns());
-		targeting.setExclude(createBooleanFromXmlString(exculdeStr));
+		return createBooleanFromXmlString(exculdeStr);
 	}
 
-	private void populateTargetingValues(AbstractCampaignTargeting targeting, TargetingCode targetingCode, final ResponseParser parser) {
-		List<String> values = parser.getTrimmedElementList("//Campaign/Target/" + targetingCode.getCodeForCampaigns()
+	private List<String> populateTargetingValues(TargetingCode targetingCode, final ResponseParser parser) {
+		return parser.getTrimmedElementList("//Campaign/Target/" + targetingCode.getCodeForCampaigns()
 				+ "/Code");
-		targeting.setValues(values);
 	}
 
 	private RdbTargeting parseAndCreateRdbTargeting(final ResponseParser parser) {

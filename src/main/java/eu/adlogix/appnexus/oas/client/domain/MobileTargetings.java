@@ -1,7 +1,9 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class MobileTargetingGroup extends StatefulDomain implements CampaignTarget {
+public class MobileTargetings extends StatefulDomain implements CampaignTarget {
 	/**
 	 * Excludable flag for Targeting
 	 */
@@ -26,7 +28,7 @@ public class MobileTargetingGroup extends StatefulDomain implements CampaignTarg
 	 * related to MobileCampaignTargetings types is any code with
 	 * {@link TargetGroup#MOBILE}
 	 */
-	private List<MobileCampaignTargeting> targetings;
+	private Map<TargetingCode, CampaignTargetValues> targetings;
 
 	@Override
 	public TargetGroup getGroup() {
@@ -38,9 +40,25 @@ public class MobileTargetingGroup extends StatefulDomain implements CampaignTarg
 		addModifiedAttribute("excludeMobileDevice");
 	}
 
-	public void setTargetings(List<MobileCampaignTargeting> targetings) {
-		this.targetings = Collections.unmodifiableList(targetings);
+	public void setTargetings(Map<TargetingCode, CampaignTargetValues> targetings) {
+		this.targetings = Collections.unmodifiableMap(targetings);
 		addModifiedAttribute("targetings");
 	}
 
+	public void setDeviceGroupTargeting(CampaignTargetValues target) {
+		addTargeting(TargetingCode.DEVICE_GROUP, target);
+	}
+
+	public CampaignTargetValues getDeviceGroupTargeting() {
+		return targetings.get(TargetingCode.DEVICE_GROUP);
+	}
+
+	private void addTargeting(TargetingCode code, CampaignTargetValues target) {
+
+		final Map<TargetingCode, CampaignTargetValues> targetings = this.targetings != null ? new HashMap<TargetingCode, CampaignTargetValues>(this.targetings)
+				: new HashMap<TargetingCode, CampaignTargetValues>();
+
+		targetings.put(code, target);
+		setTargetings(targetings);
+	}
 }

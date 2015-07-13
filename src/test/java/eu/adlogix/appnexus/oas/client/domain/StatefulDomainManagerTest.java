@@ -1,11 +1,13 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Maps;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
@@ -145,23 +147,23 @@ public class StatefulDomainManagerTest {
 	}
 
 	@Test
-	public final void getModifiedObject_ObjectWithStatefulList_ReturnModifiedObject() {
+	public final void getModifiedObject_ObjectWithStatefulMap_ReturnModifiedObject() {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
 		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
+		Map<TargetingCode, CampaignExcludableTargetValues> targeting = Maps.newHashMap();
 
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
+		targeting.put(TargetingCode.TOP_DOMAIN, topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
+		targeting.put(TargetingCode.BANDWIDTH, bandwidthTargeting);
 
 		campaign.setTargetings(targeting);
 
@@ -169,37 +171,37 @@ public class StatefulDomainManagerTest {
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals(CampaignStatus.WORK_IN_PROGRESS, updatedCampaign.getStatus());
 
-		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
+		Map<TargetingCode, CampaignExcludableTargetValues> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(2, updatedTargeting.size());
 
-		AbstractExcludableCampaignTargeting updatedTopLevelDomain = (AbstractExcludableCampaignTargeting) updatedTargeting.get(0);
+		CampaignExcludableTargetValues updatedTopLevelDomain = updatedTargeting.get(TargetingCode.TOP_DOMAIN);
 		assertEquals(false, updatedTopLevelDomain.getExclude().booleanValue());
 		assertEquals(Arrays.asList("US", "COM", "EDU"), updatedTopLevelDomain.getValues());
 
-		AbstractExcludableCampaignTargeting updatedBandwidth = (AbstractExcludableCampaignTargeting) updatedTargeting.get(1);
+		CampaignExcludableTargetValues updatedBandwidth = updatedTargeting.get(TargetingCode.BANDWIDTH);
 		assertEquals(true, updatedBandwidth.getExclude().booleanValue());
 		assertEquals(Arrays.asList("LAN", "DSL/Cable"), updatedBandwidth.getValues());
 
 	}
 
 	@Test
-	public final void getModifiedObject_ResetObjectWithStatefulList_ReturnEmptyObject() {
+	public final void getModifiedObject_ResetObjectWithStatefulMap_ReturnEmptyObject() {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
 		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
+		Map<TargetingCode, CampaignExcludableTargetValues> targeting = Maps.newHashMap();
 
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
+		targeting.put(TargetingCode.TOP_DOMAIN, topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
+		targeting.put(TargetingCode.BANDWIDTH, bandwidthTargeting);
 
 		campaign.setTargetings(targeting);
 
@@ -209,47 +211,47 @@ public class StatefulDomainManagerTest {
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals(null, updatedCampaign.getStatus());
 
-		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
+		Map<TargetingCode, CampaignExcludableTargetValues> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(null, updatedTargeting);
 
 	}
 
 	@Test
-	public final void getModifiedObject_ResetAndModifyObjectWithObjectWithStatefulList_ReturnModifiedObject() {
+	public final void getModifiedObject_ResetAndModifyObjectWithObjectWithStatefulMap_ReturnModifiedObject() {
 
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
 		campaign.setStatus(CampaignStatus.WORK_IN_PROGRESS);
 
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
+		Map<TargetingCode, CampaignExcludableTargetValues> targeting = Maps.newHashMap();
 
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
+		targeting.put(TargetingCode.TOP_DOMAIN, topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
+		targeting.put(TargetingCode.BANDWIDTH, bandwidthTargeting);
 
 		campaign.setTargetings(targeting);
 
 		campaign.resetModifiedAttributes();
 
-		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
+		CampaignExcludableTargetValues countryTargeting = new CampaignExcludableTargetValues();
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE"));
 
-		List<GeneralCampaignTargeting> campaignTargeting = new ArrayList<GeneralCampaignTargeting>(campaign.getTargetings());
-		campaignTargeting.add(countryTargeting);
+		Map<TargetingCode, CampaignExcludableTargetValues> campaignTargeting = new HashMap<TargetingCode, CampaignExcludableTargetValues>(campaign.getTargetings());
+		campaignTargeting.put(TargetingCode.COUNTRY, countryTargeting);
 		campaign.setTargetings(campaignTargeting);
 
 		Campaign updatedCampaign = new StatefulDomainManager().getModifiedObject(campaign);
 		assertEquals("ADID", updatedCampaign.getId());
 		assertEquals(null, updatedCampaign.getStatus());
 
-		List<GeneralCampaignTargeting> updatedTargeting = updatedCampaign.getTargetings();
+		Map<TargetingCode, CampaignExcludableTargetValues> updatedTargeting = updatedCampaign.getTargetings();
 		assertEquals(3, updatedTargeting.size());
 
 	}
