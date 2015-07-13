@@ -1,14 +1,9 @@
 package eu.adlogix.appnexus.oas.client.service;
 
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
@@ -19,16 +14,16 @@ import com.google.common.collect.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.domain.CampaignExcludableTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.CampaignType;
 import eu.adlogix.appnexus.oas.client.domain.Completion;
 import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
 import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
 import eu.adlogix.appnexus.oas.client.domain.Gender;
-import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
-import eu.adlogix.appnexus.oas.client.domain.MobileCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Reach;
@@ -36,9 +31,15 @@ import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentType;
 import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
-import eu.adlogix.appnexus.oas.client.domain.ZoneCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
+
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
@@ -122,61 +123,55 @@ public class CampaignServiceTest {
 
 		assertEquals(campaign.getExcludeTargets().booleanValue(), false);
 
-		List<GeneralCampaignTargeting> targetingList = campaign.getTargetings();
-		for (GeneralCampaignTargeting targeting : targetingList) {
-			if (targeting.getCode().equals(TargetingCode.TOP_DOMAIN)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "COM", "EDU" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		CampaignExcludableTargetValues targeting = campaign.getTopDomainTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "COM", "EDU" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BANDWIDTH)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "LAN", "DSL/Cable" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBandwidthTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "LAN", "DSL/Cable" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.CONTINENT)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AS", "EU", "NA" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getContinentTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AS", "EU", "NA" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.COUNTRY)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "CA", "AF" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getCountryTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "US", "CA", "AF" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.STATE)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AL:BERAT", "AL:FIER", "AM:ARTASHAT" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getStateTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "AL:BERAT", "AL:FIER", "AM:ARTASHAT" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.MSA)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "0240", "0280", "6280" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getMsaTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "0240", "0280", "6280" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.DMA)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "507", "508" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getDmaTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "507", "508" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.OS)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "winxp", "unix" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getOsTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "winxp", "unix" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BROWSER)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "msie", "netscape", "mozilla" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBrowserTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "msie", "netscape", "mozilla" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BROWSER_VERSIONS)) {
-				assertEquals(targeting.getValues(), Arrays.asList(new String[] { "explorer6", "mozilla0", "mozilla1",
-						"netscape7" }));
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBrowserVTargeting();
+		assertEquals(targeting.getValues(), Arrays.asList(new String[] { "explorer6", "mozilla0", "mozilla1",
+				"netscape7" }));
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			}
-		}
-
-		ZoneCampaignTargeting zoneCampaignTargeting = campaign.getZoneTargeting();
+		CampaignTargetValues zoneCampaignTargeting = campaign.getZoneTargeting();
 		assertEquals(zoneCampaignTargeting.getValues(), EMPTY_STRING_LIST);
 
-		MobileTargetingGroup mobileCampaignTargetingGroup = campaign.getMobileTargeting();
+		MobileTargetings mobileCampaignTargetingGroup = campaign.getMobileTargeting();
 		assertEquals(mobileCampaignTargetingGroup.getExcludeMobileDevice(), null);
-		List<MobileCampaignTargeting> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
+		Map<TargetingCode, CampaignTargetValues> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
 		assertEquals(mobileCampaignTargetings.size(), 1);
-		assertEquals(mobileCampaignTargetings.get(0).getCode(), TargetingCode.DEVICE_GROUP);
-		assertEquals(mobileCampaignTargetings.get(0).getValues(), EMPTY_STRING_LIST);
+		assertEquals(mobileCampaignTargetings.get(TargetingCode.DEVICE_GROUP).getValues(), EMPTY_STRING_LIST);
 
 		RdbTargeting rdbTargeting = campaign.getRdbTargeting();
 		assertEquals(rdbTargeting.getAgeExclude().booleanValue(), false);
@@ -283,60 +278,54 @@ public class CampaignServiceTest {
 
 		assertEquals(campaign.getExcludeTargets().booleanValue(), false);
 
-		List<GeneralCampaignTargeting> targetingList = campaign.getTargetings();
-		for (GeneralCampaignTargeting targeting : targetingList) {
-			if (targeting.getCode().equals(TargetingCode.TOP_DOMAIN)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		CampaignExcludableTargetValues targeting = campaign.getTopDomainTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BANDWIDTH)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBandwidthTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.CONTINENT)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getContinentTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.COUNTRY)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getCountryTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.STATE)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getStateTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.MSA)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getMsaTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.DMA)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getDmaTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.OS)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getOsTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BROWSER)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBrowserTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			} else if (targeting.getCode().equals(TargetingCode.BROWSER_VERSIONS)) {
-				assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
-				assertEquals(((GeneralCampaignTargeting) targeting).getExclude().booleanValue(), false);
+		targeting = campaign.getBrowserVTargeting();
+		assertEquals(targeting.getValues(), EMPTY_STRING_LIST);
+		assertEquals(((CampaignExcludableTargetValues) targeting).getExclude().booleanValue(), false);
 
-			}
-		}
-
-		ZoneCampaignTargeting zoneCampaignTargeting = campaign.getZoneTargeting();
+		CampaignTargetValues zoneCampaignTargeting = campaign.getZoneTargeting();
 		assertEquals(zoneCampaignTargeting.getValues(), Lists.newArrayList("1", "2"));
 
-		MobileTargetingGroup mobileCampaignTargetingGroup = campaign.getMobileTargeting();
+		MobileTargetings mobileCampaignTargetingGroup = campaign.getMobileTargeting();
 		assertEquals(mobileCampaignTargetingGroup.getExcludeMobileDevice().booleanValue(), false);
-		List<MobileCampaignTargeting> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
+		Map<TargetingCode, CampaignTargetValues> mobileCampaignTargetings = mobileCampaignTargetingGroup.getTargetings();
 		assertEquals(mobileCampaignTargetings.size(), 1);
-		assertEquals(mobileCampaignTargetings.get(0).getCode(), TargetingCode.DEVICE_GROUP);
-		assertEquals(mobileCampaignTargetings.get(0).getValues(), Lists.newArrayList("427", "429"));
+		assertEquals(mobileCampaignTargetings.get(TargetingCode.DEVICE_GROUP).getValues(), Lists.newArrayList("427", "429"));
 
 		RdbTargeting rdbTargeting = campaign.getRdbTargeting();
 		assertEquals(rdbTargeting.getAgeExclude().booleanValue(), false);
@@ -684,72 +673,67 @@ public class CampaignServiceTest {
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.CASH);
 
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
-
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
+		campaign.setTopDomainTargeting(topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
+		campaign.setBandwidthTargeting(bandwidthTargeting);
 
-		GeneralCampaignTargeting continentTargeting = new GeneralCampaignTargeting(TargetingCode.CONTINENT);
+		CampaignExcludableTargetValues continentTargeting = new CampaignExcludableTargetValues();
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
-		targeting.add(continentTargeting);
+		campaign.setContinentTargeting(continentTargeting);
 
-		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
+		CampaignExcludableTargetValues countryTargeting = new CampaignExcludableTargetValues();
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
-		targeting.add(countryTargeting);
+		campaign.setCountryTargeting(countryTargeting);
 
-		GeneralCampaignTargeting stateTargeting = new GeneralCampaignTargeting(TargetingCode.STATE);
+		CampaignExcludableTargetValues stateTargeting = new CampaignExcludableTargetValues();
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
-		targeting.add(stateTargeting);
+		campaign.setStateTargeting(stateTargeting);
 
-		GeneralCampaignTargeting msaTargeting = new GeneralCampaignTargeting(TargetingCode.MSA);
+		CampaignExcludableTargetValues msaTargeting = new CampaignExcludableTargetValues();
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
-		targeting.add(msaTargeting);
+		campaign.setMsaTargeting(msaTargeting);
 
-		GeneralCampaignTargeting dmaTargeting = new GeneralCampaignTargeting(TargetingCode.DMA);
+		CampaignExcludableTargetValues dmaTargeting = new CampaignExcludableTargetValues();
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
-		targeting.add(dmaTargeting);
+		campaign.setDmaTargeting(dmaTargeting);
 
-		GeneralCampaignTargeting osTargeting = new GeneralCampaignTargeting(TargetingCode.OS);
+		CampaignExcludableTargetValues osTargeting = new CampaignExcludableTargetValues();
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
-		targeting.add(osTargeting);
+		campaign.setOsTargeting(osTargeting);
 
-		GeneralCampaignTargeting browserTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER);
+		CampaignExcludableTargetValues browserTargeting = new CampaignExcludableTargetValues();
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
-		targeting.add(browserTargeting);
+		campaign.setBrowserTargeting(browserTargeting);
 
-		GeneralCampaignTargeting browserVersionTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER_VERSIONS);
+		CampaignExcludableTargetValues browserVersionTargeting = new CampaignExcludableTargetValues();
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
-		targeting.add(browserVersionTargeting);
+		campaign.setBrowserVTargeting(browserVersionTargeting);
 
-		campaign.setTargetings(targeting);
-
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
+		CampaignTargetValues zoneTargeting = new CampaignTargetValues();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		campaign.setZoneTargeting(zoneTargeting);
 
-		MobileCampaignTargeting deviceGroupTargeting = new MobileCampaignTargeting(TargetingCode.DEVICE_GROUP);
-		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
-		List<MobileCampaignTargeting> mobileTargetings = Lists.newArrayList(deviceGroupTargeting);
-		MobileTargetingGroup mobileTargeting = new MobileTargetingGroup();
+		MobileTargetings mobileTargeting = new MobileTargetings();
 		mobileTargeting.setExcludeMobileDevice(false);
-		mobileTargeting.setTargetings(mobileTargetings);
-		campaign.setMobileTargeting(mobileTargeting);
 
+		CampaignTargetValues deviceGroupTargeting = new CampaignTargetValues();
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
+		campaign.setMobileTargeting(mobileTargeting);
 
 		service.addCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -852,7 +836,7 @@ public class CampaignServiceTest {
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.CASH);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
+		CampaignTargetValues zoneTargeting = new CampaignTargetValues();
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setZoneTargeting(zoneTargeting);
 		campaign.setSegmentTargeting(new SegmentTargeting());
@@ -1234,71 +1218,69 @@ public class CampaignServiceTest {
 		campaign.setId("ADID");
 
 		campaign.setExcludeTargets(false);
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
-
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US", "COM", "EDU"));
-		targeting.add(topLevelDomain);
+		campaign.setTopDomainTargeting(topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN", "DSL/Cable"));
-		targeting.add(bandwidthTargeting);
+		campaign.setBandwidthTargeting(bandwidthTargeting);
 
-		GeneralCampaignTargeting continentTargeting = new GeneralCampaignTargeting(TargetingCode.CONTINENT);
+		CampaignExcludableTargetValues continentTargeting = new CampaignExcludableTargetValues();
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU", "EU"));
-		targeting.add(continentTargeting);
+		campaign.setContinentTargeting(continentTargeting);
 
-		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
+		CampaignExcludableTargetValues countryTargeting = new CampaignExcludableTargetValues();
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE", "ZA"));
-		targeting.add(countryTargeting);
+		campaign.setCountryTargeting(countryTargeting);
 
-		GeneralCampaignTargeting stateTargeting = new GeneralCampaignTargeting(TargetingCode.STATE);
+		CampaignExcludableTargetValues stateTargeting = new CampaignExcludableTargetValues();
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("US:NJ", "US:PA"));
-		targeting.add(stateTargeting);
+		campaign.setStateTargeting(stateTargeting);
 
-		GeneralCampaignTargeting msaTargeting = new GeneralCampaignTargeting(TargetingCode.MSA);
+		CampaignExcludableTargetValues msaTargeting = new CampaignExcludableTargetValues();
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220", "10980"));
-		targeting.add(msaTargeting);
+		campaign.setMsaTargeting(msaTargeting);
 
-		GeneralCampaignTargeting dmaTargeting = new GeneralCampaignTargeting(TargetingCode.DMA);
+		CampaignExcludableTargetValues dmaTargeting = new CampaignExcludableTargetValues();
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803", "501", "650"));
-		targeting.add(dmaTargeting);
+		campaign.setDmaTargeting(dmaTargeting);
 
-		GeneralCampaignTargeting osTargeting = new GeneralCampaignTargeting(TargetingCode.OS);
+		CampaignExcludableTargetValues osTargeting = new CampaignExcludableTargetValues();
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp", "unix"));
-		targeting.add(osTargeting);
+		campaign.setOsTargeting(osTargeting);
 
-		GeneralCampaignTargeting browserTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER);
+		CampaignExcludableTargetValues browserTargeting = new CampaignExcludableTargetValues();
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera", "firefox"));
-		targeting.add(browserTargeting);
+		campaign.setBrowserTargeting(browserTargeting);
 
-		GeneralCampaignTargeting browserVersionTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER_VERSIONS);
+		CampaignExcludableTargetValues browserVersionTargeting = new CampaignExcludableTargetValues();
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19", "opera12"));
-		targeting.add(browserVersionTargeting);
+		campaign.setBrowserVTargeting(browserVersionTargeting);
 
-		campaign.setTargetings(targeting);
-
-		MobileCampaignTargeting deviceGroupTargeting = new MobileCampaignTargeting(TargetingCode.DEVICE_GROUP);
-		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
-		List<MobileCampaignTargeting> mobileTargetings = Lists.newArrayList(deviceGroupTargeting);
-		MobileTargetingGroup mobileTargeting = new MobileTargetingGroup();
+		MobileTargetings mobileTargeting = new MobileTargetings();
 		mobileTargeting.setExcludeMobileDevice(false);
-		mobileTargeting.setTargetings(mobileTargetings);
+
+		CampaignTargetValues deviceGroupTargeting = new CampaignTargetValues();
+		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427", "429" }));
+		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
+		CampaignTargetValues zoneTargeting = new CampaignTargetValues();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1", "2" }));
 		campaign.setZoneTargeting(zoneTargeting);
+
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
@@ -1333,69 +1315,65 @@ public class CampaignServiceTest {
 		campaign.setUserTimeZone(false);
 
 		campaign.setExcludeTargets(false);
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
 
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(Arrays.asList("US"));
-		targeting.add(topLevelDomain);
+		campaign.setTopDomainTargeting(topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(Arrays.asList("LAN"));
-		targeting.add(bandwidthTargeting);
+		campaign.setBandwidthTargeting(bandwidthTargeting);
 
-		GeneralCampaignTargeting continentTargeting = new GeneralCampaignTargeting(TargetingCode.CONTINENT);
+		CampaignExcludableTargetValues continentTargeting = new CampaignExcludableTargetValues();
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(Arrays.asList("AU"));
-		targeting.add(continentTargeting);
+		campaign.setContinentTargeting(continentTargeting);
 
-		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
+		CampaignExcludableTargetValues countryTargeting = new CampaignExcludableTargetValues();
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(Arrays.asList("BE"));
-		targeting.add(countryTargeting);
+		campaign.setCountryTargeting(countryTargeting);
 
-		GeneralCampaignTargeting stateTargeting = new GeneralCampaignTargeting(TargetingCode.STATE);
+		CampaignExcludableTargetValues stateTargeting = new CampaignExcludableTargetValues();
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(Arrays.asList("BE:BRUSSELS"));
-		targeting.add(stateTargeting);
+		campaign.setStateTargeting(stateTargeting);
 
-		GeneralCampaignTargeting msaTargeting = new GeneralCampaignTargeting(TargetingCode.MSA);
+		CampaignExcludableTargetValues msaTargeting = new CampaignExcludableTargetValues();
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(Arrays.asList("11220"));
-		targeting.add(msaTargeting);
+		campaign.setMsaTargeting(msaTargeting);
 
-		GeneralCampaignTargeting dmaTargeting = new GeneralCampaignTargeting(TargetingCode.DMA);
+		CampaignExcludableTargetValues dmaTargeting = new CampaignExcludableTargetValues();
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(Arrays.asList("803"));
-		targeting.add(dmaTargeting);
+		campaign.setDmaTargeting(dmaTargeting);
 
-		GeneralCampaignTargeting osTargeting = new GeneralCampaignTargeting(TargetingCode.OS);
+		CampaignExcludableTargetValues osTargeting = new CampaignExcludableTargetValues();
 		osTargeting.setExclude(false);
 		osTargeting.setValues(Arrays.asList("winxp"));
-		targeting.add(osTargeting);
+		campaign.setOsTargeting(osTargeting);
 
-		GeneralCampaignTargeting browserTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER);
+		CampaignExcludableTargetValues browserTargeting = new CampaignExcludableTargetValues();
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(Arrays.asList("opera"));
-		targeting.add(browserTargeting);
+		campaign.setBrowserTargeting(browserTargeting);
 
-		GeneralCampaignTargeting browserVersionTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER_VERSIONS);
+		CampaignExcludableTargetValues browserVersionTargeting = new CampaignExcludableTargetValues();
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(Arrays.asList("firefox19"));
-		targeting.add(browserVersionTargeting);
+		campaign.setBrowserVTargeting(browserVersionTargeting);
 
-		campaign.setTargetings(targeting);
-
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
+		CampaignTargetValues zoneTargeting = new CampaignTargetValues();
 		zoneTargeting.setValues(Arrays.asList(new String[] { "1" }));
 		campaign.setZoneTargeting(zoneTargeting);
 
-		MobileCampaignTargeting deviceGroupTargeting = new MobileCampaignTargeting(TargetingCode.DEVICE_GROUP);
+		MobileTargetings mobileTargeting = new MobileTargetings();
+		CampaignTargetValues deviceGroupTargeting = new CampaignTargetValues();
 		deviceGroupTargeting.setValues(Arrays.asList(new String[] { "427" }));
-		List<MobileCampaignTargeting> mobileTargetings = Lists.newArrayList(deviceGroupTargeting);
-		MobileTargetingGroup mobileTargeting = new MobileTargetingGroup();
-		mobileTargeting.setTargetings(mobileTargetings);
+		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
 
 		service.updateCampaign(campaign);
@@ -1415,70 +1393,97 @@ public class CampaignServiceTest {
 		Campaign campaign = new Campaign();
 		campaign.setId("ADID");
 
-		List<GeneralCampaignTargeting> targeting = new ArrayList<GeneralCampaignTargeting>();
-
-		GeneralCampaignTargeting topLevelDomain = new GeneralCampaignTargeting(TargetingCode.TOP_DOMAIN);
+		CampaignExcludableTargetValues topLevelDomain = new CampaignExcludableTargetValues();
 		topLevelDomain.setExclude(false);
 		topLevelDomain.setValues(EMPTY_STRING_LIST);
-		targeting.add(topLevelDomain);
+		campaign.setTopDomainTargeting(topLevelDomain);
 
-		GeneralCampaignTargeting bandwidthTargeting = new GeneralCampaignTargeting(TargetingCode.BANDWIDTH);
+		CampaignExcludableTargetValues bandwidthTargeting = new CampaignExcludableTargetValues();
 		bandwidthTargeting.setExclude(true);
 		bandwidthTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(bandwidthTargeting);
+		campaign.setBandwidthTargeting(bandwidthTargeting);
 
-		GeneralCampaignTargeting continentTargeting = new GeneralCampaignTargeting(TargetingCode.CONTINENT);
+		CampaignExcludableTargetValues continentTargeting = new CampaignExcludableTargetValues();
 		continentTargeting.setExclude(false);
 		continentTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(continentTargeting);
+		campaign.setContinentTargeting(continentTargeting);
 
-		GeneralCampaignTargeting countryTargeting = new GeneralCampaignTargeting(TargetingCode.COUNTRY);
+		CampaignExcludableTargetValues countryTargeting = new CampaignExcludableTargetValues();
 		countryTargeting.setExclude(true);
 		countryTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(countryTargeting);
+		campaign.setCountryTargeting(countryTargeting);
 
-		GeneralCampaignTargeting stateTargeting = new GeneralCampaignTargeting(TargetingCode.STATE);
+		CampaignExcludableTargetValues stateTargeting = new CampaignExcludableTargetValues();
 		stateTargeting.setExclude(false);
 		stateTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(stateTargeting);
+		campaign.setStateTargeting(stateTargeting);
 
-		GeneralCampaignTargeting msaTargeting = new GeneralCampaignTargeting(TargetingCode.MSA);
+		CampaignExcludableTargetValues msaTargeting = new CampaignExcludableTargetValues();
 		msaTargeting.setExclude(false);
 		msaTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(msaTargeting);
+		campaign.setMsaTargeting(msaTargeting);
 
-		GeneralCampaignTargeting dmaTargeting = new GeneralCampaignTargeting(TargetingCode.DMA);
+		CampaignExcludableTargetValues dmaTargeting = new CampaignExcludableTargetValues();
 		dmaTargeting.setExclude(false);
 		dmaTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(dmaTargeting);
+		campaign.setDmaTargeting(dmaTargeting);
 
-		GeneralCampaignTargeting osTargeting = new GeneralCampaignTargeting(TargetingCode.OS);
+		CampaignExcludableTargetValues osTargeting = new CampaignExcludableTargetValues();
 		osTargeting.setExclude(false);
 		osTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(osTargeting);
+		campaign.setOsTargeting(osTargeting);
 
-		GeneralCampaignTargeting browserTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER);
+		CampaignExcludableTargetValues browserTargeting = new CampaignExcludableTargetValues();
 		browserTargeting.setExclude(false);
 		browserTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(browserTargeting);
+		campaign.setBrowserTargeting(browserTargeting);
 
-		GeneralCampaignTargeting browserVersionTargeting = new GeneralCampaignTargeting(TargetingCode.BROWSER_VERSIONS);
+		CampaignExcludableTargetValues browserVersionTargeting = new CampaignExcludableTargetValues();
 		browserVersionTargeting.setExclude(false);
 		browserVersionTargeting.setValues(EMPTY_STRING_LIST);
-		targeting.add(browserVersionTargeting);
+		campaign.setBrowserVTargeting(browserVersionTargeting);
 
-		campaign.setTargetings(targeting);
-
-		ZoneCampaignTargeting zoneTargeting = new ZoneCampaignTargeting();
+		CampaignTargetValues zoneTargeting = new CampaignTargetValues();
 		zoneTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setZoneTargeting(zoneTargeting);
 
-		MobileCampaignTargeting deviceGroupTargeting = new MobileCampaignTargeting(TargetingCode.DEVICE_GROUP);
+		MobileTargetings mobileTargeting = new MobileTargetings();
+		CampaignTargetValues deviceGroupTargeting = new CampaignTargetValues();
 		deviceGroupTargeting.setValues(EMPTY_STRING_LIST);
-		List<MobileCampaignTargeting> mobileTargetings = Lists.newArrayList(deviceGroupTargeting);
-		MobileTargetingGroup mobileTargeting = new MobileTargetingGroup();
-		mobileTargeting.setTargetings(mobileTargetings);
+		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
+
+		service.updateCampaign(campaign);
+		verify(mockedApiService).callApi(expectedRequest, false);
+	}
+
+	@Test
+	public void updateCampaign_WithTargetingHavingNullValue_Success() throws Exception {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		CampaignService service = new CampaignService(mockedApiService);
+
+		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-null-value.xml", this.getClass()));
+		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
+		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
+
+		Campaign campaign = new Campaign();
+		campaign.setId("ADID");
+
+		campaign.setTopDomainTargeting(null);
+		campaign.setBandwidthTargeting(null);
+		campaign.setContinentTargeting(null);
+		campaign.setCountryTargeting(null);
+		campaign.setStateTargeting(null);
+		campaign.setMsaTargeting(null);
+		campaign.setDmaTargeting(null);
+		campaign.setOsTargeting(null);
+		campaign.setBrowserTargeting(null);
+		campaign.setBrowserVTargeting(null);
+		campaign.setZoneTargeting(null);
+		campaign.setMobileTargeting(null);
+		campaign.setSegmentTargeting(null);
+		campaign.setRdbTargeting(null);
 
 		service.updateCampaign(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);

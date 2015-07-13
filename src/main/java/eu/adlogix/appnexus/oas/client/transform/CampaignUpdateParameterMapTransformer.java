@@ -8,19 +8,19 @@ import java.util.Map;
 
 import lombok.AllArgsConstructor;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 
-import eu.adlogix.appnexus.oas.client.domain.AbstractCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.AbstractExcludableCampaignTargeting;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
-import eu.adlogix.appnexus.oas.client.domain.GeneralCampaignTargeting;
-import eu.adlogix.appnexus.oas.client.domain.MobileTargetingGroup;
+import eu.adlogix.appnexus.oas.client.domain.CampaignExcludableTargetValues;
+import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
+import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
+import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor
@@ -187,21 +187,21 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 
 	private Map<String, Object> getTargetingZoneParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
-		addTargetingToParameters(campaign.getZoneTargeting(), parameters);
+		addTargetingToParameters(TargetingCode.ZONE, campaign.getZoneTargeting(), parameters);
 		return parameters;
 	}
 
 	final Map<String, Object> getTargetingGeneralParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 
-		final List<GeneralCampaignTargeting> targetings = campaign.getTargetings();
+		final Map<TargetingCode, CampaignExcludableTargetValues> targetings = campaign.getTargetings();
 		addTargetingsToParameters(targetings, parameters);
 		return parameters;
 	}
 
 	private Map<String, Object> getMobileTargetingParameters(Campaign campaign) {
 		final Map<String, Object> parameters = new HashMap<String, Object>();
-		MobileTargetingGroup mobileTargeting = campaign.getMobileTargeting();
+		MobileTargetings mobileTargeting = campaign.getMobileTargeting();
 
 		if (mobileTargeting != null) {
 			checkValueAndPutParam("mobileDeviceExclude", mobileTargeting.getExcludeMobileDevice(), parameters);
@@ -210,30 +210,35 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 		return parameters;
 	}
 
-	private void addTargetingsToParameters(final List<? extends AbstractCampaignTargeting> targetings,
+	private void addTargetingsToParameters(final Map<TargetingCode, ? extends CampaignTargetValues> targetings,
 			final Map<String, Object> parameters) {
 
-		if (CollectionUtils.isNotEmpty(targetings)) {
-			for (AbstractCampaignTargeting targeting : targetings) {
-				addTargetingToParameters(targeting, parameters);
+		if (MapUtils.isNotEmpty(targetings)) {
+			for (Map.Entry<TargetingCode, ? extends CampaignTargetValues> targeting : targetings.entrySet()) {
+				addTargetingToParameters(targeting.getKey(), targeting.getValue(), parameters);
 			}
 		}
 	}
 
-	private void addTargetingToParameters(AbstractCampaignTargeting targeting, final Map<String, Object> parameters) {
+	private void addTargetingToParameters(TargetingCode code, CampaignTargetValues targetingValues,
+			final Map<String, Object> parameters) {
 
-		if (targeting != null) {
-			
-			checkNotNull(targeting.getCode(), "Targeting code of targeting object having values "
-					+ targeting.getValues());
-			
-			final String targetingType = targeting.getCode().getCodeForCampaigns().toString().toLowerCase();
+		if (code != null && targetingValues != null) {
 
-			if (targeting.isSupportingExcludeFlag()) {
-				checkValueAndPutParam(targetingType + "Exclude", ((AbstractExcludableCampaignTargeting) targeting).getExclude(), parameters);
+			checkNotNull(code, "Targeting code of targeting object having values " + targetingValues.getValues());
+
+			final String targetingType = code.getCodeForCampaigns().toString().toLowerCase();
+
+			if (code.isSupportingExcludeFlagForCampaigns() != targetingValues.isSupportingExcludeFlag()) {
+				throw new RuntimeException("Targeting code " + code.name()
+						+ " expects an Exclude flag but TargetingValues object doesn't support an exclude flag");
 			}
 
-			final List<String> values = targeting.getValues();
+			if (targetingValues.isSupportingExcludeFlag()) {
+				checkValueAndPutParam(targetingType + "Exclude", ((CampaignExcludableTargetValues) targetingValues).getExclude(), parameters);
+			}
+
+			final List<String> values = targetingValues.getValues();
 			if (values != null) {
 				parameters.put(targetingType + "IsNotNull", true);
 				parameters.put(targetingType, values);

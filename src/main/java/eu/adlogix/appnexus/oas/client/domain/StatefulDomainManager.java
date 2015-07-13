@@ -3,8 +3,11 @@ package eu.adlogix.appnexus.oas.client.domain;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+
+import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 
@@ -39,18 +42,20 @@ public class StatefulDomainManager {
 			@SuppressWarnings("unchecked")
 			T updatedObject = (T) (object.getClass().newInstance());
 
-				for (String attributeName : object.getModifiedAndPersistentAttributes()) {
+			for (String attributeName : object.getModifiedAndPersistentAttributes()) {
 
-					Object value = PropertyUtils.getProperty(object, attributeName);
+				Object value = PropertyUtils.getProperty(object, attributeName);
 
-					if (isStatefulDomain(value)) {
-						setStatefulProperty(updatedObject, attributeName, value);
-					} else if (value instanceof List<?>) {
-						setListProperty(updatedObject, attributeName, value);
-					} else {
-						PropertyUtils.setProperty(updatedObject, attributeName, value);
-					}
+				if (isStatefulDomain(value)) {
+					setStatefulProperty(updatedObject, attributeName, value);
+				} else if (value instanceof List<?>) {
+					setListProperty(updatedObject, attributeName, value);
+				} else if (value instanceof Map<?, ?>) {
+					setMapProperty(updatedObject, attributeName, value);
+				} else {
+					PropertyUtils.setProperty(updatedObject, attributeName, value);
 				}
+			}
 			return updatedObject;
 
 		} catch (Exception e) {
@@ -83,6 +88,24 @@ public class StatefulDomainManager {
 		}
 		PropertyUtils.setProperty(object, attributeName, modifiedList);
 
+	}
+
+	private void setMapProperty(Object object, String attributeName, Object value) throws IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
+
+		if (value == null)
+			return;
+
+		final Map<Object, Object> modifiedMap = Maps.newHashMap();
+
+		for (Map.Entry<?, ?> mapEntry : ((Map<?, ?>) value).entrySet()) {
+			final Object origValue = mapEntry.getValue();
+			final Object modValue = isStatefulDomain(origValue) ? getModifiedObject((StatefulDomain) origValue)
+					: origValue;
+			modifiedMap.put(mapEntry.getKey(), modValue);
+		}
+
+		PropertyUtils.setProperty(object, attributeName, modifiedMap);
 	}
 
 }

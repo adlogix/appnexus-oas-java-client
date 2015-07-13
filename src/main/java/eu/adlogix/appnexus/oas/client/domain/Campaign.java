@@ -1,7 +1,10 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import lombok.Getter;
 
@@ -66,14 +69,9 @@ public class Campaign extends StatefulDomainWithId {
 
 	private Boolean excludeTargets;
 
-	/**
-	 * Valid {@link GeneralCampaignTargeting}s. Make sure {@link TargetingCode}s
-	 * related to GeneralCampaignTargeting types is any code with
-	 * {@link TargetGroup#GENERAL}
-	 */
-	private List<GeneralCampaignTargeting> targetings;
-	private ZoneCampaignTargeting zoneTargeting;
-	private MobileTargetingGroup mobileTargeting;
+	private Map<TargetingCode, CampaignExcludableTargetValues> targetings;
+	private CampaignTargetValues zoneTargeting;
+	private MobileTargetings mobileTargeting;
 	private RdbTargeting rdbTargeting;
 	private SegmentTargeting segmentTargeting;
 
@@ -310,18 +308,107 @@ public class Campaign extends StatefulDomainWithId {
 		addModifiedAttribute("excludeTargets");
 	}
 
-	public void setZoneTargeting(ZoneCampaignTargeting zoneTargeting) {
+	public void setZoneTargeting(CampaignTargetValues zoneTargeting) {
 		this.zoneTargeting = zoneTargeting;
 		addModifiedAttribute("zoneTargeting");
 	}
 
-	public void setMobileTargeting(MobileTargetingGroup mobileTargeting) {
+	public void setMobileTargeting(MobileTargetings mobileTargeting) {
 		this.mobileTargeting = mobileTargeting;
 		addModifiedAttribute(ATTRNAME_MOBILETARGETING);
 	}
 
-	public void setTargetings(List<GeneralCampaignTargeting> targeting) {
-		this.targetings = Collections.unmodifiableList(targeting);
+	public void setTopDomainTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.TOP_DOMAIN, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getTopDomainTargeting() {
+		return targetings.get(TargetingCode.TOP_DOMAIN);
+	}
+
+	public void setBandwidthTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.BANDWIDTH, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getBandwidthTargeting() {
+		return targetings.get(TargetingCode.BANDWIDTH);
+	}
+
+	public void setContinentTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.CONTINENT, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getContinentTargeting() {
+		return targetings.get(TargetingCode.CONTINENT);
+	}
+
+	public void setCountryTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.COUNTRY, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getCountryTargeting() {
+		return targetings.get(TargetingCode.COUNTRY);
+	}
+
+	public void setStateTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.STATE, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getStateTargeting() {
+		return targetings.get(TargetingCode.STATE);
+	}
+
+	public void setMsaTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.MSA, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getMsaTargeting() {
+		return targetings.get(TargetingCode.MSA);
+	}
+
+	public void setDmaTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.DMA, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getDmaTargeting() {
+		return targetings.get(TargetingCode.DMA);
+	}
+
+	public void setOsTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.OS, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getOsTargeting() {
+		return targetings.get(TargetingCode.OS);
+	}
+
+	public void setBrowserTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.BROWSER, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getBrowserTargeting() {
+		return targetings.get(TargetingCode.BROWSER);
+	}
+
+	public void setBrowserVTargeting(CampaignExcludableTargetValues campaignExcludableTarget) {
+		addTargeting(TargetingCode.BROWSER_VERSIONS, campaignExcludableTarget);
+	}
+
+	public CampaignExcludableTargetValues getBrowserVTargeting() {
+		return targetings.get(TargetingCode.BROWSER_VERSIONS);
+	}
+
+	private void addTargeting(TargetingCode code, CampaignExcludableTargetValues campaignExcludableTarget) {
+
+		final Map<TargetingCode, CampaignExcludableTargetValues> targetings = this.targetings != null ? new HashMap<TargetingCode, CampaignExcludableTargetValues>(this.targetings)
+				: new HashMap<TargetingCode, CampaignExcludableTargetValues>();
+
+		targetings.put(code, campaignExcludableTarget);
+		setTargetings(targetings);
+	}
+
+	public void setTargetings(Map<TargetingCode, CampaignExcludableTargetValues> targetings) {
+		this.targetings = Collections.unmodifiableMap(targetings);
 		addModifiedAttribute(ATTRNAME_TARGETING);
 	}
 
@@ -470,20 +557,26 @@ public class Campaign extends StatefulDomainWithId {
 	 */
 	public void resetModifiedAttributes() {
 
-		if (isModified(ATTRNAME_SEGMENTTARGETING)) {
+		if (isModified(ATTRNAME_TARGETING)) {
+			resetModifiedTargetingAttributes();
+		}
+		if (isModified(ATTRNAME_SEGMENTTARGETING) && segmentTargeting != null) {
 			segmentTargeting.resetModifiedAttributes();
 		}
-		if (isModified(ATTRNAME_TARGETING)) {
-			for (AbstractCampaignTargeting targetingValue : targetings) {
-				targetingValue.resetModifiedAttributes();
-			}
-		}
-		if (isModified(ATTRNAME_RDBTARGETING)) {
+		if (isModified(ATTRNAME_RDBTARGETING) && rdbTargeting != null) {
 			rdbTargeting.resetModifiedAttributes();
 		}
-		if (isModified(ATTRNAME_MOBILETARGETING)) {
+		if (isModified(ATTRNAME_MOBILETARGETING) && mobileTargeting != null) {
 			mobileTargeting.resetModifiedAttributes();
 		}
 		super.resetModifiedAttributes();
+	}
+
+	private void resetModifiedTargetingAttributes() {
+		for (Entry<TargetingCode, CampaignExcludableTargetValues> targetingValue : targetings.entrySet()) {
+			if (targetingValue.getValue() != null) {
+				targetingValue.getValue().resetModifiedAttributes();
+			}
+		}
 	}
 }
