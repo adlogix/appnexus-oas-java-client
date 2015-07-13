@@ -8,13 +8,18 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 
+/**
+ * Manager class which handles operations related to {@link StatefulDomain}
+ * 
+ */
 public class StatefulDomainManager {
 
 	/**
 	 * Checks if an {@link Object} is an instance of {@link StatefulDomain}
 	 * 
 	 * @param entity
-	 * @return true if the o
+	 * @return true if the object is an instance of {@link StatefulDomain},
+	 *         false if the object is not an instance of {@link StatefulDomain}
 	 * 
 	 */
 	public boolean isStatefulDomain(Object entity) {

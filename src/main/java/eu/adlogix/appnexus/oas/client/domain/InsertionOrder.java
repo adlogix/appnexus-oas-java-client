@@ -5,6 +5,10 @@ import java.util.List;
 
 import lombok.Getter;
 
+/**
+ * Domain class which represents an OAS Insertion Order. This can be used in
+ * Insertion Order creation, update and retrieval operations.
+ */
 @Getter
 public class InsertionOrder extends StatefulDomainWithId {
 

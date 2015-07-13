@@ -2,6 +2,10 @@ package eu.adlogix.appnexus.oas.client.domain;
 
 import lombok.Getter;
 
+/**
+ * Domain class which represents OAS RDB Targeting. This can be used in Campaign
+ * creation, update and retrieval operations.
+ */
 @Getter
 public class RdbTargeting extends StatefulDomain implements CampaignTarget {
 
