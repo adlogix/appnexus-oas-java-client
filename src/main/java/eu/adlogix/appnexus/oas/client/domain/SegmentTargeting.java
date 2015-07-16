@@ -10,7 +10,7 @@ import lombok.Getter;
  * Campaign creation, update and retrieval operations.
  */
 @Getter
-public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
+public class SegmentTargeting extends StatefulDomain {
 
 	private Boolean exclude;
 	private List<String> values;
@@ -29,10 +29,5 @@ public class SegmentTargeting extends StatefulDomain implements CampaignTarget {
 	public void setSegmentType(SegmentType segmentType) {
 		this.segmentType = segmentType;
 		addModifiedAttribute("segmentType");
-	}
-
-	@Override
-	public TargetGroup getGroup() {
-		return TargetGroup.SEGMENT;
 	}
 }

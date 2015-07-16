@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class MobileTargetings extends StatefulDomain implements CampaignTarget {
+public class MobileTargetings extends StatefulDomain {
 	/**
 	 * Excludable flag for Targeting
 	 */
@@ -29,11 +29,6 @@ public class MobileTargetings extends StatefulDomain implements CampaignTarget {
 	 * {@link TargetGroup#MOBILE}
 	 */
 	private Map<TargetingCode, CampaignTargetValues> targetings;
-
-	@Override
-	public TargetGroup getGroup() {
-		return TargetGroup.MOBILE;
-	}
 
 	public void setExcludeMobileDevice(Boolean excludeMobileDevice) {
 		this.excludeMobileDevice = excludeMobileDevice;

@@ -7,7 +7,7 @@ import lombok.Getter;
  * creation, update and retrieval operations.
  */
 @Getter
-public class RdbTargeting extends StatefulDomain implements CampaignTarget {
+public class RdbTargeting extends StatefulDomain {
 
 	private Integer ageFrom;
 	private Integer ageTo;
@@ -84,11 +84,6 @@ public class RdbTargeting extends StatefulDomain implements CampaignTarget {
 	public void setPreferenceFlagsExclude(Boolean preferenceFlagsExclude) {
 		this.preferenceFlagsExclude = preferenceFlagsExclude;
 		addModifiedAttribute("preferenceFlagsExclude");
-	}
-
-	@Override
-	public TargetGroup getGroup() {
-		return TargetGroup.RDB;
 	}
 
 }
