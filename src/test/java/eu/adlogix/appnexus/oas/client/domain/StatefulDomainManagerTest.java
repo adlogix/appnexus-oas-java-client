@@ -9,6 +9,10 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Maps;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.enums.Completion;
+import eu.adlogix.appnexus.oas.client.domain.enums.SegmentType;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
 

@@ -3,6 +3,7 @@ package eu.adlogix.appnexus.oas.client.domain;
 import java.util.Collections;
 import java.util.List;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.SegmentType;
 import lombok.Getter;
 
 /**

@@ -19,7 +19,7 @@ import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
-import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 @AllArgsConstructor

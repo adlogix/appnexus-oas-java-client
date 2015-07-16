@@ -1,4 +1,6 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
+
+import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 
 /**
  * "Gender" values which can be assigned to {@link RdbTargeting} in Campaign

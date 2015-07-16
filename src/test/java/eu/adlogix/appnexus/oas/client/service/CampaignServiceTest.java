@@ -12,30 +12,28 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
-import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.CampaignExcludableTargetValues;
-import eu.adlogix.appnexus.oas.client.domain.CampaignStatus;
 import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
-import eu.adlogix.appnexus.oas.client.domain.CampaignType;
-import eu.adlogix.appnexus.oas.client.domain.Completion;
-import eu.adlogix.appnexus.oas.client.domain.DayOfWeek;
-import eu.adlogix.appnexus.oas.client.domain.FrequencyScope;
-import eu.adlogix.appnexus.oas.client.domain.Gender;
-import eu.adlogix.appnexus.oas.client.domain.HourOfDay;
 import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
-import eu.adlogix.appnexus.oas.client.domain.PaymentMethod;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
-import eu.adlogix.appnexus.oas.client.domain.Reach;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
-import eu.adlogix.appnexus.oas.client.domain.SegmentType;
-import eu.adlogix.appnexus.oas.client.domain.SmoothAsap;
-import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
+import eu.adlogix.appnexus.oas.client.domain.enums.BillTo;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignType;
+import eu.adlogix.appnexus.oas.client.domain.enums.Completion;
+import eu.adlogix.appnexus.oas.client.domain.enums.DayOfWeek;
+import eu.adlogix.appnexus.oas.client.domain.enums.FrequencyScope;
+import eu.adlogix.appnexus.oas.client.domain.enums.Gender;
+import eu.adlogix.appnexus.oas.client.domain.enums.HourOfDay;
+import eu.adlogix.appnexus.oas.client.domain.enums.PaymentMethod;
+import eu.adlogix.appnexus.oas.client.domain.enums.Reach;
+import eu.adlogix.appnexus.oas.client.domain.enums.SegmentType;
+import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
-
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

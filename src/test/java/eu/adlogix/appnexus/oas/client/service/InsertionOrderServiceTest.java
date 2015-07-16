@@ -11,9 +11,9 @@ import java.util.Arrays;
 
 import org.testng.annotations.Test;
 
-import eu.adlogix.appnexus.oas.client.domain.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
-import eu.adlogix.appnexus.oas.client.domain.InsertionOrderStatus;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
+import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 

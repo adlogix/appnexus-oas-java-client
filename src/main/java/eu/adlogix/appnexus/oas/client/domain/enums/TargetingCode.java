@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
 
 import java.util.List;

@@ -1,5 +1,6 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
+import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 import lombok.AllArgsConstructor;
 
 /**

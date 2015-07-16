@@ -3,6 +3,8 @@ package eu.adlogix.appnexus.oas.client.domain;
 import java.util.Collections;
 import java.util.List;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
+import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import lombok.Getter;
 
 /**

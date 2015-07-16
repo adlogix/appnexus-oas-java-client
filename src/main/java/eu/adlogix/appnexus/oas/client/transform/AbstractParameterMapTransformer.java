@@ -8,7 +8,7 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import eu.adlogix.appnexus.oas.client.domain.XmlBoolean;
+import eu.adlogix.appnexus.oas.client.domain.enums.XmlBoolean;
 
 public abstract class AbstractParameterMapTransformer implements ParameterMapTransformer {
 

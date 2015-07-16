@@ -11,6 +11,18 @@ import lombok.Getter;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.BillTo;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignStatus;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignType;
+import eu.adlogix.appnexus.oas.client.domain.enums.Completion;
+import eu.adlogix.appnexus.oas.client.domain.enums.DayOfWeek;
+import eu.adlogix.appnexus.oas.client.domain.enums.FrequencyScope;
+import eu.adlogix.appnexus.oas.client.domain.enums.HourOfDay;
+import eu.adlogix.appnexus.oas.client.domain.enums.PaymentMethod;
+import eu.adlogix.appnexus.oas.client.domain.enums.Reach;
+import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
+
 /**
  * Domain class which represents an OAS Campaign. This can be used in Campaign
  * creation, update and retrieval operations.

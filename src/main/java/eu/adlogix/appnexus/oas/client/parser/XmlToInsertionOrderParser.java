@@ -2,9 +2,9 @@ package eu.adlogix.appnexus.oas.client.parser;
 
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 import lombok.AllArgsConstructor;
-import eu.adlogix.appnexus.oas.client.domain.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
-import eu.adlogix.appnexus.oas.client.domain.InsertionOrderStatus;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
+import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 
 @AllArgsConstructor

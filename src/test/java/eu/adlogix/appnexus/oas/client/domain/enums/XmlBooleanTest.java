@@ -1,7 +1,8 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import org.testng.annotations.Test;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.XmlBoolean;
 import static org.testng.Assert.assertEquals;
 
 public class XmlBooleanTest {

@@ -6,13 +6,12 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCodeData;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 /**

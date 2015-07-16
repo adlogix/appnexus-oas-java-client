@@ -7,10 +7,10 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.adlogix.appnexus.oas.client.domain.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
-import eu.adlogix.appnexus.oas.client.domain.CampaignType;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
+import eu.adlogix.appnexus.oas.client.domain.enums.BillTo;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignType;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;

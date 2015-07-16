@@ -1,6 +1,7 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
+import eu.adlogix.appnexus.oas.client.domain.Campaign;
 
 /**
  * "Smooth or ASAP" values which can be assigned to {@link Campaign} in Campaign

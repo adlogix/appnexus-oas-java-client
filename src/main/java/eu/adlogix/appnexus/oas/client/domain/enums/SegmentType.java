@@ -1,6 +1,7 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
+import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 
 /**
  * "Segment Type" values which can be assigned to {@link SegmentTargeting} in

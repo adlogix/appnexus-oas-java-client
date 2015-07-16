@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.Gender;
 import lombok.Getter;
 
 /**

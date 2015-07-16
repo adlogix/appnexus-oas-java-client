@@ -1,9 +1,12 @@
-package eu.adlogix.appnexus.oas.client.domain;
+package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.Getter;
 
 import org.apache.axis.utils.StringUtils;
 
+/**
+ * How {@link Boolean}s are represented in OAS XML requests and responses
+ */
 public enum XmlBoolean {
 	Y(true), N(false);
 

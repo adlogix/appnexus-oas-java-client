@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import eu.adlogix.appnexus.oas.client.domain.CampaignTargetValues;
 import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
-import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.service.CampaignService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
 import eu.adlogix.appnexus.oas.client.util.TestCredentials;

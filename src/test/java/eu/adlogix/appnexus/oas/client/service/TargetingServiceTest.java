@@ -10,8 +10,8 @@ import javax.xml.rpc.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
-import eu.adlogix.appnexus.oas.client.domain.TargetingCode;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCodeData;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;

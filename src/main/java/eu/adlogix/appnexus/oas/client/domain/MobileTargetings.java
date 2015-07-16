@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetGroup;
+import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

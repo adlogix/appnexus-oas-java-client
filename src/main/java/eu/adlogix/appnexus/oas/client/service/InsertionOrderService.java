@@ -6,10 +6,10 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.adlogix.appnexus.oas.client.domain.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
-import eu.adlogix.appnexus.oas.client.domain.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
+import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
+import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.parser.XmlToInsertionOrderParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
