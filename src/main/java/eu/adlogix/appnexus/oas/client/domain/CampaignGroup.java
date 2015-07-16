@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Represents a Campaign group of OAS
+ * Represents a Campaign group which a Campaign would belong to
  */
 @Data
 @NoArgsConstructor
