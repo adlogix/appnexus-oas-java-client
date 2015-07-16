@@ -7,10 +7,10 @@ import com.google.common.collect.Sets;
 
 import static org.testng.Assert.assertEquals;
 
-public class CampaignDeliveryByPageAndPositionTest {
+public class CampaignDeliveryByPageAndPositionIndexTest {
 	@Test
 	public void mapMethods_MultiplePagesAndPositions_CorrectlyMapped() {
-		CampaignDeliveryByPageAndPosition deliveryByPageAndPosition = new CampaignDeliveryByPageAndPosition();
+		CampaignDeliveryByPageAndPositionIndex deliveryByPageAndPosition = new CampaignDeliveryByPageAndPositionIndex();
 		final CampaignDeliveryByPageAndPosition.Row rowPg1Pos1_1 = new CampaignDeliveryByPageAndPosition.Row("Page1", "Position1", 111, 11);
 		final CampaignDeliveryByPageAndPosition.Row rowPg1Pos1_2 = new CampaignDeliveryByPageAndPosition.Row("Page1", "Position1", 112, 11);
 		final CampaignDeliveryByPageAndPosition.Row rowPg1Pos2 = new CampaignDeliveryByPageAndPosition.Row("Page1", "Position2", 120, 12);
@@ -22,8 +22,6 @@ public class CampaignDeliveryByPageAndPositionTest {
 		deliveryByPageAndPosition.addRow(rowPg1Pos2);
 		deliveryByPageAndPosition.addRow(rowPg2Pos1);
 		deliveryByPageAndPosition.addRow(rowPg2Pos2);
-
-		assertEquals(deliveryByPageAndPosition.getRows(), Lists.newArrayList(rowPg1Pos1_1, rowPg1Pos1_2, rowPg1Pos2, rowPg2Pos1, rowPg2Pos2));
 
 		assertEquals(deliveryByPageAndPosition.getAllPages(), Lists.newArrayList("Page1", "Page2"));
 		assertEquals(deliveryByPageAndPosition.getAllPositionsOfPage("Page1"), Sets.newHashSet("Position1", "Position2"));
