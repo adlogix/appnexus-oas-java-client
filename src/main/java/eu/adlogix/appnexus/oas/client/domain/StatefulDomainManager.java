@@ -25,7 +25,7 @@ public class StatefulDomainManager {
 	 *         false if the object is not an instance of {@link StatefulDomain}
 	 * 
 	 */
-	public boolean isStatefulDomain(Object entity) {
+	private static boolean isStatefulDomain(Object entity) {
 		return StatefulDomain.class.isInstance(entity);
 	}
 
