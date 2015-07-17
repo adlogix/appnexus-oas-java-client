@@ -25,6 +25,7 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
+
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
@@ -258,11 +259,7 @@ public class NetworkService extends AbstractOasService {
 			}
 		});
 
-		if (positions.isEmpty()) {
-			throw new RuntimeException("No Positions were found with name " + positionName);
-		}
-
-		return positions.get(0);
+		return !positions.isEmpty() ? positions.get(0) : null;
 	}
 
 	/**

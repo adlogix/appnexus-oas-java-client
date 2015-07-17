@@ -7,7 +7,7 @@ public class OasClientSideException extends RuntimeException {
 		super(errorMsg);
 	}
 
-	public OasClientSideException(final String errorMsg, Exception e) {
+	public OasClientSideException(final String errorMsg, Throwable e) {
 		super(errorMsg, e);
 	}
 

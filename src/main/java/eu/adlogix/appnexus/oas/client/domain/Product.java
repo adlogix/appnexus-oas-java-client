@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * OAS Product
+ * Represents a Product
  */
 @NoArgsConstructor
 @Data

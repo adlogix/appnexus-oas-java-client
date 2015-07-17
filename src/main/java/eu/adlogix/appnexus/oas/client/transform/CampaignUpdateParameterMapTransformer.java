@@ -1,7 +1,5 @@
 package eu.adlogix.appnexus.oas.client.transform;
 
-import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,10 @@ import eu.adlogix.appnexus.oas.client.domain.MobileTargetings;
 import eu.adlogix.appnexus.oas.client.domain.RdbTargeting;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
+import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
+
+import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
 @AllArgsConstructor
 public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapTransformer {
@@ -230,7 +231,7 @@ public class CampaignUpdateParameterMapTransformer extends AbstractParameterMapT
 			final String targetingType = code.getCodeForCampaigns().toString().toLowerCase();
 
 			if (code.isSupportingExcludeFlagForCampaigns() != targetingValues.isSupportingExcludeFlag()) {
-				throw new RuntimeException("Targeting code " + code.name()
+				throw new OasClientSideException("Targeting code " + code.name()
 						+ " expects an Exclude flag but TargetingValues object doesn't support an exclude flag");
 			}
 

@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
+import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 
 public class FileUtils {
@@ -34,7 +35,8 @@ public class FileUtils {
 		} catch (ResourceNotFoundException adlrnfe) {
 			throw adlrnfe;
 		} catch (Throwable t) {
-			throw new RuntimeException("Unexpected throwable while getResourceFilePerClassPath for '" + resourcePath
+			throw new OasClientSideException("Unexpected throwable while getResourceFilePerClassPath for '"
+					+ resourcePath
 					+ "' [" + t.getMessage() + "]", t);
 		}
 	}
@@ -44,7 +46,7 @@ public class FileUtils {
 		InputStream resourceFileStream = callingClazz.getClassLoader().getResourceAsStream(resourcePath);
 
 		if (resourceFileStream == null)
-			throw new RuntimeException("Unable to locate resource for path " + resourcePath
+			throw new OasClientSideException("Unable to locate resource for path " + resourcePath
 					+ " (resourceFileStream is null)");
 
 		IOUtils.copy(resourceFileStream, new FileOutputStream(destinationLocalFile));

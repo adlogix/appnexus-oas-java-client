@@ -143,7 +143,7 @@ public class OasApiService {
 			certificateInitialisedForHost = host;
 		} else {
 			if (!certificateInitialisedForHost.equals(host)) {
-				throw new RuntimeException("Can not initialize certificate for host" + host
+				throw new OasConnectionException("Can not initialize certificate for host" + host
 						+ " as it was already initialized for " + certificateInitialisedForHost);
 			} else {
 				renewCertificateIfExpired();

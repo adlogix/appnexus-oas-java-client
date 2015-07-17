@@ -6,12 +6,14 @@ import java.io.InputStream;
 import org.antlr.stringtemplate.StringTemplate;
 import org.apache.commons.io.IOUtils;
 
+import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
+
 public final class ResourceUtils {
 
 	public static InputStream loadResourceInputStream(final String resourceFileName) {
 		final InputStream result = ResourceUtils.class.getResourceAsStream(resourceFileName);
 		if (result == null) {
-			throw new RuntimeException(resourceFileName + " could not be found");
+			throw new OasClientSideException(resourceFileName + " could not be found");
 		}
 		return result;
 	}
@@ -20,7 +22,7 @@ public final class ResourceUtils {
 		try {
 			return IOUtils.toString(loadResourceInputStream(resourceFileName));
 		} catch (IOException exception) {
-			throw new RuntimeException(exception);
+			throw new OasClientSideException("Error while reading file " + resourceFileName, exception);
 		}
 	}
 

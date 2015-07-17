@@ -25,6 +25,8 @@ import javax.net.ssl.X509TrustManager;
 import org.slf4j.Logger;
 
 import eu.adlogix.appnexus.oas.client.exceptions.OasCertificateException;
+import eu.adlogix.appnexus.oas.client.exceptions.OasClientSideException;
+import eu.adlogix.appnexus.oas.client.exceptions.OasConnectionException;
 import eu.adlogix.appnexus.oas.client.utils.log.LogUtils;
 
 /**
@@ -56,12 +58,12 @@ public class CertificateManager {
 
 		try {
 			if (!host.startsWith(HTTPS_PREFIX))
-				throw new RuntimeException("We only support https host and not [" + host + "]");
+				throw new OasConnectionException("We only support https host and not [" + host + "]");
 
 			final File confDir = new File("conf");
 
 			if (!confDir.exists() && !confDir.mkdir())
-				throw new RuntimeException("Unable to create inexisting conf dir at " + confDir.getAbsolutePath());
+				throw new OasConnectionException("Unable to create inexisting conf dir at " + confDir.getAbsolutePath());
 
 			final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
 
@@ -69,11 +71,11 @@ public class CertificateManager {
 				logger.warn("Going to delete pre-existing keyStore file at " + usedKeyStoreFile.getAbsolutePath());
 
 				if (!usedKeyStoreFile.delete())
-					throw new RuntimeException("Unable to delete pre-existing keyStore at "
+					throw new OasConnectionException("Unable to delete pre-existing keyStore at "
 							+ usedKeyStoreFile.getAbsolutePath());
 
 				if (usedKeyStoreFile.exists())
-					throw new RuntimeException("We could not delete the existing keyStore at "
+					throw new OasConnectionException("We could not delete the existing keyStore at "
 							+ usedKeyStoreFile.getAbsolutePath());
 			}
 
@@ -82,7 +84,8 @@ public class CertificateManager {
 			installCertificate(usedKeyStoreFile.getAbsolutePath(), shortenedHost);
 
 			if (!usedKeyStoreFile.exists())
-				throw new RuntimeException("We could not copy the keyStore to " + usedKeyStoreFile.getAbsolutePath());
+				throw new OasConnectionException("We could not copy the keyStore to "
+						+ usedKeyStoreFile.getAbsolutePath());
 
 			System.setProperty("javax.net.ssl.trustStore", CONF_DIRECTORY + File.separator + OAS_KEYSTORE_FILENAME);
 
@@ -102,7 +105,7 @@ public class CertificateManager {
 
 		try {
 			if (!host.startsWith(HTTPS_PREFIX))
-				throw new RuntimeException("We only support https host and not [" + host + "]");
+				throw new OasConnectionException("We only support https host and not [" + host + "]");
 
 			final File confDir = new File("conf");
 			final File usedKeyStoreFile = new File(confDir, OAS_KEYSTORE_FILENAME);
@@ -137,7 +140,7 @@ public class CertificateManager {
 			File file = new File(filePath);
 
 			if (!file.exists()) {
-				throw new RuntimeException("There is no keystore at " + filePath);
+				throw new OasConnectionException("There is no keystore at " + filePath);
 			}
 
 			KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -162,7 +165,7 @@ public class CertificateManager {
 			}
 
 		} catch (Exception e) {
-			throw new RuntimeException("Error occured while checking if the certificate expires", e);
+			throw new OasConnectionException("Error occured while checking if the certificate expires", e);
 		}
 	}
 
@@ -277,7 +280,7 @@ public class CertificateManager {
 			logger.info("Added certificate to keystore " + file.getAbsolutePath());
 
 		} catch (Exception e) {
-			throw new RuntimeException("Error in installing certificate", e);
+			throw new OasClientSideException("Error in installing certificate", e);
 		}
 	}
 
