@@ -2,6 +2,7 @@ package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Payment Method" values which can be assigned to a {@link Campaign} in
@@ -9,7 +10,7 @@ import eu.adlogix.appnexus.oas.client.domain.Campaign;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum PaymentMethod {
+public enum PaymentMethod implements ToStringReturnsEnumCode {
 
 	CASH("C"), BARTER("B"), IN_HOUSE("I"), INTERNAL_TRANSFER("T");
 
@@ -32,15 +33,7 @@ public enum PaymentMethod {
 	 * @return {@link PaymentMethod} object
 	 */
 	public static PaymentMethod fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (PaymentMethod paymentMethod : PaymentMethod.values()) {
-			if (code.equalsIgnoreCase(paymentMethod.code)) {
-				return paymentMethod;
-			}
-		}
-		throw new IllegalArgumentException("Invalid PaymentMethod Code:" + code);
+		return EnumUtils.fromString(code, values(), PaymentMethod.class.getSimpleName());
 	}
 
 }

@@ -1,7 +1,8 @@
 package eu.adlogix.appnexus.oas.client.domain.enums;
 
-import eu.adlogix.appnexus.oas.client.domain.Campaign;
 import lombok.AllArgsConstructor;
+import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Reach" values which can be assigned to a {@link Campaign} in Campaign
@@ -9,7 +10,7 @@ import lombok.AllArgsConstructor;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum Reach {
+public enum Reach implements ToStringReturnsEnumCode {
 
 	OPEN("O"), FIXED("F"), DYNAMIC("D"), DYNAMIC_RECALCULATED_MONTHLY("M"), HOUSE("H");
 
@@ -31,14 +32,6 @@ public enum Reach {
 	 * @return {@link Reach} object
 	 */
 	public static Reach fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (Reach reach : Reach.values()) {
-			if (code.equalsIgnoreCase(reach.code)) {
-				return reach;
-			}
-		}
-		throw new IllegalArgumentException("Invalid Reach Code:" + code);
+		return EnumUtils.fromString(code, values(), Reach.class.getSimpleName());
 	}
 }

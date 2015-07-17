@@ -2,6 +2,7 @@ package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Day Of Week" values which can be assigned to a {@link Campaign} in Campaign
@@ -9,18 +10,18 @@ import eu.adlogix.appnexus.oas.client.domain.Campaign;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum DayOfWeek {
+public enum DayOfWeek implements ToStringReturnsEnumCode {
 
-	SUNDAY("0"), MONDAY("1"), TUESDAY("2"), WEDNESDAY("3"), THURSDAY("4"), FRIDAY("5"), SATURDAY("6");
+	SUNDAY(0), MONDAY(1), TUESDAY(2), WEDNESDAY(3), THURSDAY(4), FRIDAY(5), SATURDAY(6);
 
-	private final String code;
+	private final int code;
 
 	/**
 	 * Returns the OAS code
 	 */
 	@Override
 	public String toString() {
-		return code;
+		return Integer.toString(code);
 	}
 
 	/**
@@ -32,14 +33,6 @@ public enum DayOfWeek {
 	 * @return {@link DayOfWeek} object
 	 */
 	public static DayOfWeek fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-			if (code.equalsIgnoreCase(dayOfWeek.code)) {
-				return dayOfWeek;
-			}
-		}
-		throw new IllegalArgumentException("Invalid DayOfWeek Code:" + code);
+		return EnumUtils.fromString(code, values(), DayOfWeek.class.getSimpleName());
 	}
 }

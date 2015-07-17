@@ -2,6 +2,7 @@ package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Hour Of Day" values which can be assigned to a {@link Campaign} in Campaign
@@ -9,7 +10,7 @@ import eu.adlogix.appnexus.oas.client.domain.Campaign;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum HourOfDay {
+public enum HourOfDay implements ToStringReturnsEnumCode {
 
 	ZERO("00"),
 	ONE("01"),
@@ -55,14 +56,6 @@ public enum HourOfDay {
 	 * @return {@link HourOfDay} object
 	 */
 	public static HourOfDay fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (HourOfDay hourOfDay : HourOfDay.values()) {
-			if (code.equalsIgnoreCase(hourOfDay.code)) {
-				return hourOfDay;
-			}
-		}
-		throw new IllegalArgumentException("Invalid HourOfDay Code:" + code);
+		return EnumUtils.fromString(code, values(), HourOfDay.class.getSimpleName());
 	}
 }

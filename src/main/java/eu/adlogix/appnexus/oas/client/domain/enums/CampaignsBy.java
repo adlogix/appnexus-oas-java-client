@@ -1,7 +1,9 @@
 package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Campaigns By" values which can be assigned to a {@link Campaign} in Campaign
@@ -9,10 +11,11 @@ import eu.adlogix.appnexus.oas.client.domain.Campaign;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum CampaignsBy {
+public enum CampaignsBy implements ToStringReturnsEnumCode {
 
 	ADVERTISER("A"), AGENCY("G");
 
+	@Getter
 	private final String code;
 
 	/**
@@ -32,15 +35,7 @@ public enum CampaignsBy {
 	 * @return {@link CampaignsBy} object
 	 */
 	public static CampaignsBy fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (CampaignsBy campaignsBy : CampaignsBy.values()) {
-			if (code.equalsIgnoreCase(campaignsBy.code)) {
-				return campaignsBy;
-			}
-		}
-		throw new IllegalArgumentException("Invalid CampaignsBy Code:" + code);
+		return EnumUtils.fromString(code, values(), CampaignsBy.class.getSimpleName());
 	}
 
 }

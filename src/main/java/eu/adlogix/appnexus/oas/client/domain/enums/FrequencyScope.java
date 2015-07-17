@@ -1,6 +1,8 @@
 package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
+import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Frequency Scope" values which can be assigned to a {@link Campaign} in
@@ -8,18 +10,18 @@ import lombok.AllArgsConstructor;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum FrequencyScope {
+public enum FrequencyScope implements ToStringReturnsEnumCode {
 
-	ZERO("0"), SESSION("1"), HOURLY("2"), DAILY("3"), WEEKLY("4"), MONTHLY("5"), LIFETIME("6");
+	ZERO(0), SESSION(1), HOURLY(2), DAILY(3), WEEKLY(4), MONTHLY(5), LIFETIME(6);
 
-	private final String code;
+	private final int code;
 
 	/**
 	 * Returns the OAS code
 	 */
 	@Override
 	public String toString() {
-		return code;
+		return Integer.toString(code);
 	}
 
 	/**
@@ -31,15 +33,7 @@ public enum FrequencyScope {
 	 * @return {@link FrequencyScope} object
 	 */
 	public static FrequencyScope fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (FrequencyScope frequencyScope : FrequencyScope.values()) {
-			if (code.equalsIgnoreCase(frequencyScope.code)) {
-				return frequencyScope;
-			}
-		}
-		throw new IllegalArgumentException("Invalid FrequencyScope Code:" + code);
+		return EnumUtils.fromString(code, values(), FrequencyScope.class.getSimpleName());
 	}
 
 }

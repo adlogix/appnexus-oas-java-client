@@ -2,6 +2,7 @@ package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Segment Type" values which can be assigned to {@link SegmentTargeting} in
@@ -9,7 +10,7 @@ import eu.adlogix.appnexus.oas.client.domain.SegmentTargeting;
  * accessible via {@link #toString()}
  */
 @AllArgsConstructor
-public enum SegmentType {
+public enum SegmentType implements ToStringReturnsEnumCode {
 
 	ANY("A"), ALL("L");
 
@@ -32,15 +33,7 @@ public enum SegmentType {
 	 * @return {@link SegmentType} object
 	 */
 	public static SegmentType fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (SegmentType segmentType : SegmentType.values()) {
-			if (code.equalsIgnoreCase(segmentType.code)) {
-				return segmentType;
-			}
-		}
-		throw new IllegalArgumentException("Invalid SegmentType Code:" + code);
+		return EnumUtils.fromString(code, values(), SegmentType.class.getSimpleName());
 	}
 
 }

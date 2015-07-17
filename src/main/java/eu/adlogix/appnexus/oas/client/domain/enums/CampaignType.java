@@ -2,6 +2,7 @@ package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Campaign Type" values which can be assigned to a {@link Campaign} in
@@ -9,7 +10,7 @@ import eu.adlogix.appnexus.oas.client.domain.Campaign;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum CampaignType {
+public enum CampaignType implements ToStringReturnsEnumCode {
 
 	CLT("CLT"), REGULAR("RM");
 
@@ -32,15 +33,6 @@ public enum CampaignType {
 	 * @return {@link CampaignType} object
 	 */
 	public static CampaignType fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (CampaignType campaignType : CampaignType.values()) {
-			if (code.equalsIgnoreCase(campaignType.code)) {
-				return campaignType;
-			}
-		}
-		throw new IllegalArgumentException("Invalid CampaignType Code:" + code);
+		return EnumUtils.fromString(code, values(), CampaignType.class.getSimpleName());
 	}
-
 }

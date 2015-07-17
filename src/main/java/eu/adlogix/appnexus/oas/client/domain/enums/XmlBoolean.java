@@ -1,13 +1,12 @@
 package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.Getter;
-
-import org.apache.axis.utils.StringUtils;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * How {@link Boolean}s are represented in OAS XML requests and responses
  */
-public enum XmlBoolean {
+public enum XmlBoolean implements ToStringReturnsEnumCode {
 	Y(true), N(false);
 
 	@Getter
@@ -22,7 +21,7 @@ public enum XmlBoolean {
 	}
 
 	public static XmlBoolean fromString(final String param) {
-		return !StringUtils.isEmpty(param) ? (param.equalsIgnoreCase("Y") ? Y : N) : null;
+		return EnumUtils.fromString(param, values(), XmlBoolean.class.getSimpleName());
 	}
 
 	public Boolean toBoolean() {

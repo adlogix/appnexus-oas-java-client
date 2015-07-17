@@ -1,6 +1,9 @@
 package eu.adlogix.appnexus.oas.client.domain.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import eu.adlogix.appnexus.oas.client.domain.Campaign;
+import eu.adlogix.appnexus.oas.client.utils.EnumUtils;
 
 /**
  * "Campaign Status" values which can be assigned to a {@link Campaign} in
@@ -8,11 +11,12 @@ import lombok.AllArgsConstructor;
  * {@link #toString()}
  */
 @AllArgsConstructor
-public enum CampaignStatus {
+public enum CampaignStatus implements ToStringReturnsEnumCode {
 
 	WORK_IN_PROGRESS("W"), LIVE("L"), WAITING_FOR_APPROVAL("P"), ORDERED("O"), COMPLETED("C"), RESERVED("R"), REJECTED(
 			"J"), CANCELLED("X"), SUSPENDED("S"), ARCHIVED("A"), RLC_DECLINE("D"), TEMPLATE("T");
 
+	@Getter
 	private final String code;
 
 	/**
@@ -32,14 +36,6 @@ public enum CampaignStatus {
 	 * @return {@link CampaignStatus} object
 	 */
 	public static CampaignStatus fromString(String code) {
-		if (code == null)
-			return null;
-
-		for (CampaignStatus status : CampaignStatus.values()) {
-			if (code.equalsIgnoreCase(status.code)) {
-				return status;
-			}
-		}
-		throw new IllegalArgumentException("Invalid CampaignStatus Code:" + code);
+		return EnumUtils.fromString(code, values(), CampaignStatus.class.getSimpleName());
 	}
 }
