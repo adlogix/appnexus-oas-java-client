@@ -212,10 +212,12 @@ public class NetworkService extends AbstractOasService {
 			String position = OasPageUrlParser.getPosition(url);
 
 			if (!mapPositionsPerPage.containsKey(pageUrl)) {
+				// Create page
 				mapPositionsPerPage.put(pageUrl, new Page(pageUrl));
 			}
-			if (!StringUtils.isEmpty(position)) {
-				Position oasPosition = new Position(position);
+			if (StringUtils.isNotEmpty(position)) {
+				// Add position to the existing page
+				final Position oasPosition = new Position(position);
 				mapPositionsPerPage.get(pageUrl).addPosition(oasPosition);
 			}
 		}

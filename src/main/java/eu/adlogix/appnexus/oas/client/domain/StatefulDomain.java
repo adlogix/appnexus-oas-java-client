@@ -1,5 +1,6 @@
 package eu.adlogix.appnexus.oas.client.domain;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +24,8 @@ public abstract class StatefulDomain {
 	}
 
 	/**
-	 * Adds a persistent attribute.
+	 * Adds a persistent attribute. These attributes will be always included
+	 * even if they're not modified. Ex: ID
 	 * 
 	 * @param attribute
 	 *            - name of the attribute
@@ -55,8 +57,8 @@ public abstract class StatefulDomain {
 	 * @return
 	 */
 	public Set<String> getModifiedAndPersistentAttributes() {
-		Set<String> attributes = new HashSet<String>(modifiedAttributes);
+		final Set<String> attributes = new HashSet<String>(modifiedAttributes);
 		attributes.addAll(persistentAttributes);
-		return attributes;
+		return Collections.unmodifiableSet(attributes);
 	}
 }
