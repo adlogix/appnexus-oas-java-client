@@ -64,7 +64,7 @@ public class OasApiService {
 	 * expired, the certificate will be automatically renewed before making the
 	 * API call.
 	 * 
-	 * @param adXML
+	 * @param request
 	 *            The structured XML request containing all the parameters
 	 * @param retryOnConnectionErrors
 	 *            boolean which specifies whether to retry the call if there are
@@ -75,7 +75,7 @@ public class OasApiService {
 	 * 
 	 */
 
-	public String callApi(final String adXML, boolean retryOnConnectionErrors) throws MalformedURLException,
+	public String callApi(final String request, boolean retryOnConnectionErrors) throws MalformedURLException,
 			ServiceException,
 			RemoteException {
 
@@ -85,13 +85,49 @@ public class OasApiService {
 			logger.debug("Call Oas Api as '" + user + "' ', account: '" + account
 					+ "' on '" + host + "'...");
 
-		final HostnameVerifier hv = new HostnameVerifier() {
-			public boolean verify(final String urlHostName, final SSLSession session) {
-				return true;
-			}
-		};
+		setHostnameVerifier();
 
-		HttpsURLConnection.setDefaultHostnameVerifier(hv);
+		final Call call = createCall();
+
+		int retryCount = 0;
+
+		String response = null;
+
+		while ((response == null) && (retryCount < MAX_RETRY)) {
+			try {
+				response = (String) call.invoke(new Object[] { account, user, password, request });
+			} catch (Exception e) {
+				if (retryOnConnectionErrors) {
+
+					retryCount++;
+
+					if (retryCount < MAX_RETRY) {
+						logger.info("OAS API call retry #" + retryCount);
+					} else {
+						throwExceptionOnMaxRetry(e, request);
+					}
+				} else {
+					throwExceptionOnNoRetry(e);
+				}
+			}
+		}
+
+		return response;
+	}
+
+	private void throwExceptionOnNoRetry(Exception e) {
+		logger.error("Exception while calling OAS API: [" + e.toString() + "]", e);
+		throw new OasConnectionException("Exception while calling OAS API: [" + e.toString() + "]");
+	}
+
+	private void throwExceptionOnMaxRetry(Exception e, final String adXML) {
+		logger.error("We just exceeded the maximum number of OAS API call retries while calling API with request ["
+				+ adXML + "]");
+		throw new OasConnectionException("Exception while calling OAS API: [" + e.toString()
+				+ "]. Aborted after retrying " + MAX_RETRY + " times");
+	}
+
+	private Call createCall() throws MalformedURLException, ServiceException {
 		final String urlString = host + "/oasapi/";
 		final URL url = new URL(urlString + "OaxApi?wsdl");
 		final String nameSpace = "http://api.oas.tfsm.com/";
@@ -102,35 +138,17 @@ public class OasApiService {
 		final ServiceFactory factory = ServiceFactory.newInstance();
 		final Service service = factory.createService(url, qname);
 		final Call call = service.createCall(port, operation);
+		return call;
+	}
 
-		int retryCount = 0;
-
-		String res = null;
-
-		while ((res == null) && (retryCount < MAX_RETRY)) {
-			try {
-				res = (String) call.invoke(new Object[] { account, user, password, adXML });
-			} catch (Exception e) {
-				if (retryOnConnectionErrors) {
-
-					retryCount++;
-
-					if (retryCount < MAX_RETRY) {
-						logger.info("OAS API call retry #" + retryCount);
-					} else {
-						logger.error("We just exceeded the maximum number of OAS API call retries while calling API with request ["
-								+ adXML + "]");
-						throw new OasConnectionException("Exception while calling OAS API: [" + e.toString()
-								+ "]. Aborted after retrying " + MAX_RETRY + " times");
-					}
-				} else {
-					logger.error("Exception while calling OAS API: [" + e.toString() + "]", e);
-					throw new OasConnectionException("Exception while calling OAS API: [" + e.toString() + "]");
-				}
+	private void setHostnameVerifier() {
+		final HostnameVerifier hv = new HostnameVerifier() {
+			public boolean verify(final String urlHostName, final SSLSession session) {
+				return true;
 			}
-		}
+		};
 
-		return res;
+		HttpsURLConnection.setDefaultHostnameVerifier(hv);
 	}
 
 	/**
