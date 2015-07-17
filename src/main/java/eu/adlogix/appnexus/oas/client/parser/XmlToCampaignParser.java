@@ -33,6 +33,7 @@ import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
+
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
@@ -46,76 +47,82 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 	private static final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 	private static final DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm");
 
-	private ResponseParser responseParser;
+	private final ResponseParser responseParser;
 
 	@Override
 	public Campaign parse() {
+
 		Campaign campaign = new Campaign();
-		campaign = parseAndSetOverviewAttributes(responseParser, campaign);
-		campaign = parseAndSetScheduleAttributes(responseParser, campaign);
+
+		parseAndSetOverviewAttributes(campaign);
+		parseAndSetScheduleAttributes(campaign);
+		parseAndSetNetworkAttributes(campaign);
+		parseAndSetTargetingAttributes(campaign);
+		parseAndSetBillingAttributes(campaign);
+
+		return campaign;
+	}
+
+	private void parseAndSetNetworkAttributes(Campaign campaign) {
 		campaign.setPageUrls(responseParser.getTrimmedElementList("//Campaign/Pages/Url"));
 		campaign.setExcludedSiteIds(responseParser.getTrimmedElementList("//Campaign/Exclude/Sites/SiteId"));
 		campaign.setExcludedPageUrls(responseParser.getTrimmedElementList("//Campaign/Exclude/Pages/Url"));
-		campaign = parseAndSetTargetingAttributes(responseParser, campaign);
-		campaign = parseAndSetBillingAttributes(responseParser, campaign);
-		return campaign;
 	}
 
-	private Campaign parseAndSetOverviewAttributes(final ResponseParser parser, Campaign campaign) {
-		campaign.setId(parser.getTrimmedElement("//Campaign/Overview/Id"));
-		campaign.setType(CampaignType.fromString(parser.getTrimmedElement("//Campaign/Overview/Type")));
-		campaign.setInsertionOrderId(parser.getTrimmedElement("//Campaign/Overview/InsertionOrderId"));
-		campaign.setAdvertiserId(parser.getTrimmedElement("//Campaign/Overview/AdvertiserId"));
-		campaign.setName(parser.getTrimmedElement("//Campaign/Overview/Name"));
-		campaign.setAgencyId(parser.getTrimmedElement("//Campaign/Overview/AgencyId"));
-		campaign.setDescription(parser.getTrimmedElement("//Campaign/Overview/Description"));
-		campaign.setCampaignManager(parser.getTrimmedElement("//Campaign/Overview/CampaignManager"));
-		campaign.setProductId(parser.getTrimmedElement("//Campaign/Overview/ProductId"));
-		campaign.setStatus(CampaignStatus.fromString(parser.getTrimmedElement("//Campaign/Overview/Status")));
-		campaign.setCampaignGroupIds(parser.getTrimmedElementList("//Campaign/Overview/CampaignGroups/CampaignGroupId"));
-		campaign.setCompetitiveCategroryIds(parser.getTrimmedElementList("//Campaign/Overview/CompetitiveCategories/CompetitiveCategoryId"));
-		campaign.setExternalUserIds(parser.getTrimmedElementList("//Campaign/Overview/ExternalUsers/UserId"));
-		campaign.setInternalQuickReport(parser.getTrimmedElement("//Campaign/Overview/InternalQuickReport"));
-		campaign.setExternalQuickReport(parser.getTrimmedElement("//Campaign/Overview/ExternalQuickReport"));
-		return campaign;
+	private void parseAndSetOverviewAttributes(Campaign campaign) {
+		campaign.setId(responseParser.getTrimmedElement("//Campaign/Overview/Id"));
+		campaign.setType(CampaignType.fromString(responseParser.getTrimmedElement("//Campaign/Overview/Type")));
+		campaign.setInsertionOrderId(responseParser.getTrimmedElement("//Campaign/Overview/InsertionOrderId"));
+		campaign.setAdvertiserId(responseParser.getTrimmedElement("//Campaign/Overview/AdvertiserId"));
+		campaign.setName(responseParser.getTrimmedElement("//Campaign/Overview/Name"));
+		campaign.setAgencyId(responseParser.getTrimmedElement("//Campaign/Overview/AgencyId"));
+		campaign.setDescription(responseParser.getTrimmedElement("//Campaign/Overview/Description"));
+		campaign.setCampaignManager(responseParser.getTrimmedElement("//Campaign/Overview/CampaignManager"));
+		campaign.setProductId(responseParser.getTrimmedElement("//Campaign/Overview/ProductId"));
+		campaign.setStatus(CampaignStatus.fromString(responseParser.getTrimmedElement("//Campaign/Overview/Status")));
+		campaign.setCampaignGroupIds(responseParser.getTrimmedElementList("//Campaign/Overview/CampaignGroups/CampaignGroupId"));
+		campaign.setCompetitiveCategroryIds(responseParser.getTrimmedElementList("//Campaign/Overview/CompetitiveCategories/CompetitiveCategoryId"));
+		campaign.setExternalUserIds(responseParser.getTrimmedElementList("//Campaign/Overview/ExternalUsers/UserId"));
+		campaign.setInternalQuickReport(responseParser.getTrimmedElement("//Campaign/Overview/InternalQuickReport"));
+		campaign.setExternalQuickReport(responseParser.getTrimmedElement("//Campaign/Overview/ExternalQuickReport"));
 	}
 
-	private Campaign parseAndSetScheduleAttributes(final ResponseParser parser, Campaign campaign) {
-		campaign.setImpressions(createLong(parser.getTrimmedElement("//Campaign/Schedule/Impressions")));
-		campaign.setClicks(createLong(parser.getTrimmedElement("//Campaign/Schedule/Clicks")));
-		campaign.setUniques(createLong(parser.getTrimmedElement("//Campaign/Schedule/Uniques")));
-		campaign.setWeight(createLong(parser.getTrimmedElement("//Campaign/Schedule/Weight")));
-		campaign.setPriorityLevel(createLong(parser.getTrimmedElement("//Campaign/Schedule/PriorityLevel")));
-		campaign.setCompletion(Completion.fromString(parser.getTrimmedElement("//Campaign/Schedule/Completion")));
+	private void parseAndSetScheduleAttributes(Campaign campaign) {
+		campaign.setImpressions(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/Impressions")));
+		campaign.setClicks(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/Clicks")));
+		campaign.setUniques(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/Uniques")));
+		campaign.setWeight(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/Weight")));
+		campaign.setPriorityLevel(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/PriorityLevel")));
+		campaign.setCompletion(Completion.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/Completion")));
 
-		String startDateString = parser.getTrimmedElement("//Campaign/Schedule/StartDate");
+		String startDateString = responseParser.getTrimmedElement("//Campaign/Schedule/StartDate");
 		campaign.setStartDate(createLocalDate(startDateString, dateFormatter));
 
-		String startTimeString = parser.getTrimmedElement("//Campaign/Schedule/StartTime");
+		String startTimeString = responseParser.getTrimmedElement("//Campaign/Schedule/StartTime");
 		campaign.setStartTime(createLocalTime(startTimeString, timeFormatter));
 
-		String endDateString = parser.getTrimmedElement("//Campaign/Schedule/EndDate");
+		String endDateString = responseParser.getTrimmedElement("//Campaign/Schedule/EndDate");
 		campaign.setEndDate(createLocalDate(endDateString, dateFormatter));
 
-		String endTimeString = parser.getTrimmedElement("//Campaign/Schedule/EndTime");
+		String endTimeString = responseParser.getTrimmedElement("//Campaign/Schedule/EndTime");
 		campaign.setEndTime(createLocalTime(endTimeString, timeFormatter));
 
-		campaign.setReach(Reach.fromString(parser.getTrimmedElement("//Campaign/Schedule/Reach")));
-		campaign.setDailyImps(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyImp")));
-		campaign.setDailyClicks(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyClicks")));
-		campaign.setDailyUniques(createLong(parser.getTrimmedElement("//Campaign/Schedule/DailyUniq")));
+		campaign.setReach(Reach.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/Reach")));
+		campaign.setDailyImps(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/DailyImp")));
+		campaign.setDailyClicks(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/DailyClicks")));
+		campaign.setDailyUniques(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/DailyUniq")));
 
-		campaign.setSmoothOrAsap(SmoothAsap.fromString(parser.getTrimmedElement("//Campaign/Schedule/SmoothOrAsap")));
-		campaign.setImpressionsOverrun(createLong(parser.getTrimmedElement("//Campaign/Schedule/ImpOverrun")));
-		campaign.setCompanionPositions(parser.getTrimmedElementList("//Campaign/Schedule/CompanionPositions/CompanionPosition"));
-		campaign.setStrictCompanions(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Schedule/StrictCompanions")));
-		campaign.setPrimaryImpsPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ImpPerVisitor")));
-		campaign.setPrimaryClicksPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ClickPerVisitor")));
-		campaign.setPrimaryFrequencyScope(FrequencyScope.fromString((parser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/FreqScope"))));
-		campaign.setSecondaryImpsPerVisitor(createLong(parser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/ImpPerVisitor")));
-		campaign.setSecondaryFrequencyScope(FrequencyScope.fromString(parser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/FreqScope")));
+		campaign.setSmoothOrAsap(SmoothAsap.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/SmoothOrAsap")));
+		campaign.setImpressionsOverrun(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/ImpOverrun")));
+		campaign.setCompanionPositions(responseParser.getTrimmedElementList("//Campaign/Schedule/CompanionPositions/CompanionPosition"));
+		campaign.setStrictCompanions(createBooleanFromXmlString(responseParser.getTrimmedElement("//Campaign/Schedule/StrictCompanions")));
+		campaign.setPrimaryImpsPerVisitor(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ImpPerVisitor")));
+		campaign.setPrimaryClicksPerVisitor(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/ClickPerVisitor")));
+		campaign.setPrimaryFrequencyScope(FrequencyScope.fromString((responseParser.getTrimmedElement("//Campaign/Schedule/PrimaryFrequency/FreqScope"))));
+		campaign.setSecondaryImpsPerVisitor(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/ImpPerVisitor")));
+		campaign.setSecondaryFrequencyScope(FrequencyScope.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/SecondaryFrequency/FreqScope")));
 
-		List<String> hourOfDayCodes = parser.getTrimmedElementList("//Campaign/Schedule/HourOfDay/Hour");
+		List<String> hourOfDayCodes = responseParser.getTrimmedElementList("//Campaign/Schedule/HourOfDay/Hour");
 		if (hourOfDayCodes != null) {
 			List<HourOfDay> hoursOfDay = new ArrayList<HourOfDay>();
 			for (String hourCode : hourOfDayCodes) {
@@ -124,7 +131,7 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 			campaign.setHourOfDay(hoursOfDay);
 		}
 
-		List<String> daysOfWeekCodes = parser.getTrimmedElementList("//Campaign/Schedule/DayOfWeek/Day");
+		List<String> daysOfWeekCodes = responseParser.getTrimmedElementList("//Campaign/Schedule/DayOfWeek/Day");
 		if (daysOfWeekCodes != null) {
 			List<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
 			for (String dayOfWeekCode : daysOfWeekCodes) {
@@ -133,33 +140,33 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 			campaign.setDayOfWeek(daysOfWeek);
 		}
 
-		campaign.setUserTimeZone(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Schedule/UserTimeZone")));
-		campaign.setSectionIds(parser.getTrimmedElementList("//Campaign/Schedule/Sections/SectionId"));
-		return campaign;
+		campaign.setUserTimeZone(createBooleanFromXmlString(responseParser.getTrimmedElement("//Campaign/Schedule/UserTimeZone")));
+		campaign.setSectionIds(responseParser.getTrimmedElementList("//Campaign/Schedule/Sections/SectionId"));
 
 	}
 
-	private Campaign parseAndSetTargetingAttributes(final ResponseParser parser, Campaign campaign) {
-		campaign.setExcludeTargets(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeTargets")));
-		campaign.setTargetings(parseAndCreateGeneralTargeting(parser));
-		campaign.setZoneTargeting(parseAndCreateZoneTargeting(parser));
-		campaign.setMobileTargeting(parseAndCreateMobileTargeting(parser));
-		campaign.setRdbTargeting(parseAndCreateRdbTargeting(parser));
-		campaign.setSegmentTargeting(parseAndCreateSegmentTargeting(parser));
-		return campaign;
+	private void parseAndSetTargetingAttributes(Campaign campaign) {
+
+		campaign.setExcludeTargets(createBooleanFromXmlString(responseParser.getTrimmedElement("//Campaign/Target/ExcludeTargets")));
+
+		campaign.setTargetings(parseAndCreateGeneralTargeting());
+		campaign.setZoneTargeting(parseAndCreateZoneTargeting());
+		campaign.setMobileTargeting(parseAndCreateMobileTargeting());
+		campaign.setRdbTargeting(parseAndCreateRdbTargeting());
+		campaign.setSegmentTargeting(parseAndCreateSegmentTargeting());
 
 	}
 
-	private MobileTargetings parseAndCreateMobileTargeting(ResponseParser parser) {
+	private MobileTargetings parseAndCreateMobileTargeting() {
 
 		MobileTargetings mobileTargetingGroup = new MobileTargetings();
 
-		mobileTargetingGroup.setExcludeMobileDevice(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Target/ExcludeMobileTargeting")));
+		mobileTargetingGroup.setExcludeMobileDevice(createBooleanFromXmlString(responseParser.getTrimmedElement("//Campaign/Target/ExcludeMobileTargeting")));
 
 		final Map<TargetingCode, CampaignTargetValues> targetings = Maps.newHashMap();
 		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.MOBILE)) {
 
-			final List<String> values = populateTargetingValues(targetingCode, parser);
+			final List<String> values = populateTargetingValues(targetingCode);
 			final CampaignTargetValues targeting = new CampaignTargetValues();
 			targeting.setValues(values);
 			targetings.put(targetingCode, targeting);
@@ -169,30 +176,28 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		return mobileTargetingGroup;
 	}
 
-	private Campaign parseAndSetBillingAttributes(final ResponseParser parser, Campaign campaign) {
-		campaign.setCpm(createDouble(parser.getTrimmedElement("//Campaign/Billing/Cpm")));
-		campaign.setCpc(createDouble(parser.getTrimmedElement("//Campaign/Billing/Cpc")));
-		campaign.setCpa(createDouble(parser.getTrimmedElement("//Campaign/Billing/Cpa")));
-		campaign.setFlatRate(createDouble(parser.getTrimmedElement("//Campaign/Billing/FlatRate")));
-		campaign.setTax(createDouble(parser.getTrimmedElement("//Campaign/Billing/Tax")));
-		campaign.setAgencyCommission(NumberUtils.createDouble(parser.getTrimmedElement("//Campaign/Billing/AgencyCommission")));
-		campaign.setPaymentMethod(PaymentMethod.fromString(parser.getTrimmedElement("//Campaign/Billing/PaymentMethod")));
-		campaign.setIsYieldManaged(createBooleanFromXmlString(parser.getTrimmedElement("//Campaign/Billing/IsYieldManaged")));
-		campaign.setBillTo(BillTo.fromString(parser.getTrimmedElement("//Campaign/Billing/BillTo")));
-		campaign.setCurrency(parser.getTrimmedElement("//Campaign/Billing/Currency"));
-		return campaign;
+	private void parseAndSetBillingAttributes(Campaign campaign) {
+		campaign.setCpm(createDouble(responseParser.getTrimmedElement("//Campaign/Billing/Cpm")));
+		campaign.setCpc(createDouble(responseParser.getTrimmedElement("//Campaign/Billing/Cpc")));
+		campaign.setCpa(createDouble(responseParser.getTrimmedElement("//Campaign/Billing/Cpa")));
+		campaign.setFlatRate(createDouble(responseParser.getTrimmedElement("//Campaign/Billing/FlatRate")));
+		campaign.setTax(createDouble(responseParser.getTrimmedElement("//Campaign/Billing/Tax")));
+		campaign.setAgencyCommission(NumberUtils.createDouble(responseParser.getTrimmedElement("//Campaign/Billing/AgencyCommission")));
+		campaign.setPaymentMethod(PaymentMethod.fromString(responseParser.getTrimmedElement("//Campaign/Billing/PaymentMethod")));
+		campaign.setIsYieldManaged(createBooleanFromXmlString(responseParser.getTrimmedElement("//Campaign/Billing/IsYieldManaged")));
+		campaign.setBillTo(BillTo.fromString(responseParser.getTrimmedElement("//Campaign/Billing/BillTo")));
+		campaign.setCurrency(responseParser.getTrimmedElement("//Campaign/Billing/Currency"));
 
 	}
 
-	private Map<TargetingCode, CampaignExcludableTargetValues> parseAndCreateGeneralTargeting(
-			final ResponseParser parser) {
+	private Map<TargetingCode, CampaignExcludableTargetValues> parseAndCreateGeneralTargeting() {
 
 		final Map<TargetingCode, CampaignExcludableTargetValues> targetings = Maps.newHashMap();
 
 		for (TargetingCode targetingCode : TargetingCode.getCodesForGroup(TargetGroup.GENERAL)) {
 
-			final List<String> values = populateTargetingValues(targetingCode, parser);
-			final Boolean exclude = populateTargetingExcludeFlag(parser, targetingCode);
+			final List<String> values = populateTargetingValues(targetingCode);
+			final Boolean exclude = populateTargetingExcludeFlag(targetingCode);
 
 			final CampaignExcludableTargetValues targeting = new CampaignExcludableTargetValues();
 			targeting.setExclude(exclude);
@@ -203,9 +208,9 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		return targetings;
 	}
 
-	private CampaignTargetValues parseAndCreateZoneTargeting(final ResponseParser parser) {
+	private CampaignTargetValues parseAndCreateZoneTargeting() {
 
-		List<String> values = populateTargetingValues(TargetingCode.ZONE, parser);
+		List<String> values = populateTargetingValues(TargetingCode.ZONE);
 
 		final CampaignTargetValues targeting = new CampaignTargetValues();
 		targeting.setValues(values);
@@ -213,66 +218,66 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		return targeting;
 	}
 
-	private Boolean populateTargetingExcludeFlag(final ResponseParser parser,
-			TargetingCode targetingCode) {
-		String exculdeStr = parser.getTrimmedElement("//Campaign/Target/Exclude"
+	private Boolean populateTargetingExcludeFlag(TargetingCode targetingCode) {
+		String exculdeStr = responseParser.getTrimmedElement("//Campaign/Target/Exclude"
 				+ targetingCode.getCodeForCampaigns());
 		return createBooleanFromXmlString(exculdeStr);
 	}
 
-	private List<String> populateTargetingValues(TargetingCode targetingCode, final ResponseParser parser) {
-		return parser.getTrimmedElementList("//Campaign/Target/" + targetingCode.getCodeForCampaigns()
+	private List<String> populateTargetingValues(TargetingCode targetingCode) {
+		return responseParser.getTrimmedElementList("//Campaign/Target/" + targetingCode.getCodeForCampaigns()
 				+ "/Code");
 	}
 
-	private RdbTargeting parseAndCreateRdbTargeting(final ResponseParser parser) {
+	private RdbTargeting parseAndCreateRdbTargeting() {
+
 		RdbTargeting rdbTargeting = new RdbTargeting();
 
-		String ageExcludeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeAgeTargeting");
+		String ageExcludeStr = responseParser.getTrimmedElement("//Campaign/Target/ExcludeAgeTargeting");
 		rdbTargeting.setAgeExclude(createBooleanFromXmlString(ageExcludeStr));
 
-		String ageFromStr = parser.getTrimmedElement("//Campaign/Target/AgeFrom");
+		String ageFromStr = responseParser.getTrimmedElement("//Campaign/Target/AgeFrom");
 		rdbTargeting.setAgeFrom(createInteger(ageFromStr));
 
-		String ageToStr = parser.getTrimmedElement("//Campaign/Target/AgeTo");
+		String ageToStr = responseParser.getTrimmedElement("//Campaign/Target/AgeTo");
 		rdbTargeting.setAgeTo(createInteger(ageToStr));
 
-		String genderExculdeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeGenderTargeting");
+		String genderExculdeStr = responseParser.getTrimmedElement("//Campaign/Target/ExcludeGenderTargeting");
 		rdbTargeting.setGenderExclude(createBooleanFromXmlString(genderExculdeStr));
 
-		String genderStr = parser.getTrimmedElement("//Campaign/Target/Gender/Code");
+		String genderStr = responseParser.getTrimmedElement("//Campaign/Target/Gender/Code");
 		rdbTargeting.setGender(Gender.valueOf(genderStr));
 
-		String incomeExcludeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeIncomeTargeting");
+		String incomeExcludeStr = responseParser.getTrimmedElement("//Campaign/Target/ExcludeIncomeTargeting");
 		rdbTargeting.setIncomeExclude(createBooleanFromXmlString(incomeExcludeStr));
 
-		String incomeFromStr = parser.getTrimmedElement("//Campaign/Target/IncomeFrom");
+		String incomeFromStr = responseParser.getTrimmedElement("//Campaign/Target/IncomeFrom");
 		rdbTargeting.setIncomeFrom(createLong(incomeFromStr));
 
-		String incomeToStr = parser.getTrimmedElement("//Campaign/Target/IncomeTo");
+		String incomeToStr = responseParser.getTrimmedElement("//Campaign/Target/IncomeTo");
 		rdbTargeting.setIncomeTo(createLong(incomeToStr));
 
-		String subsciberExculdeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeSubscriberTargeting");
+		String subsciberExculdeStr = responseParser.getTrimmedElement("//Campaign/Target/ExcludeSubscriberTargeting");
 		rdbTargeting.setSubscriberCodeExclude(createBooleanFromXmlString(subsciberExculdeStr));
 
-		String subscriberCode = parser.getTrimmedElement("//Campaign/Target/SubscriberCode");
+		String subscriberCode = responseParser.getTrimmedElement("//Campaign/Target/SubscriberCode");
 		rdbTargeting.setSubscriberCode(subscriberCode);
 
-		String preferenceFlagsExclude = parser.getTrimmedElement("//Campaign/Target/ExcludePreferenceTargeting");
+		String preferenceFlagsExclude = responseParser.getTrimmedElement("//Campaign/Target/ExcludePreferenceTargeting");
 		rdbTargeting.setPreferenceFlagsExclude(createBooleanFromXmlString(preferenceFlagsExclude));
 
-		String preferenceFlags = parser.getTrimmedElement("//Campaign/Target/PreferenceFlags");
+		String preferenceFlags = responseParser.getTrimmedElement("//Campaign/Target/PreferenceFlags");
 		rdbTargeting.setPreferenceFlags(preferenceFlags);
 
 		return rdbTargeting;
 	}
 
-	private SegmentTargeting parseAndCreateSegmentTargeting(final ResponseParser parser) {
+	private SegmentTargeting parseAndCreateSegmentTargeting() {
 
 		SegmentTargeting targeting = new SegmentTargeting();
-		targeting.setSegmentType(SegmentType.fromString(parser.getTrimmedElement("//Campaign/Target/Cluster/SegmentType")));
-		String exculdeStr = parser.getTrimmedElement("//Campaign/Target/ExcludeSegmentTargeting");
-		List<String> targetingValues = parser.getTrimmedElementList("//Campaign/Target/Cluster/Segment");
+		targeting.setSegmentType(SegmentType.fromString(responseParser.getTrimmedElement("//Campaign/Target/Cluster/SegmentType")));
+		String exculdeStr = responseParser.getTrimmedElement("//Campaign/Target/ExcludeSegmentTargeting");
+		List<String> targetingValues = responseParser.getTrimmedElementList("//Campaign/Target/Cluster/Segment");
 		targeting.setValues(targetingValues);
 		targeting.setExclude(createBooleanFromXmlString(exculdeStr));
 		return targeting;
