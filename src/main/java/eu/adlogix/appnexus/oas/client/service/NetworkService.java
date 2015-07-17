@@ -19,13 +19,12 @@ import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
-import eu.adlogix.appnexus.oas.client.utils.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.parser.XmlPagePositionParser;
 import eu.adlogix.appnexus.oas.client.xml.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
-
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
@@ -208,8 +207,8 @@ public class NetworkService extends AbstractOasService {
 
 		for (String url : pageUrls) {
 
-			String pageUrl = OasPageUrlParser.getPageUrl(url);
-			String position = OasPageUrlParser.getPosition(url);
+			String pageUrl = XmlPagePositionParser.getPageUrl(url);
+			String position = XmlPagePositionParser.getPosition(url);
 
 			if (!mapPositionsPerPage.containsKey(pageUrl)) {
 				// Create page

@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.utils;
+package eu.adlogix.appnexus.oas.client.parser;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
  * OasPageUrlParser class handles OAS Page url parsing related functions.
  * 
  */
-public class OasPageUrlParser {
+public class XmlPagePositionParser {
 
 	/**
 	 * Retrieves page url from the given url string. eg: when the url is

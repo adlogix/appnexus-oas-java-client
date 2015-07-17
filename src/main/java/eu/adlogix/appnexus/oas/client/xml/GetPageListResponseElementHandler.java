@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Site;
-import eu.adlogix.appnexus.oas.client.utils.OasPageUrlParser;
+import eu.adlogix.appnexus.oas.client.parser.XmlPagePositionParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 
@@ -29,8 +29,8 @@ public final class GetPageListResponseElementHandler implements ResponseElementH
 
 		if (!StringUtils.isEmpty(url)) {
 
-			String pageUrl = OasPageUrlParser.getPageUrl(url);
-			String position = OasPageUrlParser.getPosition(url);
+			String pageUrl = XmlPagePositionParser.getPageUrl(url);
+			String position = XmlPagePositionParser.getPosition(url);
 
 			addPageToPageMap(element, pageUrl);
 			addPositionToPageMap(position, pageUrl);
