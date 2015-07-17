@@ -16,12 +16,10 @@ public abstract class AbstractOasService {
 
 	private static final Logger logger = LogUtils.getLogger(AbstractOasService.class);
 
-	protected static final String OAS_DATE_FORMAT = "yyyy-MM-dd";
-
-	private OasApiService OasApiService;
+	private OasApiService oasApiService;
 
 	protected AbstractOasService(OasApiService apiService) {
-		this.OasApiService = apiService;
+		this.oasApiService = apiService;
 	}
 
 	/**
@@ -101,7 +99,7 @@ public abstract class AbstractOasService {
 	private String performRequest(final String xmlRequest, final boolean retryOnConnectionErrors) {
 		try {
 			logger.info("Making Request:\n" + xmlRequest);
-			final String xmlResponse = OasApiService.callApi(xmlRequest, retryOnConnectionErrors);
+			final String xmlResponse = oasApiService.callApi(xmlRequest, retryOnConnectionErrors);
 			logger.info("Recieved Response:\n" + xmlResponse);
 			return xmlResponse;
 		} catch (final Exception exception) {

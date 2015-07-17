@@ -1,16 +1,17 @@
 package eu.adlogix.appnexus.oas.client.parser;
 
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 import lombok.AllArgsConstructor;
 import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
+
 @AllArgsConstructor
 public class XmlToInsertionOrderParser implements XmlToObjectParser<InsertionOrder> {
 
-	ResponseParser parser;
+	private final ResponseParser parser;
 
 	@Override
 	public InsertionOrder parse() {

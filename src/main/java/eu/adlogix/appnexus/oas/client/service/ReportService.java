@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import eu.adlogix.appnexus.oas.client.domain.CampaignDeliveryByPageAndPosition;
 import eu.adlogix.appnexus.oas.client.domain.CampaignDetail;
@@ -16,6 +14,7 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
@@ -29,7 +28,6 @@ public class ReportService extends AbstractOasService {
 		super(apiService);
 	}
 
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern(OAS_DATE_FORMAT);
 	private static final String CUSTOMREPORT_TAG = "CustomReport";
 
 	private final XmlRequestGenerator inventoryReportRequestGenerator = new XmlRequestGenerator("inventory-report");

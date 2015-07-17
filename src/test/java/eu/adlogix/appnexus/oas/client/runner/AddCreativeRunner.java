@@ -1,18 +1,14 @@
 package eu.adlogix.appnexus.oas.client.runner;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.Creative;
 import eu.adlogix.appnexus.oas.client.service.CreativeService;
 import eu.adlogix.appnexus.oas.client.service.OasServiceFactory;
 import eu.adlogix.appnexus.oas.client.util.TestCredentials;
+import eu.adlogix.appnexus.oas.client.utils.ParserUtil;
 
 public class AddCreativeRunner {
-
-	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
-	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
 
 	public static void main(String[] args) {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
@@ -34,10 +30,10 @@ public class AddCreativeRunner {
 		creative.setAltText("alt text value");
 		creative.setDiscountImpressions(false);
 
-		creative.setStartDate(DATE_FORMATTER.parseLocalDate("2015-12-01"));
-		creative.setStartTime(TIME_FORMATTER.parseLocalTime("04:00"));
-		creative.setEndDate(DATE_FORMATTER.parseLocalDate("2016-01-31"));
-		creative.setEndTime(TIME_FORMATTER.parseLocalTime("15:59"));
+		creative.setStartDate(ParserUtil.DATE_FORMATTER.parseLocalDate("2015-12-01"));
+		creative.setStartTime(ParserUtil.TIME_FORMATTER.parseLocalTime("04:00"));
+		creative.setEndDate(ParserUtil.DATE_FORMATTER.parseLocalDate("2016-01-31"));
+		creative.setEndTime(ParserUtil.TIME_FORMATTER.parseLocalTime("15:59"));
 
 		creative.setWeight(10);
 		creative.setExpireImmediately(false);

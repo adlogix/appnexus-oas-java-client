@@ -26,6 +26,8 @@ import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMAT_STRING;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
@@ -124,7 +126,7 @@ public class NetworkService extends AbstractOasService {
 
 		final Map<String, Object> parameters = new HashMap<String, Object>();
 		if (lastModifiedDate != null) {
-			parameters.put("lastModifiedDate", lastModifiedDate.toString(OAS_DATE_FORMAT));
+			parameters.put("lastModifiedDate", lastModifiedDate.toString(DATE_FORMAT_STRING));
 		}
 
 		// If siteMap is empty, sites will not be loaded and will have site with
@@ -163,7 +165,7 @@ public class NetworkService extends AbstractOasService {
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		if (lastModifiedDate != null) {
-			parameters.put("lastModifiedDate", lastModifiedDate.toString(OAS_DATE_FORMAT));
+			parameters.put("lastModifiedDate", lastModifiedDate.toString(DATE_FORMATTER));
 		}
 
 		ResponseElementHandler getSectionListResponseElementHandler = new ResponseElementHandler() {

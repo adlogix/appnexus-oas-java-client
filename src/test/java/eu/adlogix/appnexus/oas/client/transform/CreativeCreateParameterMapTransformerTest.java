@@ -2,19 +2,18 @@ package eu.adlogix.appnexus.oas.client.transform;
 
 import java.util.Map;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.Creative;
 import eu.adlogix.appnexus.oas.client.domain.Creative.CreativeFile;
+
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.TIME_FORMATTER;
+
 import static org.testng.Assert.assertEquals;
 
 public class CreativeCreateParameterMapTransformerTest {
-
-	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
-	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
 
 	@Test
 	public void transform_CreativeFilesWithComponent_ParametersExist() {

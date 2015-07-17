@@ -7,8 +7,6 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import com.google.common.collect.Maps;
 
@@ -33,7 +31,6 @@ import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetGroup;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
-
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createBooleanFromXmlString;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createDouble;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createInteger;
@@ -43,9 +40,6 @@ import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.createLong;
 
 @AllArgsConstructor
 public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
-
-	private static final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-	private static final DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm");
 
 	private final ResponseParser responseParser;
 
@@ -96,16 +90,16 @@ public class XmlToCampaignParser implements XmlToObjectParser<Campaign>{
 		campaign.setCompletion(Completion.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/Completion")));
 
 		String startDateString = responseParser.getTrimmedElement("//Campaign/Schedule/StartDate");
-		campaign.setStartDate(createLocalDate(startDateString, dateFormatter));
+		campaign.setStartDate(createLocalDate(startDateString));
 
 		String startTimeString = responseParser.getTrimmedElement("//Campaign/Schedule/StartTime");
-		campaign.setStartTime(createLocalTime(startTimeString, timeFormatter));
+		campaign.setStartTime(createLocalTime(startTimeString));
 
 		String endDateString = responseParser.getTrimmedElement("//Campaign/Schedule/EndDate");
-		campaign.setEndDate(createLocalDate(endDateString, dateFormatter));
+		campaign.setEndDate(createLocalDate(endDateString));
 
 		String endTimeString = responseParser.getTrimmedElement("//Campaign/Schedule/EndTime");
-		campaign.setEndTime(createLocalTime(endTimeString, timeFormatter));
+		campaign.setEndTime(createLocalTime(endTimeString));
 
 		campaign.setReach(Reach.fromString(responseParser.getTrimmedElement("//Campaign/Schedule/Reach")));
 		campaign.setDailyImps(createLong(responseParser.getTrimmedElement("//Campaign/Schedule/DailyImp")));

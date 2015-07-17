@@ -5,15 +5,14 @@ import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import eu.adlogix.appnexus.oas.client.domain.enums.XmlBoolean;
 
-public abstract class AbstractParameterMapTransformer implements ParameterMapTransformer {
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.TIME_FORMATTER;
 
-	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
-	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
+public abstract class AbstractParameterMapTransformer implements ParameterMapTransformer {
 
 	protected void checkValueAndPutParam(String paramName, String paramValue, Map<String, Object> result) {
 		if (paramValue != null)
