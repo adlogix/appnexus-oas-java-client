@@ -6,12 +6,15 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * Represents a Page (Web page) which has a URL
+ */
 @Data
 public final class Page {
 
 	private final String url;
-	private Site site;
 	private final List<Position> positions;
+	private Site site;
 
 	public Page(final String url, final List<Position> positions, final Site site) {
 		this.url = url;

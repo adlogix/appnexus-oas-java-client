@@ -7,7 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * Refers to a Section in OAS
+ * Represents a Section which can group {@link Page}s based on various criteria.
+ * Ex: based on the subject of its content
  */
 @Data
 @AllArgsConstructor

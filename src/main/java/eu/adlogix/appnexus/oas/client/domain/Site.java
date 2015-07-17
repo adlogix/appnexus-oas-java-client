@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * A Site in OAS
+ * Represents a Site (Website)
  */
 @AllArgsConstructor
 @Data
