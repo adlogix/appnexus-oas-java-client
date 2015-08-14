@@ -13,6 +13,7 @@ import eu.adlogix.appnexus.oas.client.domain.enums.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignType;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
+import eu.adlogix.appnexus.oas.client.transform.CampaignParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
@@ -67,7 +68,7 @@ public class CampaignService extends AbstractOasService {
 
 		final Campaign campaignWithDefaults = setDefaultsForEmptyFields(campaign);
 
-		CampaignCreateParameterMapTransformer parameterTransformer = new CampaignCreateParameterMapTransformer(campaignWithDefaults);
+		CampaignParameterMapTransformer parameterTransformer = new CampaignCreateParameterMapTransformer(campaignWithDefaults);
 
 		performRequest(addCampaignRequestGenerator, parameterTransformer.transform());
 
