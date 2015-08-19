@@ -35,7 +35,7 @@ public abstract class AbstractOasService {
 	 *            and parameter values as values
 	 * @return {@link ResponseParser} of the Response String
 	 */
-	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+	protected ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
 			final Map<String, Object> parameters) {
 		return performRequest(xmlRequestGenerator, parameters, false);
 	}
@@ -55,7 +55,7 @@ public abstract class AbstractOasService {
 	 *            found on invocation. Best for state less methods
 	 * @return {@link ResponseParser} of the Response String
 	 */
-	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+	protected ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
 			final Map<String, Object> parameters, final boolean retryOnConnectionErrors) {
 		return performRequest(xmlRequestGenerator, parameters, retryOnConnectionErrors, false);
 	}
@@ -81,7 +81,7 @@ public abstract class AbstractOasService {
 	 *            {@link ResponseParser#getExceptionMessage()}
 	 * @return {@link ResponseParser} of the Response String
 	 */
-	public ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
+	protected ResponseParser performRequest(final XmlRequestGenerator xmlRequestGenerator,
 			final Map<String, Object> parameters, final boolean retryOnConnectionErrors,
 			final boolean suppressOasServerSideExceptions) {
 
@@ -127,7 +127,7 @@ public abstract class AbstractOasService {
 	 *            An implementation of {@link ResponseElementHandler} which does
 	 *            a custom action on finding instances of xPathLoopExpression
 	 */
-	public void performPagedRequest(final XmlRequestGenerator requestGenerator,
+	protected void performPagedRequest(final XmlRequestGenerator requestGenerator,
 			final Map<String, Object> requestParams, final String sizeHeaderTag, final String xPathLoopExpression,
 			final ResponseElementHandler responseElementHandler) {
 
