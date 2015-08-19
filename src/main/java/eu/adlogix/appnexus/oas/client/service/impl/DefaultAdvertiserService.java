@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
@@ -13,24 +13,28 @@ import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToAdvertiserParser;
+import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
+import eu.adlogix.appnexus.oas.client.service.AdvertiserService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
 /**
- * Service Class which provides functions for all Advertiser related operations
+ * Default implementation of {@link AdvertiserService} which provides functions
+ * for Advertiser related operations
  * 
  */
 @SuppressWarnings("serial")
-public class AdvertiserService extends AbstractOasService {
+public class DefaultAdvertiserService extends AbstractOasService implements AdvertiserService {
 
 	private final XmlRequestGenerator addAdvertiserRequestGenerator = new XmlRequestGenerator("add-advertiser");
 	private final XmlRequestGenerator listAdvertisersRequestGenerator = new XmlRequestGenerator("list-advertisers");
 	private final XmlRequestGenerator readAdvertisersRequestGenerator = new XmlRequestGenerator("read-advertiser");
 	private final XmlRequestGenerator updateAdvertiserRequestGenerator = new XmlRequestGenerator("update-advertiser");
 
-	AdvertiserService(OasApiService apiService) {
+	public DefaultAdvertiserService(OasApiService apiService) {
 		super(apiService);
 	}
 

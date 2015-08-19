@@ -1,4 +1,9 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,23 +18,21 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.domain.TargetingCodeData;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
+import eu.adlogix.appnexus.oas.client.service.TargetingService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
-public class TargetingServiceTest {
+public class DefaultTargetingServiceTest {
 	@Test
 	public void getTargetingCodeDataLists_DeviceGroup_Success() throws FileNotFoundException, URISyntaxException,
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		TargetingService service = new TargetingService(mockedApiService);
+		TargetingService service = new DefaultTargetingService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-devicegroup-request.xml", TargetingServiceTest.class));
-		final String expectedAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-devicegroup-answer.xml", TargetingServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-devicegroup-request.xml", DefaultTargetingServiceTest.class));
+		final String expectedAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-devicegroup-answer.xml", DefaultTargetingServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(expectedAnswer);
 
 		TargetingCode targetingType = TargetingCode.DEVICE_GROUP;
@@ -59,10 +62,10 @@ public class TargetingServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		TargetingService service = new TargetingService(mockedApiService);
+		TargetingService service = new DefaultTargetingService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-browser-request.xml", TargetingServiceTest.class));
-		final String expectedAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-browser-answer.xml", TargetingServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-browser-request.xml", DefaultTargetingServiceTest.class));
+		final String expectedAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-browser-answer.xml", DefaultTargetingServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(expectedAnswer);
 
 		TargetingCode targetingType = TargetingCode.BROWSER;

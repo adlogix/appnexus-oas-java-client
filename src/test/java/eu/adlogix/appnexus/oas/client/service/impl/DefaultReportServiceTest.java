@@ -1,4 +1,10 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
+
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,17 +23,12 @@ import eu.adlogix.appnexus.oas.client.domain.CampaignDetail.CampaignDetailDelive
 import eu.adlogix.appnexus.oas.client.domain.PageAtPositionDeliveryInformation;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
+import eu.adlogix.appnexus.oas.client.service.ReportService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-
-public class ReportServiceTest {
+public class DefaultReportServiceTest {
 
 	public final List<PageAtPositionDeliveryInformation.Row> expectedHistoStats() {
 		List<PageAtPositionDeliveryInformation.Row> expectedHistoStats = new ArrayList<PageAtPositionDeliveryInformation.Row>();
@@ -68,14 +69,14 @@ public class ReportServiceTest {
 			FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedPageOneRequest = fileToString("inventory-report-page1-request-test.xml");
 		final String mockedPageOneAnswer = fileToString("inventory-report-page1-answer-test.xml");
 		when(mockedApiService.callApi(expectedPageOneRequest, true)).thenReturn(mockedPageOneAnswer);
 
-		final String expectedPageTwoRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-request-test.xml", ReportServiceTest.class));
-		final String mockedPageTwoAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-answer-test.xml", ReportServiceTest.class));
+		final String expectedPageTwoRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-request-test.xml", DefaultReportServiceTest.class));
+		final String mockedPageTwoAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("inventory-report-page2-answer-test.xml", DefaultReportServiceTest.class));
 		when(mockedApiService.callApi(expectedPageTwoRequest, true)).thenReturn(mockedPageTwoAnswer);
 
 		final DateTime testedStartDate = new DateTime().withYear(2011).withMonthOfYear(4).withDayOfMonth(1);
@@ -113,7 +114,7 @@ public class ReportServiceTest {
 			throws ServiceException,
 			FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedLiveDeliRequest = fileToString("expected-request-addeliveryreport-inventory.xml");
 		final String mockedLiveDeliAnswer = fileToString("expected-response-addeliveryreport-inventory.xml");
@@ -132,7 +133,7 @@ public class ReportServiceTest {
 
 	private String fileToString(String fileName) throws URISyntaxException, FileNotFoundException, IOException,
 			ResourceNotFoundException {
-		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, ReportServiceTest.class));
+		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, DefaultReportServiceTest.class));
 	}
 
 	@Test
@@ -140,7 +141,7 @@ public class ReportServiceTest {
 			throws ServiceException, FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedLiveDeliRequest = fileToString("expected-request-adstatusreport-livedeli-noenddate.xml");
 		final String mockedLiveDeliAnswer = fileToString("expected-answer-adstatusreport-livedeli-noenddate.xml");
@@ -166,7 +167,7 @@ public class ReportServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		service.getCampaignDetail("0312_AXA-CENTRAL_XPR_HAB_5894", DATE_FORMATTER.parseDateTime("2012-02-22"), null);
 	}
@@ -177,7 +178,7 @@ public class ReportServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedAdTrafficRequestOfDay = fileToString("expected-request-trafficonedayreport-readcampaign.xml");
 		final String answerAdTrafficRequestOfDay = fileToString("expected-answer-trafficonedayreport-readcampaign.xml");
@@ -193,7 +194,7 @@ public class ReportServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedAdTrafficRequestOfDay23 = fileToString("expected-request-addeliveryreport-report-23.xml");
 		final String answerAdTrafficRequestOfDay23 = fileToString("expected-response-addeliveryreport-report-23.xml");
@@ -212,7 +213,7 @@ public class ReportServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ReportService service = new ReportService(mockedApiService);
+		ReportService service = new DefaultReportService(mockedApiService);
 
 		final String expectedAdTrafficRequest = fileToString("expected-request-addeliveryreport-1.xml");
 		final String answerAdTrafficRequest = fileToString("expected-answer-addeliveryreport-1.xml");

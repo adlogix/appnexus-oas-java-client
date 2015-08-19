@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
@@ -15,15 +15,17 @@ import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.service.InsertionOrderService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
-public class InsertionOrderServiceTest {
+public class DefaultInsertionOrderServiceTest {
 
 	@Test
 	public final void add_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-insertionorder-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-insertionorder-successful-response.xml", this.getClass()));
@@ -47,7 +49,7 @@ public class InsertionOrderServiceTest {
 	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-insertionorder-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-insertionorder-id-already-exists-response.xml", this.getClass()));
@@ -68,7 +70,7 @@ public class InsertionOrderServiceTest {
 	public final void update_UpdateBookedImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-update-io-bookedimps-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-insertionorder-successful-response.xml", this.getClass()));
@@ -87,7 +89,7 @@ public class InsertionOrderServiceTest {
 	public final void update_UpdateClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-update-io-bookedclicks-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-insertionorder-successful-response.xml", this.getClass()));
@@ -106,7 +108,7 @@ public class InsertionOrderServiceTest {
 	public final void update_UpdateCampaigns_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-update-io-campaigns-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-insertionorder-successful-response.xml", this.getClass()));
@@ -125,7 +127,7 @@ public class InsertionOrderServiceTest {
 	public final void getById_ExistingInsertionOrder_ReturnInsertionOrder() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-insertionorder-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-insertionorder-response.xml", this.getClass()));
@@ -154,7 +156,7 @@ public class InsertionOrderServiceTest {
 	public final void getById_InvalidId_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		InsertionOrderService service = new InsertionOrderService(mockedApiService);
+		InsertionOrderService service = new DefaultInsertionOrderService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-insertionorder-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-insertionorder-invalid-id-response.xml", this.getClass()));

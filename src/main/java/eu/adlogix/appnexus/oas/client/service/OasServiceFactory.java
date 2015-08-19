@@ -1,10 +1,20 @@
 package eu.adlogix.appnexus.oas.client.service;
 
 import eu.adlogix.appnexus.oas.client.domain.Credentials;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultAdvertiserService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultCampaignGroupService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultCampaignService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultCompetitiveCategoryService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultCreativeService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultInsertionOrderService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultNetworkService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultProductService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultReportService;
+import eu.adlogix.appnexus.oas.client.service.impl.DefaultTargetingService;
 
 
 /**
- * Factory that should be used to create OAS Services ({@link AdvertiserService}
+ * Factory that should be used to create OAS Services ({@link DefaultAdvertiserService}
  * , {@link ReportService}, {@link NetworkService})
  * 
  **/
@@ -46,13 +56,13 @@ public class OasServiceFactory {
 	}
 
 	/**
-	 * Getter Method for {@link AdvertiserService}
+	 * Getter Method for {@link DefaultAdvertiserService}
 	 * 
-	 * @return {@link AdvertiserService}
+	 * @return {@link DefaultAdvertiserService}
 	 */
 	public AdvertiserService getAdvertiserService() {
 		if (advertiserService == null) {
-			advertiserService = new AdvertiserService(oasApiService);
+			advertiserService = new DefaultAdvertiserService(oasApiService);
 		}
 		return advertiserService;
 	}
@@ -64,7 +74,7 @@ public class OasServiceFactory {
 	 */
 	public NetworkService getNetworkService(){
 		if (networkService == null) {
-			networkService = new NetworkService(oasApiService);
+			networkService = new DefaultNetworkService(oasApiService);
 		}
 		return networkService;
 	}
@@ -76,7 +86,7 @@ public class OasServiceFactory {
 	 */
 	public ReportService getReportService() {
 		if (reportService == null) {
-			reportService = new ReportService(oasApiService);
+			reportService = new DefaultReportService(oasApiService);
 		}
 		return reportService;
 	}
@@ -88,7 +98,7 @@ public class OasServiceFactory {
 	 */
 	public InsertionOrderService getInsertionOrderService() {
 		if (insertionOrderService == null) {
-			insertionOrderService = new InsertionOrderService(oasApiService);
+			insertionOrderService = new DefaultInsertionOrderService(oasApiService);
 		}
 		return insertionOrderService;
 	}
@@ -100,7 +110,7 @@ public class OasServiceFactory {
 	 */
 	public TargetingService getTargetingService() {
 		if (targetingService == null) {
-			targetingService = new TargetingService(oasApiService);
+			targetingService = new DefaultTargetingService(oasApiService);
 		}
 		return targetingService;
 	}
@@ -112,7 +122,7 @@ public class OasServiceFactory {
 	 */
 	public CompetitiveCategoryService getCompetitiveCategoryService() {
 		if (competitiveCategoryService == null) {
-			competitiveCategoryService = new CompetitiveCategoryService(oasApiService);
+			competitiveCategoryService = new DefaultCompetitiveCategoryService(oasApiService);
 		}
 		return competitiveCategoryService;
 	}
@@ -124,7 +134,7 @@ public class OasServiceFactory {
 	 */
 	public CampaignGroupService getCampaignGroupService() {
 		if (campaignGroupService == null) {
-			campaignGroupService = new CampaignGroupService(oasApiService);
+			campaignGroupService = new DefaultCampaignGroupService(oasApiService);
 		}
 		return campaignGroupService;
 	}
@@ -136,7 +146,7 @@ public class OasServiceFactory {
 	 */
 	public CreativeService getCreativeService() {
 		if (creativeService == null) {
-			creativeService = new CreativeService(oasApiService);
+			creativeService = new DefaultCreativeService(oasApiService);
 		}
 		return creativeService;
 	}
@@ -147,7 +157,7 @@ public class OasServiceFactory {
 	 */
 	public CampaignService getCampaignService() {
 		if (campaignService == null) {
-			campaignService = new CampaignService(oasApiService);
+			campaignService = new DefaultCampaignService(oasApiService);
 		}
 		return campaignService;
 	}
@@ -159,7 +169,7 @@ public class OasServiceFactory {
 	 */
 	public ProductService getProductService() {
 		if (productService == null) {
-			productService = new ProductService(oasApiService);
+			productService = new DefaultProductService(oasApiService);
 		}
 		return productService;
 	}

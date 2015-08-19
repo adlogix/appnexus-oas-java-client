@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
@@ -12,15 +12,17 @@ import org.testng.annotations.Test;
 
 import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.service.AdvertiserService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
-public class AdvertiserServiceTest {
+public class DefaultAdvertiserServiceTest {
 
 	@Test
 	public final void getById_ExistingAdvertiser_ReturnAdvertiser() throws Exception {
 		
 		OasApiService mockedApiService=mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-advertiser-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-response.xml", this.getClass()));
@@ -37,7 +39,7 @@ public class AdvertiserServiceTest {
 	public final void getById_InvalidId_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-advertiser-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-invalid-id-response.xml", this.getClass()));
@@ -50,7 +52,7 @@ public class AdvertiserServiceTest {
 	public final void add_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-advertiser-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-successful-response.xml", this.getClass()));
@@ -68,7 +70,7 @@ public class AdvertiserServiceTest {
 	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-advertiser-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-advertiser-id-already-exists-response.xml", this.getClass()));
@@ -85,7 +87,7 @@ public class AdvertiserServiceTest {
 	public final void getAll_NoExceptions_ReturnAllAdvertisers() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-list-advertisers-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("list-advertisers-response.xml", this.getClass()));
@@ -107,7 +109,7 @@ public class AdvertiserServiceTest {
 	public final void update_UpdateOrganization_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		AdvertiserService service = new AdvertiserService(mockedApiService);
+		AdvertiserService service = new DefaultAdvertiserService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-update-advertiser-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("update-advertiser-successful-response.xml", this.getClass()));

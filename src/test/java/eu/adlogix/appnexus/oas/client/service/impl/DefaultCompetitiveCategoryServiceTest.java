@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -17,19 +17,21 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.domain.CompetitiveCategory;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.CompetitiveCategoryService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-public class CompetitiveCategoryServiceTest {
+public class DefaultCompetitiveCategoryServiceTest {
 	@Test
 	public void getAll_NoError_ReturnCategories() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
+		CompetitiveCategoryService service = new DefaultCompetitiveCategoryService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-get-all-competitive-categories.xml", CompetitiveCategoryServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-get-all-competitive-categories.xml", CompetitiveCategoryServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-get-all-competitive-categories.xml", DefaultCompetitiveCategoryServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-get-all-competitive-categories.xml", DefaultCompetitiveCategoryServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		List<CompetitiveCategory> categories = service.getAll();
@@ -52,10 +54,10 @@ public class CompetitiveCategoryServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
+		CompetitiveCategoryService service = new DefaultCompetitiveCategoryService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", DefaultCompetitiveCategoryServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-add-competitive-category.xml", DefaultCompetitiveCategoryServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		service.add(new CompetitiveCategory("testCompetitiveCategory00"));
@@ -68,10 +70,10 @@ public class CompetitiveCategoryServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CompetitiveCategoryService service = new CompetitiveCategoryService(mockedApiService);
+		CompetitiveCategoryService service = new DefaultCompetitiveCategoryService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", CompetitiveCategoryServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-id-already-exists-error.xml", CompetitiveCategoryServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-add-competitive-category.xml", DefaultCompetitiveCategoryServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-response-id-already-exists-error.xml", DefaultCompetitiveCategoryServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		service.add(new CompetitiveCategory("testCompetitiveCategory00"));

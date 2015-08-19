@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.TIME_FORMATTER;
@@ -19,10 +19,12 @@ import eu.adlogix.appnexus.oas.client.domain.Creative;
 import eu.adlogix.appnexus.oas.client.domain.Creative.CreativeFile;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.CreativeService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-public class CreativeServiceTest {
+public class DefaultCreativeServiceTest {
 
 	@Test
 	public void add_CreativeWithFiles_NoError() throws FileNotFoundException, URISyntaxException,
@@ -30,7 +32,7 @@ public class CreativeServiceTest {
 			ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CreativeService service = new CreativeService(mockedApiService);
+		CreativeService service = new DefaultCreativeService(mockedApiService);
 
 		final String expectedRequest = loadXml("expected-add-creative-request.xml");
 		final String mockedpAnswer = loadXml("successful-creative-add-answer.xml");
@@ -78,7 +80,7 @@ public class CreativeServiceTest {
 	}
 
 	private String loadXml(String fileName) throws URISyntaxException, FileNotFoundException, IOException, ResourceNotFoundException {
-		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, CreativeServiceTest.class));
+		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, DefaultCreativeServiceTest.class));
 	}
 
 	@Test
@@ -86,7 +88,7 @@ public class CreativeServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CreativeService service = new CreativeService(mockedApiService);
+		CreativeService service = new DefaultCreativeService(mockedApiService);
 
 		final String expectedRequest = loadXml("expected-add-creative-request-with-redirecturl.xml");
 		final String mockedpAnswer = loadXml("successful-creative-add-answer.xml");
@@ -136,7 +138,7 @@ public class CreativeServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CreativeService service = new CreativeService(mockedApiService);
+		CreativeService service = new DefaultCreativeService(mockedApiService);
 
 		final String expectedRequest = loadXml("expected-add-creative-request-without-file-and-redirecturl.xml");
 		final String mockedpAnswer = loadXml("successful-creative-add-answer.xml");
@@ -174,7 +176,7 @@ public class CreativeServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CreativeService service = new CreativeService(mockedApiService);
+		CreativeService service = new DefaultCreativeService(mockedApiService);
 
 		final String expectedRequest = loadXml("expected-add-creative-request-without-file-and-redirecturl.xml");
 		final String mockedpAnswer = loadXml("enddatepast-creative-add-answer.xml");

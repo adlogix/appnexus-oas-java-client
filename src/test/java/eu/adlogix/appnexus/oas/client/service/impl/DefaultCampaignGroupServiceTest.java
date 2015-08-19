@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -16,16 +16,18 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.domain.CampaignGroup;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.CampaignGroupService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-public class CampaignGroupServiceTest {
+public class DefaultCampaignGroupServiceTest {
 	@Test
 	public void add_DoesntExist_Success() throws ServiceException, FileNotFoundException, URISyntaxException,
 			IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignGroupService service = new CampaignGroupService(mockedApiService);
+		CampaignGroupService service = new DefaultCampaignGroupService(mockedApiService);
 
 		final String request = contentFromFile("add-campaign-group.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-campaign-group-successful-response.xml"));
@@ -40,7 +42,7 @@ public class CampaignGroupServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignGroupService service = new CampaignGroupService(mockedApiService);
+		CampaignGroupService service = new DefaultCampaignGroupService(mockedApiService);
 
 		final String request = contentFromFile("add-campaign-group-with-all-fields.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-campaign-group-successful-response.xml"));
@@ -58,14 +60,14 @@ public class CampaignGroupServiceTest {
 
 	private String contentFromFile(String fileName) throws FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException {
-		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, CampaignGroupServiceTest.class));
+		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, DefaultCampaignGroupServiceTest.class));
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[512\\]: 'ID Already Exists.'")
 	public void add_AlreadyExists_Failure() throws FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException, ServiceException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignGroupService service = new CampaignGroupService(mockedApiService);
+		CampaignGroupService service = new DefaultCampaignGroupService(mockedApiService);
 
 		final String request = contentFromFile("add-campaign-group.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-campaign-group-id-already-exists-response.xml"));
@@ -79,7 +81,7 @@ public class CampaignGroupServiceTest {
 	public void add_Error_Failure() throws FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException, ServiceException {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignGroupService service = new CampaignGroupService(mockedApiService);
+		CampaignGroupService service = new DefaultCampaignGroupService(mockedApiService);
 
 		final String request = contentFromFile("add-campaign-group.xml");
 		when(mockedApiService.callApi(request, false)).thenReturn(contentFromFile("add-insertion-order-error.xml"));

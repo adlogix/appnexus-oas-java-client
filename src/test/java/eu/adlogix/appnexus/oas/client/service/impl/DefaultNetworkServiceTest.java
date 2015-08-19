@@ -1,4 +1,11 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,25 +25,21 @@ import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.NetworkService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
 
-public class NetworkServiceTest {
+public class DefaultNetworkServiceTest {
 	@Test
 	public void getAllSites_NoError_ReturnAllSites() throws FileNotFoundException, URISyntaxException, IOException,
 			ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsites.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsites.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsites.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsites.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = service.getAllSites();
@@ -59,10 +62,10 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
@@ -104,10 +107,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
@@ -143,10 +146,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
@@ -183,10 +186,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
@@ -219,10 +222,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
@@ -285,10 +288,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
@@ -345,10 +348,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		service.getAllPagesWithPositionsModifiedSinceDate(null, new ArrayList<Site>());
@@ -361,10 +364,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages-modifieddate.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpages-modifieddate.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
@@ -402,10 +405,10 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		Section section = service.readSection("Finegil.Centro.Necro");
@@ -427,10 +430,10 @@ public class NetworkServiceTest {
 			ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-nopositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-nopositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		Section section = service.readSection("Finegil.Centro.Necro");
@@ -450,10 +453,10 @@ public class NetworkServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-nopages.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-nopages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		Section section = service.readSection("Finegil.Centro.Necro");
@@ -469,10 +472,10 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-multiplepages.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-multiplepages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		Section section = service.readSection("Finegil.Centro.Necro");
@@ -510,18 +513,18 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		final String expectedSectionRequest1 = (TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer1 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest1 = (TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer1 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
 
-		final String expectedSectionRequest2 = (TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer2 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest2 = (TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer2 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
 
 		List<Section> sections = service.getSectionListModifiedSinceDate(null);
@@ -548,18 +551,18 @@ public class NetworkServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		final String expectedSectionRequest1 = (TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer1 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest1 = (TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer1 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
 
-		final String expectedSectionRequest2 = (TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer2 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest2 = (TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer2 = (TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
 
 		List<Section> sections = service.getAllSections();
@@ -586,18 +589,18 @@ public class NetworkServiceTest {
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections-modifieddate.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections-modifieddate.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		final String expectedSectionRequest1 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer1 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest1 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer1 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest1, true)).thenReturn(mockedSectionAnswer1);
 
-		final String expectedSectionRequest2 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", NetworkServiceTest.class));
-		final String mockedSectionAnswer2 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", NetworkServiceTest.class));
+		final String expectedSectionRequest2 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-readsection-2.xml", DefaultNetworkServiceTest.class));
+		final String mockedSectionAnswer2 = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-readsection-2.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedSectionRequest2, true)).thenReturn(mockedSectionAnswer2);
 
 		List<Section> sections = service.getSectionListModifiedSinceDate(new DateTime(2014, 5, 10, 0, 0, 0, 0));
@@ -624,10 +627,10 @@ public class NetworkServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpositions.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listpositions.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		List<Position> positions = service.getAllPositions();
@@ -646,10 +649,10 @@ public class NetworkServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		Position position = service.getPositionByName("x76");
@@ -662,10 +665,10 @@ public class NetworkServiceTest {
 			ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname-notexistname.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname-notexistname.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getpositionbyname-notexistname.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getpositionbyname-notexistname.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		Position position = service.getPositionByName("x7600");
@@ -678,10 +681,10 @@ public class NetworkServiceTest {
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		NetworkService service = new NetworkService(mockedApiService);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
 
-		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getallcompanionpositions.xml", NetworkServiceTest.class));
-		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getallcompanionpositions.xml", NetworkServiceTest.class));
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-getallcompanionpositions.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-getallcompanionpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
 		List<CompanionPosition> positions = service.getAllCompanionsPositions();

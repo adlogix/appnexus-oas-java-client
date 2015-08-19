@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
@@ -38,9 +38,11 @@ import eu.adlogix.appnexus.oas.client.domain.enums.SegmentType;
 import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
+import eu.adlogix.appnexus.oas.client.service.CampaignService;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
-public class CampaignServiceTest {
+public class DefaultCampaignServiceTest {
 
 	private static final List<String> EMPTY_STRING_LIST = Lists.newArrayList();
 
@@ -50,7 +52,7 @@ public class CampaignServiceTest {
 		final String campaignId = "0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278";
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-campaign-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-campaign-response.xml", this.getClass()));
@@ -213,7 +215,7 @@ public class CampaignServiceTest {
 		final String campaignId = "test_campaign_gunith_2_clt";
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-clt-campaign-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-clt-campaign-response.xml", this.getClass()));
@@ -365,7 +367,7 @@ public class CampaignServiceTest {
 	public void add_DefaultTypeWithMandatoryParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-mandatory-params-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -391,7 +393,7 @@ public class CampaignServiceTest {
 	public void add_DefaultTypeWithAdditionalParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-default-type-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -435,7 +437,7 @@ public class CampaignServiceTest {
 	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-mandatory-params-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-id-already-exists-response.xml", this.getClass()));
@@ -460,7 +462,7 @@ public class CampaignServiceTest {
 	public void add_CltTypeWithMandatoryParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-clt-campaign-mandatory-params-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -486,7 +488,7 @@ public class CampaignServiceTest {
 	public void add_CltTypeWithAdditionalParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-clt-type-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -532,7 +534,7 @@ public class CampaignServiceTest {
 	public void add_WithCompanionPositionsAndStrictCompanions_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-companionparameters-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -560,7 +562,7 @@ public class CampaignServiceTest {
 	public void add_WithCompanionPositions_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-companion-positions-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -587,7 +589,7 @@ public class CampaignServiceTest {
 	public void add_WithCpmParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-cpm-params-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -622,7 +624,7 @@ public class CampaignServiceTest {
 	public void add_WithCpcParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-cpc-params-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -654,7 +656,7 @@ public class CampaignServiceTest {
 	public void add_WithTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-targeting-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -743,7 +745,7 @@ public class CampaignServiceTest {
 	public void add_WithSegmentTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-segmenttargeting-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -776,7 +778,7 @@ public class CampaignServiceTest {
 	public void add_WithRdbTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-rdbtargeting-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -817,7 +819,7 @@ public class CampaignServiceTest {
 	public void add_WithEmptyTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-empty-targeting-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -849,7 +851,7 @@ public class CampaignServiceTest {
 	public void add_WithHourOfDayAndDayOfWeek_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-hod-dow-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -878,7 +880,7 @@ public class CampaignServiceTest {
 	public void add_WithCpmParamsFixedReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpm-fixedreach-no-frequencyimps-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -914,7 +916,7 @@ public class CampaignServiceTest {
 	public void add_WithCpcParamsFixedReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpc-fixedreach-no-frequencyclicks-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -948,7 +950,7 @@ public class CampaignServiceTest {
 	public void add_WithCpmParamsDynamicReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpm-dynamicreach-no-frequencyimps-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -983,7 +985,7 @@ public class CampaignServiceTest {
 	public void add_WithCpcParamsDynamicReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpc-dynamicreach-no-frequencyclicks-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1019,7 +1021,7 @@ public class CampaignServiceTest {
 	public void add_WithCpmParamsOpenReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpm-openreach-no-frequencyimps-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1054,7 +1056,7 @@ public class CampaignServiceTest {
 	public void add_WithCpcParamsOpenReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-cpc-openreach-no-frequencyclicks-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1086,7 +1088,7 @@ public class CampaignServiceTest {
 	public void add_WithCampaignManager_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-campaignmanager-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1113,7 +1115,7 @@ public class CampaignServiceTest {
 	public void add_WithStartDateTimeAndEndDateTime_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-add-campaign-with-startdate-enddate-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1143,7 +1145,7 @@ public class CampaignServiceTest {
 	public void update_WithCpm_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-cpm.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1175,7 +1177,7 @@ public class CampaignServiceTest {
 	public void update_WithCpc_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-cpc.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1207,7 +1209,7 @@ public class CampaignServiceTest {
 	public void update_WithTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1290,7 +1292,7 @@ public class CampaignServiceTest {
 	public void update_WithTargetingHavingSingleValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-single-value.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1383,7 +1385,7 @@ public class CampaignServiceTest {
 	public void update_WithTargetingHavingEmptyValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-empty-value.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1460,7 +1462,7 @@ public class CampaignServiceTest {
 	public void update_WithTargetingHavingNullValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-targeting-null-value.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1491,7 +1493,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithHourOfDay_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hourofday.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1523,7 +1525,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithHourOfDayAndDayOfWeek_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1541,7 +1543,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithHourOfDayAndDayOfWeekEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-hod-dow-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1559,7 +1561,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithRdbTargeting_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-rdb-targeting.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1591,7 +1593,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithSegmentTargeting_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-segment-targeting.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1613,7 +1615,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithSegmentTargetingEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-segment-targeting-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1634,7 +1636,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithOnlyState_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-state.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1651,7 +1653,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithOnlyCompanion_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-companion.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1669,7 +1671,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithOnlyHourOfDay_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-only-hourofday.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1687,7 +1689,7 @@ public class CampaignServiceTest {
 	public void update_WithStartAndEndTimesHasNonStandardMinuteValues_StartTimeHas0MinsAndEndTime59Mins()
 			throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-secondpush-request-with-starttime-endtime.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1705,7 +1707,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithExcludeSiteAndPageIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1723,7 +1725,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithExcludeSiteAndPageIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-exclude-site-page-ids-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1741,7 +1743,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithPageUrls_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1758,7 +1760,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithPageUrlsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-page-urls-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1775,7 +1777,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithSectionIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1792,7 +1794,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithSectionIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-section-ids-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1809,7 +1811,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithCampaignGroupIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-campaign-groups.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1826,7 +1828,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithCampaignGroupIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-campaign-groups-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1843,7 +1845,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithExternalUserIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));
@@ -1860,7 +1862,7 @@ public class CampaignServiceTest {
 	@Test
 	public void update_WithExternalUserIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
-		CampaignService service = new CampaignService(mockedApiService);
+		CampaignService service = new DefaultCampaignService(mockedApiService);
 
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-second-push-request-with-user-ids-empty.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("add-campaign-successful-response.xml", this.getClass()));

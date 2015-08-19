@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service;
+package eu.adlogix.appnexus.oas.client.service.impl;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,16 +16,18 @@ import org.testng.annotations.Test;
 import eu.adlogix.appnexus.oas.client.domain.Product;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
+import eu.adlogix.appnexus.oas.client.service.OasApiService;
+import eu.adlogix.appnexus.oas.client.service.ProductService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-public class ProductServiceTest {
+public class DefaultProductServiceTest {
 	@Test
 	public void getById_WithExistingProduct_ReturnTrue() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ProductService service = new ProductService(mockedApiService);
+		ProductService service = new DefaultProductService(mockedApiService);
 
 		final String expectedRequest = getXml("expected-request-readproduct.xml");
 		final String mockedpAnswer = getXml("expected-answer-readproduct.xml");
@@ -40,7 +42,7 @@ public class ProductServiceTest {
 
 	private String getXml(String fileName) throws URISyntaxException, FileNotFoundException, IOException,
 			ResourceNotFoundException {
-		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, ProductServiceTest.class));
+		return StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString(fileName, DefaultProductServiceTest.class));
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[544\\]: 'Invalid ProductId.'")
@@ -48,7 +50,7 @@ public class ProductServiceTest {
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ProductService service = new ProductService(mockedApiService);
+		ProductService service = new DefaultProductService(mockedApiService);
 
 		final String expectedRequest = getXml("expected-request-readproduct-nonexisting.xml");
 		final String mockedpAnswer = getXml("expected-answer-readproduct-nonexisting.xml");
@@ -65,7 +67,7 @@ public class ProductServiceTest {
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ProductService service = new ProductService(mockedApiService);
+		ProductService service = new DefaultProductService(mockedApiService);
 
 		final String expectedRequest = getXml("expected-request-createproduct.xml");
 		final String mockedpAnswer = getXml("expected-answer-createproduct-success.xml");
@@ -87,7 +89,7 @@ public class ProductServiceTest {
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
-		ProductService service = new ProductService(mockedApiService);
+		ProductService service = new DefaultProductService(mockedApiService);
 
 		final String expectedRequest = getXml("expected-request-createproduct-error.xml");
 		final String mockedpAnswer = getXml("expected-answer-createproduct-error.xml");
