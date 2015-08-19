@@ -19,7 +19,7 @@ public class UpdateCampaignRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CampaignService service = factory.getCampaignService();
 
-		Campaign campaign = service.getCampaignById("test_campaign_gunith_2_clt");
+		Campaign campaign = service.getById("test_campaign_gunith_2_clt");
 
 		// campaign.setImpressions(12500l);
 		// campaign.setAdvertiserId("TestAdvertiser");
@@ -89,9 +89,9 @@ public class UpdateCampaignRunner {
 		mobileTargeting.setTargetings(mobileTargetings);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 
-		service.getCampaignById("test_campaign_gunith_2_clt");
+		service.getById("test_campaign_gunith_2_clt");
 
 	}
 }

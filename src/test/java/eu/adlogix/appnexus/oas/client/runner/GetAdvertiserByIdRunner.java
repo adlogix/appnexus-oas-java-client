@@ -12,7 +12,7 @@ public class GetAdvertiserByIdRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		AdvertiserService service = factory.getAdvertiserService();
 
-		Advertiser advertiser = service.getAdvertiserById("test_advertiser");
+		Advertiser advertiser = service.getById("test_advertiser");
 		System.out.println("Id:" + advertiser.getId());
 		System.out.println("Organization:" + advertiser.getOrganization());
 	}

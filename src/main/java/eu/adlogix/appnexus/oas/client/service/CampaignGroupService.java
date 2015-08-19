@@ -27,7 +27,7 @@ public class CampaignGroupService extends AbstractOasService {
 	 * @param group
 	 *            The campaignGroup to create on OAS
 	 */
-	public final void createGroup(final CampaignGroup group) {
+	public final void add(final CampaignGroup group) {
 
 		checkNotNull(group, "group");
 		checkNotEmpty(group.getId(), "group ID");

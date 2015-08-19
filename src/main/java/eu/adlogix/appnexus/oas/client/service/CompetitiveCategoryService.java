@@ -32,7 +32,7 @@ public class CompetitiveCategoryService extends AbstractOasService {
 	 * 
 	 * @return The full {@link CompetitiveCategory} {@link List}
 	 */
-	public final List<CompetitiveCategory> getAllCompetitiveCategories() {
+	public final List<CompetitiveCategory> getAll() {
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> requestParameters = new HashMap<String, Object>() {
@@ -61,7 +61,7 @@ public class CompetitiveCategoryService extends AbstractOasService {
 	 * @param competitiveCategory
 	 *            The {@link CompetitiveCategory} to create
 	 */
-	public final void addCompetitiveCategory(final CompetitiveCategory competitiveCategory) {
+	public final void add(final CompetitiveCategory competitiveCategory) {
 
 		checkNotNull(competitiveCategory, "competitiveCategory");
 		checkNotEmpty(competitiveCategory.getId(), "competitiveCategory ID");

@@ -48,6 +48,6 @@ public class AddCreativeRunner {
 
 		creative.setRedirectUrl("http://x.y.z/image.gif");
 
-		service.createCreative(creative);
+		service.add(creative);
 	}
 }

@@ -12,7 +12,7 @@ public class GetCompetitiveCategoriesRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CompetitiveCategoryService service = factory.getCompetitiveCategoryService();
 
-		List<CompetitiveCategory> list = service.getAllCompetitiveCategories();
+		List<CompetitiveCategory> list = service.getAll();
 		System.out.println(list);
 	}
 }

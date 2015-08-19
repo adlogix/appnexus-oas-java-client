@@ -15,6 +15,6 @@ public class AddAdvertiserRunner {
 		Advertiser advertiser = new Advertiser();
 		advertiser.setId("test_advertiser");
 		advertiser.setOrganization("test");
-		service.addAdvertiser(advertiser);
+		service.add(advertiser);
 	}
 }

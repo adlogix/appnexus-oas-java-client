@@ -1,5 +1,11 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,18 +39,13 @@ import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
-import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 public class CampaignServiceTest {
 
 	private static final List<String> EMPTY_STRING_LIST = Lists.newArrayList();
 
 	@Test
-	public void getCampaignById_ExistingCampaign_ReturnCampaign() throws Exception {
+	public void getById_ExistingCampaign_ReturnCampaign() throws Exception {
 
 		final String campaignId = "0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278";
 
@@ -55,7 +56,7 @@ public class CampaignServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-campaign-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Campaign campaign = service.getCampaignById(campaignId);
+		Campaign campaign = service.getById(campaignId);
 
 		assertEquals(campaign.getId(), "0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		assertEquals(campaign.getType(), CampaignType.REGULAR);
@@ -207,7 +208,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void getCampaignById_ExistingCltCampaignWithMobileZoneTargeting_ReturnCampaign() throws Exception {
+	public void getById_ExistingCltCampaignWithMobileZoneTargeting_ReturnCampaign() throws Exception {
 
 		final String campaignId = "test_campaign_gunith_2_clt";
 
@@ -218,7 +219,7 @@ public class CampaignServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-clt-campaign-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Campaign campaign = service.getCampaignById(campaignId);
+		Campaign campaign = service.getById(campaignId);
 
 		assertEquals(campaign.getId(), campaignId);
 		assertEquals(campaign.getType(), CampaignType.CLT);
@@ -361,7 +362,7 @@ public class CampaignServiceTest {
 	}
 
 	@Test
-	public void addCampaign_DefaultTypeWithMandatoryParameters_Success() throws Exception {
+	public void add_DefaultTypeWithMandatoryParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -381,13 +382,13 @@ public class CampaignServiceTest {
 		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.BARTER);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_DefaultTypeWithAdditionalParameters_Success() throws Exception {
+	public void add_DefaultTypeWithAdditionalParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -426,12 +427,12 @@ public class CampaignServiceTest {
 		campaign.setCpm(4000.0);
 		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setCurrency("EUR");
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void addCampaign_IdAlreadyExists_ThrowException() throws Exception {
+	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -451,12 +452,12 @@ public class CampaignServiceTest {
 		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.BARTER);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void addCampaign_CltTypeWithMandatoryParameters_Success() throws Exception {
+	public void add_CltTypeWithMandatoryParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -478,11 +479,11 @@ public class CampaignServiceTest {
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setReach(Reach.OPEN);
 		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
-		service.addCampaign(campaign);
+		service.add(campaign);
 	}
 
 	@Test
-	public void addCampaign_CltTypeWithAdditionalParameters_Success() throws Exception {
+	public void add_CltTypeWithAdditionalParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -523,12 +524,12 @@ public class CampaignServiceTest {
 		campaign.setCpm(4000.0);
 		campaign.setPaymentMethod(PaymentMethod.CASH);
 		campaign.setCurrency("EUR");
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void addCampaign_WithCompanionPositionsAndStrictCompanions_Success() throws Exception {
+	public void add_WithCompanionPositionsAndStrictCompanions_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -550,13 +551,13 @@ public class CampaignServiceTest {
 		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
 		campaign.setStrictCompanions(false);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCompanionPositions_Success() throws Exception {
+	public void add_WithCompanionPositions_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -577,13 +578,13 @@ public class CampaignServiceTest {
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpmParameters_Success() throws Exception {
+	public void add_WithCpmParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -612,13 +613,13 @@ public class CampaignServiceTest {
 		campaign.setSecondaryImpsPerVisitor(10l);
 		campaign.setSecondaryFrequencyScope(FrequencyScope.HOURLY);
 		campaign.setCpm(4000.0);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpcParameters_Success() throws Exception {
+	public void add_WithCpcParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -644,13 +645,13 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(10l);
 		campaign.setPrimaryFrequencyScope(FrequencyScope.SESSION);
 		campaign.setCpc(4.0);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithTargeting_Success() throws Exception {
+	public void add_WithTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -733,13 +734,13 @@ public class CampaignServiceTest {
 		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithSegmentTargeting_Success() throws Exception {
+	public void add_WithSegmentTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -766,13 +767,13 @@ public class CampaignServiceTest {
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
 
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithRdbTargeting_Success() throws Exception {
+	public void add_WithRdbTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -807,13 +808,13 @@ public class CampaignServiceTest {
 		rdbTargeting.setPreferenceFlagsExclude(true);
 		rdbTargeting.setPreferenceFlags("012345678911");
 		campaign.setRdbTargeting(rdbTargeting);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithEmptyTargeting_Success() throws Exception {
+	public void add_WithEmptyTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -839,13 +840,13 @@ public class CampaignServiceTest {
 		campaign.setZoneTargeting(zoneTargeting);
 		campaign.setSegmentTargeting(new SegmentTargeting());
 		campaign.setRdbTargeting(new RdbTargeting());
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithHourOfDayAndDayOfWeek_Success() throws Exception {
+	public void add_WithHourOfDayAndDayOfWeek_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -868,13 +869,13 @@ public class CampaignServiceTest {
 		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
 		campaign.setDayOfWeek(Arrays.asList(new DayOfWeek[] { DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
 				DayOfWeek.THURSDAY }));
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpmParamsFixedReachAndZeroFrequencyImps_Success() throws Exception {
+	public void add_WithCpmParamsFixedReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -903,14 +904,14 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
 		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
-		service.addCampaign(campaign);
+		service.add(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpcParamsFixedReachAndZeroFrequencyClicks_Success() throws Exception {
+	public void add_WithCpcParamsFixedReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -938,13 +939,13 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpmParamsDynamicReachAndZeroFrequencyImps_Success() throws Exception {
+	public void add_WithCpmParamsDynamicReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -973,13 +974,13 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
 		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpcParamsDynamicReachAndZeroFrequencyClicks_Success() throws Exception {
+	public void add_WithCpcParamsDynamicReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1008,14 +1009,14 @@ public class CampaignServiceTest {
 		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
 
-		service.addCampaign(campaign);
+		service.add(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpmParamsOpenReachAndZeroFrequencyImps_Success() throws Exception {
+	public void add_WithCpmParamsOpenReachAndZeroFrequencyImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1043,14 +1044,14 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setSecondaryImpsPerVisitor(0l);
 		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
-		service.addCampaign(campaign);
+		service.add(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCpcParamsOpenReachAndZeroFrequencyClicks_Success() throws Exception {
+	public void add_WithCpcParamsOpenReachAndZeroFrequencyClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1075,14 +1076,14 @@ public class CampaignServiceTest {
 		campaign.setPrimaryClicksPerVisitor(0l);
 		campaign.setPrimaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setCpc(4.0);
-		service.addCampaign(campaign);
+		service.add(campaign);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithCampaignManager_Success() throws Exception {
+	public void add_WithCampaignManager_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1103,13 +1104,13 @@ public class CampaignServiceTest {
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.BARTER);
 		campaign.setCampaignManager("test_campaign_manager");
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void addCampaign_WithStartDateTimeAndEndDateTime_Success() throws Exception {
+	public void add_WithStartDateTimeAndEndDateTime_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1133,13 +1134,13 @@ public class CampaignServiceTest {
 		campaign.setStartTime(new LocalTime(4, 00));
 		campaign.setEndDate(new LocalDate(2016, 7, 8));
 		campaign.setEndTime(new LocalTime(5, 59));
-		service.addCampaign(campaign);
+		service.add(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void updateCampaign_WithCpm_Success() throws Exception {
+	public void update_WithCpm_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1165,13 +1166,13 @@ public class CampaignServiceTest {
 		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setUserTimeZone(false);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void updateCampaign_WithCpc_Success() throws Exception {
+	public void update_WithCpc_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1197,13 +1198,13 @@ public class CampaignServiceTest {
 		campaign.setSecondaryFrequencyScope(FrequencyScope.ZERO);
 		campaign.setUserTimeZone(false);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void updateCampaign_WithTargeting_Success() throws Exception {
+	public void update_WithTargeting_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1280,13 +1281,13 @@ public class CampaignServiceTest {
 		campaign.setZoneTargeting(zoneTargeting);
 
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public void updateCampaign_WithTargetingHavingSingleValue_Success() throws Exception {
+	public void update_WithTargetingHavingSingleValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1374,12 +1375,12 @@ public class CampaignServiceTest {
 		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithTargetingHavingEmptyValue_Success() throws Exception {
+	public void update_WithTargetingHavingEmptyValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1451,12 +1452,12 @@ public class CampaignServiceTest {
 		mobileTargeting.setDeviceGroupTargeting(deviceGroupTargeting);
 		campaign.setMobileTargeting(mobileTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithTargetingHavingNullValue_Success() throws Exception {
+	public void update_WithTargetingHavingNullValue_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1483,12 +1484,12 @@ public class CampaignServiceTest {
 		campaign.setSegmentTargeting(null);
 		campaign.setRdbTargeting(null);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithHourOfDay_Success() throws Exception {
+	public void update_WithHourOfDay_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1515,12 +1516,12 @@ public class CampaignServiceTest {
 		campaign.setHourOfDay(Lists.newArrayList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
 		campaign.setUserTimeZone(false);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithHourOfDayAndDayOfWeek_Success() throws Exception {
+	public void update_WithHourOfDayAndDayOfWeek_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1533,12 +1534,12 @@ public class CampaignServiceTest {
 		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
 		campaign.setDayOfWeek(Lists.newArrayList(DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithHourOfDayAndDayOfWeekEmpty_Success() throws Exception {
+	public void update_WithHourOfDayAndDayOfWeekEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1551,12 +1552,12 @@ public class CampaignServiceTest {
 		campaign.setHourOfDay(new ArrayList<HourOfDay>());
 		campaign.setDayOfWeek(new ArrayList<DayOfWeek>());
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithRdbTargeting_Success() throws Exception {
+	public void update_WithRdbTargeting_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1583,12 +1584,12 @@ public class CampaignServiceTest {
 		rdbTargeting.setPreferenceFlags("012345678911");
 		campaign.setRdbTargeting(rdbTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithSegmentTargeting_Success() throws Exception {
+	public void update_WithSegmentTargeting_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1605,12 +1606,12 @@ public class CampaignServiceTest {
 		segmentTargeting.setValues(Arrays.asList(new String[] { "AlaSegTest1", "AlaSegTest2" }));
 		campaign.setSegmentTargeting(segmentTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithSegmentTargetingEmpty_Success() throws Exception {
+	public void update_WithSegmentTargetingEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1626,12 +1627,12 @@ public class CampaignServiceTest {
 		segmentTargeting.setValues(EMPTY_STRING_LIST);
 		campaign.setSegmentTargeting(segmentTargeting);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithOnlyState_Success() throws Exception {
+	public void update_WithOnlyState_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1643,12 +1644,12 @@ public class CampaignServiceTest {
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setStatus(CampaignStatus.CANCELLED);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithOnlyCompanion_Success() throws Exception {
+	public void update_WithOnlyCompanion_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1661,12 +1662,12 @@ public class CampaignServiceTest {
 		campaign.setCompanionPositions(Arrays.asList(new String[] { "B/T" }));
 		campaign.setStrictCompanions(true);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithOnlyHourOfDay_Success() throws Exception {
+	public void update_WithOnlyHourOfDay_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1678,12 +1679,12 @@ public class CampaignServiceTest {
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setHourOfDay(Arrays.asList(HourOfDay.EIGHTEEN, HourOfDay.NINETEEN, HourOfDay.TWENTY));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithStartAndEndTimesHasNonStandardMinuteValues_StartTimeHas0MinsAndEndTime59Mins()
+	public void update_WithStartAndEndTimesHasNonStandardMinuteValues_StartTimeHas0MinsAndEndTime59Mins()
 			throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
@@ -1697,12 +1698,12 @@ public class CampaignServiceTest {
 		campaign.setStartTime(new LocalTime(8, 30));
 		campaign.setEndTime(new LocalTime(17, 0));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithExcludeSiteAndPageIds_Success() throws Exception {
+	public void update_WithExcludeSiteAndPageIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1715,12 +1716,12 @@ public class CampaignServiceTest {
 		campaign.setExcludedSiteIds(Lists.newArrayList("mkarlov.com", "apiSite2"));
 		campaign.setExcludedPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithExcludeSiteAndPageIdsEmpty_Success() throws Exception {
+	public void update_WithExcludeSiteAndPageIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1733,12 +1734,12 @@ public class CampaignServiceTest {
 		campaign.setExcludedSiteIds(EMPTY_STRING_LIST);
 		campaign.setExcludedPageUrls(EMPTY_STRING_LIST);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithPageUrls_Success() throws Exception {
+	public void update_WithPageUrls_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1750,12 +1751,12 @@ public class CampaignServiceTest {
 		campaign.setId("0212_CHLOE_ENTREE_SITE_XPR_STYLE_RG_6278");
 		campaign.setPageUrls(Lists.newArrayList("www.spon.de/sport/wm-spezial/center", "www.testfz.com", "www.mkarlov.com/sports"));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithPageUrlsEmpty_Success() throws Exception {
+	public void update_WithPageUrlsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1767,12 +1768,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_1");
 		campaign.setPageUrls(EMPTY_STRING_LIST);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithSectionIds_Success() throws Exception {
+	public void update_WithSectionIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1784,12 +1785,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_1");
 		campaign.setSectionIds(Lists.newArrayList("383section", "AASec", "Adulte"));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithSectionIdsEmpty_Success() throws Exception {
+	public void update_WithSectionIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1801,12 +1802,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_1");
 		campaign.setSectionIds(EMPTY_STRING_LIST);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithCampaignGroupIds_Success() throws Exception {
+	public void update_WithCampaignGroupIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1818,12 +1819,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_1");
 		campaign.setCampaignGroupIds(Lists.newArrayList("0521_AGEN313394_Campaig_010313_12948_152", "055CASHME388747_Campaig_010313_12947_152"));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithCampaignGroupIdsEmpty_Success() throws Exception {
+	public void update_WithCampaignGroupIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1835,12 +1836,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_1");
 		campaign.setCampaignGroupIds(EMPTY_STRING_LIST);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithExternalUserIds_Success() throws Exception {
+	public void update_WithExternalUserIds_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1852,12 +1853,12 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_2_clt");
 		campaign.setExternalUserIds(Lists.newArrayList("AAExt", "alaExt"));
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void updateCampaign_WithExternalUserIdsEmpty_Success() throws Exception {
+	public void update_WithExternalUserIdsEmpty_Success() throws Exception {
 		OasApiService mockedApiService = mock(OasApiService.class);
 		CampaignService service = new CampaignService(mockedApiService);
 
@@ -1869,7 +1870,7 @@ public class CampaignServiceTest {
 		campaign.setId("test_campaign_gunith_2_clt");
 		campaign.setExternalUserIds(EMPTY_STRING_LIST);
 
-		service.updateCampaign(campaign);
+		service.update(campaign);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 }

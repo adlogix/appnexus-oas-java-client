@@ -26,7 +26,7 @@ public class CreativeService extends AbstractOasService {
 	 * @param creative
 	 *            {@link Creative} objects with values properly populated
 	 */
-	public void createCreative(final Creative creative) {
+	public void add(final Creative creative) {
 		
 		checkNotNull(creative, "creative");
 		checkNotEmpty(creative.getId(), "creative ID");

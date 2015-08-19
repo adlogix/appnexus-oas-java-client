@@ -12,7 +12,7 @@ public class GetInsertionOrderRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		InsertionOrderService service = factory.getInsertionOrderService();
 
-		InsertionOrder insertionOrder = service.getInsertionOrderById("test_insertionorder_01");
+		InsertionOrder insertionOrder = service.getById("test_insertionorder_01");
 		System.out.println("Id:" + insertionOrder.getId());
 		System.out.println("Description:" + insertionOrder.getDescription());
 	}

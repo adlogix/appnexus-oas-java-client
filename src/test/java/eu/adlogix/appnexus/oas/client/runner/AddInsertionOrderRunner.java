@@ -20,6 +20,6 @@ public class AddInsertionOrderRunner {
 		insertionOrder.setDescription("test_description");
 		insertionOrder.setBookedClicks(2500l);
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_01", "campaign_02" }));
-		service.addInsertionOrder(insertionOrder);
+		service.add(insertionOrder);
 	}
 }

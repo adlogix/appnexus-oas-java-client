@@ -32,7 +32,7 @@ public class CampaignService extends AbstractOasService {
 	private final XmlRequestGenerator addCampaignRequestGenerator = new XmlRequestGenerator("add-campaign");
 	private final XmlRequestGenerator updateCampaignRequestGenerator = new XmlRequestGenerator("update-campaign");
 
-	final public Campaign getCampaignById(final String id) {
+	final public Campaign getById(final String id) {
 
 		@SuppressWarnings("serial")
 		final Map<String, Object> parameters = new HashMap<String, Object>() {
@@ -50,7 +50,7 @@ public class CampaignService extends AbstractOasService {
 		return campaign;
 	}
 
-	public final void addCampaign(Campaign campaign) {
+	public final void add(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");
 		checkNotEmpty(campaign.getAdvertiserId(), "advertiserId");
@@ -75,7 +75,7 @@ public class CampaignService extends AbstractOasService {
 		campaign.resetModifiedAttributes();
 	}
 
-	public final void updateCampaign(Campaign campaign) {
+	public final void update(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");
 

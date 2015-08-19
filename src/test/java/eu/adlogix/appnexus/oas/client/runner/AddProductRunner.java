@@ -15,6 +15,6 @@ public class AddProductRunner {
 		product.setId("TestProduct01");
 		product.setName("Test Product 01");
 		product.setNotes("test note");
-		service.createProduct(product);
+		service.add(product);
 	}
 }

@@ -10,7 +10,7 @@ public class GetCampaignByIdRunner {
 	public static void main(String[] args) {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CampaignService service = factory.getCampaignService();
-		Campaign campaign = service.getCampaignById("campaign_id");
+		Campaign campaign = service.getById("campaign_id");
 		System.out.println(campaign);
 	}
 }

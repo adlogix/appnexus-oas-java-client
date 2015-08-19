@@ -21,7 +21,7 @@ import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
 public class ProductServiceTest {
 	@Test
-	public void getProduct_WithExistingProduct_ReturnTrue() throws FileNotFoundException, URISyntaxException,
+	public void getById_WithExistingProduct_ReturnTrue() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -32,7 +32,7 @@ public class ProductServiceTest {
 
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
-		Product response = service.getProduct("TestProduct");
+		Product response = service.getById("TestProduct");
 
 		assertEquals(response, new Product("TestProduct", "Test Product"));
 
@@ -44,7 +44,7 @@ public class ProductServiceTest {
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[544\\]: 'Invalid ProductId.'")
-	public void getProduct_WithNonExistingProduct_ReturnFalse() throws FileNotFoundException, URISyntaxException,
+	public void getById_WithNonExistingProduct_ReturnFalse() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -55,13 +55,13 @@ public class ProductServiceTest {
 
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
-		Product response = service.getProduct("TestProduct02");
+		Product response = service.getById("TestProduct02");
 
 		assertEquals(response, false);
 	}
 
 	@Test
-	public void createProduct_WithValidParameters_Success() throws FileNotFoundException, URISyntaxException,
+	public void add_WithValidParameters_Success() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -76,14 +76,14 @@ public class ProductServiceTest {
 		product.setId("TestProduct02");
 		product.setName("Test Product 02");
 		product.setNotes("test note");
-		service.createProduct(product);
+		service.add(product);
 
 		assertTrue(true);
 
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[506\\]: 'Test_Product_1234567890_1234567890 contains too many characters for Id'")
-	public void createProduct_WithInvalidProductId_ThrowException() throws FileNotFoundException, URISyntaxException,
+	public void add_WithInvalidProductId_ThrowException() throws FileNotFoundException, URISyntaxException,
 			IOException, ServiceException, ResourceNotFoundException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -94,7 +94,7 @@ public class ProductServiceTest {
 
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedpAnswer);
 
-		service.createProduct(new Product("Test_Product_1234567890_1234567890", "Test Product"));
+		service.add(new Product("Test_Product_1234567890_1234567890", "Test Product"));
 
 	}
 

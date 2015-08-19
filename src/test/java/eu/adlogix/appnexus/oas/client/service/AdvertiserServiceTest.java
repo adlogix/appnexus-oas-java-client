@@ -17,7 +17,7 @@ import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 public class AdvertiserServiceTest {
 
 	@Test
-	public final void getAdvertiserById_ExistingAdvertiser_ReturnAdvertiser() throws Exception {
+	public final void getById_ExistingAdvertiser_ReturnAdvertiser() throws Exception {
 		
 		OasApiService mockedApiService=mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -26,7 +26,7 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		Advertiser advertiser = service.getAdvertiserById("test_advertiser_01");
+		Advertiser advertiser = service.getById("test_advertiser_01");
 		assertEquals(advertiser.getId(), "test_advertiser_01");
 		assertEquals(advertiser.getOrganization(), "Adlogix");
 		assertEquals(advertiser.getBillingInformation().getCountry(), "US");
@@ -34,7 +34,7 @@ public class AdvertiserServiceTest {
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void getAdvertiserById_InvalidId_ThrowException() throws Exception {
+	public final void getById_InvalidId_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -43,11 +43,11 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-advertiser-invalid-id-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		service.getAdvertiserById("test_advertiser_01");
+		service.getById("test_advertiser_01");
 	}
 
 	@Test
-	public final void addAdvertiser_ValidParameters_Success() throws Exception {
+	public final void add_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -59,13 +59,13 @@ public class AdvertiserServiceTest {
 		Advertiser advertiser = new Advertiser();
 		advertiser.setId("test_advertiser_01");
 		advertiser.setOrganization("Adlogix");
-		service.addAdvertiser(advertiser);
+		service.add(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void addAdvertiser_IdAlreadyExists_ThrowException() throws Exception {
+	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -77,12 +77,12 @@ public class AdvertiserServiceTest {
 		Advertiser advertiser = new Advertiser();
 		advertiser.setId("test_advertiser_01");
 		advertiser.setOrganization("Adlogix");
-		service.addAdvertiser(advertiser);
+		service.add(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public final void getAllAdvertisers_NoExceptions_ReturnAllAdvertisers() throws Exception {
+	public final void getAll_NoExceptions_ReturnAllAdvertisers() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -91,7 +91,7 @@ public class AdvertiserServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("list-advertisers-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedAnswer);
 
-		List<Advertiser> advertisers = service.getAllAdvertisers();
+		List<Advertiser> advertisers = service.getAll();
 		assertEquals(advertisers.size(), 5);
 
 		Advertiser advertiser1 = advertisers.get(0);
@@ -104,7 +104,7 @@ public class AdvertiserServiceTest {
 	}
 
 	@Test
-	public final void updateAdvertiser_UpdateOrganization_Success() throws Exception {
+	public final void update_UpdateOrganization_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		AdvertiserService service = new AdvertiserService(mockedApiService);
@@ -116,7 +116,7 @@ public class AdvertiserServiceTest {
 		Advertiser advertiser = new Advertiser();
 		advertiser.setId("test_advertiser_01");
 		advertiser.setOrganization("Adlogix_Advertiser");
-		service.updateAdvertiser(advertiser);
+		service.update(advertiser);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}

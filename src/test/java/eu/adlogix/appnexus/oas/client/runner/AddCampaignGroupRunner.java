@@ -19,6 +19,6 @@ public class AddCampaignGroupRunner {
 		group.setDescription("test");
 		group.setNotes("test note");
 		group.setExternalUserIds(Arrays.asList(new String[] { "AAExt", "alaExt" }));
-		campaignGroupService.createGroup(group);
+		campaignGroupService.add(group);
 	}
 }

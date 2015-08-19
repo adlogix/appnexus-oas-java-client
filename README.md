@@ -42,7 +42,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 CampaignService service = factory.getCampaignService();
-Campaign campaign = service.getCampaignById("testCampaignId");
+Campaign campaign = service.getById("testCampaignId");
 ````
 
 ### Campaign Group Service
@@ -56,7 +56,7 @@ CampaignGroupService campaignGroupService = factory.getCampaignGroupService();
 CampaignGroup group = new CampaignGroup();
 group.setId("testCampaignGrpGuni10");
 group.setDescription("test");
-campaignGroupService.createGroup(group);
+campaignGroupService.add(group);
 ````
 
 ### Competitive Category Service
@@ -67,7 +67,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 CompetitiveCategoryService service = factory.getCompetitiveCategoryService();
-List<CompetitiveCategory> list = service.getAllCompetitiveCategories();
+List<CompetitiveCategory> list = service.getAll();
 ````
 
 ### Creative Service
@@ -82,7 +82,7 @@ Creative creative = new Creative();
 creative.setId("GuniCreative_001");
 creative.setCampaignId("test_campaign_055");
 creative.setName("Api Creative");
-service.createCreative(creative);
+service.add(creative);
 ````
 
 ### Insertion Order Service
@@ -93,7 +93,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 InsertionOrderService service = factory.getInsertionOrderService();
-InsertionOrder insertionOrder = service.getInsertionOrderById("test_insertionorder_01");
+InsertionOrder insertionOrder = service.getById("test_insertionorder_01");
 ````
 
 ### Network Service
@@ -115,7 +115,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 ProductService service = factory.getProductService();
-Product product = service.getProduct("TestProduct");
+Product product = service.getById("TestProduct");
 ````
 
 ### Report Service
@@ -148,7 +148,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 AdvertiserService service = factory.getAdvertiserService();
-List<Advertiser> advertiserList = service.getAllAdvertisers();
+List<Advertiser> advertiserList = service.getAll();
 ````
 
 

@@ -20,7 +20,7 @@ import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 public class InsertionOrderServiceTest {
 
 	@Test
-	public final void addInsertionOrder_ValidParameters_Success() throws Exception {
+	public final void add_ValidParameters_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -36,7 +36,7 @@ public class InsertionOrderServiceTest {
 		insertionOrder.setBookedImpressions(1000l);
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_01", "campaign_02" }));
 
-		service.addInsertionOrder(insertionOrder);
+		service.add(insertionOrder);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 
@@ -44,7 +44,7 @@ public class InsertionOrderServiceTest {
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void addInsertionOrder_IdAlreadyExists_ThrowException() throws Exception {
+	public final void add_IdAlreadyExists_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -60,12 +60,12 @@ public class InsertionOrderServiceTest {
 		insertionOrder.setBookedImpressions(1000l);
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_01", "campaign_02" }));
 
-		service.addInsertionOrder(insertionOrder);
+		service.add(insertionOrder);
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateBookedImps_Success() throws Exception {
+	public final void update_UpdateBookedImps_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -78,13 +78,13 @@ public class InsertionOrderServiceTest {
 		insertionOrder.setId("test_insertionorder");
 		insertionOrder.setBookedImpressions(5000l);
 
-		service.updateInsertionOrder(insertionOrder);
+		service.update(insertionOrder);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateClicks_Success() throws Exception {
+	public final void update_UpdateClicks_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -97,13 +97,13 @@ public class InsertionOrderServiceTest {
 		insertionOrder.setId("test_insertionorder");
 		insertionOrder.setBookedClicks(2500l);
 
-		service.updateInsertionOrder(insertionOrder);
+		service.update(insertionOrder);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public final void updateInsertionOrder_UpdateCampaigns_Success() throws Exception {
+	public final void update_UpdateCampaigns_Success() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -116,13 +116,13 @@ public class InsertionOrderServiceTest {
 		insertionOrder.setId("test_insertionorder");
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "campaign_01", "campaign_02" }));
 
-		service.updateInsertionOrder(insertionOrder);
+		service.update(insertionOrder);
 		verify(mockedApiService).callApi(expectedRequest, false);
 
 	}
 
 	@Test
-	public final void getInsertionOrderById_ExistingInsertionOrder_ReturnInsertionOrder() throws Exception {
+	public final void getById_ExistingInsertionOrder_ReturnInsertionOrder() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -131,7 +131,7 @@ public class InsertionOrderServiceTest {
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-insertionorder-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
 
-		InsertionOrder insertionOrder = service.getInsertionOrderById("test_insertionorder");
+		InsertionOrder insertionOrder = service.getById("test_insertionorder");
 		assertEquals(insertionOrder.getId(), "test_insertionorder");
 		assertEquals(insertionOrder.getDescription(), "test_description");
 		assertEquals(insertionOrder.getCampaignsBy(), CampaignsBy.ADVERTISER);
@@ -151,7 +151,7 @@ public class InsertionOrderServiceTest {
 	}
 
 	@Test(expectedExceptions = { OasServerSideException.class })
-	public final void getInsertionOrderById_InvalidId_ThrowException() throws Exception {
+	public final void getById_InvalidId_ThrowException() throws Exception {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
 		InsertionOrderService service = new InsertionOrderService(mockedApiService);
@@ -159,7 +159,7 @@ public class InsertionOrderServiceTest {
 		final String expectedRequest = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-read-insertionorder-request.xml", this.getClass()));
 		final String mockedAnswer = normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("read-insertionorder-invalid-id-response.xml", this.getClass()));
 		when(mockedApiService.callApi(expectedRequest, false)).thenReturn(mockedAnswer);
-		service.getInsertionOrderById("test_insertionorder");
+		service.getById("test_insertionorder");
 
 	}
 

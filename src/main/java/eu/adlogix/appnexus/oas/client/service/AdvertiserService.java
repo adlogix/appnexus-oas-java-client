@@ -41,7 +41,7 @@ public class AdvertiserService extends AbstractOasService {
 	 *            {@link Advertiser}
 	 * @return
 	 */
-	public final void addAdvertiser(Advertiser advertiser) {
+	public final void add(Advertiser advertiser) {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 		checkNotEmpty(advertiser.getOrganization(), "advertiserOrganization");
@@ -71,7 +71,7 @@ public class AdvertiserService extends AbstractOasService {
 	 *            {@link Advertiser}
 	 * @return
 	 */
-	public final void updateAdvertiser(final Advertiser advertiser) {
+	public final void update(final Advertiser advertiser) {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
 
@@ -94,7 +94,7 @@ public class AdvertiserService extends AbstractOasService {
 	 * 
 	 * @return {@link List} of {@link Advertiser}s
 	 */
-	public final List<Advertiser> getAllAdvertisers() {
+	public final List<Advertiser> getAll() {
 		final List<Advertiser> result = new ArrayList<Advertiser>();
 
 		ResponseElementHandler advertiserResponseHandler = new ResponseElementHandler() {
@@ -124,7 +124,7 @@ public class AdvertiserService extends AbstractOasService {
 	 * @return {@link Advertiser}
 	 * 
 	 */
-	public Advertiser getAdvertiserById(final String id) {
+	public Advertiser getById(final String id) {
 
 		checkNotEmpty(id, "advertiserId");
 

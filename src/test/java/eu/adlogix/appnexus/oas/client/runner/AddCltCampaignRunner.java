@@ -29,6 +29,6 @@ public class AddCltCampaignRunner {
 		campaign.setSmoothOrAsap(SmoothAsap.SMOOTH);
 		campaign.setCompletion(Completion.SOONEST);
 		campaign.setPaymentMethod(PaymentMethod.CASH);
-		service.addCampaign(campaign);
+		service.add(campaign);
 	}
 }

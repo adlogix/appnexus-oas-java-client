@@ -13,12 +13,12 @@ public class UpdateInsertionOrderRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		InsertionOrderService service = factory.getInsertionOrderService();
 
-		InsertionOrder insertionOrder = service.getInsertionOrderById("test_insertionorder_01");
+		InsertionOrder insertionOrder = service.getById("test_insertionorder_01");
 
 		insertionOrder.setBookedImpressions(5000l);
 		insertionOrder.setBookedClicks(2500l);
 		insertionOrder.setCampaignIds(Arrays.asList(new String[] { "test_campaign_055" }));
 
-		service.updateInsertionOrder(insertionOrder);
+		service.update(insertionOrder);
 	}
 }

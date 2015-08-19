@@ -29,7 +29,7 @@ public class ProductService extends AbstractOasService {
 	 * @param product
 	 *            The Product to be created
 	 */
-	public final void createProduct(final Product product) {
+	public final void add(final Product product) {
 
 		checkNotNull(product, "product");
 		checkNotEmpty(product.getId(), "product ID");
@@ -55,7 +55,7 @@ public class ProductService extends AbstractOasService {
 	 *            the Product ID
 	 * @return the {@link Product}
 	 */
-	public Product getProduct(final String productId) {
+	public Product getById(final String productId) {
 
 		checkNotEmpty(productId, "productId");
 

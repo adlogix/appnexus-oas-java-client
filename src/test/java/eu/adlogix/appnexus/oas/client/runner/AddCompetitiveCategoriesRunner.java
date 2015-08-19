@@ -10,6 +10,6 @@ public class AddCompetitiveCategoriesRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		CompetitiveCategoryService service = factory.getCompetitiveCategoryService();
 
-		service.addCompetitiveCategory(new CompetitiveCategory("testCompetitiveCategory00"));
+		service.add(new CompetitiveCategory("testCompetitiveCategory00"));
 	}
 }

@@ -1,5 +1,11 @@
 package eu.adlogix.appnexus.oas.client.service;
 
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
+import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.TIME_FORMATTER;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,17 +22,10 @@ import eu.adlogix.appnexus.oas.client.exceptions.ResourceNotFoundException;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 import eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils;
 
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
-import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.TIME_FORMATTER;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 public class CreativeServiceTest {
 
 	@Test
-	public void createCreative_CreativeWithFiles_NoError() throws FileNotFoundException, URISyntaxException,
+	public void add_CreativeWithFiles_NoError() throws FileNotFoundException, URISyntaxException,
 			IOException,
 			ResourceNotFoundException, ServiceException {
 
@@ -73,7 +72,7 @@ public class CreativeServiceTest {
 
 		creative.setComponentFiles(Lists.newArrayList(new CreativeFile("hi2.gif", "image/gif", "2AojmQpIgeVGBIqEgNlBBL8xtNs2jld8hIdwFB4CQxIog/4IQSe0CUOxBQyPVXpTaYNZWvTZtgaNpnP6LR6zW6735gIADs=+PC9hPgo="), new CreativeFile("hi1.gif", "image/gif", "2AojmQpIgeVGBIqEgNlBBL8xtNs2jld8hIdwFB4CQxIog/4IQSe0CUOxBQyPVXpTaYNZWvTZtgaNpnP6LR6zW6735gIADs=+PC9hPgo=")));
 
-		service.createCreative(creative);
+		service.add(creative);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
@@ -83,7 +82,7 @@ public class CreativeServiceTest {
 	}
 
 	@Test
-	public void createCreative_CreativeWithRedirectUrl_NoError() throws FileNotFoundException, URISyntaxException,
+	public void add_CreativeWithRedirectUrl_NoError() throws FileNotFoundException, URISyntaxException,
 			IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -127,13 +126,13 @@ public class CreativeServiceTest {
 
 		creative.setRedirectUrl("http://x.y.z/image.gif");
 
-		service.createCreative(creative);
+		service.add(creative);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test
-	public void createCreative_CreativeWithoutFilesNorRedirectUrl_NoError() throws FileNotFoundException,
+	public void add_CreativeWithoutFilesNorRedirectUrl_NoError() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -165,13 +164,13 @@ public class CreativeServiceTest {
 		creative.setSequenceNo(0);
 		creative.setCountOnDownload(false);
 
-		service.createCreative(creative);
+		service.add(creative);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}
 
 	@Test(expectedExceptions = OasServerSideException.class, expectedExceptionsMessageRegExp = "OAS Error \\[573\\]: 'enddate_past'")
-	public void createCreative_CreativeWithoutFilesNorRedirectUrl_DateInPastError() throws FileNotFoundException,
+	public void add_CreativeWithoutFilesNorRedirectUrl_DateInPastError() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -203,7 +202,7 @@ public class CreativeServiceTest {
 		creative.setSequenceNo(0);
 		creative.setCountOnDownload(false);
 
-		service.createCreative(creative);
+		service.add(creative);
 
 		verify(mockedApiService).callApi(expectedRequest, false);
 	}

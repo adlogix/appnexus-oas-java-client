@@ -14,7 +14,7 @@ public class GetAllAdvertisersRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		AdvertiserService service = factory.getAdvertiserService();
 
-		List<Advertiser> advertisersList = service.getAllAdvertisers();
+		List<Advertiser> advertisersList = service.getAll();
 		for (Advertiser advertiser : advertisersList) {
 			System.out.println("Id:" + advertiser.getId() + " Organization:" + advertiser.getOrganization());
 		}

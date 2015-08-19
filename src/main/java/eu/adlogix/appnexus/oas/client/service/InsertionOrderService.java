@@ -41,7 +41,7 @@ public class InsertionOrderService extends AbstractOasService{
 	 *            {@link InsertionOrder}
 	 * @return
 	 */
-	public final void addInsertionOrder(final InsertionOrder insertionOrder) {
+	public final void add(final InsertionOrder insertionOrder) {
 
 		checkNotEmpty(insertionOrder.getId(), "insertionOrderId");
 		checkNotEmpty(insertionOrder.getAdvertiserId(), "advertiserId");
@@ -77,7 +77,7 @@ public class InsertionOrderService extends AbstractOasService{
 	 *            {@link InsertionOrder}
 	 * @return
 	 */
-	public final void updateInsertionOrder(final InsertionOrder insertionOrder) {
+	public final void update(final InsertionOrder insertionOrder) {
 
 		checkNotEmpty(insertionOrder.getId(), "insertionOrderId");
 
@@ -113,7 +113,7 @@ public class InsertionOrderService extends AbstractOasService{
 	 * @return {@link InsertionOrder}
 	 * 
 	 */
-	public InsertionOrder getInsertionOrderById(final String id) {
+	public InsertionOrder getById(final String id) {
 
 		checkNotEmpty(id, "insertionOrderId");
 

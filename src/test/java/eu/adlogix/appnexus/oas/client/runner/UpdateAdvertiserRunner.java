@@ -12,8 +12,8 @@ public class UpdateAdvertiserRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		AdvertiserService service = factory.getAdvertiserService();
 
-		Advertiser advertiser = service.getAdvertiserById("test_advertiser");
+		Advertiser advertiser = service.getById("test_advertiser");
 		advertiser.setOrganization("Adlogix");
-		service.updateAdvertiser(advertiser);
+		service.update(advertiser);
 	}
 }
