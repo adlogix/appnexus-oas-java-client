@@ -126,7 +126,7 @@ Example
 Credentials credentials = Credentials(host,userName, password, account);
 OasServiceFactory factory = new OasServiceFactory(credentials);
 ReportService service = factory.getReportService();
-CampaignDeliveryByPageAndPosition delivery = service.getCampaignDeliveryByPageAndPosition("test_campaign_id", DATE_FORMATTER.parseDateTime("2012-02-27"), DATE_FORMATTER.parseDateTime("2012-02-28"));
+CampaignDeliveryByPageAndPosition delivery = service.getCampaignDeliveryByPageAndPosition("test_campaign_id", new org.joda.time.DateTime(2015, 5, 20, 0, 0), new org.joda.time.DateTime(2015, 8, 20, 0, 0));
 ````
 
 ### Targeting Service
