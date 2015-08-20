@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.Product;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
-import eu.adlogix.appnexus.oas.client.service.ProductService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
@@ -26,12 +23,7 @@ public class DefaultProductService extends AbstractOasService implements Product
 		super(apiService);
 	}
 
-	/**
-	 * Creates a {@link Product} on OAS
-	 * 
-	 * @param product
-	 *            The Product to be created
-	 */
+	@Override
 	public final void add(final Product product) {
 
 		checkNotNull(product, "product");
@@ -51,13 +43,7 @@ public class DefaultProductService extends AbstractOasService implements Product
 		performRequest(addProductRequestGenerator, requestParameters);
 	}
 
-	/**
-	 * Get {@link Product} by ID
-	 * 
-	 * @param productId
-	 *            the Product ID
-	 * @return the {@link Product}
-	 */
+	@Override
 	public Product getById(final String productId) {
 
 		checkNotEmpty(productId, "productId");

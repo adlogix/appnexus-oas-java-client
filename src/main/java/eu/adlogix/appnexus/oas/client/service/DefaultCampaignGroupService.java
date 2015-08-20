@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.CampaignGroup;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.CampaignGroupService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
 /**
@@ -25,12 +22,7 @@ public class DefaultCampaignGroupService extends AbstractOasService implements C
 		super(apiService);
 	}
 
-	/**
-	 * Creates a Campaign Group if it doesn't exist
-	 * 
-	 * @param group
-	 *            The campaignGroup to create on OAS
-	 */
+	@Override
 	public final void add(final CampaignGroup group) {
 
 		checkNotNull(group, "group");

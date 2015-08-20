@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMATTER;
 import static eu.adlogix.appnexus.oas.client.utils.ParserUtil.DATE_FORMAT_STRING;
@@ -25,9 +25,6 @@ import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
 import eu.adlogix.appnexus.oas.client.parser.XmlPagePositionParser;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.NetworkService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
@@ -52,9 +49,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		super(apiService);
 	}
 
-	/**
-	 * Retrieve all sites
-	 */
+	@Override
 	public List<Site> getAllSites() {
 		final List<Site> result = new ArrayList<Site>();
 
@@ -72,18 +67,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return Collections.unmodifiableList(result);
 	}
 
-	/**
-	 * Retrieve list of pages with positions which are modified since the given
-	 * last modified date
-	 * @param lastModifiedDate
-	 *            Used to retrieve all modifications since this given date. If
-	 *            null, everything will be retrieved.
-	 * @param allSites
-	 *            {@link List} which contains all the OAS {@link Site}s mapped
-	 *            against their IDs
-	 * 
-	 * @return
-	 */
+	@Override
 	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final DateTime lastModifiedDate,
 			final List<Site> allSites) {
 
@@ -99,26 +83,12 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, siteMapById);
 	}
 
-	/**
-	 * Retrieve list of pages with positions. No {@link Site} details are loaded
-	 * since {@link Page#getSite()} only contains ID
-	 * 
-	 * @return
-	 */
+	@Override
 	public List<Page> getAllPagesWithPositionsWithoutSiteDetails() {
 		return getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
 	}
 
-	/**
-	 * Retrieve list of pages with positions which are modified since the given
-	 * last modified date. No {@link Site} details are loaded since
-	 * {@link Page#getSite()} only contains ID
-	 * 
-	 * @param lastModifiedDate
-	 *            Used to retrieve all modifications since this given date. If
-	 *            null, everything will be retrieved.
-	 * @return
-	 */
+	@Override
 	public List<Page> getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate) {
 
 		return getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, new HashMap<String, Site>());
@@ -144,24 +114,12 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return getPageListResponseElementHandler.getPages();
 	}
 
-	/**
-	 * Retrieve full list of sections
-	 * 
-	 * @return
-	 */
+	@Override
 	public List<Section> getAllSections() {
 		return getSectionListModifiedSinceDate(null);
 	}
 
-	/**
-	 * Retrieve list of sections that are modified since the given last modified
-	 * date
-	 * 
-	 * @param lastModifiedDate
-	 *            Used to retrieve all modifications since this given date. If
-	 *            null, everything will be retrieved.
-	 * @return
-	 */
+	@Override
 	public List<Section> getSectionListModifiedSinceDate(DateTime lastModifiedDate) {
 
 		final List<Section> result = new ArrayList<Section>();
@@ -184,13 +142,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return Collections.unmodifiableList(result);
 	}
 
-	/**
-	 * Retrieve a single section by id
-	 * 
-	 * @param sectionId
-	 *            OAS ID of the section that needs to be retrieved
-	 * @return
-	 */
+	@Override
 	public Section readSection(final String sectionId) {
 
 		checkNotNull(sectionId, "sectionId");
@@ -232,13 +184,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return oasSection;
 	}
 
-	/**
-	 * Get Position By Name
-	 * 
-	 * @param positionName
-	 *            Unique {@link Position#getName()}
-	 * @return {@link Position}
-	 */
+	@Override
 	public Position getPositionByName(final String positionName) {
 
 		checkNotEmpty(positionName, "positionName");
@@ -267,11 +213,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 		return !positions.isEmpty() ? positions.get(0) : null;
 	}
 
-	/**
-	 * Get all {@link Position}s in the Network
-	 * 
-	 * @return {@link List} of {@link Position}s
-	 */
+	@Override
 	public List<Position> getAllPositions() {
 
 		final List<Position> positions = Lists.newArrayList();
@@ -300,11 +242,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 
 	}
 
-	/**
-	 * Get all {@link CompanionPosition}s of OAS
-	 * 
-	 * @return all {@link CompanionPosition}s
-	 */
+	@Override
 	public final List<CompanionPosition> getAllCompanionsPositions() {
 		@SuppressWarnings("serial")
 		final HashMap<String, Object> requestParameters = new HashMap<String, Object>() {

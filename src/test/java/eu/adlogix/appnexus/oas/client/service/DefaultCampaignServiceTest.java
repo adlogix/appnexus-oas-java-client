@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
@@ -38,8 +38,6 @@ import eu.adlogix.appnexus.oas.client.domain.enums.SegmentType;
 import eu.adlogix.appnexus.oas.client.domain.enums.SmoothAsap;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
-import eu.adlogix.appnexus.oas.client.service.CampaignService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
 public class DefaultCampaignServiceTest {

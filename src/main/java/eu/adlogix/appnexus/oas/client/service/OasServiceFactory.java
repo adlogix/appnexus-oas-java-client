@@ -1,17 +1,6 @@
 package eu.adlogix.appnexus.oas.client.service;
 
 import eu.adlogix.appnexus.oas.client.domain.Credentials;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultAdvertiserService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultCampaignGroupService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultCampaignService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultCompetitiveCategoryService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultCreativeService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultInsertionOrderService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultNetworkService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultProductService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultReportService;
-import eu.adlogix.appnexus.oas.client.service.impl.DefaultTargetingService;
-
 
 /**
  * Factory that should be used to create OAS Services ({@link DefaultAdvertiserService}

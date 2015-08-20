@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
@@ -6,9 +6,6 @@ import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 import java.util.Map;
 
 import eu.adlogix.appnexus.oas.client.domain.Creative;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.CreativeService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.transform.CreativeCreateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
@@ -24,12 +21,7 @@ public class DefaultCreativeService extends AbstractOasService implements Creati
 		super(apiService);
 	}
 
-	/**
-	 * Adds a Creative to OAS
-	 * 
-	 * @param creative
-	 *            {@link Creative} objects with values properly populated
-	 */
+	@Override
 	public void add(final Creative creative) {
 		
 		checkNotNull(creative, "creative");

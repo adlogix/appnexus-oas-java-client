@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
@@ -13,9 +13,6 @@ import eu.adlogix.appnexus.oas.client.domain.Advertiser;
 import eu.adlogix.appnexus.oas.client.domain.BillingInformation;
 import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.parser.XmlToAdvertiserParser;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.AdvertiserService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -38,13 +35,7 @@ public class DefaultAdvertiserService extends AbstractOasService implements Adve
 		super(apiService);
 	}
 
-	/**
-	 * Adds a new {@link Advertiser}
-	 * 
-	 * @param advertiser
-	 *            {@link Advertiser}
-	 * @return
-	 */
+	@Override
 	public final void add(Advertiser advertiser) {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
@@ -68,13 +59,7 @@ public class DefaultAdvertiserService extends AbstractOasService implements Adve
 		advertiser.resetModifiedAttributes();
 	}
 
-	/**
-	 * Updates an existing {@link Advertiser}
-	 * 
-	 * @param advertiser
-	 *            {@link Advertiser}
-	 * @return
-	 */
+	@Override
 	public final void update(final Advertiser advertiser) {
 
 		checkNotEmpty(advertiser.getId(), "advertiserId");
@@ -93,11 +78,7 @@ public class DefaultAdvertiserService extends AbstractOasService implements Adve
 		advertiser.resetModifiedAttributes();
 	}
 
-	/**
-	 * Retrieves a list of existing {@link Advertiser}s
-	 * 
-	 * @return {@link List} of {@link Advertiser}s
-	 */
+	@Override
 	public final List<Advertiser> getAll() {
 		final List<Advertiser> result = new ArrayList<Advertiser>();
 
@@ -119,15 +100,7 @@ public class DefaultAdvertiserService extends AbstractOasService implements Adve
 		return Collections.unmodifiableList(result);
 	}
 
-	/**
-	 * Retrieves an existing {@link Advertiser} by the given advertiser id
-	 * 
-	 * @param id
-	 *            OAS advertiser Id
-	 * 
-	 * @return {@link Advertiser}
-	 * 
-	 */
+	@Override
 	public Advertiser getById(final String id) {
 
 		checkNotEmpty(id, "advertiserId");

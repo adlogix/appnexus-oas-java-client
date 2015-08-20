@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
@@ -10,9 +10,6 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 
 import eu.adlogix.appnexus.oas.client.domain.CompetitiveCategory;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.CompetitiveCategoryService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -31,11 +28,7 @@ public class DefaultCompetitiveCategoryService extends AbstractOasService implem
 		super(apiService);
 	}
 
-	/**
-	 * Gets all Competitive Categories
-	 * 
-	 * @return The full {@link CompetitiveCategory} {@link List}
-	 */
+	@Override
 	public final List<CompetitiveCategory> getAll() {
 
 		@SuppressWarnings("serial")
@@ -59,12 +52,7 @@ public class DefaultCompetitiveCategoryService extends AbstractOasService implem
 
 	}
 
-	/**
-	 * Add a Competitive Category if it doesn't exist
-	 * 
-	 * @param competitiveCategory
-	 *            The {@link CompetitiveCategory} to create
-	 */
+	@Override
 	public final void add(final CompetitiveCategory competitiveCategory) {
 
 		checkNotNull(competitiveCategory, "competitiveCategory");

@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.string.StringTestUtils.normalizeNewLinesToCurPlatform;
 import static org.mockito.Mockito.mock;
@@ -15,8 +15,6 @@ import eu.adlogix.appnexus.oas.client.domain.InsertionOrder;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.exceptions.OasServerSideException;
-import eu.adlogix.appnexus.oas.client.service.InsertionOrderService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.utils.file.TestFileUtils;
 
 public class DefaultInsertionOrderServiceTest {

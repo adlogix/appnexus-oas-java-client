@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
 
@@ -10,9 +10,6 @@ import com.google.common.collect.Maps;
 
 import eu.adlogix.appnexus.oas.client.domain.TargetingCodeData;
 import eu.adlogix.appnexus.oas.client.domain.enums.TargetingCode;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
-import eu.adlogix.appnexus.oas.client.service.TargetingService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElementHandler;
@@ -30,17 +27,7 @@ public class DefaultTargetingService extends AbstractOasService implements Targe
 		super(apiService);
 	}
 
-	/**
-	 * Gets possible values ({@link TargetingCodeData}) corresponding to a
-	 * particular targeting type code ({@link TargetingCode}) where a
-	 * TargetingCodeData value can be assigned to a Campaign upon
-	 * creation/updating
-	 * 
-	 * @param targetingCode
-	 *            {@link TargetingCode} corresponding to a type of targeting
-	 *            which can be assigned to a Campaign upon creation/updating
-	 * @return Possible values for the {@link TargetingCode}
-	 */
+	@Override
 	public List<TargetingCodeData> getTargetingCodeDataLists(final TargetingCode targetingCode) {
 
 		checkNotNull(targetingCode, "targetingCode");

@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotNull;
@@ -12,9 +12,6 @@ import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.domain.enums.BillTo;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignType;
 import eu.adlogix.appnexus.oas.client.parser.XmlToCampaignParser;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.CampaignService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.transform.CampaignCreateParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.transform.CampaignParameterMapTransformer;
 import eu.adlogix.appnexus.oas.client.transform.CampaignUpdateParameterMapTransformer;
@@ -36,15 +33,7 @@ public class DefaultCampaignService extends AbstractOasService implements Campai
 		super(apiService);
 	}
 
-	/**
-	 * Retrieves an existing {@link Campaign} by the given campaign id
-	 * 
-	 * @param id
-	 *            OAS campaign Id
-	 * 
-	 * @return {@link Campaign}
-	 * 
-	 */
+	@Override
 	final public Campaign getById(final String id) {
 
 		@SuppressWarnings("serial")
@@ -63,14 +52,7 @@ public class DefaultCampaignService extends AbstractOasService implements Campai
 		return campaign;
 	}
 
-	/**
-	 * Adds a new {@link Campaign}
-	 * 
-	 * @param campaign
-	 *            {@link Campaign}
-	 * @return
-	 */
-
+	@Override
 	public final void add(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");
@@ -96,13 +78,7 @@ public class DefaultCampaignService extends AbstractOasService implements Campai
 		campaign.resetModifiedAttributes();
 	}
 
-	/**
-	 * Updates an existing {@link Campaign}
-	 * 
-	 * @param campaign
-	 *            {@link Campaign}
-	 * @return
-	 */
+	@Override
 	public final void update(Campaign campaign) {
 
 		checkNotEmpty(campaign.getId(), "campaignId");

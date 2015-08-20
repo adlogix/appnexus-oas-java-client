@@ -1,4 +1,4 @@
-package eu.adlogix.appnexus.oas.client.service.impl;
+package eu.adlogix.appnexus.oas.client.service;
 
 import static eu.adlogix.appnexus.oas.client.utils.ValidatorUtils.checkNotEmpty;
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
@@ -11,9 +11,6 @@ import eu.adlogix.appnexus.oas.client.domain.StatefulDomainManager;
 import eu.adlogix.appnexus.oas.client.domain.enums.CampaignsBy;
 import eu.adlogix.appnexus.oas.client.domain.enums.InsertionOrderStatus;
 import eu.adlogix.appnexus.oas.client.parser.XmlToInsertionOrderParser;
-import eu.adlogix.appnexus.oas.client.service.AbstractOasService;
-import eu.adlogix.appnexus.oas.client.service.InsertionOrderService;
-import eu.adlogix.appnexus.oas.client.service.OasApiService;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.XmlRequestGenerator;
 
@@ -37,13 +34,7 @@ public class DefaultInsertionOrderService extends AbstractOasService implements 
 		super(apiService);
 	}
 
-	/**
-	 * Adds a new {@link InsertionOrder}
-	 * 
-	 * @param insertionOrder
-	 *            {@link InsertionOrder}
-	 * @return
-	 */
+	@Override
 	public final void add(final InsertionOrder insertionOrder) {
 
 		checkNotEmpty(insertionOrder.getId(), "insertionOrderId");
@@ -73,13 +64,7 @@ public class DefaultInsertionOrderService extends AbstractOasService implements 
 		insertionOrder.resetModifiedAttributes();
 	}
 
-	/**
-	 * Updates an existing {@link InsertionOrder}
-	 * 
-	 * @param insertionOrder
-	 *            {@link InsertionOrder}
-	 * @return
-	 */
+	@Override
 	public final void update(final InsertionOrder insertionOrder) {
 
 		checkNotEmpty(insertionOrder.getId(), "insertionOrderId");
@@ -106,16 +91,7 @@ public class DefaultInsertionOrderService extends AbstractOasService implements 
 		insertionOrder.resetModifiedAttributes();
 	}
 
-	/**
-	 * Retrieves an existing {@link InsertionOrder} by the given insertion order
-	 * id
-	 * 
-	 * @param id
-	 *            OAS insertion order Id
-	 * 
-	 * @return {@link InsertionOrder}
-	 * 
-	 */
+	@Override
 	public InsertionOrder getById(final String id) {
 
 		checkNotEmpty(id, "insertionOrderId");
@@ -134,6 +110,13 @@ public class DefaultInsertionOrderService extends AbstractOasService implements 
 		return insertionOrder;
 	}
 
+	/**
+	 * Sets default values for the empty fields of the {@link InsertionOrder}
+	 * object
+	 * 
+	 * @param insertionOrder
+	 * @return {@link InsertionOrder} object with default values
+	 */
 	private InsertionOrder setDefaultsForEmptyFields(InsertionOrder insertionOrder) {
 		insertionOrder.setCampaignsBy(insertionOrder.getCampaignsBy() == null ? CampaignsBy.ADVERTISER
 				: insertionOrder.getCampaignsBy());
