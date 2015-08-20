@@ -25,7 +25,7 @@ OasServiceFactory factory = new OasServiceFactory(credentials);
 ````
 
 ## Accessing Services
-All the Oas Services can be accessed using the OasServiceFactory. 
+All the OAS Services can be accessed using the OasServiceFactory. 
 
 Example of retrieving the CampaignService is shown below.
 ```java
@@ -35,7 +35,7 @@ CampaignService service = factory.getCampaignService();
 ````
 
 ### Campaign Service
-CampaignService provides all the campaign related operations such as getCampaignById, addCampaign and updateCampaign.
+CampaignService provides all the campaign related operations such as getById, add and update.
 
 Example
 ```java
@@ -46,7 +46,7 @@ Campaign campaign = service.getById("testCampaignId");
 ````
 
 ### Campaign Group Service
-CampaignGroupService provides campaign group related operations such as createGroup.
+CampaignGroupService provides campaign group related operations such as add.
 
 Example
 ```java
@@ -60,7 +60,7 @@ campaignGroupService.add(group);
 ````
 
 ### Competitive Category Service
-CompetitiveCategoryService provides operations such as getAllCompetitiveCategories and addCompetitiveCategory.
+CompetitiveCategoryService provides operations such as getAll and add.
 
 Example
 ```java
@@ -71,7 +71,7 @@ List<CompetitiveCategory> list = service.getAll();
 ````
 
 ### Creative Service
-CreativeService provides creative related operations such as createCreative.
+CreativeService provides creative related operations such as add.
 
 Example
 ```java
@@ -86,7 +86,7 @@ service.add(creative);
 ````
 
 ### Insertion Order Service
-InsertionOrderService provides all insertion order related operations such as addInsertionOrder, updateInsertionOrder and getInsertionOrderById
+InsertionOrderService provides all insertion order related operations such as add, update and getById
 
 Example
 ```java
@@ -108,7 +108,7 @@ List<Site> list = service.getAllSites();
 ````
 
 ### Product Service
-ProductService provides all product related operations such as createProduct and getProduct
+ProductService provides all product related operations such as add and getById
 
 Example
 ```java
@@ -130,7 +130,7 @@ CampaignDeliveryByPageAndPosition delivery = service.getCampaignDeliveryByPageAn
 ````
 
 ### Targeting Service
-TargetingService provides fuctions for retrieving targeting details.
+TargetingService provides functions for retrieving targeting details.
 
 Example
 ```java
@@ -141,7 +141,7 @@ List<TargetingCodeData> list = service.getTargetingCodeDataLists(TargetingCode.D
 ````
 
 ### Advertiser Service
-AdvertiserService provides all advertiser related fuctions such as addAdvertiser,updateAdvertiser,getAdvertiserById and getAllAdvertisers;
+AdvertiserService provides all advertiser related functions such as add,update,getById and getAll;
 
 Example
 ```java
