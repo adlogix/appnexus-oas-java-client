@@ -47,10 +47,12 @@ public class DefaultNetworkServiceTest {
 		Site site1 = (Site) sites.get(0);
 		assertEquals("118218", site1.getId());
 		assertEquals("", site1.getName());
+		assertEquals("www.118218.fr", site1.getDomain());
 
 		Site site2 = (Site) sites.get(1);
 		assertEquals("12345", site2.getId());
 		assertEquals("Eriks site", site2.getName());
+		assertEquals("erikssite.se", site2.getDomain());
 
 	}
 
@@ -67,10 +69,10 @@ public class DefaultNetworkServiceTest {
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
-		sites.add(new Site("adsolutions", null));
-		sites.add(new Site("dada", "dada"));
-		sites.add(new Site("Aperol", "aperol"));
-		sites.add(new Site("cartest.it", null));
+		sites.add(new Site("adsolutions", null, null));
+		sites.add(new Site("dada", "dada", null));
+		sites.add(new Site("Aperol", "aperol", "aperol"));
+		sites.add(new Site("cartest.it", null, "cartest"));
 
 		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
@@ -81,18 +83,22 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertEquals("aperol", Page.getSite().getName());
+				assertEquals("aperol", Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals("cartest", Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
@@ -120,18 +126,22 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertNull(Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertNull(Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertNull(Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertNull(Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
@@ -151,8 +161,8 @@ public class DefaultNetworkServiceTest {
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
-		sites.add(new Site("adsolutions", null));
-		sites.add(new Site("dada", "dada"));
+		sites.add(new Site("adsolutions", null, null));
+		sites.add(new Site("dada", "dada", "dada"));
 
 		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
@@ -167,11 +177,13 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
+				assertEquals("dada", Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
@@ -203,11 +215,13 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
@@ -227,10 +241,10 @@ public class DefaultNetworkServiceTest {
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
-		sites.add(new Site("adsolutions", null));
-		sites.add(new Site("dada", "dada"));
-		sites.add(new Site("Aperol", "aperol"));
-		sites.add(new Site("cartest.it", null));
+		sites.add(new Site("adsolutions", null, null));
+		sites.add(new Site("dada", "dada", "dada"));
+		sites.add(new Site("Aperol", "aperol", null));
+		sites.add(new Site("cartest.it", null, "cartest.it"));
 
 		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
 
@@ -246,22 +260,26 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
+				assertEquals("dada", Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 			} else if (Page.getUrl().equals("www.dada.it/sport")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
+				assertEquals("dada", Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
@@ -269,10 +287,12 @@ public class DefaultNetworkServiceTest {
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertEquals("aperol", Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals("cartest.it", Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 
 			}
@@ -306,22 +326,26 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
 			} else if (Page.getUrl().equals("www.dada.it/sport")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 4);
 				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
 						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
@@ -329,10 +353,12 @@ public class DefaultNetworkServiceTest {
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertTrue(Page.getPositions().isEmpty());
 
 			}
@@ -369,8 +395,8 @@ public class DefaultNetworkServiceTest {
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
 		List<Site> sites = Lists.newArrayList();
-		sites.add(new Site("adsolutions", null));
-		sites.add(new Site("dada", "dada"));
+		sites.add(new Site("adsolutions", null, null));
+		sites.add(new Site("dada", "dada", "dada"));
 
 		DateTime lastModifiedDate = new DateTime(2014, 5, 10, 0, 0, 0, 0);
 		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, sites);
@@ -386,11 +412,13 @@ public class DefaultNetworkServiceTest {
 			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
+				assertEquals(null, Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
+				assertEquals("dada", Page.getSite().getDomain());
 				assertEquals(Page.getPositions().size(), 2);
 				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}

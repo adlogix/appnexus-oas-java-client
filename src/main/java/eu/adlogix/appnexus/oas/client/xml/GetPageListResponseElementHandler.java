@@ -51,7 +51,8 @@ public final class GetPageListResponseElementHandler implements ResponseElementH
 			final String siteId = element.getChild("SiteId");
 
 			if (StringUtils.isNotEmpty(siteId)) {
-				final Site site = MapUtils.isNotEmpty(siteMapById) ? siteMapById.get(siteId) : new Site(siteId, null);
+				final Site site = MapUtils.isNotEmpty(siteMapById) ? siteMapById.get(siteId)
+						: new Site(siteId, null, null);
 				pagesPerPageUrl.put(pageUrl, new Page(pageUrl, site));
 			}
 		}

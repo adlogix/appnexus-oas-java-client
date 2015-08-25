@@ -57,7 +57,8 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 			public final void processElement(final ResponseElement element) {
 				final String id = element.getChild("Id");
 				final String name = element.getChild("Name");
-				final Site site = new Site(id, name);
+				final String domain = element.getChild("Domain");
+				final Site site = new Site(id, name, domain);
 				result.add(site);
 			}
 		};
