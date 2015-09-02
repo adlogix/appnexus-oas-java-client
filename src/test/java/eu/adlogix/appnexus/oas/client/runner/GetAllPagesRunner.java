@@ -12,7 +12,7 @@ public class GetAllPagesRunner {
 		OasServiceFactory factory = new OasServiceFactory(TestCredentials.getCredentialsFromExternalFile());
 		NetworkService service = factory.getNetworkService();
 
-		List<Page> list = service.getAllPagesWithPositionsWithoutSiteDetails();
+		List<Page> list = service.getAllPagesWithoutSiteDetails();
 		System.out.println(list);
 	}
 }

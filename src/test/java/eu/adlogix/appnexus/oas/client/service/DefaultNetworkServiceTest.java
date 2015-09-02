@@ -58,7 +58,7 @@ public class DefaultNetworkServiceTest {
 
 
 	@Test
-	public void getAllPagesWithPositionsModifiedSinceDate_NoPositions_ReturnPagesOnly() throws FileNotFoundException,
+	public void getAllPagesModifiedSinceDate_PagesExists_ReturnPages() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -74,7 +74,7 @@ public class DefaultNetworkServiceTest {
 		sites.add(new Site("Aperol", "aperol", "aperol"));
 		sites.add(new Site("cartest.it", null, "cartest"));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
+		List<Page> pages = service.getAllPagesModifiedSinceDate(null, sites);
 
 		assertEquals(pages.size(), 4);
 
@@ -84,29 +84,25 @@ public class DefaultNetworkServiceTest {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertEquals("aperol", Page.getSite().getName());
 				assertEquals("aperol", Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals("cartest", Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
 
 	}
 
 	@Test
-	public void getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate_NoPositions_ReturnPagesOnly()
+	public void getAllPagesWithoutSiteDetailsModifiedSinceDate_PagesExists_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -117,7 +113,7 @@ public class DefaultNetworkServiceTest {
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-nopositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
+		List<Page> pages = service.getAllPagesWithoutSiteDetailsModifiedSinceDate(null);
 
 		assertEquals(pages.size(), 4);
 
@@ -127,29 +123,25 @@ public class DefaultNetworkServiceTest {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertNull(Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertNull(Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertNull(Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertNull(Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			}
 		}
 
 	}
 
 	@Test
-	public void getAllPagesWithPositionsModifiedSinceDate_WithPositions_ReturnPagesAndPositions()
+	public void getAllPagesModifiedSinceDate_PageUrlsContainPositions_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -164,34 +156,27 @@ public class DefaultNetworkServiceTest {
 		sites.add(new Site("adsolutions", null, null));
 		sites.add(new Site("dada", "dada", "dada"));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
+		List<Page> pages = service.getAllPagesModifiedSinceDate(null, sites);
 
-		assertEquals(pages.size(), 2);
-
-		Position rightPostion = new Position("Right");
-		Position topPostion = new Position("Top");
-		Position leftPostion = new Position("Left");
+		assertEquals(pages.size(), 4);
 
 		for (Page Page : pages) {
 			assertNotNull(Page.getUrl());
-			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+			if (Page.getUrl().equals("www.adsolutions.com/adservering@Right") || Page.getUrl().equals("www.adsolutions.com/adservering@Top")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
-			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine@Left")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Right")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
 				assertEquals("dada", Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
 	}
 
 	@Test
-	public void getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate_WithPositions_ReturnPagesAndPositions()
+	public void getAllPagesWithoutSiteDetailsModifiedSinceDate_PageUrlsContainPositions_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -202,34 +187,29 @@ public class DefaultNetworkServiceTest {
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages-withpositions.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
+		List<Page> pages = service.getAllPagesWithoutSiteDetailsModifiedSinceDate(null);
 
-		assertEquals(pages.size(), 2);
+		assertEquals(pages.size(), 4);
 
-		Position rightPostion = new Position("Right");
-		Position topPostion = new Position("Top");
-		Position leftPostion = new Position("Left");
 
 		for (Page Page : pages) {
 			assertNotNull(Page.getUrl());
-			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+			if (Page.getUrl().equals("www.adsolutions.com/adservering@Right")
+					|| Page.getUrl().equals("www.adsolutions.com/adservering@Top")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
-			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine@Left")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Right")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
 	}
 
 	@Test
-	public void getAllPagesWithPositionsModifiedSinceDate_WithAndWithoutPositions_ReturnPagesAndPositions()
+	public void getAllPagesModifiedSinceDate_SomePageUrlsContainPositions_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -246,14 +226,9 @@ public class DefaultNetworkServiceTest {
 		sites.add(new Site("Aperol", "aperol", null));
 		sites.add(new Site("cartest.it", null, "cartest.it"));
 
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(null, sites);
+		List<Page> pages = service.getAllPagesModifiedSinceDate(null, sites);
 
-		assertEquals(pages.size(), 6);
-
-		Position rightPostion = new Position("Right");
-		Position topPostion = new Position("Top");
-		Position leftPostion = new Position("Left");
-		Position topRightPostion = new Position("TopRight");
+		assertEquals(pages.size(), 14);
 
 		for (Page Page : pages) {
 			assertNotNull(Page.getUrl());
@@ -261,47 +236,40 @@ public class DefaultNetworkServiceTest {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
-			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+			} else if (Page.getUrl().equals("www.adsolutions.com/adservering@Right")
+					|| Page.getUrl().equals("www.adsolutions.com/adservering@Top")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
-
-			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Left")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Right")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Top")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@TopRight")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
 				assertEquals("dada", Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 4);
-				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
-						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
-			} else if (Page.getUrl().equals("www.dada.it/sport")) {
+			} else if (Page.getUrl().equals("www.dada.it/sport@Left")
+					|| Page.getUrl().equals("www.dada.it/sport@Right") || Page.getUrl().equals("www.dada.it/sport@Top")
+					|| Page.getUrl().equals("www.dada.it/sport@TopRight")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
 				assertEquals("dada", Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 4);
-				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
-						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
-
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertEquals("aperol", Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals("cartest.it", Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
-
 			}
 
 		}
 	}
 
 	@Test
-	public void getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate_WithAndWithoutPositions_ReturnPagesAndPositions()
+	public void getAllPagesWithoutSiteDetailsModifiedSinceDate_SomePageUrlsContainPositions_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -312,14 +280,9 @@ public class DefaultNetworkServiceTest {
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		List<Page> pages = service.getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
+		List<Page> pages = service.getAllPagesWithoutSiteDetailsModifiedSinceDate(null);
 
-		assertEquals(pages.size(), 6);
-
-		Position rightPostion = new Position("Right");
-		Position topPostion = new Position("Top");
-		Position leftPostion = new Position("Left");
-		Position topRightPostion = new Position("TopRight");
+		assertEquals(pages.size(), 14);
 
 		for (Page Page : pages) {
 			assertNotNull(Page.getUrl());
@@ -327,47 +290,40 @@ public class DefaultNetworkServiceTest {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
-			} else if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+			} else if (Page.getUrl().equals("www.adsolutions.com/adservering@Right")
+					|| Page.getUrl().equals("www.adsolutions.com/adservering@Top")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
-
-			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Left")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Right")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Top")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@TopRight")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 4);
-				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
-						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
-			} else if (Page.getUrl().equals("www.dada.it/sport")) {
+			} else if (Page.getUrl().equals("www.dada.it/sport@Left")
+					|| Page.getUrl().equals("www.dada.it/sport@Right") || Page.getUrl().equals("www.dada.it/sport@Top")
+					|| Page.getUrl().equals("www.dada.it/sport@TopRight")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 4);
-				assertTrue(Page.getPositions().contains(leftPostion) && Page.getPositions().contains(rightPostion)
-						&& Page.getPositions().contains(topPostion) && Page.getPositions().contains(topRightPostion));
-
 			} else if (Page.getUrl().equals("www.aperol.com")) {
 				assertEquals("Aperol", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
 			} else if (Page.getUrl().equals("www.cartest.it")) {
 				assertEquals("cartest.it", Page.getSite().getId());
 				assertNull(Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertTrue(Page.getPositions().isEmpty());
-
 			}
 
 		}
 	}
 
 	@Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "allSites shouldn't be empty")
-	public void getAllPagesWithPositionsModifiedSinceDate_EmptySitesMapParameter_ThrowException()
+	public void getAllPagesModifiedSinceDate_EmptySitesMapParameter_ThrowException()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -378,12 +334,12 @@ public class DefaultNetworkServiceTest {
 		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listpages.xml", DefaultNetworkServiceTest.class));
 		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
 
-		service.getAllPagesWithPositionsModifiedSinceDate(null, new ArrayList<Site>());
+		service.getAllPagesModifiedSinceDate(null, new ArrayList<Site>());
 
 	}
 
 	@Test
-	public void getAllPagesWithPositionsModifiedSinceDate_WithPositionsAndLastModifiedParam_ReturnPagesAndPositions()
+	public void getAllPagesModifiedSinceDate_WithLastModifiedParam_ReturnPages()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -399,35 +355,29 @@ public class DefaultNetworkServiceTest {
 		sites.add(new Site("dada", "dada", "dada"));
 
 		DateTime lastModifiedDate = new DateTime(2014, 5, 10, 0, 0, 0, 0);
-		List<Page> pages = service.getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, sites);
+		List<Page> pages = service.getAllPagesModifiedSinceDate(lastModifiedDate, sites);
 
-		assertEquals(pages.size(), 2);
-
-		Position rightPostion = new Position("Right");
-		Position topPostion = new Position("Top");
-		Position leftPostion = new Position("Left");
+		assertEquals(pages.size(), 4);
 
 		for (Page Page : pages) {
 			assertNotNull(Page.getUrl());
-			if (Page.getUrl().equals("www.adsolutions.com/adservering")) {
+			if (Page.getUrl().equals("www.adsolutions.com/adservering@Right")
+					|| Page.getUrl().equals("www.adsolutions.com/adservering@Top")) {
 				assertEquals("adsolutions", Page.getSite().getId());
 				assertEquals(null, Page.getSite().getName());
 				assertEquals(null, Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(topPostion));
-			} else if (Page.getUrl().equals("www.dada.it/female/Magazine")) {
+			} else if (Page.getUrl().equals("www.dada.it/female/Magazine@Left")
+					|| Page.getUrl().equals("www.dada.it/female/Magazine@Right")) {
 				assertEquals("dada", Page.getSite().getId());
 				assertEquals("dada", Page.getSite().getName());
 				assertEquals("dada", Page.getSite().getDomain());
-				assertEquals(Page.getPositions().size(), 2);
-				assertTrue(Page.getPositions().contains(rightPostion) && Page.getPositions().contains(leftPostion));
 			}
 		}
 
 	}
 
 	@Test
-	public void readSection_WithSinglePage_ReturnSectionWithSinglePage() throws FileNotFoundException,
+	public void readSection_WithPageWhichContainsPostion_ReturnSectionWithSinglePage() throws FileNotFoundException,
 			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
 
 		OasApiService mockedApiService = mock(OasApiService.class);
@@ -444,14 +394,12 @@ public class DefaultNetworkServiceTest {
 		List<Page> list = section.getPages();
 		assertEquals(list.size(), 1);
 		Page actualPage = list.get(0);
-		assertEquals(actualPage.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
-		assertEquals(actualPage.getPositions().size(), 1);
-		assertEquals(actualPage.getPositions().get(0).getName(), "x96");
+		assertEquals(actualPage.getUrl(), "quotidianiespresso.it/qe/ilcentro/home@x96");
 
 	}
 
 	@Test
-	public void readSection_WithSinglePageAndNoPositions_ReturnSectionWithSinglePageWithoutPositions()
+	public void readSection_WithSinglePage_ReturnSectionWithSinglePage()
 			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException,
 			ServiceException {
 
@@ -470,7 +418,6 @@ public class DefaultNetworkServiceTest {
 		assertEquals(list.size(), 1);
 		Page actualPage = list.get(0);
 		assertEquals(actualPage.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
-		assertTrue(actualPage.getPositions().isEmpty());
 
 	}
 
@@ -509,27 +456,25 @@ public class DefaultNetworkServiceTest {
 		assertEquals(section.getId(), "Finegil.Centro.Necro");
 
 		List<Page> pages = section.getPages();
-		assertEquals(pages.size(), 5);
+		assertEquals(pages.size(), 6);
 
 		Page page1 = pages.get(0);
-		assertNotNull(page1.getUrl());
-		assertEquals(page1.getPositions().size(), 1);
+		assertEquals(page1.getUrl(), "quotidianiespresso.it/qe/ilcentro/home@x96");
 
 		Page page2 = pages.get(1);
-		assertNotNull(page2.getUrl());
-		assertTrue(page2.getPositions().isEmpty());
+		assertEquals(page2.getUrl(), "express_styles/PUBLI@Top");
 
 		Page page3 = pages.get(2);
-		assertNotNull(page3.getUrl());
-		assertTrue(page3.getPositions().isEmpty());
+		assertEquals(page3.getUrl(), "express_styles/PUBLI@Bottom");
 
 		Page page4 = pages.get(3);
-		assertNotNull(page4.getUrl());
-		assertEquals(page4.getPositions().size(), 2);
+		assertEquals(page4.getUrl(), "express_styles/CONCOURS");
 
 		Page page5 = pages.get(4);
-		assertNotNull(page5.getUrl());
-		assertTrue(page5.getPositions().isEmpty());
+		assertEquals(page5.getUrl(), "express_styles/BIO_HP");
+
+		Page page6 = pages.get(5);
+		assertEquals(page6.getUrl(), "express_styles/MODE_HP");
 
 	}
 
@@ -565,10 +510,7 @@ public class DefaultNetworkServiceTest {
 		assertEquals(section2.getId(), "Finegil.Centro.Necro");
 		assertEquals(section2.getPages().size(), 1);
 		Page section2Page = section2.getPages().get(0);
-		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
-		assertEquals(section2Page.getPositions().size(), 1);
-		Position section2PagePosition = section2Page.getPositions().get(0);
-		assertEquals(section2PagePosition.getName(), "x96");
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home@x96");
 
 	}
 
@@ -603,10 +545,7 @@ public class DefaultNetworkServiceTest {
 		assertEquals(section2.getId(), "Finegil.Centro.Necro");
 		assertEquals(section2.getPages().size(), 1);
 		Page section2Page = section2.getPages().get(0);
-		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
-		assertEquals(section2Page.getPositions().size(), 1);
-		Position section2PagePosition = section2Page.getPositions().get(0);
-		assertEquals(section2PagePosition.getName(), "x96");
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home@x96");
 
 	}
 
@@ -641,10 +580,7 @@ public class DefaultNetworkServiceTest {
 		assertEquals(section2.getId(), "Finegil.Centro.Necro");
 		assertEquals(section2.getPages().size(), 1);
 		Page section2Page = section2.getPages().get(0);
-		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home");
-		assertEquals(section2Page.getPositions().size(), 1);
-		Position section2PagePosition = section2Page.getPositions().get(0);
-		assertEquals(section2PagePosition.getName(), "x96");
+		assertEquals(section2Page.getUrl(), "quotidianiespresso.it/qe/ilcentro/home@x96");
 
 	}
 

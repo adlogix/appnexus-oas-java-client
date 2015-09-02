@@ -23,8 +23,9 @@ public interface NetworkService {
 	public List<Site> getAllSites();
 
 	/**
-	 * Retrieve list of pages with positions which are modified since the given
-	 * last modified date
+	 * Retrieve list of pages with page urls which are modified since the given
+	 * last modified date. (eg Page url "www.test.com/home@Bottom")
+	 * 
 	 * @param lastModifiedDate
 	 *            Used to retrieve all modifications since this given date. If
 	 *            null, everything will be retrieved.
@@ -34,20 +35,22 @@ public interface NetworkService {
 	 * 
 	 * @return
 	 */
-	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final DateTime lastModifiedDate,
+	public List<Page> getAllPagesModifiedSinceDate(final DateTime lastModifiedDate,
 			final List<Site> allSites);
 
 	/**
-	 * Retrieve list of pages with positions. No {@link Site} details are loaded
-	 * since {@link Page#getSite()} only contains ID
+	 * Retrieve list of pages with page urls. (eg Page url
+	 * "www.test.com/home@Bottom") No {@link Site} details are loaded since
+	 * {@link Page#getSite()} only contains ID
 	 * 
 	 * @return
 	 */
-	public List<Page> getAllPagesWithPositionsWithoutSiteDetails();
+	public List<Page> getAllPagesWithoutSiteDetails();
 
 	/**
-	 * Retrieve list of pages with positions which are modified since the given
-	 * last modified date. No {@link Site} details are loaded since
+	 * Retrieve list of pages with with page urls. (eg Page url
+	 * "www.test.com/home@Bottom") which are modified since the given last
+	 * modified date. No {@link Site} details are loaded since
 	 * {@link Page#getSite()} only contains ID
 	 * 
 	 * @param lastModifiedDate
@@ -55,7 +58,7 @@ public interface NetworkService {
 	 *            null, everything will be retrieved.
 	 * @return
 	 */
-	public List<Page> getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate);
+	public List<Page> getAllPagesWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate);
 
 	/**
 	 * Retrieve full list of sections

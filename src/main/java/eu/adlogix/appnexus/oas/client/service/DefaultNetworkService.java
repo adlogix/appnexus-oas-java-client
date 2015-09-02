@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Function;
@@ -24,7 +23,6 @@ import eu.adlogix.appnexus.oas.client.domain.Page;
 import eu.adlogix.appnexus.oas.client.domain.Position;
 import eu.adlogix.appnexus.oas.client.domain.Section;
 import eu.adlogix.appnexus.oas.client.domain.Site;
-import eu.adlogix.appnexus.oas.client.parser.XmlPagePositionParser;
 import eu.adlogix.appnexus.oas.client.xml.GetPageListResponseElementHandler;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser;
 import eu.adlogix.appnexus.oas.client.xml.ResponseParser.ResponseElement;
@@ -69,7 +67,7 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 	}
 
 	@Override
-	public List<Page> getAllPagesWithPositionsModifiedSinceDate(final DateTime lastModifiedDate,
+	public List<Page> getAllPagesModifiedSinceDate(final DateTime lastModifiedDate,
 			final List<Site> allSites) {
 
 		checkNotEmpty(allSites, "allSites");
@@ -85,12 +83,12 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 	}
 
 	@Override
-	public List<Page> getAllPagesWithPositionsWithoutSiteDetails() {
-		return getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(null);
+	public List<Page> getAllPagesWithoutSiteDetails() {
+		return getAllPagesWithoutSiteDetailsModifiedSinceDate(null);
 	}
 
 	@Override
-	public List<Page> getAllPagesWithPositionsWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate) {
+	public List<Page> getAllPagesWithoutSiteDetailsModifiedSinceDate(final DateTime lastModifiedDate) {
 
 		return getAllPagesWithPositionsModifiedSinceDate(lastModifiedDate, new HashMap<String, Site>());
 	}
@@ -162,25 +160,13 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 
 		List<String> pageUrls = parser.getTrimmedElementList("//Section/Pages/Url");
 
-		final Map<String, Page> mapPositionsPerPage = new HashMap<String, Page>();
+		List<Page> pages = new ArrayList<Page>();
 
 		for (String url : pageUrls) {
-
-			String pageUrl = XmlPagePositionParser.getPageUrl(url);
-			String position = XmlPagePositionParser.getPosition(url);
-
-			if (!mapPositionsPerPage.containsKey(pageUrl)) {
-				// Create page
-				mapPositionsPerPage.put(pageUrl, new Page(pageUrl));
-			}
-			if (StringUtils.isNotEmpty(position)) {
-				// Add position to the existing page
-				final Position oasPosition = new Position(position);
-				mapPositionsPerPage.get(pageUrl).addPosition(oasPosition);
-			}
+			pages.add(new Page(url));
 		}
 
-		oasSection.setPages(new ArrayList<Page>(mapPositionsPerPage.values()));
+		oasSection.setPages(pages);
 
 		return oasSection;
 	}
