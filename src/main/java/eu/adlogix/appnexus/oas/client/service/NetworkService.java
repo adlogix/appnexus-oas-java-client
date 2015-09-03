@@ -79,6 +79,24 @@ public interface NetworkService {
 	public List<Section> getSectionListModifiedSinceDate(DateTime lastModifiedDate);
 
 	/**
+	 * Retrieve full list of sections without pages
+	 * 
+	 * @return
+	 */
+	public List<Section> getAllSectionsWithoutPages();
+
+	/**
+	 * Retrieve list of sections without pages that are modified since the given
+	 * last modified date
+	 * 
+	 * @param lastModifiedDate
+	 *            Used to retrieve all modifications since this given date. If
+	 *            null, everything will be retrieved.
+	 * @return
+	 */
+	public List<Section> getSectionsWithoutPagesModifiedSinceDate(DateTime lastModifiedDate);
+
+	/**
 	 * Retrieve a single section by id
 	 * 
 	 * @param sectionId

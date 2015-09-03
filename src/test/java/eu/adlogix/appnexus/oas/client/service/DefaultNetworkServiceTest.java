@@ -585,6 +585,81 @@ public class DefaultNetworkServiceTest {
 	}
 
 	@Test
+	public void getAllSectionsWithoutPages_HasSections_ReturnSectionList() throws FileNotFoundException,
+			URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		List<Section> sections = service.getAllSectionsWithoutPages();
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertTrue(section2.getPages().isEmpty());
+
+	}
+
+	@Test
+	public void getSectionsWithoutPagesModifiedSinceDate_WithLastModifiedDate_ReturnSectionList()
+			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections-modifieddate.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		List<Section> sections = service.getSectionsWithoutPagesModifiedSinceDate(new DateTime(2014, 5, 10, 0, 0, 0, 0));
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertTrue(section2.getPages().isEmpty());
+
+	}
+
+	@Test
+	public void getSectionsWithoutPagesModifiedSinceDate_WithoutLastModifiedDate_ReturnSectionList()
+			throws FileNotFoundException, URISyntaxException, IOException, ResourceNotFoundException, ServiceException {
+
+		OasApiService mockedApiService = mock(OasApiService.class);
+		NetworkService service = new DefaultNetworkService(mockedApiService);
+
+		final String expectedRequest = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-request-listsections.xml", DefaultNetworkServiceTest.class));
+		final String mockedpAnswer = StringTestUtils.normalizeNewLinesToCurPlatform(TestFileUtils.getTestResourceAsString("expected-answer-listsections.xml", DefaultNetworkServiceTest.class));
+		when(mockedApiService.callApi(expectedRequest, true)).thenReturn(mockedpAnswer);
+
+		List<Section> sections = service.getSectionsWithoutPagesModifiedSinceDate(null);
+
+		assertEquals(sections.size(), 2);
+
+		Section section1 = sections.get(0);
+		assertEquals(section1.getId(), "383section");
+		assertTrue(section1.getPages().isEmpty());
+
+		Section section2 = sections.get(1);
+		assertEquals(section2.getId(), "Finegil.Centro.Necro");
+		assertTrue(section2.getPages().isEmpty());
+
+	}
+
+	@Test
 	public void getAllPositions_NoError_ReturnPositionList() throws FileNotFoundException, URISyntaxException,
 			IOException, ResourceNotFoundException, ServiceException {
 

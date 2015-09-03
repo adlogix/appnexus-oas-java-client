@@ -254,4 +254,31 @@ public class DefaultNetworkService extends AbstractOasService implements Network
 
 		return companionPositions;
 	}
+
+	@Override
+	public List<Section> getAllSectionsWithoutPages() {
+		return getSectionsWithoutPagesModifiedSinceDate(null);
+	}
+
+	@Override
+	public List<Section> getSectionsWithoutPagesModifiedSinceDate(DateTime lastModifiedDate) {
+		final List<Section> result = new ArrayList<Section>();
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		if (lastModifiedDate != null) {
+			parameters.put("lastModifiedDate", lastModifiedDate.toString(DATE_FORMATTER));
+		}
+
+		ResponseElementHandler getSectionListResponseElementHandler = new ResponseElementHandler() {
+			public final void processElement(final ResponseElement element) {
+				final String id = element.getChild("Id");
+				final Section section = new Section(id);
+				result.add(section);
+			}
+		};
+
+		performPagedRequest(getSectionListRequestGenerator, parameters, "List", "//List/Section", getSectionListResponseElementHandler);
+
+		return Collections.unmodifiableList(result);
+	}
 }
